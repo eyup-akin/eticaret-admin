@@ -1,0 +1,111 @@
+.panel {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--arkaPlan);
+}
+
+/* ---------- SOL MENÜ ---------- */
+.yan-menu {
+  width: 240px;
+  flex-shrink: 0;
+  background-color: var(--menuArka);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.yan-menu-logo {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0 20px 24px 20px;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: var(--menuYazi);
+  text-decoration: none;
+  font-size: 15px;
+  border-left: 3px solid transparent;
+}
+
+.menu-link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+/* NavLink aktif sayfadayken bu sınıfı OTOMATİK ekler */
+.menu-link.active {
+  background-color: var(--menuAktifArka);
+  color: var(--menuAktifYazi);
+  font-weight: 600;
+  border-left-color: #ffffff;
+}
+
+.menu-ikon {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+}
+
+/* ---------- SAĞ TARAF ---------- */
+.panel-sag {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ust-bar {
+  height: 62px;
+  background-color: var(--kartArka);
+  border-bottom: 1px solid var(--kenarlik);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 0 24px;
+}
+
+.ust-bar-isim {
+  color: var(--yaziOrta);
+  font-size: 14px;
+  margin-right: auto; /* ismi sola iter */
+}
+
+.ust-bar-isim b {
+  color: var(--yaziKoyu);
+}
+
+.ust-buton {
+  padding: 8px 14px;
+  border: 1px solid var(--kenarlik);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-size: 14px;
+}
+
+.ust-buton:hover {
+  background-color: var(--acikGri);
+}
+
+.cikis-buton {
+  border-color: var(--hata);
+  color: var(--hata);
+}
+
+.cikis-buton:hover {
+  background-color: var(--hata);
+  color: #ffffff;
+}
+
+/* Sayfa içeriğinin oturduğu alan */
+.icerik {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}

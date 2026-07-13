@@ -1,0 +1,86 @@
+.giris-kapsayici {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--arkaPlan);
+}
+
+.giris-kutu {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.giris-baslik {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.giris-altyazi {
+  font-size: 14px;
+  color: var(--yaziOrta);
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.giris-etiket {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  margin-bottom: 6px;
+}
+
+.giris-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+}
+
+.giris-input:focus {
+  border-color: var(--anaRenk);
+}
+
+.giris-buton {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--anaRenk);
+  color: var(--anaRenkUstuYazi);
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.giris-buton:hover {
+  background-color: var(--anaRenkKoyu);
+}
+
+.giris-buton:disabled {
+  background-color: var(--pasif);
+  cursor: not-allowed;
+}
+
+.giris-hata {
+  background-color: rgba(231, 76, 60, 0.1);
+  border: 1px solid var(--hata);
+  color: var(--hata);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}

@@ -1,60 +1,43 @@
-import { useEffect, useState } from 'react';
-import { apiGet } from './services/api';
-import { API_URL } from './services/config';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// GEÇİCİ TEST EKRANI — Adım 38'de yerine gerçek uygulama gelecek.
-// Amaç: servis katmanı backend'e ulaşabiliyor mu, onu görmek.
+import KorumaliRota from './components/KorumaliRota';
+import PanelDuzeni from './components/PanelDuzeni';
+
+import GirisSayfasi from './pages/GirisSayfasi';
+import DashboardSayfasi from './pages/DashboardSayfasi';
+import UrunlerSayfasi from './pages/UrunlerSayfasi';
+import KategorilerSayfasi from './pages/KategorilerSayfasi';
+import SiparislerSayfasi from './pages/SiparislerSayfasi';
+import OdemelerSayfasi from './pages/OdemelerSayfasi';
+import MusterilerSayfasi from './pages/MusterilerSayfasi';
+
 export default function App() {
-  const [urunler, setUrunler] = useState([]);
-  const [hata, setHata] = useState('');
-  const [yukleniyor, setYukleniyor] = useState(true);
-
-  useEffect(() => {
-    async function urunleriGetir() {
-      try {
-        const veri = await apiGet('/products');
-        setUrunler(veri);
-      } catch (e) {
-        setHata(e.message);
-      } finally {
-        setYukleniyor(false);
-      }
-    }
-
-    urunleriGetir();
-  }, []);
-
   return (
-    <div style={{ padding: 30 }}>
-      <h1>Admin Panel — Bağlantı Testi</h1>
+    <BrowserRouter>
+      <Routes>
 
-      <p style={{ color: '#666', marginTop: 8 }}>
-        Backend adresi: <b>{API_URL}</b>
-      </p>
+        {/* HERKESE AÇIK */}
+        <Route path="/giris" element={<GirisSayfasi />} />
 
-      {yukleniyor && <p style={{ marginTop: 20 }}>Yükleniyor...</p>}
+        {/* BEKÇİ — buradan aşağısı sadece admin'e açık */}
+        <Route element={<KorumaliRota />}>
 
-      {hata !== '' && (
-        <p style={{ marginTop: 20, color: '#e74c3c' }}>
-          HATA: {hata}
-        </p>
-      )}
+          {/* Sol menülü kabuk — içindeki sayfalar <Outlet />'e oturur */}
+          <Route element={<PanelDuzeni />}>
+            <Route path="/"            element={<DashboardSayfasi />} />
+            <Route path="/urunler"     element={<UrunlerSayfasi />} />
+            <Route path="/kategoriler" element={<KategorilerSayfasi />} />
+            <Route path="/siparisler"  element={<SiparislerSayfasi />} />
+            <Route path="/odemeler"    element={<OdemelerSayfasi />} />
+            <Route path="/musteriler"  element={<MusterilerSayfasi />} />
+          </Route>
 
-      {!yukleniyor && hata === '' && (
-        <div style={{ marginTop: 20 }}>
-          <p>
-            Bağlantı başarılı. Toplam <b>{urunler.length}</b> ürün geldi.
-          </p>
+        </Route>
 
-          <ul style={{ marginTop: 12, paddingLeft: 20 }}>
-            {urunler.slice(0, 5).map((u) => (
-              <li key={u.id} style={{ marginBottom: 4 }}>
-                {u.name} — {u.price} TL
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+        {/* Olmayan bir adres yazıldıysa → ana sayfaya at */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+
+      </Routes>
+    </BrowserRouter>
   );
 }

@@ -7,8 +7,8 @@
 
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background-color: #f5f6fa;
-  color: #333333;
+  background-color: var(--arkaPlan, #f5f6fa);
+  color: var(--yaziKoyu, #333333);
 }
 
 /* Buton ve inputlar font'u body'den miras alsın */
