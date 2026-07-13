@@ -1,0 +1,156 @@
+.sayfa-baslik {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 6px;
+}
+
+.sayfa-altyazi {
+  font-size: 14px;
+  color: var(--yaziOrta);
+  margin-bottom: 24px;
+}
+
+/* ---------- ÖZET KARTLAR IZGARASI ---------- */
+.kart-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+/* ---------- GELİR KUTUSU ---------- */
+.gelir-kutusu {
+  background: linear-gradient(135deg, var(--anaRenk), var(--anaRenkKoyu));
+  border-radius: 14px;
+  padding: 28px;
+  color: var(--anaRenkUstuYazi);
+  margin-bottom: 24px;
+}
+
+.gelir-etiket {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+
+.gelir-tutar {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.gelir-alt-satir {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  flex-wrap: wrap;
+}
+
+.gelir-alt-oge {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.gelir-alt-oge b {
+  display: block;
+  font-size: 18px;
+  margin-top: 3px;
+  opacity: 1;
+}
+
+/* ---------- BÖLÜM KUTULARI ---------- */
+.bolum {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.bolum-baslik {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 4px;
+}
+
+.bolum-altyazi {
+  font-size: 13px;
+  color: var(--yaziGri);
+  margin-bottom: 16px;
+}
+
+/* İki bölümü yan yana koymak için */
+.ikili-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+/* ---------- MİNİ TABLO ---------- */
+.mini-tablo {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mini-tablo th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--yaziGri);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.mini-tablo td {
+  padding: 11px 10px;
+  font-size: 14px;
+  color: var(--yaziKoyu);
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.mini-tablo tr:last-child td {
+  border-bottom: none;
+}
+
+.mini-tablo tbody tr:hover {
+  background-color: var(--acikGri);
+}
+
+.sag-hizali {
+  text-align: right;
+}
+
+/* Kritik stok sayısı — kırmızı uyarı */
+.stok-kritik {
+  font-weight: 700;
+  color: var(--hata);
+}
+
+.stok-uyari {
+  font-weight: 700;
+  color: var(--uyari);
+}
+
+/* Veri yoksa */
+.bos-yazi {
+  text-align: center;
+  color: var(--yaziGri);
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+/* Değişim yüzdesi rozeti */
+.degisim {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,31 @@
+.hata-kutusu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: rgba(231, 76, 60, 0.1);
+  border: 1px solid var(--hata);
+  color: var(--hata);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+}
+
+.hata-mesaj {
+  flex: 1;
+}
+
+.hata-tekrar-buton {
+  padding: 7px 14px;
+  border: 1px solid var(--hata);
+  border-radius: 7px;
+  background-color: transparent;
+  color: var(--hata);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hata-tekrar-buton:hover {
+  background-color: var(--hata);
+  color: #ffffff;
+}
