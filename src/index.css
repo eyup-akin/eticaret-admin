@@ -1,0 +1,25 @@
+/* Tarayıcının varsayılan boşluklarını sıfırla */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: #f5f6fa;
+  color: #333333;
+}
+
+/* Buton ve inputlar font'u body'den miras alsın */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+}
