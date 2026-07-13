@@ -1,11 +1,12 @@
 // ============================================
-// Backend adresi TEK YERDE durur.
-// Port/IP değişirse SADECE burayı değiştireceksin.
+// Sunucu adresi TEK YERDE durur.
 // ============================================
 
-// Admin panel backend ile AYNI bilgisayarda çalışıyor,
-// o yüzden localhost yeterli (IP değişse bile bozulmaz).
-export const API_URL = 'http://localhost:5289/api';
+// Sunucunun kökü — resim adresleri için lazım (/uploads/... buna eklenecek)
+export const SUNUCU_URL = 'http://localhost:5289';
+
+// API'nin kökü
+export const API_URL = SUNUCU_URL + '/api';
 
 // Token'ı tarayıcıda hangi isimle saklayacağız
 export const TOKEN_ANAHTAR = 'admin_token';

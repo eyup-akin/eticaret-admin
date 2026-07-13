@@ -1,0 +1,33 @@
+.arama-kutu {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.arama-ikon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--yaziGri);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.arama-input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+}
+
+.arama-input:focus {
+  border-color: var(--anaRenk);
+}
+
+.arama-input::placeholder {
+  color: var(--yaziGri);
+}

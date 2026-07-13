@@ -1,0 +1,118 @@
+/* İki sütun: solda bilgi formu, sağda resimler */
+.form-izgara {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+  align-items: start; /* kutular birbirinin boyuna uymasın, kendi boyunda kalsın */
+}
+
+/* Dar ekranda (laptop/tablet) alt alta insin */
+@media (max-width: 1100px) {
+  .form-izgara {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-kutu {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 26px;
+  margin-bottom: 0;
+}
+
+.form-alan {
+  margin-bottom: 18px;
+}
+
+.form-etiket {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--anaRenk);
+}
+
+.form-ipucu {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 5px;
+}
+
+.form-ikili {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-butonlar {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--kenarlik);
+}
+
+/* Resim bölümü başlığı */
+.bolum-baslik-form {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 4px;
+}
+
+.bolum-altyazi-form {
+  font-size: 13px;
+  color: var(--yaziGri);
+  margin-bottom: 16px;
+}
+
+/* Yeni üründe resim bölümü kilitli görünsün */
+.kilitli-bolum {
+  text-align: center;
+  padding: 32px 20px;
+  border: 2px dashed var(--kenarlik);
+  border-radius: 12px;
+  color: var(--yaziGri);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Başarı mesajı */
+.basari-kutusu {
+  background-color: rgba(39, 174, 96, 0.1);
+  border: 1px solid var(--basari);
+  color: var(--basari);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+
+
+/* Sağ sütun kaydırma sırasında yapışık kalsın */
+.form-kutu-sag {
+  position: sticky;
+  top: 20px;
+}
+
+@media (max-width: 1100px) {
+  .form-kutu-sag {
+    position: static; /* dar ekranda yapışmasın */
+  }
+}

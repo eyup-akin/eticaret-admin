@@ -1,0 +1,129 @@
+/* Sürükle-bırak alanı */
+.yukle-alan {
+  border: 2px dashed var(--inputKenar);
+  border-radius: 12px;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.yukle-alan:hover {
+  border-color: var(--anaRenk);
+  background-color: var(--acikGri);
+}
+
+/* Dosya üzerine sürüklenirken */
+.yukle-alan-aktif {
+  border-color: var(--anaRenk);
+  background-color: var(--acikGri);
+}
+
+.yukle-ikon {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.yukle-yazi {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  margin-bottom: 4px;
+}
+
+.yukle-ipucu {
+  font-size: 12px;
+  color: var(--yaziGri);
+}
+
+/* Gizli gerçek dosya inputu */
+.yukle-gizli-input {
+  display: none;
+}
+
+/* ---------- RESİM IZGARASI ---------- */
+.resim-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.resim-kutu {
+  position: relative;
+  border: 2px solid var(--kenarlik);
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background-color: var(--acikGri);
+}
+
+/* Ana resim mavi çerçeveli */
+.resim-kutu-ana {
+  border-color: var(--anaRenk);
+}
+
+.resim-gorsel {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Üstteki "ANA" etiketi */
+.resim-ana-etiket {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background-color: var(--anaRenk);
+  color: var(--anaRenkUstuYazi);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 999px;
+}
+
+/* Fare üstüne gelince çıkan karartma + butonlar */
+.resim-katman {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.resim-kutu:hover .resim-katman {
+  opacity: 1;
+}
+
+.resim-mini-buton {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resim-mini-buton:hover {
+  background-color: #ffffff;
+}
+
+.resim-mini-buton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Yükleme sırasında */
+.yukleme-durumu {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--yaziOrta);
+}

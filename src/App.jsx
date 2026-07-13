@@ -11,6 +11,9 @@ import SiparislerSayfasi from './pages/SiparislerSayfasi';
 import OdemelerSayfasi from './pages/OdemelerSayfasi';
 import MusterilerSayfasi from './pages/MusterilerSayfasi';
 
+
+import UrunFormSayfasi from './pages/UrunFormSayfasi';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -24,12 +27,14 @@ export default function App() {
 
           {/* Sol menülü kabuk — içindeki sayfalar <Outlet />'e oturur */}
           <Route element={<PanelDuzeni />}>
-            <Route path="/"            element={<DashboardSayfasi />} />
-            <Route path="/urunler"     element={<UrunlerSayfasi />} />
-            <Route path="/kategoriler" element={<KategorilerSayfasi />} />
-            <Route path="/siparisler"  element={<SiparislerSayfasi />} />
-            <Route path="/odemeler"    element={<OdemelerSayfasi />} />
-            <Route path="/musteriler"  element={<MusterilerSayfasi />} />
+            <Route path="/"                     element={<DashboardSayfasi />} />
+            <Route path="/urunler"              element={<UrunlerSayfasi />} />
+            <Route path="/urunler/yeni"         element={<UrunFormSayfasi />} />
+            <Route path="/urunler/:id/duzenle"  element={<UrunFormSayfasi />} />
+            <Route path="/kategoriler"          element={<KategorilerSayfasi />} />
+            <Route path="/siparisler"           element={<SiparislerSayfasi />} />
+            <Route path="/odemeler"             element={<OdemelerSayfasi />} />
+            <Route path="/musteriler"           element={<MusterilerSayfasi />} />
           </Route>
 
         </Route>

@@ -1,0 +1,55 @@
+.buton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: opacity 0.15s, background-color 0.15s;
+}
+
+.buton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---------- TİPLER ---------- */
+.buton-ana {
+  background-color: var(--anaRenk);
+  color: var(--anaRenkUstuYazi);
+}
+
+.buton-ana:hover:not(:disabled) {
+  background-color: var(--anaRenkKoyu);
+}
+
+.buton-ikincil {
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  border-color: var(--kenarlik);
+}
+
+.buton-ikincil:hover:not(:disabled) {
+  background-color: var(--acikGri);
+}
+
+.buton-tehlike {
+  background-color: transparent;
+  color: var(--hata);
+  border-color: var(--hata);
+}
+
+.buton-tehlike:hover:not(:disabled) {
+  background-color: var(--hata);
+  color: #ffffff;
+}
+
+/* ---------- BOYUTLAR ---------- */
+.buton-kucuk {
+  padding: 6px 11px;
+  font-size: 13px;
+}

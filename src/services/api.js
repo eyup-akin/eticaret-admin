@@ -1,6 +1,9 @@
 import { API_URL } from './config';
 import { tokenAl } from './tokenStorage';
 
+
+
+
 // ============================================
 // Bütün istekler buradan geçer.
 // Token'ı otomatik ekler, hataları tek yerde yakalar.
@@ -8,8 +11,15 @@ import { tokenAl } from './tokenStorage';
 export async function apiIstek(yol, secenekler = {}) {
   const token = tokenAl();
 
+  // ⚠️ ÖNEMLİ TUZAK:
+  // FormData (dosya) gönderirken Content-Type'ı ELLE KOYMA!
+  // Tarayıcı onu kendisi ayarlamalı, çünkü sonuna bir "boundary" eklemesi gerekir:
+  //    multipart/form-data; boundary=----WebKitFormBoundaryX7Yz...
+  // Biz elle "multipart/form-data" yazarsak boundary olmaz, sunucu dosyayı çözemez.
+  const formVeriMi = secenekler.body instanceof FormData;
+
   const headers = {
-    'Content-Type': 'application/json',
+    ...(formVeriMi ? {} : { 'Content-Type': 'application/json' }),
     ...(secenekler.headers || {}),
   };
 
@@ -69,4 +79,12 @@ export function apiPut(yol, govde) {
 
 export function apiDelete(yol) {
   return apiIstek(yol, { method: 'DELETE' });
+}
+
+// Dosya yükleme — backend [FromForm] IFormFile bekliyor
+export function apiYukle(yol, dosya, alanAdi = 'dosya') {
+  const govde = new FormData();
+  govde.append(alanAdi, dosya);
+
+  return apiIstek(yol, { method: 'POST', body: govde });
 }

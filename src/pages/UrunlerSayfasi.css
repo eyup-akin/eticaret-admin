@@ -1,0 +1,75 @@
+.sayfa-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.filtre-cubugu {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.filtre-secim {
+  padding: 10px 12px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+  min-width: 170px;
+}
+
+.filtre-secim:focus {
+  border-color: var(--anaRenk);
+}
+
+.sonuc-sayisi {
+  font-size: 13px;
+  color: var(--yaziGri);
+  margin-top: 12px;
+}
+
+.islem-butonlari {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.stok-yok {
+  font-weight: 700;
+  color: var(--hata);
+}
+
+.stok-az {
+  font-weight: 700;
+  color: var(--uyari);
+}
+
+/* Tablodaki küçük ürün resmi */
+.satir-resim {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--kenarlik);
+  display: block;
+}
+
+/* Resmi olmayan ürün için gri kutu */
+.satir-resim-yok {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  border: 1px solid var(--kenarlik);
+  background-color: var(--acikGri);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--yaziGri);
+}

@@ -1,0 +1,54 @@
+.tablo-kutu {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Dar ekranda tablo yana kaysın, taşmasın */
+.tablo-kaydir {
+  overflow-x: auto;
+}
+
+.tablo {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tablo th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--yaziGri);
+  background-color: var(--acikGri);
+  padding: 13px 16px;
+  white-space: nowrap;
+}
+
+.tablo td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--yaziKoyu);
+  border-top: 1px solid var(--kenarlik);
+}
+
+.tablo tbody tr:hover {
+  background-color: var(--acikKart);
+}
+
+.tablo-sag {
+  text-align: right;
+}
+
+.tablo-orta {
+  text-align: center;
+}
+
+.tablo-bos {
+  padding: 50px 20px;
+  text-align: center;
+  color: var(--yaziGri);
+  font-size: 14px;
+}
