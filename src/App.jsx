@@ -12,6 +12,8 @@ import OdemelerSayfasi from './pages/OdemelerSayfasi';
 import MusterilerSayfasi from './pages/MusterilerSayfasi';
 
 
+import SiparisDetaySayfasi from './pages/SiparisDetaySayfasi';
+
 import UrunFormSayfasi from './pages/UrunFormSayfasi';
 
 export default function App() {
@@ -33,6 +35,9 @@ export default function App() {
             <Route path="/urunler/:id/duzenle"  element={<UrunFormSayfasi />} />
             <Route path="/kategoriler"          element={<KategorilerSayfasi />} />
             <Route path="/siparisler"           element={<SiparislerSayfasi />} />
+
+            <Route path="/siparisler/:id" element={<SiparisDetaySayfasi />} />
+
             <Route path="/odemeler"             element={<OdemelerSayfasi />} />
             <Route path="/musteriler"           element={<MusterilerSayfasi />} />
           </Route>

@@ -1,6 +1,7 @@
 .panel {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;        /* min-height DEĞİL — tam ekran boyu, sabit */
+  overflow: hidden;     /* sayfanın kendisi kaymasın */
   background-color: var(--arkaPlan);
 }
 
@@ -12,6 +13,8 @@
   display: flex;
   flex-direction: column;
   padding: 20px 0;
+  height: 100vh;        /* ⭐ tam boy */
+  overflow-y: auto;     /* ⭐ menü çok uzarsa KENDİ İÇİNDE kaysın */
 }
 
 .yan-menu-logo {
@@ -57,10 +60,12 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  overflow: hidden;     /* ⭐ taşmayı içerik kutusuna bırak */
 }
 
 .ust-bar {
   height: 62px;
+  flex-shrink: 0;       /* ⭐ içerik uzayınca üst bar ezilmesin */
   background-color: var(--kartArka);
   border-bottom: 1px solid var(--kenarlik);
   display: flex;
