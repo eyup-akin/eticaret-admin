@@ -14,8 +14,21 @@ const DURUMLAR = {
   iade:         { yazi: 'İade',         renk: '#8e44ad' },
   iade_edildi:  { yazi: 'İade Edildi',  renk: '#8e44ad' },
 
+  admin:    { yazi: 'Admin',    renk: '#8e44ad' },
+  customer: { yazi: 'Müşteri',  renk: '#2563eb' },
+
+
   basarili:     { yazi: 'Başarılı',     renk: '#27ae60' },
   basarisiz:    { yazi: 'Başarısız',    renk: '#e74c3c' },
+
+
+  superadmin: { yazi: 'Süper Yönetici', renk: '#e67e22' },
+  admin:      { yazi: 'Yönetici',       renk: '#8e44ad' },
+  customer:   { yazi: 'Müşteri',        renk: '#2563eb' },
+  pasif:      { yazi: 'Pasif',          renk: '#e74c3c' },
+  aktif:      { yazi: 'Aktif',          renk: '#27ae60' },
+
+
 };
 
 export default function Rozet({ durum }) {

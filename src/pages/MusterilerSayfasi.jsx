@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from '../context/AuthContext';
+
 import { apiGet } from '../services/api';
 import { paraBicimle, sayiBicimle, tarihBicimle } from '../utils/bicimlendir';
 
@@ -31,7 +33,11 @@ export function basHarfler(ad) {
 }
 
 export default function MusterilerSayfasi() {
+  
   const navigate = useNavigate();
+
+  const { kullanici } = useAuth();
+  const superAdminMi = kullanici?.role === 'superadmin';
 
   const [kullanicilar, setKullanicilar] = useState([]);
   const [ozet, setOzet] = useState(null);
@@ -109,6 +115,11 @@ export default function MusterilerSayfasi() {
       hucre: (k) => <Rozet durum={k.role} />,
     },
     {
+      baslik: 'Durum',
+      hizala: 'orta',
+      hucre: (k) => <Rozet durum={k.isActive ? 'aktif' : 'pasif'} />,
+    },
+    {
       baslik: 'Kayıt',
       hucre: (k) => tarihBicimle(k.createdAt),
     },
@@ -144,7 +155,7 @@ export default function MusterilerSayfasi() {
           <Buton
             tip="ikincil"
             boyut="kucuk"
-            onClick={() => navigate('/musteriler/' + k.id)}
+            onClick={() => navigate('/kullanicilar/' + k.id)}
           >
             Detay →
           </Buton>
@@ -156,9 +167,11 @@ export default function MusterilerSayfasi() {
   return (
     <div>
       <div className="sayfa-ust">
-        <h1 className="sayfa-baslik">Müşteriler</h1>
+        <h1 className="sayfa-baslik">Kullanıcılar</h1>
         <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>
-          Kayıtlı kullanıcılar, sipariş geçmişleri ve harcamaları
+          {superAdminMi
+            ? 'Kullanıcıları görüntüle, rollerini değiştir, hesapları yönet'
+            : 'Kayıtlı kullanıcılar ve sipariş geçmişleri'}
         </p>
       </div>
 
@@ -202,6 +215,7 @@ export default function MusterilerSayfasi() {
           onChange={(e) => setRolFiltre(e.target.value)}
         >
           <option value="">Tüm roller</option>
+          <option value="superadmin">Süper Yönetici</option>
           <option value="customer">Müşteri</option>
           <option value="admin">Yönetici</option>
         </select>

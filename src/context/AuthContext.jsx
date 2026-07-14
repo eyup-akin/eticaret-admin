@@ -32,12 +32,12 @@ export function AuthProvider({ children }) {
       password: sifre,
     });
 
-    // ⭐ ADMIN PANELE ÖZEL KURAL: müşteri buraya giremez
-    if (veri.role !== 'admin') {
-      throw new Error('Bu panele sadece admin girebilir.');
+    // Hem admin hem süper admin panele girebilir
+    if (veri.role !== 'admin' && veri.role !== 'superadmin') {
+      throw new Error('Bu panele sadece yöneticiler girebilir.');
     }
 
-    const kul = { fullName: veri.fullName, role: veri.role };
+    const kul = { id: veri.id, fullName: veri.fullName, role: veri.role };
 
     tokenKaydet(veri.token);
     kullaniciKaydet(kul);

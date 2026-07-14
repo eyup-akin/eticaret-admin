@@ -41,9 +41,8 @@ export default function App() {
 
             <Route path="/odemeler"             element={<OdemelerSayfasi />} />
             
-            <Route path="/musteriler"           element={<MusterilerSayfasi />} />
-
-            <Route path="/musteriler/:id" element={<MusteriDetaySayfasi />} />
+            <Route path="/kullanicilar"     element={<MusterilerSayfasi />} />
+            <Route path="/kullanicilar/:id" element={<MusteriDetaySayfasi />} />
 
           </Route>
 

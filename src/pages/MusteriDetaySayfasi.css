@@ -154,3 +154,78 @@
   margin-top: 12px;
   line-height: 1.5;
 }
+
+/* ---------- YETKİ YÖNETİMİ KARTI ---------- */
+.yetki-kutu {
+  background-color: var(--kartArka);
+  border: 2px solid #e67e22;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.yetki-baslik {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e67e22;
+  margin-bottom: 6px;
+}
+
+.yetki-aciklama {
+  font-size: 13px;
+  color: var(--yaziOrta);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.yetki-secim {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+  margin-bottom: 12px;
+}
+
+.yetki-ayirac {
+  border: none;
+  border-top: 1px solid var(--kenarlik);
+  margin: 18px 0;
+}
+
+.uyari-notu {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+/* ---------- İŞLEM GEÇMİŞİ ---------- */
+.log-satiri {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--kenarlik);
+  font-size: 13px;
+}
+
+.log-satiri:last-child {
+  border-bottom: none;
+}
+
+.log-islem {
+  font-weight: 600;
+  color: var(--yaziKoyu);
+}
+
+.log-detay {
+  color: var(--yaziOrta);
+  margin-top: 2px;
+}
+
+.log-tarih {
+  color: var(--yaziGri);
+  font-size: 12px;
+  margin-top: 2px;
+}
+

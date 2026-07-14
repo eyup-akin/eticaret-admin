@@ -10,7 +10,7 @@ const MENU = [
   { yol: '/kategoriler',ikon: '🏷️', yazi: 'Kategoriler' },
   { yol: '/siparisler', ikon: '🧾', yazi: 'Siparişler' },
   { yol: '/odemeler',   ikon: '💳', yazi: 'Ödemeler / Gelir' },
-  { yol: '/musteriler', ikon: '👥', yazi: 'Müşteriler' },
+  { yol: '/kullanicilar', ikon: '👥', yazi: 'Kullanıcılar' },
 ];
 
 export default function PanelDuzeni() {

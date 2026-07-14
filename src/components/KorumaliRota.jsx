@@ -19,7 +19,11 @@ export default function KorumaliRota() {
   }
 
   // 2) Token yok VEYA admin değil → kapı dışarı
-  if (!token || !kullanici || kullanici.role !== 'admin') {
+  const yonetici =
+    kullanici &&
+    (kullanici.role === 'admin' || kullanici.role === 'superadmin');
+
+  if (!token || !yonetici) {
     return <Navigate to="/giris" replace />;
   }
 
