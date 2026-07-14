@@ -47,3 +47,15 @@ export function kisaTarih(tarihMetni) {
     month: 'short',
   });
 }
+
+
+// "2026-07"  →  "Tem 2026"   (grafik ekseni için)
+export function ayBicimle(ayMetni) {
+  const [yil, ay] = ayMetni.split('-');
+  const tarih = new Date(Number(yil), Number(ay) - 1, 1);
+
+  return tarih.toLocaleDateString('tr-TR', {
+    month: 'short',
+    year: 'numeric',
+  });
+}

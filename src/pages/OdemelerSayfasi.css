@@ -1,0 +1,131 @@
+.sayfa-ust {
+  margin-bottom: 22px;
+}
+
+/* ---------- ÖZET KARTLAR ---------- */
+.ozet-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+/* ---------- GRAFİK KUTUSU ---------- */
+.grafik-kutu {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 22px;
+}
+
+.grafik-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.grafik-baslik {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+}
+
+.grafik-altyazi {
+  font-size: 13px;
+  color: var(--yaziGri);
+  margin-top: 2px;
+}
+
+/* ---------- FİLTRELER ---------- */
+.filtre-cubugu {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filtre-grup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filtre-etiket {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--yaziOrta);
+}
+
+.filtre-secim,
+.filtre-tarih {
+  padding: 10px 12px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+}
+
+.filtre-secim:focus,
+.filtre-tarih:focus {
+  border-color: var(--anaRenk);
+}
+
+.filtre-secim {
+  min-width: 160px;
+}
+
+/* Hızlı tarih butonları */
+.hizli-tarihler {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* ---------- TABLO İÇİ ---------- */
+.musteri-ad {
+  font-weight: 600;
+  color: var(--yaziKoyu);
+}
+
+.musteri-mail {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 2px;
+}
+
+.kart-mono {
+  font-family: monospace;
+  color: var(--yaziOrta);
+}
+
+/* İade tutarları eksi işaretli ve mor */
+.tutar-iade {
+  color: #8e44ad;
+  font-weight: 700;
+}
+
+.tutar-basarili {
+  color: var(--basari);
+  font-weight: 700;
+}
+
+.siparis-link {
+  color: var(--anaRenk);
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+}
+
+.siparis-link:hover {
+  text-decoration: underline;
+}
