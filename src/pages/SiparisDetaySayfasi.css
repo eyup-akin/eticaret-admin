@@ -8,11 +8,25 @@
 }
 
 /* İki sütun: solda ürünler, sağda bilgi kartları */
+/* Sol: ürünler + bilgi kartları | Sağ: kargo + iptal */
 .detay-izgara {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 20px;
   align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .detay-izgara {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Müşteri / Adres / Ödeme kartları YAN YANA */
+.bilgi-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
 }
 
 @media (max-width: 1000px) {
@@ -147,4 +161,78 @@
   padding: 12px 14px;
   font-size: 14px;
   margin-bottom: 16px;
+}
+
+
+/* ---------- İPTAL KARTI ---------- */
+.iptal-kutu {
+  background-color: var(--kartArka);
+  border: 1px solid var(--hata);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.iptal-baslik {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--hata);
+  margin-bottom: 12px;
+}
+
+.iptal-aciklama {
+  font-size: 13px;
+  color: var(--yaziOrta);
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.iptal-alan {
+  width: 100%;
+  min-height: 90px;
+  padding: 11px 12px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+  resize: vertical;
+  margin-bottom: 6px;
+  font-family: inherit;
+}
+
+.iptal-alan:focus {
+  border-color: var(--hata);
+}
+
+.karakter-sayaci {
+  font-size: 12px;
+  color: var(--yaziGri);
+  text-align: right;
+  margin-bottom: 12px;
+}
+
+/* Zaten iptal edilmiş siparişin sebep kutusu */
+.iptal-bilgi-kutu {
+  background-color: rgba(231, 76, 60, 0.08);
+  border: 1px solid var(--hata);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.iptal-sebep-metin {
+  font-size: 14px;
+  color: var(--yaziKoyu);
+  line-height: 1.6;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Son durum bilgisi */
+.son-durum {
+  font-size: 13px;
+  color: var(--yaziGri);
+  line-height: 1.5;
+  padding: 12px;
+  background-color: var(--acikGri);
+  border-radius: 8px;
 }

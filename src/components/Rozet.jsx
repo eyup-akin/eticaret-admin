@@ -10,6 +10,10 @@ const DURUMLAR = {
 
   odendi:       { yazi: 'Ödendi',       renk: '#27ae60' },
   beklemede:    { yazi: 'Beklemede',    renk: '#f39c12' },
+
+  iade:         { yazi: 'İade',         renk: '#8e44ad' },
+  iade_edildi:  { yazi: 'İade Edildi',  renk: '#8e44ad' },
+
   basarili:     { yazi: 'Başarılı',     renk: '#27ae60' },
   basarisiz:    { yazi: 'Başarısız',    renk: '#e74c3c' },
 };

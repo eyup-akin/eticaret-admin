@@ -10,6 +10,7 @@ import Tablo from '../components/Tablo';
 import Buton from '../components/Buton';
 import Rozet from '../components/Rozet';
 import AramaKutusu from '../components/AramaKutusu';
+import Sayfalama from '../components/Sayfalama';
 
 import './SiparislerSayfasi.css';
 
@@ -17,23 +18,55 @@ export default function SiparislerSayfasi() {
   const navigate = useNavigate();
 
   const [siparisler, setSiparisler] = useState([]);
+  const [ozet, setOzet] = useState({
+    toplam: 0,
+    toplamTutar: 0,
+    toplamSayfa: 1,
+  });
+
   const [yukleniyor, setYukleniyor] = useState(true);
   const [hata, setHata] = useState('');
 
-  // Filtreler — HEPSİ TARAYICIDA çalışıyor.
-  // Neden? Backend /api/admin/orders için filtre parametresi kabul etmiyor
-  // ve sipariş sayısı az. Veri binlerce olsaydı backend'e taşırdık.
+  // FİLTRELER — hepsi BACKEND'e gidiyor
   const [arama, setArama] = useState('');
   const [durumFiltre, setDurumFiltre] = useState('');
   const [odemeFiltre, setOdemeFiltre] = useState('');
+
+  // SAYFALAMA
+  const [sayfa, setSayfa] = useState(1);
+  const [sayfaBoyutu, setSayfaBoyutu] = useState(10);
 
   async function siparisleriGetir() {
     setYukleniyor(true);
     setHata('');
 
     try {
-      const veri = await apiGet('/admin/orders');
-      setSiparisler(veri);
+      // Query string'i güvenli şekilde kur
+      const p = new URLSearchParams();
+
+      if (arama.trim() !== '') {
+        p.append('search', arama.trim());
+      }
+
+      if (durumFiltre !== '') {
+        p.append('status', durumFiltre);
+      }
+
+      if (odemeFiltre !== '') {
+        p.append('paymentStatus', odemeFiltre);
+      }
+
+      p.append('page', sayfa);
+      p.append('pageSize', sayfaBoyutu);
+
+      const veri = await apiGet('/admin/orders?' + p.toString());
+
+      setSiparisler(veri.siparisler);
+      setOzet({
+        toplam: veri.toplam,
+        toplamTutar: veri.toplamTutar,
+        toplamSayfa: veri.toplamSayfa,
+      });
     } catch (e) {
       setHata(e.message);
     } finally {
@@ -41,29 +74,21 @@ export default function SiparislerSayfasi() {
     }
   }
 
+  // Filtre veya sayfa değişince yeniden çek (aramada 400ms debounce)
   useEffect(() => {
-    siparisleriGetir();
-  }, []);
+    const sayac = setTimeout(() => {
+      siparisleriGetir();
+    }, 400);
 
-  // ---------- FİLTRELEME ----------
-  const filtreliSiparisler = siparisler.filter((s) => {
-    // Arama: sipariş no VEYA müşteri adı VEYA e-posta
-    const aramaMetni = arama.trim().toLowerCase();
+    return () => clearTimeout(sayac);
+  }, [arama, durumFiltre, odemeFiltre, sayfa, sayfaBoyutu]);
 
-    const aramaUyuyor =
-      aramaMetni === '' ||
-      String(s.id).includes(aramaMetni) ||
-      s.musteriAdi.toLowerCase().includes(aramaMetni) ||
-      s.musteriEmail.toLowerCase().includes(aramaMetni);
-
-    const durumUyuyor = durumFiltre === '' || s.durum === durumFiltre;
-    const odemeUyuyor = odemeFiltre === '' || s.odemeDurumu === odemeFiltre;
-
-    return aramaUyuyor && durumUyuyor && odemeUyuyor;
-  });
-
-  // Filtrelenen siparişlerin toplam cirosu
-  const toplamTutar = filtreliSiparisler.reduce((toplam, s) => toplam + s.tutar, 0);
+  // ⚠️ ÖNEMLİ: Filtre değişince 1. sayfaya dön.
+  // Yoksa 5. sayfadayken filtre uygularsın, sonuç 2 sayfa çıkar,
+  // sen hâlâ 5. sayfadasındır → boş ekran görürsün.
+  useEffect(() => {
+    setSayfa(1);
+  }, [arama, durumFiltre, odemeFiltre, sayfaBoyutu]);
 
   const sutunlar = [
     {
@@ -84,9 +109,17 @@ export default function SiparislerSayfasi() {
       hucre: (s) => tarihBicimle(s.tarih),
     },
     {
-      baslik: 'Ürün',
+      baslik: 'İçerik',
       hizala: 'orta',
-      hucre: (s) => sayiBicimle(s.urunAdedi) + ' kalem',
+      hucre: (s) => (
+        <div>
+          <div>{sayiBicimle(s.urunCesidi)} ürün</div>
+
+          <div className="alt-bilgi">
+            {sayiBicimle(s.toplamAdet)} adet
+          </div>
+        </div>
+      ),
     },
     {
       baslik: 'Kargo',
@@ -99,9 +132,7 @@ export default function SiparislerSayfasi() {
           <Rozet durum={s.odemeDurumu} />
 
           {s.kartSon4 && (
-            <div className="kart-no" style={{ marginTop: 4, fontSize: 12 }}>
-              •••• {s.kartSon4}
-            </div>
+            <div className="kart-no">•••• {s.kartSon4}</div>
           )}
         </div>
       ),
@@ -133,7 +164,7 @@ export default function SiparislerSayfasi() {
       <div className="sayfa-ust">
         <h1 className="sayfa-baslik">Siparişler</h1>
         <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>
-          Tüm siparişleri görüntüle, detaya gir, kargo durumunu değiştir
+          Tüm siparişleri görüntüle, detaya gir, kargo durumunu ilerlet
         </p>
       </div>
 
@@ -165,7 +196,19 @@ export default function SiparislerSayfasi() {
           <option value="">Tüm ödeme durumları</option>
           <option value="odendi">Ödendi</option>
           <option value="beklemede">Beklemede</option>
+          <option value="iade_edildi">İade Edildi</option>
         </select>
+      </div>
+
+      {/* ---------- ÖZET ---------- */}
+      <div className="ozet-cubugu">
+        <span>
+          Filtreye uyan <b>{sayiBicimle(ozet.toplam)}</b> sipariş
+        </span>
+
+        <span>
+          Toplam tutar: <b>{paraBicimle(ozet.toplamTutar)}</b>
+        </span>
       </div>
 
       {hata !== '' && <HataKutusu mesaj={hata} tekrarDene={siparisleriGetir} />}
@@ -176,19 +219,19 @@ export default function SiparislerSayfasi() {
         <>
           <Tablo
             sutunlar={sutunlar}
-            veriler={filtreliSiparisler}
+            veriler={siparisler}
             anahtar={(s) => s.id}
-            bosMesaj={
-              siparisler.length === 0
-                ? 'Henüz sipariş yok.'
-                : 'Bu filtreye uyan sipariş yok.'
-            }
+            bosMesaj="Bu filtreye uyan sipariş yok."
           />
 
-          <p className="sonuc-sayisi">
-            {sayiBicimle(filtreliSiparisler.length)} sipariş ·
-            Toplam tutar: <b>{paraBicimle(toplamTutar)}</b>
-          </p>
+          <Sayfalama
+            sayfa={sayfa}
+            toplamSayfa={ozet.toplamSayfa}
+            toplam={ozet.toplam}
+            sayfaBoyutu={sayfaBoyutu}
+            sayfaDegistir={setSayfa}
+            boyutDegistir={setSayfaBoyutu}
+          />
         </>
       )}
     </div>
