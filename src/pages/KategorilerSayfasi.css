@@ -1,0 +1,82 @@
+.sayfa-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+/* ---------- YENİ KATEGORİ EKLEME ÇUBUĞU ---------- */
+.ekle-cubugu {
+  display: flex;
+  gap: 10px;
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.ekle-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+}
+
+.ekle-input:focus {
+  border-color: var(--anaRenk);
+}
+
+/* ---------- SATIR İÇİ DÜZENLEME ---------- */
+.satir-input {
+  width: 100%;
+  max-width: 320px;
+  padding: 7px 10px;
+  border: 2px solid var(--anaRenk);
+  border-radius: 6px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+}
+
+.islem-butonlari {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Ürün sayısı rozeti */
+.urun-sayisi {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: var(--acikGri);
+  color: var(--yaziOrta);
+}
+
+.urun-sayisi-bos {
+  background-color: rgba(153, 153, 153, 0.15);
+  color: var(--yaziGri);
+}
+
+.sonuc-sayisi {
+  font-size: 13px;
+  color: var(--yaziGri);
+  margin-top: 12px;
+}
+
+/* Kategori silinemez uyarısı */
+.silinemez-ipucu {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 6px;
+}
