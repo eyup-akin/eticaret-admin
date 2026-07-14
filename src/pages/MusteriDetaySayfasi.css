@@ -1,0 +1,156 @@
+.detay-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+/* Müşteri başlığı: avatar + isim */
+.musteri-basligi {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar-buyuk {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--anaRenkUstuYazi);
+  background-color: var(--anaRenk);
+  flex-shrink: 0;
+}
+
+.ozet-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.detay-izgara {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .detay-izgara {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kutu {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.kutu-baslik {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.mini-tablo {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mini-tablo th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--yaziGri);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.mini-tablo td {
+  padding: 12px 10px;
+  font-size: 14px;
+  color: var(--yaziKoyu);
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.mini-tablo tr:last-child td {
+  border-bottom: none;
+}
+
+.mini-tablo tbody tr:hover {
+  background-color: var(--acikGri);
+}
+
+.sag {
+  text-align: right;
+}
+
+.siparis-link {
+  color: var(--anaRenk);
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+}
+
+.siparis-link:hover {
+  text-decoration: underline;
+}
+
+/* Adres / kart kartçıkları */
+.mini-kart {
+  border: 1px solid var(--kenarlik);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.mini-kart-baslik {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  margin-bottom: 4px;
+}
+
+.mini-kart-metin {
+  font-size: 13px;
+  color: var(--yaziOrta);
+  line-height: 1.5;
+}
+
+.kart-mono {
+  font-family: monospace;
+  color: var(--yaziOrta);
+  font-size: 13px;
+}
+
+.bos-yazi {
+  text-align: center;
+  color: var(--yaziGri);
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+.gizlilik-notu {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 12px;
+  line-height: 1.5;
+}

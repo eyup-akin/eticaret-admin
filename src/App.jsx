@@ -11,6 +11,7 @@ import SiparislerSayfasi from './pages/SiparislerSayfasi';
 import OdemelerSayfasi from './pages/OdemelerSayfasi';
 import MusterilerSayfasi from './pages/MusterilerSayfasi';
 
+import MusteriDetaySayfasi from './pages/MusteriDetaySayfasi';
 
 import SiparisDetaySayfasi from './pages/SiparisDetaySayfasi';
 
@@ -39,7 +40,11 @@ export default function App() {
             <Route path="/siparisler/:id" element={<SiparisDetaySayfasi />} />
 
             <Route path="/odemeler"             element={<OdemelerSayfasi />} />
+            
             <Route path="/musteriler"           element={<MusterilerSayfasi />} />
+
+            <Route path="/musteriler/:id" element={<MusteriDetaySayfasi />} />
+
           </Route>
 
         </Route>
