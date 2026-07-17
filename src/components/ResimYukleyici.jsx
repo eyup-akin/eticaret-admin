@@ -110,8 +110,13 @@ export default function ResimYukleyici({ urunId, resimler, yenile }) {
         accept="image/jpeg,image/png,image/webp"
         multiple
         onChange={(e) => {
-          dosyalariYukle(e.target.files);
+          // Canlı FileList'i HEMEN diziye kopyala. Aksi halde aşağıdaki
+          // value='' satırı, yükleme bitmeden listeyi boşaltıp sadece ilk
+          // dosyanın yüklenmesine sebep oluyordu.
+          const secilenler = Array.from(e.target.files);
+
           e.target.value = ''; // aynı dosyayı tekrar seçebilmek için sıfırla
+          dosyalariYukle(secilenler);
         }}
       />
 
