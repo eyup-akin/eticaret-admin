@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { apiYukle, apiDelete, apiPut } from '../services/api';
+import { apiYukle, apiDelete, apiPut, apiPost } from '../services/api';
 import { resimUrl } from '../utils/resim';
 
 import './ResimYukleyici.css';
@@ -15,8 +15,9 @@ export default function ResimYukleyici({ urunId, resimler, yenile }) {
   const [yukleniyor, setYukleniyor] = useState(false);
   const [durum, setDurum] = useState('');
   const [hata, setHata] = useState('');
+  const [urlMetni, setUrlMetni] = useState(''); // ⭐ YENİ — link kutusu metni
 
-  // ---------- YÜKLEME ----------
+  // ---------- DOSYADAN YÜKLEME ----------
   async function dosyalariYukle(dosyalar) {
     if (!dosyalar || dosyalar.length === 0) {
       return;
@@ -40,6 +41,29 @@ export default function ResimYukleyici({ urunId, resimler, yenile }) {
     setYukleniyor(false);
 
     await yenile(); // listeyi tazele
+  }
+
+  // ---------- LİNKTEN YÜKLEME ----------  ⭐ YENİ
+  async function linktenEkle() {
+    const url = urlMetni.trim();
+    if (url === '') {
+      return;
+    }
+
+    setYukleniyor(true);
+    setHata('');
+    setDurum('Link indiriliyor...');
+
+    try {
+      await apiPost('/products/' + urunId + '/images/url', { url });
+      setUrlMetni(''); // kutuyu temizle
+      await yenile();
+    } catch (e) {
+      setHata(e.message);
+    } finally {
+      setDurum('');
+      setYukleniyor(false);
+    }
   }
 
   // ---------- SÜRÜKLE-BIRAK ----------
@@ -110,15 +134,40 @@ export default function ResimYukleyici({ urunId, resimler, yenile }) {
         accept="image/jpeg,image/png,image/webp"
         multiple
         onChange={(e) => {
-          // Canlı FileList'i HEMEN diziye kopyala. Aksi halde aşağıdaki
-          // value='' satırı, yükleme bitmeden listeyi boşaltıp sadece ilk
-          // dosyanın yüklenmesine sebep oluyordu.
+          // Canlı FileList'i HEMEN diziye kopyala. Aksi halde alttaki value=''
+          // satırı yükleme bitmeden listeyi boşaltıp sadece ilk dosyayı yüklüyor.
           const secilenler = Array.from(e.target.files);
 
           e.target.value = ''; // aynı dosyayı tekrar seçebilmek için sıfırla
           dosyalariYukle(secilenler);
         }}
       />
+
+      {/* ---------- LİNK İLE EKLEME ---------- ⭐ YENİ */}
+      <div className="link-satir">
+        <input
+          className="link-input"
+          type="text"
+          placeholder="veya resim linki yapıştır (https://...)"
+          value={urlMetni}
+          onChange={(e) => setUrlMetni(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              linktenEkle();
+            }
+          }}
+          disabled={yukleniyor}
+        />
+
+        <button
+          className="link-buton"
+          type="button"
+          onClick={linktenEkle}
+          disabled={yukleniyor || urlMetni.trim() === ''}
+        >
+          Ekle
+        </button>
+      </div>
 
       {durum !== '' && <div className="yukleme-durumu">{durum}</div>}
 
