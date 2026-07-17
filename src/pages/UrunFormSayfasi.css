@@ -116,3 +116,73 @@
     position: static; /* dar ekranda yapışmasın */
   }
 }
+
+
+/* ===================================================== */
+/*  Canlı kâr önizleme kutusu                            */
+/* ===================================================== */
+
+.kar-onizleme {
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  border: 1px solid var(--kenarlik);
+}
+
+/* Henüz fiyat/maliyet girilmemiş durum */
+.kar-bos {
+  background-color: var(--acikKart);
+}
+
+.kar-bos-yazi {
+  font-size: 13px;
+  color: var(--yaziGri);
+}
+
+/* Kâr pozitif → yeşil vurgu */
+.kar-pozitif {
+  background-color: rgba(39, 174, 96, 0.1);
+  border-color: var(--basari);
+}
+
+/* Zarar → kırmızı vurgu */
+.kar-negatif {
+  background-color: rgba(231, 76, 60, 0.1);
+  border-color: var(--hata);
+}
+
+/* Kâr sıfır → nötr */
+.kar-sifir {
+  background-color: var(--acikKart);
+}
+
+/* Kutu içindeki her satır: etiket solda, değer sağda */
+.kar-satir {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kar-satir + .kar-satir {
+  margin-top: 6px;
+}
+
+.kar-etiket {
+  font-size: 13px;
+  color: var(--yaziOrta);
+}
+
+.kar-deger {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+}
+
+/* Pozitif kutuda değer yeşil, negatifte kırmızı */
+.kar-pozitif .kar-deger {
+  color: var(--basari);
+}
+
+.kar-negatif .kar-deger {
+  color: var(--hata);
+}
