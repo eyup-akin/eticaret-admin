@@ -88,12 +88,28 @@ export default function UrunlerSayfasi() {
     }
   }
 
+  // Bir ürünün kârını hesapla. Maliyeti yoksa (eski ürün) null döner.
+  function urunKari(u) {
+    if (u.cost == null) {
+      return null;
+    }
+    return u.price - u.cost;
+  }
+
   // Sıralama tarayıcıda (veri zaten elimizde)
   const siraliUrunler = [...urunler].sort((a, b) => {
     if (siralama === 'ad')          return a.name.localeCompare(b.name, 'tr');
     if (siralama === 'fiyatArtan')  return a.price - b.price;
     if (siralama === 'fiyatAzalan') return b.price - a.price;
     if (siralama === 'stokArtan')   return a.stock - b.stock;
+
+    if (siralama === 'karAzalan') {
+      // Maliyeti olmayan ürünler en dibe insin (-Infinity)
+      const ka = a.cost != null ? a.price - a.cost : -Infinity;
+      const kb = b.cost != null ? b.price - b.cost : -Infinity;
+      return kb - ka;
+    }
+
     return 0;
   });
 
@@ -113,8 +129,13 @@ export default function UrunlerSayfasi() {
         ),
     },
     {
-      baslik: '#',
-      hucre: (u) => <span style={{ color: 'var(--yaziGri)' }}>{u.id}</span>,
+      // ⭐ DEĞİŞTİ — eski "#" (id) yerine artık barkod
+      baslik: 'Barkod',
+      hucre: (u) => (
+        <span style={{ fontFamily: 'monospace', color: 'var(--yaziOrta)' }}>
+          {u.barcode || '—'}
+        </span>
+      ),
     },
     {
       baslik: 'Ürün Adı',
@@ -138,6 +159,32 @@ export default function UrunlerSayfasi() {
       baslik: 'Fiyat',
       hizala: 'sag',
       hucre: (u) => paraBicimle(u.price),
+    },
+    {
+      // ⭐ YENİ — kâr sütunu (fiyat − maliyet), marjı altında küçük yazı
+      baslik: 'Kâr',
+      hizala: 'sag',
+      hucre: (u) => {
+        const kar = urunKari(u);
+
+        // Maliyeti girilmemiş eski ürün → çizgi
+        if (kar == null) {
+          return <span style={{ color: 'var(--yaziGri)' }}>—</span>;
+        }
+
+        const marj = u.price > 0 ? (kar / u.price) * 100 : 0;
+        const renk =
+          kar > 0 ? 'var(--basari)' : kar < 0 ? 'var(--hata)' : 'var(--yaziGri)';
+
+        return (
+          <div>
+            <b style={{ color: renk }}>{paraBicimle(kar)}</b>
+            <div style={{ fontSize: 12, color: 'var(--yaziGri)', marginTop: 2 }}>
+              %{marj.toFixed(1)}
+            </div>
+          </div>
+        );
+      },
     },
     {
       baslik: 'Stok',
@@ -217,6 +264,7 @@ export default function UrunlerSayfasi() {
           <option value="ad">İsme göre (A-Z)</option>
           <option value="fiyatArtan">Fiyat (artan)</option>
           <option value="fiyatAzalan">Fiyat (azalan)</option>
+          <option value="karAzalan">Kâr (çoktan aza)</option>
           <option value="stokArtan">Stok (azdan çoğa)</option>
         </select>
       </div>
