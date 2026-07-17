@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { apiGet, apiPost, apiPut } from '../services/api';
-import { paraBicimle } from '../utils/bicimlendir';   // ⭐ YENİ — kâr önizlemesi için
+import { apiGet, apiPost, apiPut, apiYukle } from '../services/api'; // ⭐ apiYukle eklendi
+import { paraBicimle } from '../utils/bicimlendir';
 
 import Yukleniyor from '../components/Yukleniyor';
 import HataKutusu from '../components/HataKutusu';
 import Buton from '../components/Buton';
 import ResimYukleyici from '../components/ResimYukleyici';
+import BekleyenResimler from '../components/BekleyenResimler'; // ⭐ YENİ
 
 import './UrunFormSayfasi.css';
 
@@ -25,25 +26,29 @@ export default function UrunFormSayfasi() {
   const [hata, setHata] = useState('');
   const [basari, setBasari] = useState('');
 
+  // ⭐ YENİ — yeni üründe resimler kaydedilene kadar burada bekler
+  const [bekleyenDosyalar, setBekleyenDosyalar] = useState([]);
+  const [bekleyenLinkler, setBekleyenLinkler] = useState([]);
+  const [yuklemeDurumu, setYuklemeDurumu] = useState('');
+
   const [form, setForm] = useState({
     name: '',
-    barcode: '',   // ⭐ YENİ
+    barcode: '',
     price: '',
-    cost: '',      // ⭐ YENİ
+    cost: '',
     stock: '',
     categoryId: '',
   });
 
   // ---------- ÜRÜNÜ ÇEK (resimler dahil) ----------
-  // ResimYukleyici her işlemden sonra bunu çağıracak
   async function urunuYenile() {
     const urun = await apiGet('/products/' + id);
 
     setForm({
       name: urun.name,
-      barcode: urun.barcode || '',                        // ⭐ eski üründe null olabilir
+      barcode: urun.barcode || '',
       price: String(urun.price),
-      cost: urun.cost != null ? String(urun.cost) : '',   // ⭐ eski üründe null olabilir
+      cost: urun.cost != null ? String(urun.cost) : '',
       stock: String(urun.stock),
       categoryId: String(urun.categoryId),
     });
@@ -79,11 +84,9 @@ export default function UrunFormSayfasi() {
   }
 
   // ---------- CANLI KÂR HESABI ----------
-  // Fiyat ve maliyet girildikçe her render'da yeniden hesaplanır.
   const fiyatSayi = Number(form.price);
   const maliyetSayi = Number(form.cost);
 
-  // İkisi de dolu, geçerli sayı ve fiyat 0'dan büyükse hesap yapılabilir
   const karHesaplanabilir =
     form.price !== '' &&
     form.cost !== '' &&
@@ -94,9 +97,40 @@ export default function UrunFormSayfasi() {
   const kar = karHesaplanabilir ? fiyatSayi - maliyetSayi : 0;
   const marj = karHesaplanabilir ? (kar / fiyatSayi) * 100 : 0;
 
-  // Kutu rengi: kâr yeşil, zarar kırmızı, sıfır nötr
   const karDurum =
     kar > 0 ? 'kar-pozitif' : kar < 0 ? 'kar-negatif' : 'kar-sifir';
+
+  // ---------- BEKLEYEN RESİMLERİ YÜKLE ----------
+  // Ürün oluştuktan (id geldikten) sonra çağrılır.
+  // Bir resim patlarsa ürünü iptal etmeyiz, atlar devam ederiz.
+  async function bekleyenleriYukle(yeniId) {
+    const toplam = bekleyenDosyalar.length + bekleyenLinkler.length;
+    let sayac = 0;
+
+    for (const dosya of bekleyenDosyalar) {
+      sayac++;
+      setYuklemeDurumu(`Resimler yükleniyor... (${sayac}/${toplam})`);
+
+      try {
+        await apiYukle('/products/' + yeniId + '/images', dosya);
+      } catch (e) {
+        console.error('Resim yüklenemedi:', dosya.name, e.message);
+      }
+    }
+
+    for (const link of bekleyenLinkler) {
+      sayac++;
+      setYuklemeDurumu(`Resimler yükleniyor... (${sayac}/${toplam})`);
+
+      try {
+        await apiPost('/products/' + yeniId + '/images/url', { url: link });
+      } catch (e) {
+        console.error('Link yüklenemedi:', link, e.message);
+      }
+    }
+
+    setYuklemeDurumu('');
+  }
 
   // ---------- KAYDET ----------
   async function formGonder(e) {
@@ -109,9 +143,9 @@ export default function UrunFormSayfasi() {
     try {
       const govde = {
         name: form.name.trim(),
-        barcode: form.barcode.trim(),   // ⭐ YENİ
+        barcode: form.barcode.trim(),
         price: Number(form.price),
-        cost: Number(form.cost),        // ⭐ YENİ
+        cost: Number(form.cost),
         stock: Number(form.stock),
         categoryId: Number(form.categoryId),
       };
@@ -120,12 +154,17 @@ export default function UrunFormSayfasi() {
         await apiPut('/products/' + id, govde);
         setBasari('Ürün güncellendi. ✅');
       } else {
-        // Yeni ürün: backend id döndürüyor
+        // 1) Önce ürünü oluştur, id'yi al
         const cevap = await apiPost('/products', govde);
+        const yeniId = cevap.id;
 
-        // Düzenleme adresine geçiyoruz → artık id'miz var, resim yükleyebiliriz.
-        // replace: true → geri tuşuna basınca boş forma dönmesin.
-        navigate('/urunler/' + cevap.id + '/duzenle', { replace: true });
+        // 2) Bekleyen resimleri (varsa) o id'ye yükle
+        if (bekleyenDosyalar.length + bekleyenLinkler.length > 0) {
+          await bekleyenleriYukle(yeniId);
+        }
+
+        // 3) Düzenleme ekranına geç — artık resimleri buradan yönetebilir
+        navigate('/urunler/' + yeniId + '/duzenle', { replace: true });
         return;
       }
     } catch (e) {
@@ -148,10 +187,15 @@ export default function UrunFormSayfasi() {
       <p className="sayfa-altyazi">
         {duzenlemeMi
           ? `#${id} numaralı ürünün bilgilerini ve resimlerini yönet`
-          : 'Önce ürün bilgilerini kaydet, sonra resimlerini yükle'}
+          : 'Bilgileri doldur, dilersen resimleri de ekle, sonra tek tuşla kaydet'}
       </p>
 
       {basari !== '' && <div className="basari-kutusu">{basari}</div>}
+
+      {/* Resim yükleme sürüyorsa durumu göster */}
+      {yuklemeDurumu !== '' && (
+        <div className="basari-kutusu">{yuklemeDurumu}</div>
+      )}
 
       <div className="form-izgara">
 
@@ -182,7 +226,7 @@ export default function UrunFormSayfasi() {
             <div className="form-ipucu">2-200 karakter arası olmalı.</div>
           </div>
 
-          {/* ⭐ YENİ — Barkod (zorunlu, benzersiz) */}
+          {/* Barkod (zorunlu, benzersiz) */}
           <div className="form-alan">
             <label className="form-etiket">Barkod</label>
 
@@ -218,7 +262,6 @@ export default function UrunFormSayfasi() {
               />
             </div>
 
-            {/* ⭐ YENİ — Maliyet */}
             <div className="form-alan">
               <label className="form-etiket">Maliyet (₺)</label>
 
@@ -235,7 +278,7 @@ export default function UrunFormSayfasi() {
             </div>
           </div>
 
-          {/* ⭐ YENİ — Canlı kâr önizlemesi */}
+          {/* Canlı kâr önizlemesi */}
           <div
             className={`kar-onizleme ${karHesaplanabilir ? karDurum : 'kar-bos'}`}
           >
@@ -301,7 +344,7 @@ export default function UrunFormSayfasi() {
                 ? 'Kaydediliyor...'
                 : duzenlemeMi
                   ? '💾 Bilgileri Güncelle'
-                  : '➕ Kaydet ve Resim Ekle'}
+                  : '➕ Ürünü Kaydet'}
             </Buton>
 
             <Buton
@@ -320,8 +363,9 @@ export default function UrunFormSayfasi() {
           <div className="bolum-baslik-form">🖼️ Ürün Resimleri</div>
 
           <div className="bolum-altyazi-form">
-            İlk yüklenen resim otomatik olarak ana resim olur.
-            Değiştirmek için resmin üstüne gelip ⭐ butonuna bas.
+            {duzenlemeMi
+              ? 'İlk yüklenen resim otomatik ana resim olur. Değiştirmek için resmin üstüne gelip ⭐ butonuna bas.'
+              : 'Resimleri şimdi ekleyebilirsin; ürünü kaydedince otomatik yüklenecekler.'}
           </div>
 
           {duzenlemeMi ? (
@@ -331,11 +375,12 @@ export default function UrunFormSayfasi() {
               yenile={urunuYenile}
             />
           ) : (
-            <div className="kilitli-bolum">
-              🔒 Resim yükleyebilmek için önce ürünü kaydetmelisin.
-              <br />
-              Kaydettikten sonra bu bölüm otomatik açılacak.
-            </div>
+            <BekleyenResimler
+              dosyalar={bekleyenDosyalar}
+              setDosyalar={setBekleyenDosyalar}
+              linkler={bekleyenLinkler}
+              setLinkler={setBekleyenLinkler}
+            />
           )}
         </div>
 
