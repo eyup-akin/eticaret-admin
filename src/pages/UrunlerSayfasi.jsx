@@ -12,6 +12,9 @@ import Buton from '../components/Buton';
 import AramaKutusu from '../components/AramaKutusu';
 import OnayPenceresi from '../components/OnayPenceresi';
 
+
+import ExcelIceAktar from '../components/ExcelIceAktar';
+
 import './UrunlerSayfasi.css';
 
 export default function UrunlerSayfasi() {
@@ -28,6 +31,11 @@ export default function UrunlerSayfasi() {
 
   const [silinecek, setSilinecek] = useState(null);
   const [siliniyor, setSiliniyor] = useState(false);
+
+
+  // Excel içe aktarma modalı açık mı?
+  const [iceAktarAcik, setIceAktarAcik] = useState(false);
+
 
   // Kategorileri bir kez çek
   useEffect(() => {
@@ -232,7 +240,13 @@ export default function UrunlerSayfasi() {
           </p>
         </div>
 
-        <Buton onClick={() => navigate('/urunler/yeni')}>➕ Yeni Ürün</Buton>
+        <div className="sayfa-ust-butonlar">
+          <Buton tip="ikincil" onClick={() => setIceAktarAcik(true)}>
+            📥 Excel ile İçe Aktar
+          </Buton>
+
+          <Buton onClick={() => navigate('/urunler/yeni')}>➕ Yeni Ürün</Buton>
+        </div>
       </div>
 
       <div className="filtre-cubugu">
@@ -304,6 +318,13 @@ export default function UrunlerSayfasi() {
         iptal={() => setSilinecek(null)}
         islemde={siliniyor}
       />
+
+      <ExcelIceAktar
+        acik={iceAktarAcik}
+        kapat={() => setIceAktarAcik(false)}
+        iceAktarimBitti={urunleriGetir}
+      />
+
     </div>
   );
 }

@@ -1,0 +1,310 @@
+/* ---------- PERDE (arka karartma) ---------- */
+.ice-perde {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+/* ---------- MODAL KUTUSU ---------- */
+.ice-kutu {
+  width: 100%;
+  max-width: 460px;
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- BAŞLIK SATIRI (başlık + ✕) ---------- */
+.ice-baslik-satir {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ice-baslik {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin: 0;
+}
+
+.ice-kapat-x {
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--yaziGri);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.ice-kapat-x:hover {
+  color: var(--yaziKoyu);
+}
+
+/* ---------- AÇIKLAMA ---------- */
+.ice-aciklama {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--yaziOrta);
+  margin-bottom: 16px;
+}
+
+/* ---------- SÜTUN İPUCU KUTUSU ---------- */
+.ice-sutun-ipucu {
+  background-color: var(--acikKart);
+  border: 1px solid var(--kenarlik);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--yaziOrta);
+  margin-bottom: 16px;
+}
+
+.ice-ipucu-baslik {
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 4px;
+}
+
+.ice-sutun-ipucu code {
+  background-color: var(--acikGri);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* ---------- DOSYA SEÇME ALANI ---------- */
+.ice-secim-alan {
+  border: 2px dashed var(--inputKenar);
+  border-radius: 12px;
+  padding: 26px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.ice-secim-alan:hover {
+  border-color: var(--anaRenk);
+}
+
+.ice-secim-bos {
+  color: var(--yaziOrta);
+  font-size: 14px;
+}
+
+.ice-secim-ikon {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.ice-secim-ipucu {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 6px;
+}
+
+/* Dosya seçilince gösterilen satır */
+.ice-dosya-secili {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--yaziKoyu);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ice-dosya-ikon {
+  font-size: 22px;
+}
+
+.ice-dosya-ad {
+  word-break: break-all;
+}
+
+/* Gerçek <input type="file"> — gözükmesin */
+.ice-gizli-input {
+  display: none;
+}
+
+/* ---------- HATA SATIRI ---------- */
+.ice-hata {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--favoriRenk);
+}
+
+/* ---------- BUTONLAR ---------- */
+.ice-butonlar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.ice-tek-buton {
+  justify-content: center;
+}
+
+.ice-buton-ana {
+  background-color: var(--anaRenk);
+  color: var(--anaRenkUstuYazi);
+  border: none;
+  border-radius: 9px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ice-buton-ana:disabled {
+  background-color: var(--pasif);
+  cursor: not-allowed;
+}
+
+.ice-buton-ikincil {
+  background-color: transparent;
+  color: var(--yaziOrta);
+  border: 1px solid var(--inputKenar);
+  border-radius: 9px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ---------- DURUM ALANI (işleniyor / bitti / hata ortak) ---------- */
+.ice-durum-alan {
+  text-align: center;
+  padding: 10px 4px;
+}
+
+.ice-durum-yazi {
+  font-size: 14px;
+  color: var(--yaziOrta);
+  margin-top: 14px;
+}
+
+/* ---------- SPINNER (dönen halka) ---------- */
+.ice-spinner {
+  width: 42px;
+  height: 42px;
+  margin: 6px auto 0;
+  border: 4px solid var(--acikGri);
+  border-top-color: var(--anaRenk);
+  border-radius: 50%;
+  animation: ice-don 0.8s linear infinite;
+}
+
+@keyframes ice-don {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- İLERLEME ÇUBUĞU ---------- */
+.ice-ilerleme {
+  margin-top: 18px;
+}
+
+.ice-ilerleme-yazi {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  margin-bottom: 6px;
+}
+
+.ice-ilerleme-cizgi {
+  height: 8px;
+  background-color: var(--acikGri);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ice-ilerleme-dolu {
+  height: 100%;
+  background-color: var(--anaRenk);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ---------- NOT (küçük gri açıklama) ---------- */
+.ice-not {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+/* ---------- SONUÇ İKONU (✓ / !) ---------- */
+.ice-sonuc-ikon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.ice-basari-ikon {
+  background-color: var(--basari);
+}
+
+.ice-hata-ikon {
+  background-color: var(--favoriRenk);
+}
+
+.ice-sonuc-baslik {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 16px;
+}
+
+/* ---------- ÖZET TABLOSU (Toplam / Eklenen / Atlanan) ---------- */
+.ice-ozet {
+  background-color: var(--acikKart);
+  border: 1px solid var(--kenarlik);
+  border-radius: 10px;
+  padding: 6px 14px;
+}
+
+.ice-ozet-satir {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  color: var(--yaziOrta);
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.ice-ozet-satir:last-child {
+  border-bottom: none;
+}
+
+/* ---------- HATA MESAJI ---------- */
+.ice-hata-mesaj {
+  background-color: var(--acikKart);
+  border: 1px solid var(--kenarlik);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--yaziOrta);
+  word-break: break-word;
+}

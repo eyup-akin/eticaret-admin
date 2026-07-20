@@ -73,3 +73,11 @@
   font-size: 18px;
   color: var(--yaziGri);
 }
+
+
+/* Header'daki "Excel ile İçe Aktar" + "Yeni Ürün" butonlarını yan yana koyar */
+.sayfa-ust-butonlar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
