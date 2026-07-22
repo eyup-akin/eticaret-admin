@@ -1,4 +1,10 @@
-.giris-kapsayici {
+/* ============================================
+   Kimlik sayfalarının ortak stili.
+   "Şifremi Unuttum" ve "Şifre Yenile" bunu paylaşır.
+   Giriş sayfasıyla aynı görünsün diye ölçüler ondan alındı.
+   ============================================ */
+
+.kimlik-kapsayici {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -6,7 +12,7 @@
   background-color: var(--arkaPlan);
 }
 
-.giris-kutu {
+.kimlik-kutu {
   width: 100%;
   max-width: 400px;
   background-color: var(--kartArka);
@@ -16,7 +22,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-.giris-baslik {
+.kimlik-baslik {
   font-size: 24px;
   font-weight: 700;
   color: var(--yaziKoyu);
@@ -24,14 +30,15 @@
   text-align: center;
 }
 
-.giris-altyazi {
+.kimlik-altyazi {
   font-size: 14px;
   color: var(--yaziOrta);
   margin-bottom: 28px;
   text-align: center;
+  line-height: 1.5;
 }
 
-.giris-etiket {
+.kimlik-etiket {
   display: block;
   font-size: 14px;
   font-weight: 600;
@@ -39,7 +46,7 @@
   margin-bottom: 6px;
 }
 
-.giris-input {
+.kimlik-input {
   width: 100%;
   padding: 12px;
   margin-bottom: 16px;
@@ -50,11 +57,11 @@
   outline: none;
 }
 
-.giris-input:focus {
+.kimlik-input:focus {
   border-color: var(--anaRenk);
 }
 
-.giris-buton {
+.kimlik-buton {
   width: 100%;
   padding: 13px;
   border: none;
@@ -66,16 +73,17 @@
   margin-top: 6px;
 }
 
-.giris-buton:hover {
+.kimlik-buton:hover {
   background-color: var(--anaRenkKoyu);
 }
 
-.giris-buton:disabled {
+.kimlik-buton:disabled {
   background-color: var(--pasif);
   cursor: not-allowed;
 }
 
-.giris-hata {
+/* Kırmızı hata kutusu */
+.kimlik-hata {
   background-color: rgba(231, 76, 60, 0.1);
   border: 1px solid var(--hata);
   color: var(--hata);
@@ -83,11 +91,23 @@
   padding: 10px 12px;
   font-size: 14px;
   margin-bottom: 16px;
+  line-height: 1.5;
 }
 
+/* Yeşil başarı kutusu */
+.kimlik-basari {
+  background-color: rgba(39, 174, 96, 0.1);
+  border: 1px solid var(--basari);
+  color: var(--basari);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
 
-/* Giriş butonunun altındaki "Şifremi unuttum" bağlantısı */
-.giris-alt-link {
+/* Kutunun altındaki "Giriş sayfasına dön" bağlantısı */
+.kimlik-alt-link {
   display: block;
   text-align: center;
   margin-top: 18px;
@@ -96,6 +116,6 @@
   text-decoration: none;
 }
 
-.giris-alt-link:hover {
+.kimlik-alt-link:hover {
   text-decoration: underline;
 }

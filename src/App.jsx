@@ -4,6 +4,10 @@ import KorumaliRota from './components/KorumaliRota';
 import PanelDuzeni from './components/PanelDuzeni';
 
 import GirisSayfasi from './pages/GirisSayfasi';
+
+import SifremiUnuttumSayfasi from './pages/SifremiUnuttumSayfasi';
+import SifreYenileSayfasi from './pages/SifreYenileSayfasi';
+
 import DashboardSayfasi from './pages/DashboardSayfasi';
 import UrunlerSayfasi from './pages/UrunlerSayfasi';
 import KategorilerSayfasi from './pages/KategorilerSayfasi';
@@ -22,8 +26,12 @@ export default function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* HERKESE AÇIK */}
-        <Route path="/giris" element={<GirisSayfasi />} />
+        {/* HERKESE AÇIK — bu üçü KorumaliRota'nın DIŞINDA olmalı.
+            Sebep: şifresini unutan kişi zaten giriş yapamıyor. Bu sayfaları
+            bekçinin arkasına koyarsak, girmek için giriş yapması gerekirdi. */}
+        <Route path="/giris"            element={<GirisSayfasi />} />
+        <Route path="/sifremi-unuttum"  element={<SifremiUnuttumSayfasi />} />
+        <Route path="/sifre-yenile"     element={<SifreYenileSayfasi />} />
 
         {/* BEKÇİ — buradan aşağısı sadece admin'e açık */}
         <Route element={<KorumaliRota />}>

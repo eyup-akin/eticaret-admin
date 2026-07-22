@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './GirisSayfasi.css';
 
@@ -66,6 +66,9 @@ export default function GirisSayfasi() {
         <button className="giris-buton" type="submit" disabled={gonderiliyor}>
           {gonderiliyor ? 'Giriş yapılıyor...' : 'Giriş Yap'}
         </button>
+        <Link to="/sifremi-unuttum" className="giris-alt-link">
+          Şifremi unuttum
+        </Link>
       </form>
     </div>
   );
