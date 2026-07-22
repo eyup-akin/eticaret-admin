@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Ortama özel ayarlar — her geliştiricinin kendi IP'si farklı
+.env
