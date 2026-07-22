@@ -13,7 +13,9 @@ export default function GirisSayfasi() {
   const [gonderiliyor, setGonderiliyor] = useState(false);
 
   // Zaten giriş yapmışsa burada oyalanma, dashboard'a git
-  if (token && kullanici && kullanici.role === 'admin') {
+  // ⭐ superadmin de eklendi — KorumaliRota ikisini de kabul ediyordu,
+  // burası unutulmuştu: superadmin /giris'e gelince formda takılı kalıyordu.
+  if (token && kullanici && (kullanici.role === 'admin' || kullanici.role === 'superadmin')) {
     return <Navigate to="/" replace />;
   }
 
