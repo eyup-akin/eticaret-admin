@@ -23,3 +23,21 @@ textarea {
 button {
   cursor: pointer;
 }
+
+/* ================= ORTAK SAYFA BAŞLIKLARI ================= */
+/* Birden fazla sayfa kullandığı için burada duruyor.
+   Tek bir sayfaya ait CSS dosyasında olmamalı. */
+
+
+.sayfa-baslik {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 6px;
+}
+
+.sayfa-altyazi {
+  font-size: 14px;
+  color: var(--yaziOrta);
+  margin-bottom: 24px;
+}

@@ -1,21 +1,44 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTema } from '../context/TemaContext';
+import { rolYeterliMi } from '../utils/roller';
 import './PanelDuzeni.css';
 
-// Sol menüdeki 6 ana ekran (plan dosyasındaki liste)
+// SOL MENÜ
+//
+// gerekenRol alanı OPSİYONEL:
+//   - yoksa   → panele girebilen herkes görür
+//   - varsa   → sadece o seviyedeki (ve üstündeki) roller görür
+//
+// ⚠️ Buradan gizlemek güvenlik değildir. Adres elle yazılabilir.
+// Rota tarafında KorumaliRota, sunucu tarafında [Authorize] de olmalı.
 const MENU = [
-  { yol: '/',           ikon: '📊', yazi: 'Dashboard' },
-  { yol: '/urunler',    ikon: '📦', yazi: 'Ürünler' },
-  { yol: '/kategoriler',ikon: '🏷️', yazi: 'Kategoriler' },
-  { yol: '/siparisler', ikon: '🧾', yazi: 'Siparişler' },
-  { yol: '/odemeler',   ikon: '💳', yazi: 'Ödemeler / Gelir' },
-  { yol: '/kullanicilar', ikon: '👥', yazi: 'Kullanıcılar' },
+  { yol: '/',                  ikon: '📊', yazi: 'Dashboard' },
+  { yol: '/urunler',           ikon: '📦', yazi: 'Ürünler' },
+  { yol: '/kategoriler',       ikon: '🏷️', yazi: 'Kategoriler' },
+  { yol: '/siparisler',        ikon: '🧾', yazi: 'Siparişler' },
+  { yol: '/odemeler',          ikon: '💳', yazi: 'Ödemeler / Gelir' },
+  { yol: '/kullanicilar',      ikon: '👥', yazi: 'Kullanıcılar' },
+  { yol: '/kuponlar',          ikon: '🎟️', yazi: 'Kuponlar' },
+  { yol: '/raporlar',          ikon: '📈', yazi: 'Raporlar' },
+  { yol: '/destek',            ikon: '🎫', yazi: 'Destek Talepleri' },
+  {
+    yol: '/admin-basvurulari',
+    ikon: '🛡️',
+    yazi: 'Admin Başvuruları',
+    gerekenRol: 'superadmin',
+  },
 ];
 
 export default function PanelDuzeni() {
   const { kullanici, cikisYap } = useAuth();
   const { temaAdi, temayiDegistir } = useTema();
+
+  // Kullanıcının rolüne göre menüyü süz.
+  // Türetilmiş değer — state'te tutmuyoruz, her render'da hesaplanıyor.
+  const gorunenMenu = MENU.filter((oge) =>
+    rolYeterliMi(kullanici?.role, oge.gerekenRol)
+  );
 
   return (
     <div className="panel">
@@ -24,7 +47,7 @@ export default function PanelDuzeni() {
       <aside className="yan-menu">
         <div className="yan-menu-logo">🛒 E-Ticaret</div>
 
-        {MENU.map((oge) => (
+        {gorunenMenu.map((oge) => (
           <NavLink
             key={oge.yol}
             to={oge.yol}

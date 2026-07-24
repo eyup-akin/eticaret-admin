@@ -21,6 +21,12 @@ import SiparisDetaySayfasi from './pages/SiparisDetaySayfasi';
 
 import UrunFormSayfasi from './pages/UrunFormSayfasi';
 
+// İskeletler — sırası gelen aşamada içleri dolacak
+import KuponlarSayfasi from './pages/KuponlarSayfasi';
+import RaporlarSayfasi from './pages/RaporlarSayfasi';
+import DestekTalepleriSayfasi from './pages/DestekTalepleriSayfasi';
+import AdminBasvurulariSayfasi from './pages/AdminBasvurulariSayfasi';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -33,7 +39,7 @@ export default function App() {
         <Route path="/sifremi-unuttum"  element={<SifremiUnuttumSayfasi />} />
         <Route path="/sifre-yenile"     element={<SifreYenileSayfasi />} />
 
-        {/* BEKÇİ — buradan aşağısı sadece admin'e açık */}
+        {/* BEKÇİ — buradan aşağısı sadece admin ve üstüne açık */}
         <Route element={<KorumaliRota />}>
 
           {/* Sol menülü kabuk — içindeki sayfalar <Outlet />'e oturur */}
@@ -48,9 +54,23 @@ export default function App() {
             <Route path="/siparisler/:id" element={<SiparisDetaySayfasi />} />
 
             <Route path="/odemeler"             element={<OdemelerSayfasi />} />
-            
+
             <Route path="/kullanicilar"     element={<MusterilerSayfasi />} />
             <Route path="/kullanicilar/:id" element={<MusteriDetaySayfasi />} />
+
+            <Route path="/kuponlar"  element={<KuponlarSayfasi />} />
+            <Route path="/raporlar"  element={<RaporlarSayfasi />} />
+            <Route path="/destek"    element={<DestekTalepleriSayfasi />} />
+
+            {/* İKİNCİ BEKÇİ — sadece süperadmin.
+                PanelDuzeni'nin İÇİNDE duruyor ki sol menü kaybolmasın;
+                yetkisi olmayan buraya gelirse dashboard'a geri döner. */}
+            <Route element={<KorumaliRota gerekenRol="superadmin" />}>
+              <Route
+                path="/admin-basvurulari"
+                element={<AdminBasvurulariSayfasi />}
+              />
+            </Route>
 
           </Route>
 

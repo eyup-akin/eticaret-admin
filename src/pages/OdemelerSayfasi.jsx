@@ -150,6 +150,45 @@ export default function OdemelerSayfasi() {
     }
   }
 
+
+  // HANGİ HIZLI ARALIK SEÇİLİ?
+  //
+  // Bu bilgiyi state'te TUTMUYORUZ, baslangic/bitis'ten TÜRETİYORUZ.
+  // Sebep: aynı gerçek iki yerde saklanırsa er ya da geç birbirini tutmaz.
+  // Kullanıcı tarihi elle değiştirdiğinde ayrı bir state'i temizlemeyi
+  // unutsak buton yanlış yerde yanılı kalırdı. Türetince o ihtimal yok —
+  // ekran her zaman gerçek veriyi gösterir.
+  function aktifAralikBul() {
+    // Hiç tarih seçilmemişse hiçbir buton vurgulanmaz
+    if (baslangic === '' && bitis === '') {
+      return '';
+    }
+
+    // Not: ayın 1'inde "Bu Ay" ile "Bugün" aynı aralığa denk gelir.
+    // Sıra gereği "bugun" kazanır — kabul edilebilir bir durum.
+    if (baslangic === bugun() && bitis === bugun()) {
+      return 'bugun';
+    }
+
+    if (baslangic === gunOnce(6) && bitis === bugun()) {
+      return '7gun';
+    }
+
+    if (baslangic === gunOnce(29) && bitis === bugun()) {
+      return '30gun';
+    }
+
+    if (baslangic === ayBasi() && bitis === bugun()) {
+      return 'buAy';
+    }
+
+    // Hiçbirine uymuyorsa kullanıcı tarihleri elle girmiş demektir
+    return '';
+  }
+
+  const aktifAralik = aktifAralikBul();
+
+
   // Grafik verisi
   const grafikVerisi = gelir
     ? gelir.aylik.map((a) => ({
@@ -304,24 +343,49 @@ export default function OdemelerSayfasi() {
       )}
 
       {/* ================= HIZLI TARİH ================= */}
+      {/* Seçili aralığın butonu "ana" tipine geçer — dolu renkli görünür.
+          Diğerleri "ikincil" kalır: çerçeveli, arka planı kart rengi. */}
       <div className="hizli-tarihler">
-        <Buton tip="ikincil" boyut="kucuk" onClick={() => tarihAraligiSec('bugun')}>
+        <Buton
+          tip={aktifAralik === 'bugun' ? 'ana' : 'ikincil'}
+          boyut="kucuk"
+          onClick={() => tarihAraligiSec('bugun')}
+        >
           Bugün
         </Buton>
 
-        <Buton tip="ikincil" boyut="kucuk" onClick={() => tarihAraligiSec('7gun')}>
+        <Buton
+          tip={aktifAralik === '7gun' ? 'ana' : 'ikincil'}
+          boyut="kucuk"
+          onClick={() => tarihAraligiSec('7gun')}
+        >
           Son 7 Gün
         </Buton>
 
-        <Buton tip="ikincil" boyut="kucuk" onClick={() => tarihAraligiSec('30gun')}>
+        <Buton
+          tip={aktifAralik === '30gun' ? 'ana' : 'ikincil'}
+          boyut="kucuk"
+          onClick={() => tarihAraligiSec('30gun')}
+        >
           Son 30 Gün
         </Buton>
 
-        <Buton tip="ikincil" boyut="kucuk" onClick={() => tarihAraligiSec('buAy')}>
+        <Buton
+          tip={aktifAralik === 'buAy' ? 'ana' : 'ikincil'}
+          boyut="kucuk"
+          onClick={() => tarihAraligiSec('buAy')}
+        >
           Bu Ay
         </Buton>
 
-        <Buton tip="ikincil" boyut="kucuk" onClick={() => tarihAraligiSec('temizle')}>
+        {/* Temizle bir "durum" değil, bir "eylem" — asla vurgulanmaz.
+            Silinecek tarih yoksa pasif kalsın ki boşuna tıklanmasın. */}
+        <Buton
+          tip="ikincil"
+          boyut="kucuk"
+          disabled={baslangic === '' && bitis === ''}
+          onClick={() => tarihAraligiSec('temizle')}
+        >
           ✕ Temizle
         </Buton>
       </div>
