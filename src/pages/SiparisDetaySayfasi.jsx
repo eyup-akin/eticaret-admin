@@ -123,7 +123,7 @@ export default function SiparisDetaySayfasi() {
       {/* ---------- ÜST ---------- */}
       <div className="detay-ust">
         <div>
-          <h1 className="sayfa-baslik">Sipariş #{siparis.id}</h1>
+          <h1 className="sayfa-baslik">Sipariş {siparis.siparisNo}</h1>
 
           <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>
             {tarihBicimle(siparis.tarih)}
@@ -214,6 +214,13 @@ export default function SiparisDetaySayfasi() {
 
               {siparis.adres ? (
                 <>
+                  <div className="bilgi-satiri">
+                    <span className="bilgi-etiket">Alıcı</span>
+                    <span className="bilgi-deger">
+                      {siparis.adres.aliciAdi || '—'}
+                    </span>
+                  </div>
+
                   <div className="bilgi-satiri">
                     <span className="bilgi-etiket">Başlık</span>
                     <span className="bilgi-deger">{siparis.adres.title}</span>
@@ -384,7 +391,7 @@ export default function SiparisDetaySayfasi() {
         acik={iptalOnayi}
         baslik="Siparişi iptal et"
         mesaj={
-          `#${siparis.id} numaralı siparişi iptal etmek üzeresin. ` +
+          `${siparis.siparisNo} numaralı siparişi iptal etmek üzeresin. ` +
           `Stok geri eklenecek, ${paraBicimle(siparis.tutar)} tutarındaki ödeme iade edilecek. ` +
           `Bu işlem geri alınamaz.`
         }

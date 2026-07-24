@@ -238,7 +238,7 @@ export default function MusteriDetaySayfasi() {
                           className="siparis-link"
                           onClick={() => navigate('/siparisler/' + s.id)}
                         >
-                          #{s.id} →
+                          {s.siparisNo} →
                         </button>
                       </td>
 

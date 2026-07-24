@@ -92,8 +92,9 @@ export default function SiparislerSayfasi() {
 
   const sutunlar = [
     {
-      baslik: 'No',
-      hucre: (s) => <b>#{s.id}</b>,
+      // Müşteriye gösterilen numara. Id artık sadece URL'de kullanılıyor.
+      baslik: 'Sipariş No',
+      hucre: (s) => <b className="siparis-no">{s.siparisNo}</b>,
     },
     {
       baslik: 'Müşteri',

@@ -82,3 +82,14 @@
   color: var(--yaziGri);
   margin-top: 4px;
 }
+
+
+/* Sipariş numarası — SP-260724-4821 gibi.
+   Tek aralıklı yazı tipi kullanıyoruz ki alt alta gelen numaralar
+   hizalı görünsün ve rakamlar birbirine karışmasın. */
+.siparis-no {
+  font-family: monospace;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
