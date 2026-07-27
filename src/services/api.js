@@ -186,7 +186,7 @@ export function apiDelete(yol) {
 // Bu fonksiyon cevabı "blob" (ham ikili veri) olarak alır ve tarayıcıya
 // indirtir. Token'ı elle ekliyoruz çünkü apiIstek'i baypas ediyoruz.
 export async function apiDosyaIndir(yol, inecekAd) {
-  const token = await tokenAl();
+  const token = tokenAl();
 
   const headers = {};
   if (token) {
