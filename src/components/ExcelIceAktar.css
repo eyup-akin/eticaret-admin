@@ -308,3 +308,25 @@
   color: var(--yaziOrta);
   word-break: break-word;
 }
+
+
+/* Şablon indirme butonu — dosya seçme alanının üstünde,
+   ipucu kutusuyla birlikte gruplanmış durur. */
+.ice-sablon-buton {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: transparent;
+  color: var(--anaRenk);
+  border: 1px dashed var(--anaRenk);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.ice-sablon-buton:hover {
+  background: var(--anaRenkSolgun);
+}

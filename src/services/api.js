@@ -180,6 +180,48 @@ export function apiDelete(yol) {
   return apiIstek(yol, { method: 'DELETE' });
 }
 
+
+// ---------- DOSYA İNDİR ----------
+// apiIstek dosya indiremez: cevabı text() ile okuyor, oysa Excel binary.
+// Bu fonksiyon cevabı "blob" (ham ikili veri) olarak alır ve tarayıcıya
+// indirtir. Token'ı elle ekliyoruz çünkü apiIstek'i baypas ediyoruz.
+export async function apiDosyaIndir(yol, inecekAd) {
+  const token = await tokenAl();
+
+  const headers = {};
+  if (token) {
+    headers['Authorization'] = 'Bearer ' + token;
+  }
+
+  let cevap;
+  try {
+    cevap = await fetch(API_URL + yol, { headers });
+  } catch {
+    throw new Error('Sunucuya ulaşılamadı. İnternet bağlantını kontrol et.');
+  }
+
+  if (!cevap.ok) {
+    throw new Error('Dosya indirilemedi.');
+  }
+
+  // Cevabı ham ikili veri olarak al
+  const blob = await cevap.blob();
+
+  // Tarayıcıya indirtmek için geçici bir link oluşturup tıklıyoruz.
+  // (Bu, dosya indirmenin standart tarayıcı yöntemi.)
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = inecekAd;      // inecek dosyanın adı
+  document.body.appendChild(link);
+  link.click();
+
+  // Temizlik: geçici linki ve URL'yi kaldır (bellekte kalmasın)
+  link.remove();
+  window.URL.revokeObjectURL(url);
+}
+
+
 // Dosya yükleme — backend [FromForm] IFormFile bekliyor
 export function apiYukle(yol, dosya, alanAdi = 'dosya') {
   const govde = new FormData();

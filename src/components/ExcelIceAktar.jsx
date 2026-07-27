@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { apiGet, apiYukle } from '../services/api';
+import { apiGet, apiYukle, apiDosyaIndir } from '../services/api';
 
 import './ExcelIceAktar.css';
 
@@ -39,6 +39,18 @@ export default function ExcelIceAktar({ acik, kapat, iceAktarimBitti }) {
     sifirla();
     kapat();
   }
+
+
+  // ---------- ŞABLON İNDİR ----------
+  async function sablonIndir() {
+    try {
+      await apiDosyaIndir('/imports/sablon', 'urun-sablonu.xlsx');
+    } catch (e) {
+      setHata(e.message);
+    }
+  }
+
+
 
   // ---------- DOSYA SEÇİMİ ----------
   function dosyaSecildi(e) {
@@ -178,6 +190,26 @@ export default function ExcelIceAktar({ acik, kapat, iceAktarimBitti }) {
             {/* Kullanıcı hangi sütunları koymalı — küçük ipucu kutusu */}
             <div className="ice-sutun-ipucu">
               <div className="ice-ipucu-baslik">Beklenen sütunlar</div>
+              {/* Kullanıcı hangi sütunları koymalı — küçük ipucu kutusu */}
+            <div className="ice-sutun-ipucu">
+              <div className="ice-ipucu-baslik">Beklenen sütunlar</div>
+              <div>
+                <b>Zorunlu:</b> Barkod, Ürün Adı, Fiyat, Kategori
+              </div>
+              <div>
+                <b>İsteğe bağlı:</b> Maliyet, Stok, Resim (resim linki; birden
+                çoksa alt alta veya <code>;</code> ile ayır)
+              </div>
+            </div>
+
+            {/* ⭐ ŞABLON İNDİR — kullanıcı formatı tahmin etmesin, hazırını alsın */}
+            <button
+              type="button"
+              className="ice-sablon-buton"
+              onClick={sablonIndir}
+            >
+              📥 Örnek şablonu indir (.xlsx)
+            </button>
               <div>
                 <b>Zorunlu:</b> Barkod, Ürün Adı, Fiyat, Kategori
               </div>
