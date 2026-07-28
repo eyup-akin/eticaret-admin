@@ -11,6 +11,8 @@ import Buton from '../components/Buton';
 import Rozet from '../components/Rozet';
 import AramaKutusu from '../components/AramaKutusu';
 import Sayfalama from '../components/Sayfalama';
+import KargoEtiketi from '../components/KargoEtiketi';
+
 
 import './SiparislerSayfasi.css';
 
@@ -23,6 +25,27 @@ export default function SiparislerSayfasi() {
     toplamTutar: 0,
     toplamSayfa: 1,
   });
+
+  // Etiket yazdırma — veriyi butona basınca çekiyoruz, liste yüklenirken değil
+  const [etiketVerisi, setEtiketVerisi] = useState(null);
+
+  async function etiketYazdir(siparisId) {
+    try {
+      const veri = await apiGet('/admin/orders/etiket?ids=' + siparisId);
+      setEtiketVerisi(veri);
+    } catch (e) {
+      setHata(e.message);
+    }
+  }
+
+  // Veri gelince yazdır. useEffect şart: setState hemen DOM'a yansımaz,
+  // hemen print() çağırsak etiket henüz basılmamış olurdu.
+  useEffect(() => {
+    if (etiketVerisi) {
+      window.print();
+      setEtiketVerisi(null);
+    }
+  }, [etiketVerisi]);
 
   const [yukleniyor, setYukleniyor] = useState(true);
   const [hata, setHata] = useState('');
@@ -159,6 +182,16 @@ export default function SiparislerSayfasi() {
       hizala: 'sag',
       hucre: (s) => (
         <div className="islem-butonlari">
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+          <Buton
+            tip="ikincil"
+            boyut="kucuk"
+            onClick={() => etiketYazdir(s.id)}
+            title="Kargo etiketi yazdır"
+          >
+            🏷️
+          </Buton>
+
           <Buton
             tip="ikincil"
             boyut="kucuk"
@@ -166,6 +199,7 @@ export default function SiparislerSayfasi() {
           >
             Detay →
           </Buton>
+        </div>
         </div>
       ),
     },
@@ -246,6 +280,22 @@ export default function SiparislerSayfasi() {
           />
         </>
       )}
+
+
+      {/* YAZDIRMA ALANI — ekranda görünmez, yazdırırken basılır */}
+      {etiketVerisi && (
+        <div className="yazdirma-alani">
+          {etiketVerisi.etiketler.map((e) => (
+            <KargoEtiketi
+              key={e.id}
+              etiket={e}
+              magaza={etiketVerisi.magaza}
+            />
+          ))}
+        </div>
+      )}
+
+
     </div>
   );
 }

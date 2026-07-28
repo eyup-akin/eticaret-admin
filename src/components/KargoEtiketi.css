@@ -101,6 +101,22 @@
   margin-top: 2mm;
 }
 
+
+/* ================= EKRANDA GİZLE ================= */
+/* Etiket DOM'da durmalı (JsBarcode çizim için boyuta ihtiyaç duyar),
+   ama ekranda görünmemeli. Ekran dışına itiyoruz.
+
+   ⚠️ Bu kuralı @media screen içine alıyoruz ki yazdırma kuralıyla
+   ÇAKIŞMASIN. İkisi aynı sınıfa yazsaydı sonra yüklenen kazanır ve
+   yazdırırken de etiket ekran dışında kalırdı → boş sayfa. */
+@media screen {
+  .yazdirma-alani {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+  }
+}
+
 /* ================= YAZDIRMA MODU ================= */
 /*
    Yazdırırken SADECE etiketler basılsın — sol menü, üst bar, butonlar
