@@ -26,12 +26,45 @@ export default function SiparislerSayfasi() {
     toplamSayfa: 1,
   });
 
+
+  // Seçili sipariş id'leri. Dizi tutuyoruz çünkü liste küçük (sayfa başına
+  // en fazla 50); Set'in hız avantajı bu ölçekte fark etmez, dizi daha okunaklı.
+  const [secili, setSecili] = useState([]);
+
+  // Bir siparişi seç / seçimi kaldır
+  function secimDegistir(id) {
+    if (secili.includes(id)) {
+      setSecili(secili.filter((x) => x !== id));
+    } else {
+      setSecili([...secili, id]);
+    }
+  }
+
+  // Sayfadaki tüm siparişler seçili mi? (türetilmiş değer — state değil)
+  const hepsiSecili =
+    siparisler.length > 0 && siparisler.every((s) => secili.includes(s.id));
+
+  // Başlıktaki checkbox: hepsi seçiliyse temizle, değilse hepsini seç
+  function tumunuSec() {
+    if (hepsiSecili) {
+      setSecili([]);
+    } else {
+      setSecili(siparisler.map((s) => s.id));
+    }
+  }
+
   // Etiket yazdırma — veriyi butona basınca çekiyoruz, liste yüklenirken değil
   const [etiketVerisi, setEtiketVerisi] = useState(null);
 
-  async function etiketYazdir(siparisId) {
+  // idler: dizi. Tek sipariş için [5], toplu için [5, 7, 12].
+  // Backend zaten virgüllü liste kabul ediyor — tek endpoint ikisini de karşılıyor.
+  async function etiketYazdir(idler) {
+    if (idler.length === 0) {
+      return;
+    }
+
     try {
-      const veri = await apiGet('/admin/orders/etiket?ids=' + siparisId);
+      const veri = await apiGet('/admin/orders/etiket?ids=' + idler.join(','));
       setEtiketVerisi(veri);
     } catch (e) {
       setHata(e.message);
@@ -106,14 +139,45 @@ export default function SiparislerSayfasi() {
     return () => clearTimeout(sayac);
   }, [arama, durumFiltre, odemeFiltre, sayfa, sayfaBoyutu]);
 
+  // Sayfa değişince de seçim sıfırlanır (aynı sebeple)
+  useEffect(() => {
+    setSecili([]);
+  }, [sayfa]);
+
   // ⚠️ ÖNEMLİ: Filtre değişince 1. sayfaya dön.
   // Yoksa 5. sayfadayken filtre uygularsın, sonuç 2 sayfa çıkar,
   // sen hâlâ 5. sayfadasındır → boş ekran görürsün.
+  // Filtre değişince sayfayı başa al VE seçimi temizle.
+  //
+  // Seçimi neden temizliyoruz? Kullanıcı sayfa 1'de 3 sipariş seçip
+  // sayfa 2'ye geçerse, o 3 sipariş ekranda görünmez ama "3 seçildi"
+  // yazmaya devam eder. Göremediği bir şeyin etiketini basmak sürpriz olur.
   useEffect(() => {
     setSayfa(1);
+    setSecili([]);
   }, [arama, durumFiltre, odemeFiltre, sayfaBoyutu]);
 
-  const sutunlar = [
+    const sutunlar = [
+    {
+      // Başlık bir JSX — Tablo bileşeni {sutun.baslik} diye bastığı için çalışıyor
+      baslik: (
+        <input
+          type="checkbox"
+          className="secim-kutusu"
+          checked={hepsiSecili}
+          onChange={tumunuSec}
+          title="Tümünü seç"
+        />
+      ),
+      hucre: (s) => (
+        <input
+          type="checkbox"
+          className="secim-kutusu"
+          checked={secili.includes(s.id)}
+          onChange={() => secimDegistir(s.id)}
+        />
+      ),
+    },
     {
       // Müşteriye gösterilen numara. Id artık sadece URL'de kullanılıyor.
       baslik: 'Sipariş No',
@@ -186,7 +250,7 @@ export default function SiparislerSayfasi() {
           <Buton
             tip="ikincil"
             boyut="kucuk"
-            onClick={() => etiketYazdir(s.id)}
+            onClick={() => etiketYazdir([s.id])}
             title="Kargo etiketi yazdır"
           >
             🏷️
@@ -263,6 +327,34 @@ export default function SiparislerSayfasi() {
         <Yukleniyor yazi="Siparişler getiriliyor..." />
       ) : (
         <>
+
+                    {/* SEÇİM ÇUBUĞU — sadece seçim varken görünür.
+              Boşken hiç yer kaplamasın, ekranı meşgul etmesin. */}
+          {secili.length > 0 && (
+            <div className="secim-cubugu">
+              <span className="secim-yazi">
+                <b>{secili.length}</b> sipariş seçildi
+              </span>
+
+              <div className="secim-butonlar">
+                <Buton
+                  boyut="kucuk"
+                  onClick={() => etiketYazdir(secili)}
+                >
+                  🏷️ Seçilenlerin Etiketini Yazdır
+                </Buton>
+
+                <Buton
+                  tip="ikincil"
+                  boyut="kucuk"
+                  onClick={() => setSecili([])}
+                >
+                  Seçimi Temizle
+                </Buton>
+              </div>
+            </div>
+          )}
+
           <Tablo
             sutunlar={sutunlar}
             veriler={siparisler}
