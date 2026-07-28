@@ -236,3 +236,12 @@
   background-color: var(--acikGri);
   border-radius: 8px;
 }
+
+/* Yazdırma alanı ekranda görünmesin — sadece yazıcıya gitsin.
+   Tamamen kaldırmıyoruz (display:none) çünkü barkodun çizilmesi için
+   DOM'da bulunması gerekiyor. Ekran dışına itiyoruz. */
+.yazdirma-alani {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}

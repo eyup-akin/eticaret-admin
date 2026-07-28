@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
+
+
 import { apiGet, apiPut } from '../services/api';
 import { paraBicimle, sayiBicimle, tarihBicimle } from '../utils/bicimlendir';
 
@@ -9,6 +11,8 @@ import HataKutusu from '../components/HataKutusu';
 import Buton from '../components/Buton';
 import Rozet from '../components/Rozet';
 import OnayPenceresi from '../components/OnayPenceresi';
+
+import KargoEtiketi from '../components/KargoEtiketi';
 
 import './SiparisDetaySayfasi.css';
 
@@ -37,6 +41,22 @@ export default function SiparisDetaySayfasi() {
   const [iptalSebebi, setIptalSebebi] = useState('');
   const [iptalOnayi, setIptalOnayi] = useState(false);
 
+
+  // Etiket verisi — yazdırma anında çekilir, sayfa açılışında değil.
+  // Sebep: admin siparişlerin çoğunu görüntüler ama etiket basmaz.
+  // Herkese peşin çekmek gereksiz yük olurdu.
+  const [etiketVerisi, setEtiketVerisi] = useState(null);
+
+  async function etiketYazdir() {
+    try {
+      const veri = await apiGet('/admin/orders/etiket?ids=' + id);
+      setEtiketVerisi(veri);
+    } catch (e) {
+      setHata(e.message);
+    }
+  }
+
+
   async function siparisiGetir() {
     setYukleniyor(true);
     setHata('');
@@ -54,6 +74,19 @@ export default function SiparisDetaySayfasi() {
   useEffect(() => {
     siparisiGetir();
   }, [id]);
+
+  // Etiket verisi geldiğinde yazdırma penceresini aç.
+  //
+  // Neden useEffect? setEtiketVerisi HEMEN ekrana yansımaz — React
+  // state güncellemesini bir sonraki render'a bırakır. Hemen window.print()
+  // çağırsaydık etiket henüz DOM'da olmazdı ve BOŞ sayfa basılırdı.
+  // useEffect render bittikten sonra çalışır, o an etiket hazırdır.
+  useEffect(() => {
+    if (etiketVerisi) {
+      window.print();
+      setEtiketVerisi(null);  // yazdırma bitince temizle
+    }
+  }, [etiketVerisi]);
 
   // ---------- DURUMU İLERLET ----------
   async function durumuIlerlet(yeniDurum) {
@@ -111,6 +144,7 @@ export default function SiparisDetaySayfasi() {
             ← Siparişlere Dön
           </Buton>
         </div>
+        
       </div>
     );
   }
@@ -130,9 +164,15 @@ export default function SiparisDetaySayfasi() {
           </p>
         </div>
 
-        <Buton tip="ikincil" onClick={() => navigate('/siparisler')}>
-          ← Siparişlere Dön
-        </Buton>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <Buton tip="ikincil" onClick={etiketYazdir}>
+            🏷️ Etiket Yazdır
+          </Buton>
+
+          <Buton tip="ikincil" onClick={() => navigate('/siparisler')}>
+            ← Siparişlere Dön
+          </Buton>
+        </div>
       </div>
 
       {basari !== '' && <div className="basari-kutusu">{basari}</div>}
@@ -399,6 +439,22 @@ export default function SiparisDetaySayfasi() {
         iptal={() => setIptalOnayi(false)}
         islemde={islemde}
       />
+
+        {/* YAZDIRMA ALANI — ekranda görünmez, sadece yazdırırken basılır.
+          @media print kuralı bu sınıfı arıyor. */}
+      {etiketVerisi && (
+        <div className="yazdirma-alani">
+          {etiketVerisi.etiketler.map((e) => (
+            <KargoEtiketi
+              key={e.id}
+              etiket={e}
+              magaza={etiketVerisi.magaza}
+            />
+          ))}
+        </div>
+      )}
+
+
     </div>
   );
 }

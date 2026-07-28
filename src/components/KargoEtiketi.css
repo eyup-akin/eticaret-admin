@@ -1,0 +1,143 @@
+/* ================= KARGO ETİKETİ ================= */
+/* 10x15 cm termal etiket standardı.
+   Renk yok — termal yazıcı tek renk basar. */
+
+.etiket {
+  width: 100mm;
+  height: 150mm;
+  padding: 6mm;
+  box-sizing: border-box;
+  background: #fff;
+  color: #000;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #000;
+}
+
+/* ---------- ÜST: GÖNDERİCİ ---------- */
+.etiket-ust {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 4mm;
+  border-bottom: 1px solid #000;
+}
+
+.etiket-kucuk-baslik {
+  font-size: 8pt;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 1mm;
+}
+
+.etiket-magaza-ad {
+  font-size: 11pt;
+  font-weight: bold;
+}
+
+.etiket-kucuk {
+  font-size: 8pt;
+  line-height: 1.3;
+}
+
+.etiket-tarih {
+  font-size: 8pt;
+  white-space: nowrap;
+}
+
+/* ---------- ORTA: ALICI ---------- */
+/* flex: 1 → kalan boşluğu bu blok doldurur, alt blok hep dipte kalır */
+.etiket-alici {
+  flex: 1;
+  padding-top: 5mm;
+}
+
+.etiket-alici-ad {
+  font-size: 16pt;
+  font-weight: bold;
+  margin-bottom: 3mm;
+}
+
+.etiket-adres {
+  font-size: 11pt;
+  line-height: 1.4;
+  margin-bottom: 2mm;
+}
+
+.etiket-sehir {
+  font-size: 13pt;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.etiket-telefon {
+  font-size: 10pt;
+  margin-top: 2mm;
+}
+
+/* ---------- ALT: BARKOD ---------- */
+.etiket-alt {
+  border-top: 1px solid #000;
+  padding-top: 4mm;
+  text-align: center;
+}
+
+.etiket-barkod {
+  width: 100%;
+  height: 45px;
+}
+
+.etiket-no {
+  font-family: monospace;
+  font-size: 12pt;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 1mm;
+}
+
+.etiket-ozet {
+  font-size: 8pt;
+  margin-top: 2mm;
+}
+
+/* ================= YAZDIRMA MODU ================= */
+/*
+   Yazdırırken SADECE etiketler basılsın — sol menü, üst bar, butonlar
+   kâğıda gitmesin.
+   Yöntem: ekranda her şeyi göster, YAZDIRIRKEN etiket dışındakileri gizle.
+*/
+@media print {
+  /* Sayfa boyutu ve kenar boşluğu */
+  @page {
+    size: 100mm 150mm;
+    margin: 0;
+  }
+
+  /* Yazdırma alanı dışındaki HER ŞEYİ gizle */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Etiket kabını ve içindekileri geri görünür yap */
+  .yazdirma-alani,
+  .yazdirma-alani * {
+    visibility: visible;
+  }
+
+  /* Etiketi sayfanın sol üstüne sabitle */
+  .yazdirma-alani {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .etiket {
+    border: none;         /* gerçek etikette çerçeve gereksiz */
+    page-break-after: always;  /* her etiket ayrı sayfaya */
+  }
+
+  .etiket:last-child {
+    page-break-after: auto;    /* sonuncudan sonra boş sayfa olmasın */
+  }
+}
