@@ -15,6 +15,32 @@ import Rozet from '../components/Rozet';
 
 import './DashboardSayfasi.css';
 
+
+// Tek bir uyarı kartı. Öncelik rengini belirler, ilk birkaç öğeyi listeler,
+// fazlası varsa "+N daha" der. Ana bileşenden ayrı tuttuk ki döngü temiz kalsın.
+function DikkatKarti({ uyari }) {
+  const gizlenen = uyari.adet - uyari.ogeler.length;
+
+  return (
+    <div className={'dikkat-karti oncelik-' + uyari.oncelik}>
+      <div className="dikkat-karti-ust">
+        <span className="dikkat-baslik">{uyari.baslik}</span>
+        <span className="dikkat-adet">{uyari.adet}</span>
+      </div>
+
+      <ul className="dikkat-liste">
+        {uyari.ogeler.map((oge) => (
+          <li key={oge.id}>{oge.metin}</li>
+        ))}
+      </ul>
+
+      {gizlenen > 0 && (
+        <div className="dikkat-fazla">+{gizlenen} tane daha</div>
+      )}
+    </div>
+  );
+}
+
 export default function DashboardSayfasi() {
   const { renkler } = useTema(); // grafik renkleri temadan gelsin
 
@@ -22,6 +48,8 @@ export default function DashboardSayfasi() {
   const [stats, setStats] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
   const [hata, setHata] = useState('');
+  const [dikkat, setDikkat] = useState(null);
+
 
   // İki endpoint'i AYNI ANDA çağırıyoruz (sırayla değil) — Promise.all
   async function verileriGetir() {
@@ -29,13 +57,15 @@ export default function DashboardSayfasi() {
     setHata('');
 
     try {
-      const [ozetVeri, statsVeri] = await Promise.all([
+      const [ozetVeri, statsVeri, dikkatVeri] = await Promise.all([
         apiGet('/admin/dashboard'),
         apiGet('/admin/stats'),
+        apiGet('/admin/dikkat-gerektirenler'),
       ]);
 
       setOzet(ozetVeri);
       setStats(statsVeri);
+      setDikkat(dikkatVeri);
     } catch (e) {
       setHata(e.message);
     } finally {
@@ -67,6 +97,23 @@ export default function DashboardSayfasi() {
     <div>
       <h1 className="sayfa-baslik">Dashboard</h1>
       <p className="sayfa-altyazi">Mağazanın genel durumu ve bu ayki performans</p>
+
+      {/* ================= DİKKAT GEREKTİRENLER ================= */}
+      {dikkat && (
+        <div className="dikkat-bolum">
+          {dikkat.uyarilar.length === 0 ? (
+            <div className="dikkat-temiz">
+              ✅ Her şey yolunda — acil ilgilenilecek bir şey yok.
+            </div>
+          ) : (
+            <div className="dikkat-izgara">
+              {dikkat.uyarilar.map((u) => (
+                <DikkatKarti key={u.tur} uyari={u} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* ================= GELİR KUTUSU ================= */}
       <div className="gelir-kutusu">
