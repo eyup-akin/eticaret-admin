@@ -53,7 +53,9 @@ export default function KargoEtiketi({ etiket, magaza }) {
 
         <div className="etiket-sehir">{etiket.sehir || '—'}</div>
 
-        
+        <div className="etiket-telefon">Tel: {etiket.telefon || '—'}</div>
+
+
       </div>
 
       {/* ---------- ALT: BARKOD ---------- */}

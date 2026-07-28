@@ -272,6 +272,13 @@ export default function SiparisDetaySayfasi() {
                   </div>
 
                   <div className="bilgi-satiri">
+                    <span className="bilgi-etiket">Telefon</span>
+                    <span className="bilgi-deger">
+                      {siparis.adres.telefon || '—'}
+                    </span>
+                  </div>
+
+                  <div className="bilgi-satiri">
                     <span className="bilgi-etiket">Adres</span>
                     <span className="bilgi-deger">{siparis.adres.fullAddress}</span>
                   </div>
