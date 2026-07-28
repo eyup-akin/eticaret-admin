@@ -111,16 +111,27 @@ export default function SiparislerSayfasi() {
     },
     {
       baslik: 'İçerik',
-      hizala: 'orta',
-      hucre: (s) => (
-        <div>
-          <div>{sayiBicimle(s.urunCesidi)} ürün</div>
+      hucre: (s) => {
+        // İlk ürünleri virgülle birleştir. Gösterilmeyen kalan var mı?
+        const kalan = s.urunCesidi - s.ilkUrunler.length;
 
-          <div className="alt-bilgi">
-            {sayiBicimle(s.toplamAdet)} adet
+        return (
+          <div className="siparis-icerik">
+            {/* İlk 1-2 ürünün adı */}
+            <div className="icerik-urunler">
+              {s.ilkUrunler.join(', ')}
+              {kalan > 0 && (
+                <span className="icerik-kalan"> +{kalan} ürün daha</span>
+              )}
+            </div>
+
+            {/* Alt satır: çeşit ve adet özeti */}
+            <div className="alt-bilgi">
+              {sayiBicimle(s.urunCesidi)} çeşit · {sayiBicimle(s.toplamAdet)} adet
+            </div>
           </div>
-        </div>
-      ),
+        );
+      },
     },
     {
       baslik: 'Kargo',

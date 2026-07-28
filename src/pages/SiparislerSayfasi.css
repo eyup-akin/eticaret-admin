@@ -93,3 +93,20 @@
   letter-spacing: 0.3px;
   white-space: nowrap;
 }
+
+/* Sipariş içerik kolonu — ürün adları + özet */
+.siparis-icerik {
+  max-width: 280px;
+}
+
+.icerik-urunler {
+  font-size: 14px;
+  color: var(--yaziKoyu);
+  line-height: 1.4;
+}
+
+/* "+3 ürün daha" — asıl ürünlerden daha silik dursun */
+.icerik-kalan {
+  color: var(--yaziGri);
+  font-size: 13px;
+}
