@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   AreaChart, Area, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer,
@@ -16,30 +17,100 @@ import Rozet from '../components/Rozet';
 import './DashboardSayfasi.css';
 
 
-// Tek bir uyarı kartı. Öncelik rengini belirler, ilk birkaç öğeyi listeler,
-// fazlası varsa "+N daha" der. Ana bileşenden ayrı tuttuk ki döngü temiz kalsın.
+// Her uyarı türü için ikon. Yeni tür eklenince buraya bir satır eklenir.
+const UYARI_IKON = {
+  bekleyen_siparis: '⏱️',
+  kritik_stok: '📦',
+  bekleyen_basvuru: '🛡️',
+  bekleyen_destek: '🎫',
+  bekleyen_iade: '↩️',
+};
+
+// Bir tarihin üstünden kaç gün geçmiş?
+function gunFarki(tarih) {
+  const gecen = Date.now() - new Date(tarih).getTime();
+  return Math.floor(gecen / (1000 * 60 * 60 * 24));
+}
+
+// KATLANABİLİR UYARI KARTI
+// Kapalıyken: ikon + tek cümle özet + sayı. Tek satır, az yer.
+// Açıkken: her öğe ayrı satır — tıklanabilir, müşteri adı ve detayıyla.
 function DikkatKarti({ uyari }) {
+  const [acik, setAcik] = useState(false);
+  const navigate = useNavigate();
+
+  const ikon = UYARI_IKON[uyari.tur] || '⚠️';
   const gizlenen = uyari.adet - uyari.ogeler.length;
 
   return (
     <div className={'dikkat-karti oncelik-' + uyari.oncelik}>
-      <div className="dikkat-karti-ust">
-        <span className="dikkat-baslik">{uyari.baslik}</span>
-        <span className="dikkat-adet">{uyari.adet}</span>
-      </div>
 
-      <ul className="dikkat-liste">
-        {uyari.ogeler.map((oge) => (
-          <li key={oge.id}>{oge.metin}</li>
-        ))}
-      </ul>
+      {/* ---------- ÖZET SATIRI (her zaman görünür, tıklanabilir) ---------- */}
+      <button
+        type="button"
+        className="dikkat-ozet"
+        onClick={() => setAcik(!acik)}
+      >
+        <span className="dikkat-ikon">{ikon}</span>
+        <span className="dikkat-ozet-yazi">{uyari.ozet}</span>
+        <span className="dikkat-ok">{acik ? '▲' : '▼'}</span>
+      </button>
 
-      {gizlenen > 0 && (
-        <div className="dikkat-fazla">+{gizlenen} tane daha</div>
+      {/* ---------- DETAY (sadece açıkken) ---------- */}
+      {acik && (
+        <div className="dikkat-detay">
+          {uyari.ogeler.map((oge) => (
+            <button
+              key={oge.link}
+              type="button"
+              className="dikkat-satir"
+              onClick={() => navigate(oge.link)}
+            >
+              <div className="dikkat-satir-sol">
+                <div className="dikkat-satir-baslik">{oge.metin}</div>
+                <div className="dikkat-satir-alt">{oge.altMetin}</div>
+              </div>
+
+              <div className="dikkat-satir-sag">
+                {/* Sipariş ise: kaç gündür bekliyor + tutar */}
+                {oge.tarih && (
+                  <>
+                    <div className="dikkat-vurgu">
+                      {gunFarki(oge.tarih)} gündür
+                    </div>
+                    <div className="dikkat-satir-alt">
+                      {paraBicimle(oge.tutar)}
+                    </div>
+                  </>
+                )}
+
+                {/* Ürün ise: kalan stok */}
+                {oge.stok != null && (
+                  <div className={oge.stok === 0 ? 'dikkat-vurgu-kritik' : 'dikkat-vurgu'}>
+                    {oge.stok === 0 ? 'TÜKENDİ' : oge.stok + ' adet'}
+                  </div>
+                )}
+              </div>
+            </button>
+          ))}
+
+          {gizlenen > 0 && (
+            <div className="dikkat-fazla">+{gizlenen} tane daha var</div>
+          )}
+
+          <button
+            type="button"
+            className="dikkat-tumunu"
+            onClick={() => navigate(uyari.tumunuGorLink)}
+          >
+            Tümünü gör →
+          </button>
+        </div>
       )}
     </div>
   );
 }
+
 
 export default function DashboardSayfasi() {
   const { renkler } = useTema(); // grafik renkleri temadan gelsin
@@ -98,22 +169,7 @@ export default function DashboardSayfasi() {
       <h1 className="sayfa-baslik">Dashboard</h1>
       <p className="sayfa-altyazi">Mağazanın genel durumu ve bu ayki performans</p>
 
-      {/* ================= DİKKAT GEREKTİRENLER ================= */}
-      {dikkat && (
-        <div className="dikkat-bolum">
-          {dikkat.uyarilar.length === 0 ? (
-            <div className="dikkat-temiz">
-              ✅ Her şey yolunda — acil ilgilenilecek bir şey yok.
-            </div>
-          ) : (
-            <div className="dikkat-izgara">
-              {dikkat.uyarilar.map((u) => (
-                <DikkatKarti key={u.tur} uyari={u} />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+      
 
       {/* ================= GELİR KUTUSU ================= */}
       <div className="gelir-kutusu">
@@ -174,6 +230,16 @@ export default function DashboardSayfasi() {
           renk="#8e44ad"
         />
       </div>
+
+      {/* ================= DİKKAT GEREKTİRENLER ================= */}
+      {dikkat && dikkat.uyarilar.length > 0 && (
+        <div className="dikkat-bolum">
+          {dikkat.uyarilar.map((u) => (
+            <DikkatKarti key={u.tur} uyari={u} />
+          ))}
+        </div>
+      )}
+
 
       {/* ================= GELİR GRAFİĞİ ================= */}
       <div className="bolum">
