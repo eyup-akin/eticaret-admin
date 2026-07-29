@@ -448,7 +448,22 @@ export default function KuponFormSayfasi() {
             <input
               className="kupon-form-input"
               type="number"
-              step={form.discountType === 'yuzde' ? '1' : '0.01'}
+              /* ⚠️ step, SIFIRA göre değil MIN'e göre doğrulanır.
+                 Geçerli değerler kümesi:  min + (n × step)
+                 
+                 Eskiden step="1" + min="0.01" yazıyordu. Bu da geçerli
+                 değerleri 0.01, 1.01, 2.01 ... 14.01, 15.01 yapıyordu —
+                 yani düz "15" REDDEDİLİYOR, ok tuşuna basınca 14.01'e
+                 yapışıyordu.
+                 
+                 step="any" bu kontrolü tamamen kapatır. Ok tuşları yine
+                 1'er artırır (tarayıcı varsayılanı), ama elle %12.5 gibi
+                 ondalıklı değer de yazılabilir. Üst sınırı max="100"
+                 zaten tutuyor, alt sınırı da min="0.01".
+                 
+                 Tutar tipinde step="0.01" doğru: min de 0.01 olduğu için
+                 taban uyumlu ve ok tuşları kuruş kuruş ilerliyor. */
+              step={form.discountType === 'yuzde' ? 'any' : '0.01'}
               min="0.01"
               /* Yüzdede tarayıcı da 100'ü aşmayı engellesin.
                  Tutar tipinde üst sınır yok. */
