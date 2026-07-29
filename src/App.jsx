@@ -21,6 +21,8 @@ import SiparisDetaySayfasi from './pages/SiparisDetaySayfasi';
 
 import UrunFormSayfasi from './pages/UrunFormSayfasi';
 
+import KuponFormSayfasi from './pages/KuponFormSayfasi';
+
 // İskeletler — sırası gelen aşamada içleri dolacak
 import KuponlarSayfasi from './pages/KuponlarSayfasi';
 import RaporlarSayfasi from './pages/RaporlarSayfasi';
@@ -58,7 +60,14 @@ export default function App() {
             <Route path="/kullanicilar"     element={<MusterilerSayfasi />} />
             <Route path="/kullanicilar/:id" element={<MusteriDetaySayfasi />} />
 
-            <Route path="/kuponlar"  element={<KuponlarSayfasi />} />
+            {/* Kupon rotaları — form iki iş yapıyor:
+                /kuponlar/yeni        → id yok  → oluşturma modu
+                /kuponlar/5/duzenle   → id var  → düzenleme modu
+                Aynı bileşen, useParams ile hangi modda olduğunu anlıyor.
+                İki ayrı sayfa yazsaydık %90'ı birebir aynı olurdu. */}
+            <Route path="/kuponlar"              element={<KuponlarSayfasi />} />
+            <Route path="/kuponlar/yeni"         element={<KuponFormSayfasi />} />
+            <Route path="/kuponlar/:id/duzenle"  element={<KuponFormSayfasi />} />
             <Route path="/raporlar"  element={<RaporlarSayfasi />} />
             <Route path="/destek"    element={<DestekTalepleriSayfasi />} />
 
