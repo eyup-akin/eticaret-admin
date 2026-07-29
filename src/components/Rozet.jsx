@@ -28,6 +28,15 @@ const DURUMLAR = {
   pasif:      { yazi: 'Pasif',          renk: '#e74c3c' },
   aktif:      { yazi: 'Aktif',          renk: '#27ae60' },
 
+  // ---- Kupon durumları (Aşama 5C) ----
+  // 'aktif' ve 'pasif' yukarıda zaten tanımlı, tekrar yazmıyoruz.
+  // 'baslamadi' için 'beklemede' anahtarını KULLANMADIK — o ödeme
+  // durumuna ait. Aynı sözlükte iki iş alanı aynı kelimeyi
+  // kullanamaz, yoksa birini değiştirince diğeri de değişir.
+  baslamadi:     { yazi: 'Başlamadı',     renk: '#64748b' },
+  tukendi:       { yazi: 'Tükendi',       renk: '#f39c12' },
+  suresi_dolmus: { yazi: 'Süresi Doldu',  renk: '#94a3b8' },
+
 
 };
 

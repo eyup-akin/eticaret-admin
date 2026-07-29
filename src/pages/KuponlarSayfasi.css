@@ -1,0 +1,82 @@
+/* ========================================================
+   KUPON LİSTE SAYFASI
+   
+   ⚠️ Buradaki tüm sınıflar "kupon-" ön ekiyle başlıyor.
+   Sebebi: CSS'te kapsam (scope) yoktur. import etmek stili
+   o sayfaya HAPSETMEZ, sadece pakete katar. Aynı sınıf adı
+   başka bir sayfada da varsa son yüklenen kazanır.
+   Ön ek, çakışmayı isimlendirme disipliniyle çözer.
+   ======================================================== */
+
+
+/* ---------- SAYFA BAŞLIĞI + SAĞDAKİ BUTON ---------- */
+
+.kupon-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+
+/* ---------- FİLTRE ÇUBUĞU ---------- */
+
+.kupon-filtreler {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.kupon-secim {
+  padding: 10px 12px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+  min-width: 180px;
+}
+
+.kupon-secim:focus {
+  border-color: var(--anaRenk);
+}
+
+
+/* ---------- TABLO HÜCRELERİ ---------- */
+
+/* Kupon kodu — monospace çünkü kodlar karakter karakter okunur.
+   "INDIRIM10" ile "IND1R1M10" arasındaki farkı orantılı fontta
+   yakalamak zordur, eşit genişlikli fontta kolaydır. */
+.kupon-kod {
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: var(--yaziKoyu);
+}
+
+/* Hücre içindeki ikinci satır — küçük ve soluk */
+.kupon-alt-bilgi {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 3px;
+}
+
+/* Kullanım sayacındaki "/ 100" kısmı */
+.kupon-limit {
+  color: var(--yaziGri);
+  font-size: 13px;
+}
+
+/* Satır sonundaki işlem butonları.
+   flex-end: sağa yaslı dursunlar
+   flex-wrap: dar ekranda alt satıra insinler, taşmasınlar */
+.kupon-islemler {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}

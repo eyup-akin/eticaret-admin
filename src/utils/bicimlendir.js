@@ -59,3 +59,25 @@ export function ayBicimle(ayMetni) {
     year: 'numeric',
   });
 }
+
+// "2026-07-13T14:30:00"  →  "13.07.2026"
+//
+// tarihBicimle'nin saatsiz kardeşi. Kupon geçerlilik aralığı gibi
+// saatin anlamsız olduğu yerlerde kullanılır.
+//
+// Adı mobildeki fonksiyonla AYNI — iki katmanda aynı iş için farklı
+// isim kullanmak, ilerde birini arayan kişinin diğerini bulamamasına
+// yol açar.
+export function gunBicimle(tarihMetni) {
+  if (!tarihMetni) {
+    return '-';
+  }
+
+  const tarih = new Date(tarihMetni);
+
+  return tarih.toLocaleDateString('tr-TR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+}
