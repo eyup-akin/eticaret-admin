@@ -5,13 +5,18 @@
    çakışmayı isimlendirmeyle çözüyoruz.
    ======================================================== */
 
+/* max-width KALDIRILDI: genişliği artık üstteki .hesabim-sarmal
+   belirliyor. İki yerde genişlik tanımlamak, birini değiştirince
+   diğerini unutma riski yaratır — tek doğru kaynak ilkesi.
+   
+   margin-top da kaldırıldı: kartlar arası boşluğu .hesabim-kart'ın
+   margin-bottom'ı veriyor. İkisi birden olsa çift boşluk çıkardı. */
 .otr-kart {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
   border-radius: 12px;
-  padding: 22px;
-  max-width: 900px;
-  margin-top: 20px;
+  padding: 26px 28px;
+  margin-bottom: 20px;
 }
 
 .otr-ust {
@@ -23,8 +28,10 @@
   margin-bottom: 18px;
 }
 
+/* Diğer kart başlıklarıyla aynı boyut (17px).
+   Farklı boyutlar aynı sayfada hiyerarşi karmaşası yaratır. */
 .otr-baslik {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--yaziKoyu);
   margin-bottom: 4px;

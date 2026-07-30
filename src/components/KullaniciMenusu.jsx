@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+import { apiPost } from '../services/api';
+import { refreshTokenAl } from '../services/tokenStorage';
 import { useAuth } from '../context/AuthContext';
 import { useTema } from '../context/TemaContext';
 
@@ -28,6 +30,15 @@ export default function KullaniciMenusu() {
   const { temaAdi, temayiDegistir } = useTema();
 
   const [acik, setAcik] = useState(false);
+
+  // Aktif oturum sayısı. null = henüz bilinmiyor / alınamadı.
+  //
+  // Neden 0 ile başlatmıyoruz? Çünkü 0 geçerli bir cevap ("hiç oturum yok")
+  // ama bizim durumumuz "henüz sormadım". İkisini karıştırırsak, veri
+  // gelmeden ekranda "0 oturum" yazar ve kullanıcı yanlış bilgi görür.
+  // ?? ve || farkında öğrendiğimiz aynı prensip: yokluk ile sıfır
+  // birbirinden ayrı şeyler.
+  const [oturumSayisi, setOturumSayisi] = useState(null);
 
   // ⭐ useRef nedir?
   //
@@ -92,6 +103,66 @@ export default function KullaniciMenusu() {
     return () => {
       document.removeEventListener('mousedown', disariTiklandi);
       document.removeEventListener('keydown', esceBasildi);
+    };
+  }, [acik]);
+
+
+  // ---------- MENÜ AÇILINCA OTURUM SAYISINI ÇEK ----------
+  //
+  // Neden bileşen yüklenince değil de menü açılınca?
+  //   Yüklenince çekseydik her sayfa gezinmesinde bir istek giderdi —
+  //   kullanıcı menüyü hiç açmasa bile. Menü nadir açılan bir şey;
+  //   isteği o ana ertelemek boşa yükü sıfırlıyor.
+  //
+  // Neden her açılışta (önbelleğe almadan)?
+  //   Kullanıcı /hesabim'de bir oturum kapatıp geri dönebilir.
+  //   Önbellekteki sayı bayat kalır ve yanlış bilgi gösterir.
+  //   Sunucudan gelen türetilmiş değer, girdisi değişebiliyorsa
+  //   yeniden sorulmalı — kupon indiriminde de aynı ilkeyi uyguladık.
+  useEffect(() => {
+    if (!acik) {
+      return;
+    }
+
+    // ⭐ İPTAL BAYRAĞI
+    //
+    // Kullanıcı menüyü açıp hemen kapatırsa, istek hâlâ yolda olabilir.
+    // Cevap gelince setOturumSayisi çağrılır ama bileşen artık o durumu
+    // göstermiyor — boşa iş. Daha kötüsü, bileşen tamamen ekrandan
+    // kalkmışsa (çıkış yapıldı gibi) kaldırılmış bir bileşenin durumunu
+    // güncellemeye çalışırız.
+    //
+    // Temizlik fonksiyonunda bu bayrağı kaldırıp cevabı yok sayıyoruz.
+    let iptalEdildi = false;
+
+    async function sayiyiGetir() {
+      try {
+        // Refresh token'ı gönderiyoruz çünkü endpoint onu bekliyor.
+        // Sayı için "bu cihaz" işareti gerekmiyor ama endpoint tek —
+        // sırf sayaç için ikinci bir endpoint yazmak gereksiz olurdu.
+        const refresh = refreshTokenAl() ?? '';
+
+        const veri = await apiPost('/auth/oturumlarim', {
+          refreshToken: refresh,
+        });
+
+        if (!iptalEdildi) {
+          setOturumSayisi(veri.toplam);
+        }
+      } catch {
+        // Sessizce yut. Bu bir SAYAÇ — alınamazsa menü yine açılmalı,
+        // kullanıcıya hata göstermek gereksiz gürültü olurdu.
+        // /hesabim sayfasında gerçek hata yönetimi zaten var.
+        if (!iptalEdildi) {
+          setOturumSayisi(null);
+        }
+      }
+    }
+
+    sayiyiGetir();
+
+    return () => {
+      iptalEdildi = true;
     };
   }, [acik]);
 
@@ -164,6 +235,32 @@ export default function KullaniciMenusu() {
             >
               <span className="km-satir-ikon">👤</span>
               <span>Profilim</span>
+            </Link>
+
+            {/* ⭐ YENİ — Aktif oturum sayacı.
+                
+                Aynı sayfaya (/hesabim) gidiyor ama farklı bir amaçla:
+                kullanıcı "kaç cihazda açığım" sorusunun cevabını menüde
+                anında görüyor, sayfaya girmeden.
+                
+                Sayı beklenenden fazlaysa (mesela 5 görüp 2 olması
+                gerektiğini düşünüyorsa) bu bir güvenlik uyarısı olur —
+                menüden fark etmesi, sayfaya girmesini beklemekten iyi. */}
+            <Link
+              to="/hesabim"
+              className="km-satir"
+              role="menuitem"
+              onClick={() => setAcik(false)}
+            >
+              <span className="km-satir-ikon">🖥️</span>
+              <span>Aktif Oturumlar</span>
+
+              {/* Sayı henüz gelmediyse "..." gösteriyoruz.
+                  Boş bırakmak "hiç oturum yok" gibi okunurdu;
+                  0 yazmak ise düpedüz yanlış bilgi olurdu. */}
+              <span className="km-sayac">
+                {oturumSayisi === null ? '···' : oturumSayisi}
+              </span>
             </Link>
           </div>
 

@@ -2,31 +2,45 @@
    HESABIM SAYFASI (ADMİN)
    
    Tüm sınıflar "hesabim-" ön ekli — CSS'te kapsam olmadığı
-   için (.form-alan, .sayfa-ust gibi adlar başka dosyalarda
-   zaten tanımlı) çakışmayı isimlendirmeyle çözüyoruz.
+   için çakışmayı isimlendirmeyle çözüyoruz.
    ======================================================== */
 
 
-/* İki kart yan yana: solda profil, sağda şifre.
-   auto-fit + minmax: ekran daralınca kartlar kendiliğinden
-   alt alta iner. Medya sorgusu yazmaya gerek kalmıyor. */
-.hesabim-izgara {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 20px;
-  max-width: 900px;
-  align-items: start;
+/* ---------- SAYFA SARMALAYICI ---------- */
+
+/* Tek sütun, ortada.
+   
+   Neden ortada? Sola yapışık 900px'lik bir blok, geniş ekranda sağda
+   700px ölü alan bırakıyordu. Asimetrik boşluk kullanıcıya "sayfa
+   bozuk" izlenimi verir; simetrik boşluk "kasıtlı" görünür.
+   
+   Neden tek sütun? Ayarlar sayfası TARANMAZ, OKUNUR. Göz yukarıdan
+   aşağı tek bir hat izlemeli. İki sütunda "hangisini önce okusam"
+   tereddüdü doğuyor. GitHub, Stripe, Vercel — hepsi böyle. */
+.hesabim-sarmal {
+  max-width: 800px;
+
+  /* margin: 0 auto → yatayda ortala.
+     'auto' kalan boşluğu iki yana eşit dağıtır. */
+  margin: 0 auto;
 }
+
+
+/* ---------- KARTLAR ---------- */
 
 .hesabim-kart {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
   border-radius: 12px;
-  padding: 22px;
+  padding: 26px 28px;
+
+  /* Kartlar arası dikey boşluk. Ayırıcı çizgi koymuyoruz —
+     boşluğun kendisi ayırıcı görevi görüyor ve daha sakin duruyor. */
+  margin-bottom: 20px;
 }
 
 .hesabim-kart-baslik {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--yaziKoyu);
   margin-bottom: 4px;
@@ -35,19 +49,29 @@
 .hesabim-kart-altyazi {
   font-size: 13px;
   color: var(--yaziGri);
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   line-height: 1.5;
 }
 
 
 /* ---------- SALT OKUNUR BİLGİ SATIRLARI ---------- */
 
+/* Rol ve üyelik tarihi. Form alanı değil, sadece bilgi —
+   o yüzden kutu içinde değil, ince çizgilerle ayrılmış satırlar. */
+.hesabim-bilgi-blok {
+  border: 1px solid var(--kenarlik);
+  border-radius: 10px;
+  padding: 4px 16px;
+  margin-bottom: 24px;
+  background-color: var(--acikKart);
+}
+
 .hesabim-bilgi-satir {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 10px 0;
+  padding: 12px 0;
   border-bottom: 1px solid var(--kenarlik);
 }
 
@@ -72,7 +96,7 @@
 /* ---------- FORM ---------- */
 
 .hesabim-alan {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .hesabim-etiket {
@@ -83,14 +107,24 @@
   margin-bottom: 6px;
 }
 
+/* ⭐ GİRDİ GENİŞLİĞİ SINIRLI — bu bilinçli.
+   
+   Kart 800px ama ad soyad kutusunu da 800px yapmak daha kötü görünür:
+   bir isim 40 karakterdir, kutu 15 kelime alacak kadar geniş olmamalı.
+   Kullanıcı "burayı doldurmam mı gerekiyor" diye tereddüt eder.
+   
+   width: 100% + max-width: dar ekranda küçülür, geniş ekranda 440'ta durur. */
 .hesabim-input {
   width: 100%;
-  padding: 11px 12px;
+  max-width: 440px;
+  padding: 11px 13px;
   border: 1px solid var(--inputKenar);
   border-radius: 8px;
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
+  font-size: 14px;
   outline: none;
+  transition: border-color 0.15s;
 }
 
 .hesabim-input:focus {
@@ -107,8 +141,11 @@
 .hesabim-ipucu {
   font-size: 12px;
   color: var(--yaziGri);
-  margin-top: 5px;
-  line-height: 1.5;
+  margin-top: 6px;
+  line-height: 1.6;
+
+  /* İpucu metni girdiden geniş olmasın — göz aynı hizada kalsın */
+  max-width: 520px;
 }
 
 
@@ -120,11 +157,12 @@
   gap: 10px;
   background-color: var(--acikKart);
   border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 20px;
+  padding: 13px 15px;
+  margin-bottom: 22px;
   font-size: 13px;
   color: var(--yaziOrta);
-  line-height: 1.5;
+  line-height: 1.6;
+  max-width: 560px;
 }
 
 .hesabim-basari {
@@ -134,7 +172,8 @@
   border-radius: 8px;
   padding: 11px 14px;
   font-size: 13px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  max-width: 560px;
 }
 
 
@@ -142,10 +181,19 @@
 
 .hesabim-rol {
   display: inline-block;
-  padding: 3px 10px;
+  padding: 3px 11px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 700;
   background-color: var(--anaRenk);
   color: var(--anaRenkUstuYazi);
+}
+
+
+/* ---------- DAR EKRAN ---------- */
+
+@media (max-width: 640px) {
+  .hesabim-kart {
+    padding: 20px 18px;
+  }
 }

@@ -183,14 +183,15 @@ export default function HesabimSayfasi() {
   // ================= EKRAN =================
 
   return (
-    <div>
+    /* hesabim-sarmal: max-width 800px + margin 0 auto → içerik ortada.
+       Başlık da sarmalayıcının İÇİNDE — dışarıda kalsa kartlar ortada,
+       başlık solda durur ve hizasızlık göze batar. */
+    <div className="hesabim-sarmal">
       <h1 className="sayfa-baslik">Hesabım</h1>
 
       <p className="sayfa-altyazi">
         Kendi profil bilgilerini ve şifreni buradan yönetebilirsin
       </p>
-
-      <div className="hesabim-izgara">
 
         {/* ================= SOL: PROFİL ================= */}
         <div className="hesabim-kart">
@@ -199,8 +200,11 @@ export default function HesabimSayfasi() {
             Ad soyadını güncelleyebilirsin
           </div>
 
-          {/* ---- SALT OKUNUR BİLGİLER ---- */}
-          <div style={{ marginBottom: 22 }}>
+          {/* ---- SALT OKUNUR BİLGİLER ----
+              Artık çerçeveli bir blok içinde. Sebebi: kart genişleyince
+              çıplak satırlar boşlukta yüzüyor gibi duruyordu. Hafif bir
+              zemin ve kenarlık "bunlar bilgi, form değil" diyor. */}
+          <div className="hesabim-bilgi-blok">
             <div className="hesabim-bilgi-satir">
               <span className="hesabim-bilgi-etiket">Rol</span>
               <span className="hesabim-rol">
@@ -377,17 +381,14 @@ export default function HesabimSayfasi() {
           </form>
         </div>
 
-      </div>
-
-      {/* ⭐ YENİ — Aktif oturumlar.
-          
-          Izgaranın DIŞINDA duruyor çünkü tam genişlik istiyor.
-          Izgaraya koysaydık 340px'lik bir sütuna sıkışır ve cihaz
-          bilgileri okunmaz hâle gelirdi.
+      {/* ⭐ Aktif oturumlar — üçüncü kart.
           
           Ayrı bir bileşen: kendi verisini çekiyor, kendi durumunu
           yönetiyor. HesabimSayfasi'nın iki formuna üçüncü bir
-          sorumluluk yüklemiyoruz. */}
+          sorumluluk yüklemiyoruz.
+          
+          Artık tek sütunlu düzende olduğu için genişlik derdi yok —
+          kendi max-width'ini de kaldırdık, sarmalayıcı belirliyor. */}
       <OturumListesi />
     </div>
   );

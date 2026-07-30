@@ -163,6 +163,28 @@
   flex-shrink: 0;
 }
 
+/* ⭐ Oturum sayacı rozeti.
+   
+   margin-left: auto → satırın en sağına yapışsın. Flex kapsayıcıda
+   bir öğeye 'auto' kenar boşluğu vermek, kalan tüm boşluğu o kenara
+   yığar. justify-content: space-between kullanmaya gerek kalmıyor
+   (o, üç öğeli satırda ortadaki metni de dağıtırdı).
+   
+   min-width: tek haneli ve iki haneli sayılarda rozet aynı genişlikte
+   kalsın, satırlar arasında zıplama olmasın. */
+.km-sayac {
+  margin-left: auto;
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background-color: var(--acikGri);
+  color: var(--yaziOrta);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  flex-shrink: 0;
+}
+
 /* Çıkış satırı kırmızı — yıkıcı olmasa da "oturumu bitiren" bir eylem */
 .km-satir-cikis {
   color: var(--hata);
