@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTema } from '../context/TemaContext';
 import { rolYeterliMi } from '../utils/roller';
@@ -64,9 +64,19 @@ export default function PanelDuzeni() {
       <div className="panel-sag">
 
         <header className="ust-bar">
-          <span className="ust-bar-isim">
+          {/* ⭐ Hesabım bağlantısı.
+              
+              Neden sol menüde değil de burada?
+                Sol menü mağazayı yönetmek için (Ürünler, Siparişler...).
+                Bu sayfa SENİ ilgilendiriyor. İkisini aynı listede
+                karıştırmak kullanıcının tarama hızını düşürür.
+              
+              Gmail, GitHub, Jira — hepsinde hesap ayarları adının/
+              avatarının olduğu yerde. Kullanıcı içgüdüsel olarak oraya
+              bakıyor. */}
+          <Link to="/hesabim" className="ust-bar-isim" title="Hesabım">
             Hoş geldin, <b>{kullanici?.fullName}</b>
-          </span>
+          </Link>
 
           <button className="ust-buton" onClick={temayiDegistir}>
             {temaAdi === 'acik' ? '🌙 Koyu' : '☀️ Açık'}

@@ -29,6 +29,9 @@ import RaporlarSayfasi from './pages/RaporlarSayfasi';
 import DestekTalepleriSayfasi from './pages/DestekTalepleriSayfasi';
 import AdminBasvurulariSayfasi from './pages/AdminBasvurulariSayfasi';
 
+import HesabimSayfasi from './pages/HesabimSayfasi';   // ⭐ YENİ
+
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -70,6 +73,14 @@ export default function App() {
             <Route path="/kuponlar/:id/duzenle"  element={<KuponFormSayfasi />} />
             <Route path="/raporlar"  element={<RaporlarSayfasi />} />
             <Route path="/destek"    element={<DestekTalepleriSayfasi />} />
+
+
+            {/* ⭐ YENİ — Hesabım.
+                PanelDuzeni'nin İÇİNDE, yani sol menü ve üst bar korunuyor.
+                Sol menüde bağlantısı YOK — üst bardaki isimden erişiliyor.
+                Sebep: sol menü mağaza yönetimi için, bu sayfa kişisel. */}
+            <Route path="/hesabim"   element={<HesabimSayfasi />} />
+
 
             {/* İKİNCİ BEKÇİ — sadece süperadmin.
                 PanelDuzeni'nin İÇİNDE duruyor ki sol menü kaybolmasın;

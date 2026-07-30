@@ -75,10 +75,26 @@
   padding: 0 24px;
 }
 
+/* ⭐ Artık <span> değil <Link> — bağlantı görünümünü sıfırlıyoruz.
+   text-decoration: none → alt çizgi olmasın (menü gibi görünsün)
+   cursor: pointer → tıklanabilir olduğu belli olsun
+   transition → hover geçişi ani olmasın */
 .ust-bar-isim {
   color: var(--yaziOrta);
   font-size: 14px;
   margin-right: auto; /* ismi sola iter */
+  text-decoration: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  margin-left: -10px; /* padding'in soldaki hizayı bozmasını telafi et */
+  border-radius: 8px;
+  transition: background-color 0.15s;
+}
+
+/* Fare üstüne gelince arka plan belirsin — tıklanabilirliğin işareti.
+   Sadece renk değiştirmek yeterince güçlü bir ipucu değil. */
+.ust-bar-isim:hover {
+  background-color: var(--acikGri);
 }
 
 .ust-bar-isim b {

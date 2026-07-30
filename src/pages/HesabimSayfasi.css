@@ -1,0 +1,151 @@
+/* ========================================================
+   HESABIM SAYFASI (ADMİN)
+   
+   Tüm sınıflar "hesabim-" ön ekli — CSS'te kapsam olmadığı
+   için (.form-alan, .sayfa-ust gibi adlar başka dosyalarda
+   zaten tanımlı) çakışmayı isimlendirmeyle çözüyoruz.
+   ======================================================== */
+
+
+/* İki kart yan yana: solda profil, sağda şifre.
+   auto-fit + minmax: ekran daralınca kartlar kendiliğinden
+   alt alta iner. Medya sorgusu yazmaya gerek kalmıyor. */
+.hesabim-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  align-items: start;
+}
+
+.hesabim-kart {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.hesabim-kart-baslik {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 4px;
+}
+
+.hesabim-kart-altyazi {
+  font-size: 13px;
+  color: var(--yaziGri);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+
+/* ---------- SALT OKUNUR BİLGİ SATIRLARI ---------- */
+
+.hesabim-bilgi-satir {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+/* Son satırın altında çizgi olmasın */
+.hesabim-bilgi-satir:last-child {
+  border-bottom: none;
+}
+
+.hesabim-bilgi-etiket {
+  font-size: 13px;
+  color: var(--yaziOrta);
+}
+
+.hesabim-bilgi-deger {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  text-align: right;
+}
+
+
+/* ---------- FORM ---------- */
+
+.hesabim-alan {
+  margin-bottom: 16px;
+}
+
+.hesabim-etiket {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  margin-bottom: 6px;
+}
+
+.hesabim-input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+}
+
+.hesabim-input:focus {
+  border-color: var(--anaRenk);
+}
+
+/* Kilitli alan — "buraya dokunamazsın" demesi lazım */
+.hesabim-input:read-only {
+  background-color: var(--acikGri);
+  color: var(--yaziOrta);
+  cursor: not-allowed;
+}
+
+.hesabim-ipucu {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+
+/* ---------- BİLGİ / BAŞARI KUTULARI ---------- */
+
+.hesabim-bilgi-kutu {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: var(--acikKart);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--yaziOrta);
+  line-height: 1.5;
+}
+
+.hesabim-basari {
+  background-color: rgba(39, 174, 96, 0.1);
+  border: 1px solid var(--basari);
+  color: var(--basari);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+
+/* ---------- ROL ETİKETİ ---------- */
+
+.hesabim-rol {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  background-color: var(--anaRenk);
+  color: var(--anaRenkUstuYazi);
+}
