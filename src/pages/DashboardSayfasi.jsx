@@ -381,7 +381,9 @@ export default function DashboardSayfasi() {
             <tbody>
               {stats.sonSiparisler.map((s) => (
                 <tr key={s.id}>
-                  <td>#{s.id}</td>
+                  {/* Teknik Id değil, iş anahtarı gösteriliyor.
+                      Müşteri telefonda bu numarayı söyleyecek. */}
+                  <td className="siparis-no">{s.siparisNo}</td>
                   <td>{s.musteri}</td>
                   <td>{tarihBicimle(s.tarih)}</td>
                   <td><Rozet durum={s.durum} /></td>
