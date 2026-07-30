@@ -8,6 +8,8 @@ import Buton from '../components/Buton';
 import HataKutusu from '../components/HataKutusu';
 import Yukleniyor from '../components/Yukleniyor';
 
+import OturumListesi from '../components/OturumListesi';   // ⭐ YENİ
+
 import './HesabimSayfasi.css';
 
 // Sunucudaki kuralla AYNI sayı.
@@ -376,6 +378,17 @@ export default function HesabimSayfasi() {
         </div>
 
       </div>
+
+      {/* ⭐ YENİ — Aktif oturumlar.
+          
+          Izgaranın DIŞINDA duruyor çünkü tam genişlik istiyor.
+          Izgaraya koysaydık 340px'lik bir sütuna sıkışır ve cihaz
+          bilgileri okunmaz hâle gelirdi.
+          
+          Ayrı bir bileşen: kendi verisini çekiyor, kendi durumunu
+          yönetiyor. HesabimSayfasi'nın iki formuna üçüncü bir
+          sorumluluk yüklemiyoruz. */}
+      <OturumListesi />
     </div>
   );
 }

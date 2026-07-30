@@ -1,0 +1,150 @@
+/* ========================================================
+   AKTİF OTURUM LİSTESİ
+   
+   Sınıflar "otr-" ön ekli — CSS'te kapsam olmadığı için
+   çakışmayı isimlendirmeyle çözüyoruz.
+   ======================================================== */
+
+.otr-kart {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 22px;
+  max-width: 900px;
+  margin-top: 20px;
+}
+
+.otr-ust {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.otr-baslik {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: 4px;
+}
+
+.otr-altyazi {
+  font-size: 13px;
+  color: var(--yaziGri);
+  line-height: 1.5;
+}
+
+
+/* ---------- TEK OTURUM SATIRI ---------- */
+
+.otr-satir {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.otr-satir:last-child {
+  border-bottom: none;
+}
+
+/* Cihaz türünü anlatan yuvarlak ikon */
+.otr-ikon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--acikKart);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* flex: 1 → orta blok kalan alanı doldursun,
+   min-width: 0 → uzun metin taşırmasın (flex öğelerinin
+   varsayılan min-width'i auto, bu da taşmaya yol açar) */
+.otr-orta {
+  flex: 1;
+  min-width: 0;
+}
+
+.otr-cihaz {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.otr-detay {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 3px;
+}
+
+/* Ham User-Agent metni — küçük ve kesilmiş */
+.otr-ham {
+  font-size: 11px;
+  color: var(--yaziGri);
+  margin-top: 4px;
+  font-family: ui-monospace, Consolas, monospace;
+
+  /* Uzun UA metni satırı taşırmasın */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ---------- "BU CİHAZ" ETİKETİ ---------- */
+
+.otr-bu-cihaz {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  background-color: var(--basari);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+
+/* ---------- DURUMLAR ---------- */
+
+.otr-bos {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--yaziGri);
+  font-size: 14px;
+}
+
+.otr-basari {
+  background-color: rgba(39, 174, 96, 0.1);
+  border: 1px solid var(--basari);
+  color: var(--basari);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+/* Güvenlik ipucu — liste altında */
+.otr-ipucu {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: var(--acikKart);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--yaziOrta);
+  line-height: 1.6;
+}
