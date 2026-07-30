@@ -1,0 +1,184 @@
+/* ========================================================
+   KULLANICI MENÜSÜ (üst bar sağ köşe)
+   
+   Sınıflar "km-" ön ekli — CSS'te kapsam olmadığı için
+   çakışmayı isimlendirmeyle çözüyoruz.
+   ======================================================== */
+
+
+/* Sarmalayıcı: açılır panelin konumunu buna göre hesaplıyoruz.
+   position: relative olmadan panel sayfanın köşesine kaçar. */
+.km-sarmal {
+  position: relative;
+}
+
+
+/* ---------- TETİKLEYİCİ BUTON ---------- */
+
+.km-buton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid var(--kenarlik);
+  border-radius: 24px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.km-buton:hover {
+  background-color: var(--acikGri);
+}
+
+/* Menü açıkken butonun da açık göründüğünü belli et */
+.km-buton-acik {
+  background-color: var(--acikGri);
+  border-color: var(--anaRenk);
+}
+
+/* Baş harf dairesi — avatar yerine.
+   Gerçek profil fotoğrafı yüklemek ayrı bir özellik (dosya yükleme,
+   boyutlandırma, saklama); baş harf hem bedava hem yeterli. */
+.km-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--anaRenk);
+  color: var(--anaRenkUstuYazi);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Aşağı ok — menünün açılıp kapandığını gösteren ipucu */
+.km-ok {
+  font-size: 10px;
+  color: var(--yaziGri);
+  transition: transform 0.15s;
+}
+
+.km-ok-acik {
+  transform: rotate(180deg);
+}
+
+
+/* ---------- AÇILIR PANEL ---------- */
+
+.km-panel {
+  position: absolute;
+
+  /* Butonun altına, sağ kenarları hizalı.
+     right: 0 kullanıyoruz çünkü menü sağ köşede — sola doğru açılmalı,
+     yoksa ekrandan taşar. */
+  top: calc(100% + 8px);
+  right: 0;
+
+  min-width: 240px;
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+
+  /* Gölge, panelin sayfanın ÜSTÜNDE durduğunu hissettiriyor */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* z-index: içerikteki tablolar/kartların üstünde kalsın.
+     1000 seçtik çünkü modal perdeler (ExcelIceAktar, OnayPenceresi)
+     daha yüksek değerlerde — menü onların ALTINDA kalmalı. */
+  z-index: 1000;
+
+  overflow: hidden;
+}
+
+
+/* ---------- PANEL BAŞLIĞI ---------- */
+
+.km-baslik {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.km-baslik-ad {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+
+  /* Uzun isim paneli genişletmesin, taşan kısım "..." olsun */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.km-baslik-rol {
+  font-size: 12px;
+  color: var(--yaziGri);
+  margin-top: 3px;
+}
+
+
+/* ---------- MENÜ SATIRLARI ---------- */
+
+.km-grup {
+  padding: 6px;
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.km-grup:last-of-type {
+  border-bottom: none;
+}
+
+/* Hem <button> hem <Link> aynı görünsün diye ortak sınıf.
+   width: 100% ve text-align: left → button'ın varsayılan
+   ortalama davranışını sıfırlıyor. */
+.km-satir {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--yaziKoyu);
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.12s;
+}
+
+.km-satir:hover {
+  background-color: var(--acikGri);
+}
+
+.km-satir-ikon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Çıkış satırı kırmızı — yıkıcı olmasa da "oturumu bitiren" bir eylem */
+.km-satir-cikis {
+  color: var(--hata);
+}
+
+.km-satir-cikis:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+
+/* ---------- ALT BİLGİ ---------- */
+
+.km-alt {
+  padding: 10px 16px;
+  background-color: var(--acikKart);
+  font-size: 11px;
+  color: var(--yaziGri);
+  text-align: center;
+}

@@ -1,7 +1,8 @@
-import { NavLink, Outlet, Link } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTema } from '../context/TemaContext';
+
 import { rolYeterliMi } from '../utils/roller';
+import KullaniciMenusu from './KullaniciMenusu';   // ⭐ YENİ
 import './PanelDuzeni.css';
 
 // SOL MENÜ
@@ -31,8 +32,10 @@ const MENU = [
 ];
 
 export default function PanelDuzeni() {
-  const { kullanici, cikisYap } = useAuth();
-  const { temaAdi, temayiDegistir } = useTema();
+  // cikisYap artık KullaniciMenusu'nun içinde çağrılıyor.
+  // Buradan sadece rol süzmesi için kullanici lazım.
+  const { kullanici } = useAuth();
+  
 
   // Kullanıcının rolüne göre menüyü süz.
   // Türetilmiş değer — state'te tutmuyoruz, her render'da hesaplanıyor.
@@ -64,27 +67,18 @@ export default function PanelDuzeni() {
       <div className="panel-sag">
 
         <header className="ust-bar">
-          {/* ⭐ Hesabım bağlantısı.
-              
-              Neden sol menüde değil de burada?
-                Sol menü mağazayı yönetmek için (Ürünler, Siparişler...).
-                Bu sayfa SENİ ilgilendiriyor. İkisini aynı listede
-                karıştırmak kullanıcının tarama hızını düşürür.
-              
-              Gmail, GitHub, Jira — hepsinde hesap ayarları adının/
-              avatarının olduğu yerde. Kullanıcı içgüdüsel olarak oraya
-              bakıyor. */}
-          <Link to="/hesabim" className="ust-bar-isim" title="Hesabım">
+          {/* Selamlama artık BAĞLANTI DEĞİL, düz bilgi.
+              Tıklanabilir bir metnin altında çizgi/imleç değişimi olmadığı
+              için kullanıcı tıklanabilir olduğunu anlamıyordu. Eylemler
+              sağdaki menüye taşındı; burada sadece "kim olduğun" yazıyor. */}
+          <span className="ust-bar-isim">
             Hoş geldin, <b>{kullanici?.fullName}</b>
-          </Link>
+          </span>
 
-          <button className="ust-buton" onClick={temayiDegistir}>
-            {temaAdi === 'acik' ? '🌙 Koyu' : '☀️ Açık'}
-          </button>
-
-          <button className="ust-buton cikis-buton" onClick={cikisYap}>
-            Çıkış
-          </button>
+          {/* ⭐ YENİ — Tema ve çıkış butonları buraya taşındı.
+              Üst bar iki butondan tek bir öğeye indi; ileride bildirim
+              zili gibi şeyler eklenecek yer açıldı. */}
+          <KullaniciMenusu />
         </header>
 
         {/* Aktif sayfa buraya yerleşir */}
