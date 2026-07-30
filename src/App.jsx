@@ -31,6 +31,8 @@ import AdminBasvurulariSayfasi from './pages/AdminBasvurulariSayfasi';
 
 import HesabimSayfasi from './pages/HesabimSayfasi';   // ⭐ YENİ
 
+import OturumlarimSayfasi from './pages/OturumlarimSayfasi';   // ⭐ YENİ
+
 
 export default function App() {
   return (
@@ -80,6 +82,8 @@ export default function App() {
                 Sol menüde bağlantısı YOK — üst bardaki isimden erişiliyor.
                 Sebep: sol menü mağaza yönetimi için, bu sayfa kişisel. */}
             <Route path="/hesabim"   element={<HesabimSayfasi />} />
+
+            <Route path="/oturumlarim" element={<OturumlarimSayfasi />} />
 
 
             {/* İKİNCİ BEKÇİ — sadece süperadmin.

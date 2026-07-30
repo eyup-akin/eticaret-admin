@@ -41,3 +41,27 @@ button {
   color: var(--yaziOrta);
   margin-bottom: 24px;
 }
+
+/* ========================================================
+   ORTAK DÜZEN YARDIMCILARI
+   ======================================================== */
+
+/* Ortalı tek sütun.
+   
+   Ayarlar/profil türü sayfalar için. Neden ortada?
+     Sola yapışık bir içerik bloğu geniş ekranda sağda ölü alan bırakır
+     ve sayfa "yarım" görünür. Asimetrik boşluk kullanıcıya "bozuk"
+     izlenimi verir; simetrik boşluk "kasıtlı" görünür.
+   
+   Neden tek sütun?
+     Bu sayfalar TARANMAZ, OKUNUR. Göz yukarıdan aşağı tek bir hat
+     izlemeli. İki sütunda "hangisini önce okusam" tereddüdü doğar.
+   
+   Neden index.css'te?
+     İkinci bir sayfa (OturumlarimSayfasi) da kullanmaya başladı.
+     Aynı kuralı iki dosyada tanımlamak, birini değiştirince diğerini
+     unutma riski yaratır — .sayfa-ust çakışmasında bunu yaşadık. */
+.orta-sutun {
+  max-width: 800px;
+  margin: 0 auto;
+}

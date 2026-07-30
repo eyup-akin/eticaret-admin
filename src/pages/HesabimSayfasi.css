@@ -6,24 +6,6 @@
    ======================================================== */
 
 
-/* ---------- SAYFA SARMALAYICI ---------- */
-
-/* Tek sütun, ortada.
-   
-   Neden ortada? Sola yapışık 900px'lik bir blok, geniş ekranda sağda
-   700px ölü alan bırakıyordu. Asimetrik boşluk kullanıcıya "sayfa
-   bozuk" izlenimi verir; simetrik boşluk "kasıtlı" görünür.
-   
-   Neden tek sütun? Ayarlar sayfası TARANMAZ, OKUNUR. Göz yukarıdan
-   aşağı tek bir hat izlemeli. İki sütunda "hangisini önce okusam"
-   tereddüdü doğuyor. GitHub, Stripe, Vercel — hepsi böyle. */
-.hesabim-sarmal {
-  max-width: 800px;
-
-  /* margin: 0 auto → yatayda ortala.
-     'auto' kalan boşluğu iki yana eşit dağıtır. */
-  margin: 0 auto;
-}
 
 
 /* ---------- KARTLAR ---------- */

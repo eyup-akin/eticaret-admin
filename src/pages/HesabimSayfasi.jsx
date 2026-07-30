@@ -8,7 +8,7 @@ import Buton from '../components/Buton';
 import HataKutusu from '../components/HataKutusu';
 import Yukleniyor from '../components/Yukleniyor';
 
-import OturumListesi from '../components/OturumListesi';   // ⭐ YENİ
+
 
 import './HesabimSayfasi.css';
 
@@ -186,7 +186,9 @@ export default function HesabimSayfasi() {
     /* hesabim-sarmal: max-width 800px + margin 0 auto → içerik ortada.
        Başlık da sarmalayıcının İÇİNDE — dışarıda kalsa kartlar ortada,
        başlık solda durur ve hizasızlık göze batar. */
-    <div className="hesabim-sarmal">
+    /* orta-sutun: index.css'teki ortak sınıf.
+       OturumlarimSayfasi da aynısını kullanıyor. */
+    <div className="orta-sutun">
       <h1 className="sayfa-baslik">Hesabım</h1>
 
       <p className="sayfa-altyazi">
@@ -381,15 +383,6 @@ export default function HesabimSayfasi() {
           </form>
         </div>
 
-      {/* ⭐ Aktif oturumlar — üçüncü kart.
-          
-          Ayrı bir bileşen: kendi verisini çekiyor, kendi durumunu
-          yönetiyor. HesabimSayfasi'nın iki formuna üçüncü bir
-          sorumluluk yüklemiyoruz.
-          
-          Artık tek sütunlu düzende olduğu için genişlik derdi yok —
-          kendi max-width'ini de kaldırdık, sarmalayıcı belirliyor. */}
-      <OturumListesi />
-    </div>
+      </div>
   );
 }

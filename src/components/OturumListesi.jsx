@@ -180,10 +180,18 @@ export default function OturumListesi() {
     <div className="otr-kart">
       <div className="otr-ust">
         <div>
-          <div className="otr-baslik">🖥️ Aktif Oturumlar</div>
+          {/* Başlık ve açıklama artık SAYFA dosyasında (OturumlarimSayfasi).
+              Burada tekrar etmek aynı bilgiyi iki kez göstermek olurdu.
+              
+              Kartın kendi başlığı olarak sadece sayıyı gösteriyoruz —
+              "kaç oturum var" bilgisi listeye bakmadan görünsün. */}
+          <div className="otr-baslik">
+            {oturumlar.length > 0
+              ? `${oturumlar.length} aktif oturum`
+              : 'Oturumlar'}
+          </div>
           <div className="otr-altyazi">
-            Hesabına giriş yapılmış cihazlar. Tanımadığın bir cihaz varsa
-            oturumunu kapat ve şifreni değiştir.
+            Tanımadığın bir cihaz varsa oturumunu kapat ve şifreni değiştir.
           </div>
         </div>
 

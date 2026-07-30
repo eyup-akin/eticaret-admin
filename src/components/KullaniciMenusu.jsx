@@ -247,7 +247,7 @@ export default function KullaniciMenusu() {
                 gerektiğini düşünüyorsa) bu bir güvenlik uyarısı olur —
                 menüden fark etmesi, sayfaya girmesini beklemekten iyi. */}
             <Link
-              to="/hesabim"
+              to="/oturumlarim"
               className="km-satir"
               role="menuitem"
               onClick={() => setAcik(false)}
