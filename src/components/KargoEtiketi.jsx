@@ -54,9 +54,26 @@ export default function KargoEtiketi({ etiket, magaza }) {
         <div className="etiket-sehir">{etiket.sehir || '—'}</div>
 
         <div className="etiket-telefon">Tel: {etiket.telefon || '—'}</div>
-
-
       </div>
+
+      {/* ---------- ⭐ YENİ: MÜŞTERİ NOTU ----------
+          
+          Etiketin en kritik eklentisi. Koliyi hazırlayan kişi admin
+          panelini açık tutmuyor — elinde koli, önünde yazıcı var.
+          Not sadece ekranda kalırsa hiç alınmamış gibi olur.
+          
+          Kalın çerçeve ve büyük punto bilinçli: bu blok gözden
+          kaçmamalı. Termal yazıcıda renk yok, dolayısıyla vurgunun
+          tek yolu çerçeve, kalınlık ve boyut.
+          
+          Koşullu: notu olmayan siparişte blok hiç çizilmiyor,
+          10x15 cm'lik alanda boş kutu israf olurdu. */}
+      {etiket.musteriNotu && (
+        <div className="etiket-not">
+          <div className="etiket-not-baslik">⚠ MÜŞTERİ NOTU</div>
+          <div className="etiket-not-metin">{etiket.musteriNotu}</div>
+        </div>
+      )}
 
       {/* ---------- ALT: BARKOD ---------- */}
       <div className="etiket-alt">
@@ -67,6 +84,20 @@ export default function KargoEtiketi({ etiket, magaza }) {
         <div className="etiket-ozet">
           {etiket.urunCesidi} çeşit · {etiket.toplamAdet} adet · {paraBicimle(etiket.tutar)}
         </div>
+
+        {/* ⭐ YENİ — KARGO BİLGİSİ
+            
+            Neden koşullu? Gerçek akışta etiket, kargocu koliyi ALMADAN
+            önce basılır — takip numarası o an henüz yoktur. "Takip No: —"
+            yazmak hem yer kaplar hem etiketi okuyanı "eksik bilgi var mı"
+            diye düşündürür.
+            
+            Sonradan yeniden basılan etikette (arşiv kopyası) dolu gelir. */}
+        {etiket.takipNo && (
+          <div className="etiket-kargo">
+            {etiket.kargoFirmasi || 'Kargo'} · {etiket.takipNo}
+          </div>
+        )}
       </div>
 
     </div>
