@@ -15,6 +15,19 @@
   padding: 20px 0;
   height: 100vh;        /* ⭐ tam boy */
   overflow-y: auto;     /* ⭐ menü çok uzarsa KENDİ İÇİNDE kaysın */
+  overflow-x: hidden;   /* ⭐ YENİ — daralırken yazılar taşıp yatay kaydırma çubuğu doğurmasın */
+
+  /* ⭐ YENİ — yumuşak geçiş.
+     
+     Neden "transition: all" değil de sadece width?
+     "all" yazarsak tarayıcı renk, gölge, kenarlık dahil DEĞİŞEN HER
+     ŞEYİ canlandırmaya çalışır. Tema değiştirildiğinde menü renginin
+     de yavaşça geçmesi gibi istenmeyen etkiler doğar ve gereksiz
+     hesaplama yapılır. Neyi canlandırdığını açıkça yaz.
+     
+     0.18s: 0.3s ve üstü "yavaş" hissettirir, 0.1s altı fark edilmez.
+     Arayüz geçişleri için 0.15-0.25s aralığı standart. */
+  transition: width 0.18s ease;
 }
 
 .yan-menu-logo {
@@ -22,6 +35,14 @@
   font-size: 20px;
   font-weight: 700;
   padding: 0 20px 24px 20px;
+
+  /* ⭐ YENİ — ikon ve yazı ayrı öğeler oldu, yan yana hizala.
+     white-space: nowrap → daralma animasyonu sırasında "E-Ticaret"
+     alt satıra kaçıp logoyu iki katına çıkarmasın. */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
 }
 
 .menu-link {
@@ -33,6 +54,11 @@
   text-decoration: none;
   font-size: 15px;
   border-left: 3px solid transparent;
+
+  /* ⭐ YENİ — "Ödemeler / Gelir" gibi uzun yazılar daralma sırasında
+     alt satıra kaçıp bağlantı yüksekliğini iki katına çıkarmasın.
+     Animasyon boyunca satır yüksekliği sabit kalıyor. */
+  white-space: nowrap;
 }
 
 .menu-link:hover {
@@ -115,4 +141,87 @@
   flex: 1;
   padding: 24px;
   overflow-y: auto;
+}
+
+/* ========================================================
+   ⭐ YENİ — DARALTILMIŞ MENÜ
+   
+   Tüm kurallar .yan-menu-dar sınıfı altında toplandı.
+   JSX sadece bu sınıfı ekleyip kaldırıyor; görünümle ilgili
+   hiçbir karar JavaScript'te değil.
+   ======================================================== */
+
+/* 68px nereden geliyor?
+   İkon 22px + iki yandan 23px boşluk. Dokunma/tıklama hedefi olarak
+   önerilen alt sınır 44px'tir; 68px bunun rahatça üstünde. */
+.yan-menu-dar {
+  width: 68px;
+}
+
+/* Yazıları gizle — ikonlar kalsın.
+   
+   Neden display: none, neden opacity: 0 değil?
+   opacity ile gizlenen öğe yer kaplamaya DEVAM eder; 68px'lik menüde
+   görünmez bir metin taşmaya ve hizasızlığa yol açardı.
+   display: none öğeyi yerleşimden tamamen çıkarıyor. */
+.yan-menu-dar .logo-yazi,
+.yan-menu-dar .menu-yazi {
+  display: none;
+}
+
+/* Logo ve bağlantılar ortalansın.
+   
+   padding: 12px 0 → yatay boşluğu sıfırlıyoruz, çünkü 20px'lik
+   boşluk 68px içinde ikona yer bırakmazdı. */
+.yan-menu-dar .yan-menu-logo {
+  padding: 0 0 24px 0;
+  justify-content: center;
+}
+
+.yan-menu-dar .menu-link {
+  padding: 12px 0;
+  justify-content: center;
+
+  /* Sol kenar çizgisi ortalamayı 3px kaydırıyordu.
+     Daraltılmışken aktif sayfayı sol çizgiyle değil arka plan
+     rengiyle belirtiyoruz — dar alanda o daha okunaklı. */
+  border-left-width: 0;
+  gap: 0;
+}
+
+/* ---------- DARALTMA BUTONU ---------- */
+
+.menu-daralt-buton {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 1px solid var(--kenarlik);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziOrta);
+  font-size: 16px;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Buton üst barın en soluna otursun.
+     .ust-bar'da justify-content: flex-end var; bu buton ondan önce
+     geldiği ve .ust-bar-isim'de margin-right: auto olduğu için
+     sola yapışıyor. */
+  margin-right: 4px;
+}
+
+.menu-daralt-buton:hover {
+  background-color: var(--acikGri);
+  color: var(--yaziKoyu);
+}
+
+/* Klavyeyle gezinen kullanıcı butonun seçili olduğunu görebilmeli.
+   :focus değil :focus-visible kullanıyoruz — böylece FAREYLE
+   tıklandığında çerçeve çıkmıyor, sadece Tab ile gelindiğinde çıkıyor. */
+.menu-daralt-buton:focus-visible {
+  outline: 2px solid var(--anaRenk);
+  outline-offset: 2px;
 }
