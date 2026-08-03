@@ -38,6 +38,18 @@ export default function UrunFormSayfasi() {
     cost: '',
     stock: '',
     categoryId: '',
+
+    // ⭐ YENİ — ürün satışta mı?
+    //
+    // Neden diğer alanlar gibi '' (boş string) değil de gerçek boolean?
+    // Diğerleri metin girdisi — "Sayısal form alanlarını metin state'te
+    // tut" kuralı onlar için geçerli (Number('') = 0 tuzağı). Checkbox
+    // ise doğrudan boolean çalışır, e.target.checked zaten boolean döner.
+    // Tipi zorlamaya gerek yok.
+    //
+    // Varsayılan true: yeni ürün formu açıldığında ürün satışa hazır
+    // gelsin. Admin isterse kapatır.
+    isActive: true,
   });
 
   // ---------- ÜRÜNÜ ÇEK (resimler dahil) ----------
@@ -51,6 +63,14 @@ export default function UrunFormSayfasi() {
       cost: urun.cost != null ? String(urun.cost) : '',
       stock: String(urun.stock),
       categoryId: String(urun.categoryId),
+
+      // ⭐ YENİ — sunucudan gelen durumu forma yansıt.
+      //
+      // ?? true kullanıyoruz (|| true DEĞİL): eğer bir şekilde alan
+      // gelmezse (eski sürüm API, ağ hatası) ürünü kazara pasife
+      // düşürmeyelim. || kullansaydık false değeri de true'ya
+      // çevrilirdi — pasif ürünü açmaya çalışmış olurduk.
+      isActive: urun.isActive ?? true,
     });
 
     setResimler(urun.images || []);
@@ -148,6 +168,7 @@ export default function UrunFormSayfasi() {
         cost: Number(form.cost),
         stock: Number(form.stock),
         categoryId: Number(form.categoryId),
+        isActive: form.isActive,      // ⭐ YENİ
       };
 
       if (duzenlemeMi) {
@@ -337,6 +358,34 @@ export default function UrunFormSayfasi() {
               </select>
             </div>
           </div>
+          
+          {/* ⭐ YENİ — satış durumu.
+              
+              Neden checkbox, neden iki radyo düğmesi değil?
+              İki durumu olan, biri "normal" sayılan ayarlarda checkbox
+              doğru araçtır. Radyo düğmesi eşit ağırlıklı seçenekler
+              içindir (ör. kargo firması seçimi). Burada "satışta" varsayılan
+              ve normal durum, "kaldırıldı" istisnai durum. */}
+          <div className="form-alan">
+            <label className="form-onay-satir">
+              <input
+                type="checkbox"
+                checked={form.isActive}
+                onChange={(e) => alanDegistir('isActive', e.target.checked)}
+              />
+
+              <span className="form-etiket" style={{ marginBottom: 0 }}>
+                Ürün satışta
+              </span>
+            </label>
+
+            <div className="form-ipucu">
+              {form.isActive
+                ? 'Müşteriler bu ürünü görebilir ve sipariş edebilir.'
+                : 'Ürün müşterilere görünmez ve sipariş edilemez. Sepetlerde duruyorsa sipariş aşamasında engellenir.'}
+            </div>
+          </div>
+
 
           <div className="form-butonlar">
             <Buton type="submit" disabled={kaydediliyor}>

@@ -186,3 +186,24 @@
 .kar-negatif .kar-deger {
   color: var(--hata);
 }
+
+/* ⭐ YENİ — checkbox ile etiketini yan yana hizalar.
+   
+   Tüm satırı <label> yapmamızın sebebi: kullanıcı yazıya tıklayınca da
+   kutu işaretlensin. Sadece kutuya tıklanabilir olsaydı 16x16 pikselik
+   bir hedef kalırdı — dokunmatik ekranda ıskalanır. */
+.form-onay-satir {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Tarayıcının varsayılan 13px'lik kutusu bu formda küçük kalıyor */
+.form-onay-satir input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--anaRenk);
+}

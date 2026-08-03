@@ -4,7 +4,14 @@ import './Tablo.css';
 // veriler  : [{ id: 1, name: '...' }, ...]
 // anahtar  : (satir) => satir.id     — React'in her satırı tanıması için
 // bosMesaj : veri yoksa gösterilecek yazı
-export default function Tablo({ sutunlar, veriler, anahtar, bosMesaj = 'Kayıt bulunamadı.' }) {
+// satirSinifi : (satir) => 'pasif-satir' — satıra ek CSS sınıfı vermek için (opsiyonel)
+export default function Tablo({
+  sutunlar,
+  veriler,
+  anahtar,
+  bosMesaj = 'Kayıt bulunamadı.',
+  satirSinifi = null,
+}) {
 
   // Veri yoksa tabloyu hiç çizme, mesaj göster
   if (!veriler || veriler.length === 0) {
@@ -44,7 +51,10 @@ export default function Tablo({ sutunlar, veriler, anahtar, bosMesaj = 'Kayıt b
 
           <tbody>
             {veriler.map((satir) => (
-              <tr key={anahtar(satir)}>
+              <tr
+                key={anahtar(satir)}
+                className={satirSinifi ? satirSinifi(satir) : ''}
+              >
                 {sutunlar.map((sutun, i) => (
                   <td key={i} className={hizaSinifi(sutun.hizala)}>
                     {sutun.hucre(satir)}

@@ -81,3 +81,31 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+
+
+/* ⭐ YENİ — satıştan kaldırılmış ürünün satırı.
+   
+   Neden opacity, neden gri arka plan değil?
+   Arka plan rengi zebra çizgileri ve :hover efektiyle çakışırdı.
+   opacity satırın TÜM içeriğini (resim dahil) tek seferde soluklaştırır
+   ve mevcut hiçbir stille kavga etmez.
+   
+   0.5 değil 0.55: 0.5'te koyu temada yazı okunamayacak kadar siliniyor. */
+.satir-pasif {
+  opacity: 0.55;
+}
+
+/* Fare üstüne gelince tam görünürlüğe dönsün — okumak isteyen okuyabilsin.
+   Soluk gösterim bir "bu ikinci planda" işareti, bir engel değil. */
+.satir-pasif:hover {
+  opacity: 1;
+}
+
+/* Ürün adının üstü çizili olsun — soluklukla birlikte iki katmanlı sinyal.
+   
+   Sadece <b> etiketini hedefliyoruz; barkod, fiyat, stok gibi hâlâ
+   geçerli olan bilgilerin üstünü çizmek yanıltıcı olurdu. */
+.satir-pasif td b {
+  text-decoration: line-through;
+  text-decoration-color: var(--yaziGri);
+}

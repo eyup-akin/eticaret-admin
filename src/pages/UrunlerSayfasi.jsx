@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { apiGet, apiDelete } from '../services/api';
+// ⭐ apiPut eklendi — durum aç/kapa endpoint'i için
+import { apiGet, apiDelete, apiPut } from '../services/api';
 import { paraBicimle, sayiBicimle } from '../utils/bicimlendir';
 import { resimUrl } from '../utils/resim';
 
@@ -9,9 +10,9 @@ import Yukleniyor from '../components/Yukleniyor';
 import HataKutusu from '../components/HataKutusu';
 import Tablo from '../components/Tablo';
 import Buton from '../components/Buton';
+import Rozet from '../components/Rozet';          // ⭐ YENİ — durum rozeti
 import AramaKutusu from '../components/AramaKutusu';
 import OnayPenceresi from '../components/OnayPenceresi';
-
 
 import ExcelIceAktar from '../components/ExcelIceAktar';
 
@@ -29,13 +30,29 @@ export default function UrunlerSayfasi() {
   const [kategoriId, setKategoriId] = useState('');
   const [siralama, setSiralama] = useState('ad');
 
+  // ⭐ YENİ — durum filtresi.
+  // '' = hepsi, 'true' = sadece satıştakiler, 'false' = sadece kaldırılanlar.
+  //
+  // Neden boolean değil de STRING tutuyoruz?
+  // Bu değer doğrudan bir <select>'in value'su. HTML'de select değerleri
+  // her zaman string'tir; boolean tutsaydık her okuma ve yazmada
+  // dönüştürme yapmak zorunda kalırdık. Ayrıca üç durumumuz var
+  // (hepsi / aktif / pasif) ve boolean bunu karşılamıyor.
+  const [durumFiltre, setDurumFiltre] = useState('');
+
   const [silinecek, setSilinecek] = useState(null);
   const [siliniyor, setSiliniyor] = useState(false);
 
+  // ⭐ YENİ — şu an durumu değiştirilen ürünün id'si (yoksa null).
+  //
+  // Neden ayrı bir "yukleniyor" boolean'ı değil?
+  // Sayfada 40 ürün var; hangi satırın butonunun kilitleneceğini
+  // bilmemiz lazım. Boolean tutsaydık istek atılınca 40 butonun HEPSİ
+  // kilitlenirdi. id tutunca sadece ilgili satır etkileniyor.
+  const [durumDegisen, setDurumDegisen] = useState(null);
 
   // Excel içe aktarma modalı açık mı?
   const [iceAktarAcik, setIceAktarAcik] = useState(false);
-
 
   // Kategorileri bir kez çek
   useEffect(() => {
@@ -44,7 +61,7 @@ export default function UrunlerSayfasi() {
       .catch(() => setKategoriler([]));
   }, []);
 
-  // Ürünleri çek (arama + kategori filtresi backend'de)
+  // Ürünleri çek (arama + kategori + durum filtresi backend'de)
   async function urunleriGetir() {
     setYukleniyor(true);
     setHata('');
@@ -60,6 +77,16 @@ export default function UrunlerSayfasi() {
         parametreler.append('categoryId', kategoriId);
       }
 
+      // ⭐ YENİ — durum filtresi.
+      //
+      // Boş bırakırsak parametreyi HİÇ göndermiyoruz. Backend'de
+      // "aktif" parametresi bool? (nullable) — gelmezse admin tüm
+      // ürünleri görüyor. "aktif=" gibi boş bir değer göndermek
+      // model binding hatası üretirdi.
+      if (durumFiltre !== '') {
+        parametreler.append('aktif', durumFiltre);
+      }
+
       const sorgu = parametreler.toString();
       const yol = sorgu === '' ? '/products' : '/products?' + sorgu;
 
@@ -72,14 +99,18 @@ export default function UrunlerSayfasi() {
     }
   }
 
-  // Debounce: kullanıcı yazmayı bırakalı 400ms geçtiyse iste
+  // Debounce: kullanıcı yazmayı bırakalı 400ms geçtiyse iste.
+  //
+  // ⭐ durumFiltre bağımlılık dizisine eklendi — eklemeseydik filtreyi
+  // değiştirince liste yenilenmezdi. React bağımlılık dizisinde olmayan
+  // bir değer değişince effect'i tekrar çalıştırmaz.
   useEffect(() => {
     const sayac = setTimeout(() => {
       urunleriGetir();
     }, 400);
 
     return () => clearTimeout(sayac);
-  }, [arama, kategoriId]);
+  }, [arama, kategoriId, durumFiltre]);
 
   async function silmeyiOnayla() {
     setSiliniyor(true);
@@ -93,6 +124,41 @@ export default function UrunlerSayfasi() {
       setSilinecek(null);
     } finally {
       setSiliniyor(false);
+    }
+  }
+
+  // ⭐ YENİ — ürünü satışa aç / satıştan kaldır
+  async function durumDegistir(urun) {
+    setDurumDegisen(urun.id);
+    setHata('');
+
+    try {
+      // Yeni durum = mevcut durumun tersi.
+      // Tersini İSTEMCİDE hesaplayıp gönderiyoruz ama sunucuya
+      // "tersine çevir" demiyoruz — açıkça true/false gönderiyoruz.
+      // Böylece iki admin aynı anda basarsa sonuç belirsiz kalmıyor:
+      // ikisi de aynı hedef değeri gönderiyorsa sonuç aynı, farklı
+      // gönderiyorsa son yazan kazanıyor. "Tersine çevir" deseydik
+      // iki istek üst üste gelince ürün başladığı yere dönerdi.
+      const cevap = await apiPut('/products/' + urun.id + '/durum', {
+        isActive: !urun.isActive,
+      });
+
+      // Listeyi baştan çekmiyoruz — sadece o satırı güncelliyoruz.
+      // Tüm listeyi yenilemek 40 ürünü tekrar indirmek ve tablonun
+      // gözle görülür şekilde titremesi demek olurdu.
+      //
+      // Yeni değeri kendi hesabımızdan değil SUNUCUNUN CEVABINDAN
+      // alıyoruz (cevap.isActive). Sunucu son sözü söyleyen taraf.
+      setUrunler((oncekiler) =>
+        oncekiler.map((u) =>
+          u.id === urun.id ? { ...u, isActive: cevap.isActive } : u
+        )
+      );
+    } catch (e) {
+      setHata(e.message);
+    } finally {
+      setDurumDegisen(null);
     }
   }
 
@@ -137,7 +203,6 @@ export default function UrunlerSayfasi() {
         ),
     },
     {
-      // ⭐ DEĞİŞTİ — eski "#" (id) yerine artık barkod
       baslik: 'Barkod',
       hucre: (u) => (
         <span style={{ fontFamily: 'monospace', color: 'var(--yaziOrta)' }}>
@@ -160,6 +225,16 @@ export default function UrunlerSayfasi() {
       ),
     },
     {
+      // ⭐ YENİ — satış durumu.
+      //
+      // Neden ayrı bir kolon? Rengi soluk satırdan da anlaşılıyor ama
+      // renk tek başına bilgi taşımamalı: renk körü bir kullanıcı ya da
+      // ekranı parlak ışıkta bakan biri farkı göremez. Yazıyla da
+      // söylemek erişilebilirliğin temel kuralı.
+      baslik: 'Durum',
+      hucre: (u) => <Rozet durum={u.isActive ? 'aktif' : 'pasif'} />,
+    },
+    {
       baslik: 'Kategori',
       hucre: (u) => kategoriAdi(u.categoryId),
     },
@@ -169,7 +244,6 @@ export default function UrunlerSayfasi() {
       hucre: (u) => paraBicimle(u.price),
     },
     {
-      // ⭐ YENİ — kâr sütunu (fiyat − maliyet), marjı altında küçük yazı
       baslik: 'Kâr',
       hizala: 'sag',
       hucre: (u) => {
@@ -214,6 +288,25 @@ export default function UrunlerSayfasi() {
       hizala: 'sag',
       hucre: (u) => (
         <div className="islem-butonlari">
+          {/* ⭐ YENİ — satışa aç / satıştan kaldır */}
+          <Buton
+            tip="ikincil"
+            boyut="kucuk"
+            onClick={() => durumDegistir(u)}
+            disabled={durumDegisen === u.id}
+            title={
+              u.isActive
+                ? 'Müşteri artık bu ürünü göremez ve sipariş edemez'
+                : 'Ürün tekrar satışa açılır'
+            }
+          >
+            {durumDegisen === u.id
+              ? '...'
+              : u.isActive
+                ? '🚫 Satıştan Kaldır'
+                : '✅ Satışa Aç'}
+          </Buton>
+
           <Buton
             tip="ikincil"
             boyut="kucuk"
@@ -270,6 +363,17 @@ export default function UrunlerSayfasi() {
           ))}
         </select>
 
+        {/* ⭐ YENİ — durum filtresi */}
+        <select
+          className="filtre-secim"
+          value={durumFiltre}
+          onChange={(e) => setDurumFiltre(e.target.value)}
+        >
+          <option value="">Tüm durumlar</option>
+          <option value="true">Sadece satıştakiler</option>
+          <option value="false">Sadece satıştan kaldırılanlar</option>
+        </select>
+
         <select
           className="filtre-secim"
           value={siralama}
@@ -293,8 +397,10 @@ export default function UrunlerSayfasi() {
             sutunlar={sutunlar}
             veriler={siraliUrunler}
             anahtar={(u) => u.id}
+            // ⭐ YENİ — pasif ürünün satırı soluk çizilsin
+            satirSinifi={(u) => (u.isActive ? '' : 'satir-pasif')}
             bosMesaj={
-              arama !== '' || kategoriId !== ''
+              arama !== '' || kategoriId !== '' || durumFiltre !== ''
                 ? 'Bu filtreye uyan ürün yok.'
                 : 'Henüz ürün eklenmemiş.'
             }
@@ -311,7 +417,7 @@ export default function UrunlerSayfasi() {
         baslik="Ürünü sil"
         mesaj={
           silinecek
-            ? `"${silinecek.name}" ürününü ve tüm resimlerini silmek üzeresin. Bu işlem geri alınamaz.`
+            ? `"${silinecek.name}" ürününü ve tüm resimlerini silmek üzeresin. Bu işlem geri alınamaz. Ürünü geçici olarak satıştan kaldırmak istiyorsan "Satıştan Kaldır" butonunu kullan.`
             : ''
         }
         onayla={silmeyiOnayla}
