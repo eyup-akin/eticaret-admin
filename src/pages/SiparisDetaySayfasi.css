@@ -237,3 +237,90 @@
   border-radius: 8px;
 }
 
+
+
+/* ========================================================
+   ⭐ YENİ — MÜŞTERİ NOTU
+   
+   Sayfanın en üstünde, tam genişlikte, sarı vurgulu.
+   Kargo hazırlayanın gözünden kaçmaması gereken tek bilgi bu.
+   ======================================================== */
+.musteri-notu-kutu {
+  background-color: var(--acikKart);
+
+  /* Sol kenar çizgisi: "bu bir uyarı/talimat" işareti.
+     Kupon ve pasif ürün uyarılarında da aynı deseni kullandık —
+     kullanıcı bu görsel dili bir kez öğrenip her yerde tanıyor. */
+  border-left: 4px solid var(--uyari);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.musteri-notu-baslik {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--uyari);
+  margin-bottom: 6px;
+}
+
+.musteri-notu-metin {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--yaziKoyu);
+
+  /* Müşteri notu serbest metin — satır sonları ve uzun kelimeler
+     kutuyu taşırabilir.
+     
+     pre-wrap: müşterinin bastığı Enter'lar korunur, satır sonları
+     kaybolmaz. Normal metin akışında hepsi tek satıra yapışırdı.
+     
+     break-word: boşluksuz uzun bir dizi (yanlışlıkla yapıştırılmış
+     bir URL gibi) kutunun dışına taşmasın. */
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+
+/* ========================================================
+   ⭐ YENİ — KARGO BİLGİ BLOĞU
+   ======================================================== */
+.kargo-bilgi {
+  background-color: var(--acikKart);
+  border: 1px solid var(--kenarlik);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+.takip-no-mono {
+  font-family: monospace;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: var(--yaziKoyu);
+}
+
+/* Kopyala butonu — takip numarasının hemen yanında, küçük ve sade.
+   Buton bileşenini kullanmadık: o 14px yazı ve 8px dolgu ile
+   bilgi satırının yüksekliğini bozardı. */
+.kopyala-buton {
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  border: 1px solid var(--kenarlik);
+  border-radius: 6px;
+  background-color: var(--kartArka);
+  color: var(--yaziOrta);
+
+  /* Metin "📋 Kopyala" ile "✅ Kopyalandı" arasında değişiyor.
+     Genişlik sabitlenmezse buton zıplar ve gözü rahatsız eder. */
+  min-width: 92px;
+
+  /* Satır kaymasın diye dikeyde ortalama */
+  vertical-align: middle;
+}
+
+.kopyala-buton:hover {
+  background-color: var(--acikGri);
+  color: var(--yaziKoyu);
+}

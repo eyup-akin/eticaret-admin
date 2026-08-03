@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-
-
 import { apiGet, apiPut } from '../services/api';
 import { paraBicimle, sayiBicimle, tarihBicimle } from '../utils/bicimlendir';
 
@@ -11,6 +9,7 @@ import HataKutusu from '../components/HataKutusu';
 import Buton from '../components/Buton';
 import Rozet from '../components/Rozet';
 import OnayPenceresi from '../components/OnayPenceresi';
+import KargoyaVerModal from '../components/KargoyaVerModal';   // ⭐ YENİ
 
 import KargoEtiketi from '../components/KargoEtiketi';
 
@@ -41,6 +40,11 @@ export default function SiparisDetaySayfasi() {
   const [iptalSebebi, setIptalSebebi] = useState('');
   const [iptalOnayi, setIptalOnayi] = useState(false);
 
+  // ⭐ YENİ — kargoya verme penceresi açık mı?
+  const [kargoModalAcik, setKargoModalAcik] = useState(false);
+
+  // ⭐ YENİ — takip numarası panoya kopyalandı mı? (geçici geri bildirim)
+  const [kopyalandi, setKopyalandi] = useState(false);
 
   // Etiket verisi — yazdırma anında çekilir, sayfa açılışında değil.
   // Sebep: admin siparişlerin çoğunu görüntüler ama etiket basmaz.
@@ -55,7 +59,6 @@ export default function SiparisDetaySayfasi() {
       setHata(e.message);
     }
   }
-
 
   async function siparisiGetir() {
     setYukleniyor(true);
@@ -88,8 +91,38 @@ export default function SiparisDetaySayfasi() {
     }
   }, [etiketVerisi]);
 
+  // ⭐ YENİ — "Kopyalandı" yazısını 2 saniye sonra sil.
+  //
+  // Neden setTimeout'u doğrudan kopyala fonksiyonunun içine koymadık?
+  // Koysaydık, admin üst üste iki kez kopyaladığında iki zamanlayıcı
+  // birden çalışır ve ikincisi henüz süresi dolmadan birincisi yazıyı
+  // silerdi. Effect'in temizlik fonksiyonu eski zamanlayıcıyı iptal
+  // ederek bunu engelliyor.
+  useEffect(() => {
+    if (!kopyalandi) {
+      return;
+    }
+
+    const sayac = setTimeout(() => setKopyalandi(false), 2000);
+    return () => clearTimeout(sayac);
+  }, [kopyalandi]);
+
   // ---------- DURUMU İLERLET ----------
+  //
+  // ⭐ DEĞİŞTİ: "kargoda" geçişi artık doğrudan istek atmıyor.
+  //
+  // Backend bu geçişte firma + takip numarası zorunlu kılıyor. Elimizde
+  // olmayan veriyle istek atıp 400 yemek yerine önce pencereyi açıp
+  // veriyi topluyoruz. Diğer geçişler (teslim_edildi) ek bilgi
+  // istemediği için eskisi gibi tek tıkla ilerliyor.
   async function durumuIlerlet(yeniDurum) {
+    if (yeniDurum === 'kargoda') {
+      setHata('');
+      setBasari('');
+      setKargoModalAcik(true);
+      return;
+    }
+
     setIslemde(true);
     setHata('');
     setBasari('');
@@ -103,6 +136,49 @@ export default function SiparisDetaySayfasi() {
       setHata(e.message);
     } finally {
       setIslemde(false);
+    }
+  }
+
+  // ⭐ YENİ — modal "Kargoya Ver" dediğinde çalışır
+  async function kargoyaVer(firma, takipNo) {
+    setIslemde(true);
+    setHata('');
+    setBasari('');
+
+    try {
+      await apiPut('/admin/orders/' + id + '/status', {
+        status: 'kargoda',
+        shippingCompany: firma,
+        trackingNumber: takipNo,
+      });
+
+      // Pencereyi ancak İSTEK BAŞARILI OLUNCA kapatıyoruz.
+      //
+      // Hemen kapatsaydık ve sunucu reddetseydi (geçersiz firma, geçiş
+      // hatası), admin girdiği bilgileri kaybeder ve baştan yazardı.
+      // Hata durumunda pencere açık kalıyor, mesaj arkada görünüyor.
+      setKargoModalAcik(false);
+      setBasari(`Sipariş kargoya verildi. Takip no: ${takipNo} ✅`);
+
+      await siparisiGetir();
+    } catch (e) {
+      setHata(e.message);
+    } finally {
+      setIslemde(false);
+    }
+  }
+
+  // ⭐ YENİ — takip numarasını panoya kopyala
+  async function takipNoKopyala() {
+    try {
+      await navigator.clipboard.writeText(siparis.takipNo);
+      setKopyalandi(true);
+    } catch {
+      // Pano erişimi HTTPS veya localhost dışında engellidir.
+      // Kopyalanamazsa numara zaten ekranda yazıyor, admin elle seçebilir.
+      // Bu yüzden hata mesajı basmıyoruz — çözemeyeceği bir uyarı
+      // vermek gereksiz gürültü.
+      setHata('Panoya kopyalanamadı, numarayı elle seçebilirsin.');
     }
   }
 
@@ -144,7 +220,6 @@ export default function SiparisDetaySayfasi() {
             ← Siparişlere Dön
           </Buton>
         </div>
-        
       </div>
     );
   }
@@ -180,6 +255,25 @@ export default function SiparisDetaySayfasi() {
       {hata !== '' && (
         <div style={{ marginBottom: 16 }}>
           <HataKutusu mesaj={hata} />
+        </div>
+      )}
+
+      {/* ⭐ YENİ — MÜŞTERİ NOTU
+          
+          Neden en üstte ve tam genişlikte?
+          Bu notun tek amacı kargo hazırlayan kişinin onu OKUMASI.
+          Sağ sütundaki bir kutuya koysaydık, ekranı hızlıca tarayan
+          biri kaçırabilirdi ve "kapıya bırakın" notu işe yaramazdı.
+          Bilginin yeri, kaçırılmasının maliyetiyle orantılı olmalı.
+          
+          Koşullu: notu olmayan siparişlerde boş kutu göstermiyoruz. */}
+      {siparis.musteriNotu && (
+        <div className="musteri-notu-kutu">
+          <div className="musteri-notu-baslik">
+            📝 Müşteri Notu — kargo hazırlanırken dikkate al
+          </div>
+
+          <div className="musteri-notu-metin">{siparis.musteriNotu}</div>
         </div>
       )}
 
@@ -336,6 +430,57 @@ export default function SiparisDetaySayfasi() {
               <Rozet durum={siparis.durum} />
             </div>
 
+            {/* ⭐ YENİ — KARGO BİLGİLERİ
+                
+                Sadece takip numarası varsa çiziliyor. Sipariş
+                "hazırlanıyor" iken bu blok hiç yok — boş satırlar
+                göstermek yerine bloğu hiç çizmemek daha temiz. */}
+            {siparis.takipNo && (
+              <div className="kargo-bilgi">
+                <div className="bilgi-satiri">
+                  <span className="bilgi-etiket">Firma</span>
+                  <span className="bilgi-deger">{siparis.kargoFirmasi || '—'}</span>
+                </div>
+
+                <div className="bilgi-satiri">
+                  <span className="bilgi-etiket">Takip No</span>
+
+                  <span className="bilgi-deger">
+                    <span className="takip-no-mono">{siparis.takipNo}</span>
+
+                    {/* Kopyala butonu: numara uzun ve elle seçmek zor.
+                        Metin butonun İÇİNDE değişiyor — ayrı bir bildirim
+                        kutusu açmak bu kadar küçük bir onay için abartı
+                        olurdu. Geri bildirim eylemin olduğu yerde. */}
+                    <button
+                      className="kopyala-buton"
+                      onClick={takipNoKopyala}
+                      title="Takip numarasını kopyala"
+                    >
+                      {kopyalandi ? '✅ Kopyalandı' : '📋 Kopyala'}
+                    </button>
+                  </span>
+                </div>
+
+                <div className="bilgi-satiri">
+                  <span className="bilgi-etiket">Kargoya Verildi</span>
+                  <span className="bilgi-deger">
+                    {tarihBicimle(siparis.kargoyaVerilmeTarihi)}
+                  </span>
+                </div>
+
+                {/* Teslim tarihi yalnızca teslim edilince dolar */}
+                {siparis.teslimTarihi && (
+                  <div className="bilgi-satiri">
+                    <span className="bilgi-etiket">Teslim Edildi</span>
+                    <span className="bilgi-deger">
+                      {tarihBicimle(siparis.teslimTarihi)}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Sunucu hangi geçişlere izin veriyorsa O butonlar çıkar.
                 Kural burada değil, backend'de. Biz sadece uyguluyoruz. */}
             {siparis.izinliGecisler.length > 0 ? (
@@ -433,6 +578,18 @@ export default function SiparisDetaySayfasi() {
         </div>
       </div>
 
+      {/* ---------- ⭐ KARGOYA VERME PENCERESİ ---------- */}
+      {/* Firma listesini sipariş detayıyla birlikte aldık, ayrı istek yok.
+          ?? [] : sunucu bir sebeple göndermezse modal patlamasın,
+          kendi uyarısını göstersin. */}
+      <KargoyaVerModal
+        acik={kargoModalAcik}
+        firmalar={siparis.kargoFirmalari ?? []}
+        kapat={() => setKargoModalAcik(false)}
+        kaydet={kargoyaVer}
+        islemde={islemde}
+      />
+
       {/* ---------- İPTAL ONAY PENCERESİ ---------- */}
       <OnayPenceresi
         acik={iptalOnayi}
@@ -447,7 +604,7 @@ export default function SiparisDetaySayfasi() {
         islemde={islemde}
       />
 
-        {/* YAZDIRMA ALANI — ekranda görünmez, sadece yazdırırken basılır.
+      {/* YAZDIRMA ALANI — ekranda görünmez, sadece yazdırırken basılır.
           @media print kuralı bu sınıfı arıyor. */}
       {etiketVerisi && (
         <div className="yazdirma-alani">
@@ -460,7 +617,6 @@ export default function SiparisDetaySayfasi() {
           ))}
         </div>
       )}
-
 
     </div>
   );
