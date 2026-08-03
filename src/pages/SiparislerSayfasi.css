@@ -41,11 +41,6 @@
   margin-top: 2px;
 }
 
-.kart-no {
-  font-family: monospace;
-  color: var(--yaziOrta);
-}
-
 .islem-butonlari {
   display: flex;
   justify-content: flex-end;
@@ -142,4 +137,30 @@
 .secim-butonlar {
   display: flex;
   gap: 8px;
+}
+
+/* ⭐ YENİ — kargo takip numarası.
+   
+   Ödeme kolonundaki .kart-no ile bilerek AYNI görünümde: ikisi de
+   "durum rozetinin altındaki teknik numara". Farklı gösterselerdi
+   kullanıcı ikisinin farklı türde bilgi olduğunu sanırdı. */
+.takip-no {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--yaziOrta);
+  margin-top: 4px;
+
+  /* letter-spacing: monospace fontta bile uzun numara dizileri
+     birbirine yapışık okunuyor. Harfleri hafif açmak, numarayı
+     gözle takip etmeyi kolaylaştırıyor. */
+  letter-spacing: 0.3px;
+}
+
+/* ⭐ YENİ — müşteri notu işareti.
+   
+   Turuncu (uyarı rengi) seçildi: kırmızı "hata" demek, yeşil "tamam"
+   demek. Bu ikisi de değil — "dikkat et, okunacak bir şey var" demek. */
+.not-isareti {
+  color: var(--uyari);
+  font-weight: 600;
 }

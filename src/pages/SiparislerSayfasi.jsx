@@ -215,6 +215,21 @@ export default function SiparislerSayfasi() {
             {/* Alt satır: çeşit ve adet özeti */}
             <div className="alt-bilgi">
               {sayiBicimle(s.urunCesidi)} çeşit · {sayiBicimle(s.toplamAdet)} adet
+
+              {/* ⭐ YENİ — müşteri notu var mı?
+                  
+                  Sadece bir işaret koyuyoruz, metni değil. Kargo hazırlayan
+                  kişi "bu siparişte okunacak bir şey var" bilgisini
+                  listeden alıp detaya girer.
+                  
+                  title özniteliği fare üstüne gelince ipucu balonu
+                  gösteriyor — ikonun ne anlama geldiğini tahmin etmek
+                  zorunda kalmasın. */}
+              {s.notVarMi && (
+                <span className="not-isareti" title="Müşteri sipariş notu bırakmış">
+                  {' · '}📝 not var
+                </span>
+              )}
             </div>
           </div>
         );
@@ -222,7 +237,31 @@ export default function SiparislerSayfasi() {
     },
     {
       baslik: 'Kargo',
-      hucre: (s) => <Rozet durum={s.durum} />,
+      hucre: (s) => (
+        <div>
+          <Rozet durum={s.durum} />
+
+          {/* ⭐ YENİ — takip numarası ve firma, rozetin altında.
+              
+              Neden ayrı kolon açmadık? Tablo zaten 9 kolonlu. Ama daha
+              önemlisi: "Ödeme" kolonu tam olarak bu deseni kullanıyor
+              (rozet + altında •••• 4242). Aynı ekranda aynı problemi
+              iki farklı şekilde çözmemek gerekir.
+              
+              Neden koşullu? Sipariş "hazırlanıyor" durumundayken takip
+              numarası yok. Boş bir satır bırakmak yerine hiç çizmiyoruz —
+              satır kendiliğinden kısalıyor. */}
+          {s.takipNo && (
+            <div className="takip-no" title="Kargo takip numarası">
+              {s.takipNo}
+            </div>
+          )}
+
+          {s.kargoFirmasi && (
+            <div className="alt-bilgi">{s.kargoFirmasi}</div>
+          )}
+        </div>
+      ),
     },
     {
       baslik: 'Ödeme',
