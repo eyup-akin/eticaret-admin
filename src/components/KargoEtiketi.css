@@ -146,7 +146,19 @@
      -webkit- öneki eski görünse de bu özellik hâlâ standart dışı;
      Chrome, Edge, Safari ve Firefox'un hepsi bu yazımı destekliyor. */
   display: -webkit-box;
+
+  /* İkisini birden yazıyoruz:
+     - -webkit-line-clamp : bugün her tarayıcının anladığı hâli
+     - line-clamp         : standart hâli, ileride önekli sürüm
+                            kaldırılırsa devreye girer
+     
+     Bir tarayıcı anlamadığı CSS satırını sessizce yok sayar, bu yüzden
+     ikisini birden yazmak zararsız. Standart olanı SONRA yazıyoruz:
+     ikisini de destekleyen tarayıcıda sonraki kazanır ve standart
+     davranış geçerli olur. */
   -webkit-line-clamp: 4;
+  line-clamp: 4;
+
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
