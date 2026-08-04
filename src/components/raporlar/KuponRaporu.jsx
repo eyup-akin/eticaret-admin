@@ -26,24 +26,6 @@ import RaporUstBilgi from './RaporUstBilgi';
 //  küçük kupon az indirim az ciro getirir ama oranı yüksek olabilir.
 // ============================================================
 
-function disaAktar() {
-    const basliklar = [
-      'Kod', 'Açıklama', 'Kullanım', 'Farklı Müşteri',
-      'Verilen İndirim', 'Getirilen Ciro', 'Verimlilik',
-    ];
-
-    const satirlar = veri.kuponlar.map((k) => [
-      k.kod,
-      k.aciklama,
-      k.kullanimSayisi,
-      k.farkliMusteri,
-      sayiCsv(k.toplamIndirim),
-      sayiCsv(k.getirilenCiro),
-      k.verimlilik === null ? '' : sayiCsv(k.verimlilik),
-    ]);
-
-    csvIndir('kupon-raporu', basliklar, satirlar);
-  }
 
 export default function KuponRaporu({ baslangic, bitis }) {
   const [veri, setVeri] = useState(null);
@@ -76,6 +58,26 @@ export default function KuponRaporu({ baslangic, bitis }) {
   useEffect(() => {
     getir();
   }, [baslangic, bitis]);
+
+  // Bileşenin İÇİNDE olmalı — "veri" state'ine erişiyor.
+  function disaAktar() {
+    const basliklar = [
+      'Kod', 'Açıklama', 'Kullanım', 'Farklı Müşteri',
+      'Verilen İndirim', 'Getirilen Ciro', 'Verimlilik',
+    ];
+
+    const satirlar = veri.kuponlar.map((k) => [
+      k.kod,
+      k.aciklama,
+      k.kullanimSayisi,
+      k.farkliMusteri,
+      sayiCsv(k.toplamIndirim),
+      sayiCsv(k.getirilenCiro),
+      k.verimlilik === null ? '' : sayiCsv(k.verimlilik),
+    ]);
+
+    csvIndir('kupon-raporu', basliklar, satirlar);
+  }
 
   if (yukleniyor) {
     return <Yukleniyor yazi="Kupon performansı hesaplanıyor..." />;

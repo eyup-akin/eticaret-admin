@@ -26,19 +26,7 @@ import RaporUstBilgi from './RaporUstBilgi';
 //  İadeler" olacak.
 // ============================================================
 
-function disaAktar() {
-    const basliklar = ['Sipariş No', 'Müşteri', 'Sebep', 'İptal Tarihi', 'Tutar'];
 
-    const satirlar = veri.siparisler.map((o) => [
-      o.siparisNo,
-      o.musteri,
-      o.sebep || 'Belirtilmemiş',
-      o.iptalTarihi ? o.iptalTarihi.slice(0, 10) : '',
-      sayiCsv(o.tutar),
-    ]);
-
-    csvIndir('iptal-raporu', basliklar, satirlar);
-  }
 
 export default function IptalRaporu({ baslangic, bitis }) {
   const [veri, setVeri] = useState(null);
@@ -71,6 +59,21 @@ export default function IptalRaporu({ baslangic, bitis }) {
   useEffect(() => {
     getir();
   }, [baslangic, bitis]);
+
+  // Bileşenin İÇİNDE olmalı — "veri" state'ine erişiyor.
+  function disaAktar() {
+    const basliklar = ['Sipariş No', 'Müşteri', 'Sebep', 'İptal Tarihi', 'Tutar'];
+
+    const satirlar = veri.siparisler.map((o) => [
+      o.siparisNo,
+      o.musteri,
+      o.sebep || 'Belirtilmemiş',
+      o.iptalTarihi ? o.iptalTarihi.slice(0, 10) : '',
+      sayiCsv(o.tutar),
+    ]);
+
+    csvIndir('iptal-raporu', basliklar, satirlar);
+  }
 
   if (yukleniyor) {
     return <Yukleniyor yazi="İptaller hesaplanıyor..." />;

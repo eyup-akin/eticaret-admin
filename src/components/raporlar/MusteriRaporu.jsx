@@ -20,27 +20,7 @@ import RaporUstBilgi from './RaporUstBilgi';
 //  veya özel iletişim için başlangıç noktasıdır.
 // ============================================================
 
-function disaAktar() {
-    const basliklar = [
-      'Müşteri', 'E-posta', 'Sipariş Sayısı',
-      'Toplam Harcama', 'Ortalama Sepet', 'Son Sipariş',
-    ];
 
-    const satirlar = veri.musteriler.map((m) => [
-      m.musteri,
-      m.email,
-      m.siparisSayisi,
-      sayiCsv(m.toplamHarcama),
-      sayiCsv(m.ortalamaSepet),
-
-      // Tarihi ISO'nun gün kısmıyla yazıyoruz (2026-08-04).
-      // tarihBicimle() ekran için güzel ama Excel'de sıralanamaz;
-      // ISO biçimi hem sıralanır hem her yerde aynı okunur.
-      m.sonSiparis ? m.sonSiparis.slice(0, 10) : '',
-    ]);
-
-    csvIndir('musteri-raporu', basliklar, satirlar);
-  }
 
 
 export default function MusteriRaporu({ baslangic, bitis }) {
@@ -74,6 +54,29 @@ export default function MusteriRaporu({ baslangic, bitis }) {
   useEffect(() => {
     getir();
   }, [baslangic, bitis]);
+
+  // Bileşenin İÇİNDE olmalı — "veri" state'ine erişiyor.
+  function disaAktar() {
+    const basliklar = [
+      'Müşteri', 'E-posta', 'Sipariş Sayısı',
+      'Toplam Harcama', 'Ortalama Sepet', 'Son Sipariş',
+    ];
+
+    const satirlar = veri.musteriler.map((m) => [
+      m.musteri,
+      m.email,
+      m.siparisSayisi,
+      sayiCsv(m.toplamHarcama),
+      sayiCsv(m.ortalamaSepet),
+
+      // Tarihi ISO'nun gün kısmıyla yazıyoruz (2026-08-04).
+      // tarihBicimle() ekran için güzel ama Excel'de sıralanamaz;
+      // ISO biçimi hem sıralanır hem her yerde aynı okunur.
+      m.sonSiparis ? m.sonSiparis.slice(0, 10) : '',
+    ]);
+
+    csvIndir('musteri-raporu', basliklar, satirlar);
+  }
 
   if (yukleniyor) {
     return <Yukleniyor yazi="Müşteri analizi hazırlanıyor..." />;

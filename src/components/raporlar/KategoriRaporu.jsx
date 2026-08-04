@@ -50,18 +50,7 @@ const PALET = [
   '#7f8c8d', // gri
 ];
 
-function disaAktar() {
-    const basliklar = ['Kategori', 'Satılan Adet', 'Ciro', 'Pay %'];
 
-    const satirlar = veri.kategoriler.map((k) => [
-      k.kategoriAdi,
-      k.adet,
-      sayiCsv(k.ciro),
-      sayiCsv(k.yuzde),
-    ]);
-
-    csvIndir('kategori-raporu', basliklar, satirlar);
-  }
 
 export default function KategoriRaporu({ baslangic, bitis }) {
   const { renkler } = useTema();
@@ -97,6 +86,28 @@ export default function KategoriRaporu({ baslangic, bitis }) {
   useEffect(() => {
     getir();
   }, [baslangic, bitis]);
+
+  // ⚠️ Bu fonksiyon bileşenin İÇİNDE olmak zorunda.
+  //
+  // Dışarı yazsaydık "veri" state'ini göremezdi — state
+  // bileşen fonksiyonunun içinde doğar, dışarıdaki bir
+  // fonksiyon o kapsama erişemez.
+  //
+  // Dışarı çıkabilen fonksiyonlar sadece "saf" olanlardır:
+  // girdisi parametrelerden gelen, dış dünyaya bakmayanlar
+  // (sayiCsv gibi).
+  function disaAktar() {
+    const basliklar = ['Kategori', 'Satılan Adet', 'Ciro', 'Pay %'];
+
+    const satirlar = veri.kategoriler.map((k) => [
+      k.kategoriAdi,
+      k.adet,
+      sayiCsv(k.ciro),
+      sayiCsv(k.yuzde),
+    ]);
+
+    csvIndir('kategori-raporu', basliklar, satirlar);
+  }
 
   if (yukleniyor) {
     return <Yukleniyor yazi="Kategori dağılımı hesaplanıyor..." />;

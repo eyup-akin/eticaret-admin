@@ -22,19 +22,6 @@ import RaporUstBilgi from './RaporUstBilgi';
 //  20 × 800 TL = 16.000 TL beklemede bilgisi harekete geçirir.
 // ============================================================
 
-function disaAktar() {
-    const basliklar = ['Ürün', 'Stok', 'Satış Fiyatı', 'Bağlı Sermaye', 'Maliyet Girilmiş'];
-
-    const satirlar = veri.urunler.map((u) => [
-      u.urunAdi,
-      u.stok,
-      sayiCsv(u.fiyat),
-      sayiCsv(u.bagliSermaye),
-      u.maliyetVarMi ? 'Evet' : 'Hayır',
-    ]);
-
-    csvIndir('olu-stok-raporu', basliklar, satirlar);
-  }
 
 export default function OluStokRaporu({ baslangic, bitis }) {
   const [veri, setVeri] = useState(null);
@@ -67,6 +54,21 @@ export default function OluStokRaporu({ baslangic, bitis }) {
   useEffect(() => {
     getir();
   }, [baslangic, bitis]);
+
+  // Bileşenin İÇİNDE olmalı — "veri" state'ine erişiyor.
+  function disaAktar() {
+    const basliklar = ['Ürün', 'Stok', 'Satış Fiyatı', 'Bağlı Sermaye', 'Maliyet Girilmiş'];
+
+    const satirlar = veri.urunler.map((u) => [
+      u.urunAdi,
+      u.stok,
+      sayiCsv(u.fiyat),
+      sayiCsv(u.bagliSermaye),
+      u.maliyetVarMi ? 'Evet' : 'Hayır',
+    ]);
+
+    csvIndir('olu-stok-raporu', basliklar, satirlar);
+  }
 
   if (yukleniyor) {
     return <Yukleniyor yazi="Ölü stok taranıyor..." />;
