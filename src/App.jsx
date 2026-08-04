@@ -33,6 +33,7 @@ import HesabimSayfasi from './pages/HesabimSayfasi';   // ⭐ YENİ
 
 import OturumlarimSayfasi from './pages/OturumlarimSayfasi';   // ⭐ YENİ
 
+import DenetimKaydiSayfasi from './pages/DenetimKaydiSayfasi';
 
 export default function App() {
   return (
@@ -93,6 +94,14 @@ export default function App() {
               <Route
                 path="/admin-basvurulari"
                 element={<AdminBasvurulariSayfasi />}
+              />
+
+              {/* ⭐ YENİ — denetim kaydı.
+                  Aynı süperadmin bekçisinin altında: denetim
+                  mekanizması, denetlenen kişiye kapalı olmalı. */}
+              <Route
+                path="/denetim-kaydi"
+                element={<DenetimKaydiSayfasi />}
               />
             </Route>
 

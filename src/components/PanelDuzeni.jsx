@@ -30,6 +30,12 @@ const MENU = [
     yazi: 'Admin Başvuruları',
     gerekenRol: 'superadmin',
   },
+  {
+    yol: '/denetim-kaydi',
+    ikon: '🔍',
+    yazi: 'Denetim Kaydı',
+    gerekenRol: 'superadmin',
+  },
 ];
 
 // ⭐ YENİ — tercih localStorage'da bu anahtarla saklanıyor.
