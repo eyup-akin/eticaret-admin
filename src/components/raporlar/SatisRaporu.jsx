@@ -8,6 +8,9 @@ import HataKutusu from '../HataKutusu';
 import Tablo from '../Tablo';
 import OzetKart from '../OzetKart';
 
+
+import { csvIndir, sayiCsv } from '../../utils/disaAktar';
+import RaporUstBilgi from './RaporUstBilgi';
 // ============================================================
 //  SATIŞLAR & KÂR RAPORU
 //
@@ -62,6 +65,32 @@ export default function SatisRaporu({ baslangic, bitis }) {
   useEffect(() => {
     getir();
   }, [baslangic, bitis]);
+
+  // Tabloyu CSV'ye çevirir.
+  //
+  // ⚠️ Sütunlar TABLODAKİYLE AYNI SIRADA olmalı — kullanıcı
+  // ekranda gördüğüyle dosyada gördüğünü eşleştirebilsin.
+  //
+  // Neden sutunlar dizisini yeniden kullanmıyoruz? Oradaki
+  // "hucre" fonksiyonları JSX döndürüyor (<span>...</span>);
+  // CSV'ye yazılamaz. Ham veriden ayrı bir dönüşüm gerekiyor.
+  function disaAktar() {
+    const basliklar = ['Ürün', 'Adet', 'Ciro', 'Maliyet', 'Kâr', 'Marj %'];
+
+    const satirlar = veri.urunler.map((u) => [
+      u.urunAdi,
+      u.adet,
+      sayiCsv(u.ciro),
+
+      // Maliyet bilinmiyorsa boş hücre bırakıyoruz, 0 değil.
+      // 0 yazsaydık Excel'de toplama girer ve kâr şişerdi.
+      u.maliyetEksik ? '' : sayiCsv(u.maliyet),
+      u.maliyetEksik ? '' : sayiCsv(u.kar),
+      u.maliyetEksik ? '' : sayiCsv(u.marj),
+    ]);
+
+    csvIndir('satis-raporu', basliklar, satirlar);
+  }
 
   if (yukleniyor) {
     return <Yukleniyor yazi="Satış raporu hesaplanıyor..." />;
@@ -174,16 +203,11 @@ export default function SatisRaporu({ baslangic, bitis }) {
       </div>
 
       {/* ---------- DÖNEM BİLGİSİ + UYARI ---------- */}
-      <div className="rapor-bilgi">
-        {/* Dönemi SUNUCUDAN gelen değerle yazıyoruz, ön yüzde
-            hesaplamıyoruz. Kullanıcı tarih seçmediyse "son 30 gün"
-            kuralı sunucuda yaşıyor — burada tahmin etmek iki farklı
-            gerçek yaratırdı. */}
-        <span>
-          Dönem: <b>{veri.baslangic}</b> – <b>{veri.bitis}</b>
-        </span>
-  
-      </div>
+      <RaporUstBilgi
+        baslangic={veri.baslangic}
+        bitis={veri.bitis}
+        disaAktar={disaAktar}
+      />
 
       <Tablo
         sutunlar={sutunlar}

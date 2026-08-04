@@ -8,6 +8,11 @@ import HataKutusu from '../HataKutusu';
 import Tablo from '../Tablo';
 import OzetKart from '../OzetKart';
 
+
+import { csvIndir, sayiCsv } from '../../utils/disaAktar';
+import RaporUstBilgi from './RaporUstBilgi';
+
+
 // ============================================================
 //  İPTALLER — sebep dağılımı ve kaybedilen ciro
 //
@@ -20,6 +25,21 @@ import OzetKart from '../OzetKart';
 //  Aşama 9'da iade sistemi gelince bu rapor "İptaller ve
 //  İadeler" olacak.
 // ============================================================
+
+function disaAktar() {
+    const basliklar = ['Sipariş No', 'Müşteri', 'Sebep', 'İptal Tarihi', 'Tutar'];
+
+    const satirlar = veri.siparisler.map((o) => [
+      o.siparisNo,
+      o.musteri,
+      o.sebep || 'Belirtilmemiş',
+      o.iptalTarihi ? o.iptalTarihi.slice(0, 10) : '',
+      sayiCsv(o.tutar),
+    ]);
+
+    csvIndir('iptal-raporu', basliklar, satirlar);
+  }
+
 export default function IptalRaporu({ baslangic, bitis }) {
   const [veri, setVeri] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
@@ -151,12 +171,12 @@ export default function IptalRaporu({ baslangic, bitis }) {
         />
       </div>
 
-      <div className="rapor-bilgi">
-        <span>
-          Dönem: <b>{veri.baslangic}</b> – <b>{veri.bitis}</b>
-          {' '}(iptal tarihine göre)
-        </span>
-      </div>
+      <RaporUstBilgi
+        baslangic={veri.baslangic}
+        bitis={veri.bitis}
+        ekBilgi="İptal tarihine göre filtrelenmiştir."
+        disaAktar={disaAktar}
+      />
 
       {/* Sebep dağılımı önce: "neden iptal ediliyor" sorusu
           "hangi siparişler iptal edildi" sorusundan daha

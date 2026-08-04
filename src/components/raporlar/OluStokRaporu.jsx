@@ -8,6 +8,9 @@ import HataKutusu from '../HataKutusu';
 import Tablo from '../Tablo';
 import OzetKart from '../OzetKart';
 
+import { csvIndir, sayiCsv } from '../../utils/disaAktar';
+import RaporUstBilgi from './RaporUstBilgi';
+
 // ============================================================
 //  ÖLÜ STOK — seçilen aralıkta HİÇ satılmayan aktif ürünler
 //
@@ -18,6 +21,21 @@ import OzetKart from '../OzetKart';
 //  verdirir. 20 adet kalmış bilgisi tek başına anlamsız;
 //  20 × 800 TL = 16.000 TL beklemede bilgisi harekete geçirir.
 // ============================================================
+
+function disaAktar() {
+    const basliklar = ['Ürün', 'Stok', 'Satış Fiyatı', 'Bağlı Sermaye', 'Maliyet Girilmiş'];
+
+    const satirlar = veri.urunler.map((u) => [
+      u.urunAdi,
+      u.stok,
+      sayiCsv(u.fiyat),
+      sayiCsv(u.bagliSermaye),
+      u.maliyetVarMi ? 'Evet' : 'Hayır',
+    ]);
+
+    csvIndir('olu-stok-raporu', basliklar, satirlar);
+  }
+
 export default function OluStokRaporu({ baslangic, bitis }) {
   const [veri, setVeri] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
@@ -115,16 +133,12 @@ export default function OluStokRaporu({ baslangic, bitis }) {
         />
       </div>
 
-      <div className="rapor-bilgi">
-        <span>
-          Dönem: <b>{veri.baslangic}</b> – <b>{veri.bitis}</b>
-        </span>
-
-        <span>
-          Bu aralıkta hiç satılmayan <b>aktif</b> ürünler listeleniyor.
-          Pasif ürünler zaten satışta değil, listeye girmez.
-        </span>
-      </div>
+      <RaporUstBilgi
+        baslangic={veri.baslangic}
+        bitis={veri.bitis}
+        ekBilgi="Bu aralıkta hiç satılmayan aktif ürünler."
+        disaAktar={disaAktar}
+      />
 
       <Tablo
         sutunlar={sutunlar}

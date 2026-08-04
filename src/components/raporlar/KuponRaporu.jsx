@@ -8,6 +8,9 @@ import HataKutusu from '../HataKutusu';
 import Tablo from '../Tablo';
 import OzetKart from '../OzetKart';
 
+
+import { csvIndir, sayiCsv } from '../../utils/disaAktar';
+import RaporUstBilgi from './RaporUstBilgi';
 // ============================================================
 //  KUPON PERFORMANSI
 //
@@ -22,6 +25,26 @@ import OzetKart from '../OzetKart';
 //  kaç TL ciro geldi. Ham sayılar ölçeğe bağlıdır, oran değildir —
 //  küçük kupon az indirim az ciro getirir ama oranı yüksek olabilir.
 // ============================================================
+
+function disaAktar() {
+    const basliklar = [
+      'Kod', 'Açıklama', 'Kullanım', 'Farklı Müşteri',
+      'Verilen İndirim', 'Getirilen Ciro', 'Verimlilik',
+    ];
+
+    const satirlar = veri.kuponlar.map((k) => [
+      k.kod,
+      k.aciklama,
+      k.kullanimSayisi,
+      k.farkliMusteri,
+      sayiCsv(k.toplamIndirim),
+      sayiCsv(k.getirilenCiro),
+      k.verimlilik === null ? '' : sayiCsv(k.verimlilik),
+    ]);
+
+    csvIndir('kupon-raporu', basliklar, satirlar);
+  }
+
 export default function KuponRaporu({ baslangic, bitis }) {
   const [veri, setVeri] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
@@ -160,17 +183,12 @@ export default function KuponRaporu({ baslangic, bitis }) {
         />
       </div>
 
-      <div className="rapor-bilgi">
-        <span>
-          Dönem: <b>{veri.baslangic}</b> – <b>{veri.bitis}</b>
-          {' '}(kuponun kullanıldığı tarihe göre)
-        </span>
-
-        <span>
-          <b>Verimlilik</b> = getirilen ciro ÷ verilen indirim.
-          Yüksek olması iyidir.
-        </span>
-      </div>
+      <RaporUstBilgi
+        baslangic={veri.baslangic}
+        bitis={veri.bitis}
+        ekBilgi="Verimlilik = getirilen ciro ÷ verilen indirim."
+        disaAktar={disaAktar}
+      />
 
       <Tablo
         sutunlar={sutunlar}

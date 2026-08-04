@@ -12,6 +12,9 @@ import Yukleniyor from '../Yukleniyor';
 import HataKutusu from '../HataKutusu';
 import Tablo from '../Tablo';
 
+
+import { csvIndir, sayiCsv } from '../../utils/disaAktar';
+import RaporUstBilgi from './RaporUstBilgi';
 // ============================================================
 //  KATEGORİ CİRO DAĞILIMI
 //
@@ -46,6 +49,19 @@ const PALET = [
   '#d35400', // koyu turuncu
   '#7f8c8d', // gri
 ];
+
+function disaAktar() {
+    const basliklar = ['Kategori', 'Satılan Adet', 'Ciro', 'Pay %'];
+
+    const satirlar = veri.kategoriler.map((k) => [
+      k.kategoriAdi,
+      k.adet,
+      sayiCsv(k.ciro),
+      sayiCsv(k.yuzde),
+    ]);
+
+    csvIndir('kategori-raporu', basliklar, satirlar);
+  }
 
 export default function KategoriRaporu({ baslangic, bitis }) {
   const { renkler } = useTema();
@@ -189,15 +205,12 @@ export default function KategoriRaporu({ baslangic, bitis }) {
         </div>
       )}
 
-      <div className="rapor-bilgi">
-        <span>
-          Dönem: <b>{veri.baslangic}</b> – <b>{veri.bitis}</b>
-        </span>
-
-        <span>
-          Toplam ciro: <b>{paraBicimle(veri.toplamCiro)}</b>
-        </span>
-      </div>
+      <RaporUstBilgi
+        baslangic={veri.baslangic}
+        bitis={veri.bitis}
+        ekBilgi={'Toplam ciro: ' + paraBicimle(veri.toplamCiro)}
+        disaAktar={disaAktar}
+      />
 
       <Tablo
         sutunlar={sutunlar}

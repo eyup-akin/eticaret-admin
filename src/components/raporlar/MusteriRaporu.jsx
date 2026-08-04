@@ -8,6 +8,9 @@ import HataKutusu from '../HataKutusu';
 import Tablo from '../Tablo';
 import OzetKart from '../OzetKart';
 
+import { csvIndir, sayiCsv } from '../../utils/disaAktar';
+import RaporUstBilgi from './RaporUstBilgi';
+
 // ============================================================
 //  EN ÇOK HARCAYAN MÜŞTERİLER
 //
@@ -16,6 +19,30 @@ import OzetKart from '../OzetKart';
 //  kısmından gelir; kimlerin olduğunu bilmek sadakat programı
 //  veya özel iletişim için başlangıç noktasıdır.
 // ============================================================
+
+function disaAktar() {
+    const basliklar = [
+      'Müşteri', 'E-posta', 'Sipariş Sayısı',
+      'Toplam Harcama', 'Ortalama Sepet', 'Son Sipariş',
+    ];
+
+    const satirlar = veri.musteriler.map((m) => [
+      m.musteri,
+      m.email,
+      m.siparisSayisi,
+      sayiCsv(m.toplamHarcama),
+      sayiCsv(m.ortalamaSepet),
+
+      // Tarihi ISO'nun gün kısmıyla yazıyoruz (2026-08-04).
+      // tarihBicimle() ekran için güzel ama Excel'de sıralanamaz;
+      // ISO biçimi hem sıralanır hem her yerde aynı okunur.
+      m.sonSiparis ? m.sonSiparis.slice(0, 10) : '',
+    ]);
+
+    csvIndir('musteri-raporu', basliklar, satirlar);
+  }
+
+
 export default function MusteriRaporu({ baslangic, bitis }) {
   const [veri, setVeri] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
@@ -127,13 +154,12 @@ export default function MusteriRaporu({ baslangic, bitis }) {
         />
       </div>
 
-      <div className="rapor-bilgi">
-        <span>
-          Dönem: <b>{veri.baslangic}</b> – <b>{veri.bitis}</b>
-        </span>
-
-        <span>İptal edilen siparişler dahil değildir.</span>
-      </div>
+      <RaporUstBilgi
+        baslangic={veri.baslangic}
+        bitis={veri.bitis}
+        ekBilgi="İptal edilen siparişler dahil değildir."
+        disaAktar={disaAktar}
+      />
 
       <Tablo
         sutunlar={sutunlar}

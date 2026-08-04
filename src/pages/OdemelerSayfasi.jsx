@@ -21,20 +21,8 @@ import Sayfalama from '../components/Sayfalama';
 import './OdemelerSayfasi.css';
 
 // Bugünün tarihini "2026-07-14" formatına çevirir (HTML date input bunu ister)
-function bugun() {
-  return new Date().toISOString().slice(0, 10);
-}
 
-function gunOnce(gun) {
-  const t = new Date();
-  t.setDate(t.getDate() - gun);
-  return t.toISOString().slice(0, 10);
-}
-
-function ayBasi() {
-  const t = new Date();
-  return new Date(t.getFullYear(), t.getMonth(), 1).toISOString().slice(0, 10);
-}
+import TarihAraligi from '../components/TarihAraligi';
 
 export default function OdemelerSayfasi() {
   const navigate = useNavigate();
@@ -119,36 +107,6 @@ export default function OdemelerSayfasi() {
   }, [arama, durumFiltre, baslangic, bitis, sayfaBoyutu]);
 
   // Hızlı tarih seçimi
-  function tarihAraligiSec(tip) {
-    if (tip === 'temizle') {
-      setBaslangic('');
-      setBitis('');
-      return;
-    }
-
-    if (tip === 'bugun') {
-      setBaslangic(bugun());
-      setBitis(bugun());
-      return;
-    }
-
-    if (tip === '7gun') {
-      setBaslangic(gunOnce(6));
-      setBitis(bugun());
-      return;
-    }
-
-    if (tip === '30gun') {
-      setBaslangic(gunOnce(29));
-      setBitis(bugun());
-      return;
-    }
-
-    if (tip === 'buAy') {
-      setBaslangic(ayBasi());
-      setBitis(bugun());
-    }
-  }
 
 
   // HANGİ HIZLI ARALIK SEÇİLİ?
@@ -158,35 +116,8 @@ export default function OdemelerSayfasi() {
   // Kullanıcı tarihi elle değiştirdiğinde ayrı bir state'i temizlemeyi
   // unutsak buton yanlış yerde yanılı kalırdı. Türetince o ihtimal yok —
   // ekran her zaman gerçek veriyi gösterir.
-  function aktifAralikBul() {
-    // Hiç tarih seçilmemişse hiçbir buton vurgulanmaz
-    if (baslangic === '' && bitis === '') {
-      return '';
-    }
 
-    // Not: ayın 1'inde "Bu Ay" ile "Bugün" aynı aralığa denk gelir.
-    // Sıra gereği "bugun" kazanır — kabul edilebilir bir durum.
-    if (baslangic === bugun() && bitis === bugun()) {
-      return 'bugun';
-    }
 
-    if (baslangic === gunOnce(6) && bitis === bugun()) {
-      return '7gun';
-    }
-
-    if (baslangic === gunOnce(29) && bitis === bugun()) {
-      return '30gun';
-    }
-
-    if (baslangic === ayBasi() && bitis === bugun()) {
-      return 'buAy';
-    }
-
-    // Hiçbirine uymuyorsa kullanıcı tarihleri elle girmiş demektir
-    return '';
-  }
-
-  const aktifAralik = aktifAralikBul();
 
 
   // Grafik verisi
@@ -342,53 +273,24 @@ export default function OdemelerSayfasi() {
         </div>
       )}
 
-      {/* ================= HIZLI TARİH ================= */}
-      {/* Seçili aralığın butonu "ana" tipine geçer — dolu renkli görünür.
-          Diğerleri "ikincil" kalır: çerçeveli, arka planı kart rengi. */}
-      <div className="hizli-tarihler">
-        <Buton
-          tip={aktifAralik === 'bugun' ? 'ana' : 'ikincil'}
-          boyut="kucuk"
-          onClick={() => tarihAraligiSec('bugun')}
-        >
-          Bugün
-        </Buton>
 
-        <Buton
-          tip={aktifAralik === '7gun' ? 'ana' : 'ikincil'}
-          boyut="kucuk"
-          onClick={() => tarihAraligiSec('7gun')}
-        >
-          Son 7 Gün
-        </Buton>
+      {/* ⭐ DEĞİŞTİ — tarih seçimi ortak bileşene taşındı.
+          Bu sayfada 60 satır kadar kopya kod vardı: hızlı buton
+          tanımları, tarih yardımcıları ve "hangi buton aktif"
+          hesabı. Raporlar sayfası da aynısına ihtiyaç duyunca
+          ikinci tüketici çıkmış oldu — taşıma zamanı geldi.
 
-        <Buton
-          tip={aktifAralik === '30gun' ? 'ana' : 'ikincil'}
-          boyut="kucuk"
-          onClick={() => tarihAraligiSec('30gun')}
-        >
-          Son 30 Gün
-        </Buton>
-
-        <Buton
-          tip={aktifAralik === 'buAy' ? 'ana' : 'ikincil'}
-          boyut="kucuk"
-          onClick={() => tarihAraligiSec('buAy')}
-        >
-          Bu Ay
-        </Buton>
-
-        {/* Temizle bir "durum" değil, bir "eylem" — asla vurgulanmaz.
-            Silinecek tarih yoksa pasif kalsın ki boşuna tıklanmasın. */}
-        <Buton
-          tip="ikincil"
-          boyut="kucuk"
-          disabled={baslangic === '' && bitis === ''}
-          onClick={() => tarihAraligiSec('temizle')}
-        >
-          ✕ Temizle
-        </Buton>
-      </div>
+          Kural: bir kural tek yerde kullanılıyorsa orada durur;
+          İKİNCİ tüketici çıktığı an ortak yere taşınır. */}
+      <TarihAraligi
+        baslangic={baslangic}
+        bitis={bitis}
+        degistir={(yeniBaslangic, yeniBitis) => {
+          setBaslangic(yeniBaslangic);
+          setBitis(yeniBitis);
+        }}
+      />
+      
 
       {/* ================= FİLTRELER ================= */}
       <div className="filtre-cubugu">
@@ -416,29 +318,7 @@ export default function OdemelerSayfasi() {
           </select>
         </div>
 
-        <div className="filtre-grup">
-          <span className="filtre-etiket">Başlangıç</span>
-
-          <input
-            className="filtre-tarih"
-            type="date"
-            value={baslangic}
-            onChange={(e) => setBaslangic(e.target.value)}
-            max={bitis || undefined}
-          />
-        </div>
-
-        <div className="filtre-grup">
-          <span className="filtre-etiket">Bitiş</span>
-
-          <input
-            className="filtre-tarih"
-            type="date"
-            value={bitis}
-            onChange={(e) => setBitis(e.target.value)}
-            min={baslangic || undefined}
-          />
-        </div>
+        
       </div>
 
       {hata !== '' && <HataKutusu mesaj={hata} tekrarDene={odemeleriGetir} />}
