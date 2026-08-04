@@ -1,10 +1,21 @@
 /* Tüm parçalar tek satırda, dar ekranda alta kayar */
+/* Her zaman geçerli olan yerleşim.
+   Görsel kabuk (arka plan, kenarlık) buraya YAZILMAZ — çünkü
+   bileşen bazen başka bir kartın içinde yaşayacak. */
 .tarih-araligi
 {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
     gap: 8px;
+}
+
+/* Sadece TEK BAŞINA kullanıldığında eklenen kart görünümü.
+   Kart içinde kullanıldığında bu sınıf verilmez; iç içe iki
+   çerçeve "bozuk" görünür ve hangi kutunun neye ait olduğu
+   anlaşılmaz. */
+.tarih-araligi-kart
+{
     margin-bottom: 18px;
     padding: 12px 14px;
     background-color: var(--kartArka);

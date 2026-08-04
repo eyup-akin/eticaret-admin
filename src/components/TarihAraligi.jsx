@@ -67,8 +67,19 @@ export default function TarihAraligi({
   bitis,
   degistir,
   temizlenebilir = true,
-}) {
 
+  // Bileşen kendi kartını çizsin mi?
+  //
+  // true  → tek başına kullanılıyor (Ödemeler sayfası): kendi
+  //         arka planı, kenarlığı ve alt boşluğu olur
+  // false → başka bir kartın İÇİNDE (Raporlar sayfası): çerçeve
+  //         çizmez, yoksa kart içinde kart görünürdü
+  //
+  // Varsayılan true çünkü mevcut kullanım o. Yeni bir seçenek
+  // eklerken varsayılanı "eski davranış" yapmak, bileşeni
+  // kullanan diğer yerleri bozmaz.
+  cerceveli = true,
+}) {
   // Hızlı seçim butonlarının tanımı.
   //
   // NEDEN DİZİ, NEDEN 5 AYRI <Buton>?
@@ -103,7 +114,7 @@ export default function TarihAraligi({
   const bosMu = baslangic === '' && bitis === '';
 
   return (
-    <div className="tarih-araligi">
+    <div className={'tarih-araligi' + (cerceveli ? ' tarih-araligi-kart' : '')}>
 
       {/* ---- HIZLI BUTONLAR ---- */}
       {/* Seçili olan "ana" tipine geçer (dolu renkli),

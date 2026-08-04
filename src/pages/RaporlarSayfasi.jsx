@@ -4,6 +4,11 @@ import TarihAraligi from '../components/TarihAraligi';
 import SatisRaporu from '../components/raporlar/SatisRaporu';
 import KategoriRaporu from '../components/raporlar/KategoriRaporu';
 
+import OluStokRaporu from '../components/raporlar/OluStokRaporu';
+import KritikStokRaporu from '../components/raporlar/KritikStokRaporu';
+import IptalRaporu from '../components/raporlar/IptalRaporu';
+
+
 import './RaporlarSayfasi.css';
 
 // ============================================================
@@ -38,8 +43,11 @@ import './RaporlarSayfasi.css';
 // Sekme tanımları VERİ olarak duruyor, JSX'e gömülü değil.
 // Yeni rapor eklemek = bu diziye bir satır + bir bileşen dosyası.
 const SEKMELER = [
-  { kod: 'satislar',   yazi: 'Satışlar & Kâr', ikon: '💰' },
+  { kod: 'satislar',    yazi: 'Satışlar & Kâr', ikon: '💰' },
   { kod: 'kategoriler', yazi: 'Kategoriler',    ikon: '🗂️' },
+  { kod: 'oluStok',     yazi: 'Ölü Stok',       ikon: '🧊' },
+  { kod: 'kritikStok',  yazi: 'Kritik Stok',    ikon: '🚨' },
+  { kod: 'iptaller',    yazi: 'İptaller',       ikon: '❌' },
 ];
 
 export default function RaporlarSayfasi() {
@@ -70,38 +78,57 @@ export default function RaporlarSayfasi() {
         </p>
       </div>
 
-      {/* ================= TARİH ARALIĞI ================= */}
-      {/* Sekmelerin ÜSTÜNDE duruyor çünkü tüm sekmeler için geçerli.
-          Altına koysaydık "sadece bu sekmeyi etkiliyor" gibi okunurdu. */}
-      <TarihAraligi
-        baslangic={baslangic}
-        bitis={bitis}
-        degistir={tarihDegistir}
-      />
 
-      {/* ================= SEKMELER ================= */}
-      <div className="rapor-sekmeler">
-        {SEKMELER.map((s) => (
-          <button
-            key={s.kod}
+      {/* ================= KONTROL PANELİ ================= */}
+      {/*
+        Sekmeler ve tarih seçici TEK KARTTA.
 
-            /* type="button" ŞART.
-               Belirtilmezse tarayıcı butonu "submit" sayar; ileride
-               bu sayfa bir form içine girerse sekmeye tıklamak
-               formu gönderir. */
-            type="button"
+        Neden önce sekme, sonra tarih?
+        Kullanıcının zihinsel sırası "hangi rapor → hangi dönem".
+        Tersine koyarsak filtreyi, filtrelenecek şeyden önce
+        sormuş oluruz.
 
-            className={
-              'rapor-sekme' +
-              (aktifSekme === s.kod ? ' rapor-sekme-aktif' : '')
-            }
-            onClick={() => setAktifSekme(s.kod)}
-          >
-            <span className="rapor-sekme-ikon">{s.ikon}</span>
-            {s.yazi}
-          </button>
-        ))}
+        Neden aynı kartta?
+        Sekme şeridi bir GRUP BAŞLIĞIDIR — altındaki içeriğin
+        kime ait olduğunu söyler. Araya ayrı bir kart girerse o
+        bağ kopar ve sekme boşlukta asılı kalır.
+      */}
+      <div className="rapor-kontrol">
+
+        <div className="rapor-sekmeler">
+          {SEKMELER.map((s) => (
+            <button
+              key={s.kod}
+
+              /* type="button" ŞART.
+                 Belirtilmezse tarayıcı butonu "submit" sayar;
+                 bu sayfa ileride bir form içine girerse sekmeye
+                 tıklamak formu gönderir. */
+              type="button"
+
+              className={
+                'rapor-sekme' +
+                (aktifSekme === s.kod ? ' rapor-sekme-aktif' : '')
+              }
+              onClick={() => setAktifSekme(s.kod)}
+            >
+              <span className="rapor-sekme-ikon">{s.ikon}</span>
+              {s.yazi}
+            </button>
+          ))}
+        </div>
+
+        {/* cerceveli={false}: dış kart zaten var, ikinci çerçeve
+            çizilmesin. */}
+        <TarihAraligi
+          baslangic={baslangic}
+          bitis={bitis}
+          degistir={tarihDegistir}
+          cerceveli={false}
+        />
       </div>
+      
+
 
       {/* ================= AKTİF RAPOR ================= */}
       {/* Koşullu render: sadece seçili olan DOM'da var.
@@ -115,6 +142,21 @@ export default function RaporlarSayfasi() {
         {aktifSekme === 'kategoriler' && (
           <KategoriRaporu baslangic={baslangic} bitis={bitis} />
         )}
+
+        {aktifSekme === 'oluStok' && (
+          <OluStokRaporu baslangic={baslangic} bitis={bitis} />
+        )}
+
+        {/* ⚠️ Bu rapora tarih GEÇMİYORUZ — anlık stok raporu.
+            Prop geçseydik bileşen onu kullanmadığı için
+            okuyan kişi "acaba unutulmuş mu" diye tereddüt ederdi.
+            Geçmemek, niyeti kodda belgeler. */}
+        {aktifSekme === 'kritikStok' && <KritikStokRaporu />}
+
+        {aktifSekme === 'iptaller' && (
+          <IptalRaporu baslangic={baslangic} bitis={bitis} />
+        )}
+
       </div>
     </div>
   );
