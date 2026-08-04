@@ -162,3 +162,50 @@
     color: var(--tehlike);
     font-weight: 600;
 }
+
+/* ---------- YORUM RAPORU ---------- */
+
+.yorum-yildiz
+{
+    font-size: 15px;
+    color: #f39c12;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+/* Boş yıldızlar aynı karakterle çiziliyor, sadece rengi soluk.
+   Farklı karakter (☆) kullansaydık font'a göre genişlikleri
+   değişir ve yıldızlar hizasız görünürdü. */
+.yorum-yildiz-bos
+{
+    color: var(--kenarlik);
+}
+
+/* Uzun yorumlar tabloyu şişirmesin — tek satır, taşan kısım
+   üç nokta. Tam metin title özniteliğinde duruyor. */
+.yorum-metin
+{
+    display: block;
+    max-width: 320px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--yaziKoyu);
+}
+
+/* Gizlenmiş yorum satırı — listede kalır ama "yayında değil"
+   bilgisi bir bakışta okunmalı.
+
+   Neden opacity, neden gri metin değil?
+   opacity satırdaki HER ŞEYİ (yıldız, rozet, buton) birden
+   soluklaştırır. Tek tek renk vermek her yeni sütunda
+   unutulacak bir iş yaratırdı. */
+.yorum-gizli-satir
+{
+    opacity: 0.5;
+}
+
+.yorum-gizli-satir:hover
+{
+    opacity: 0.8;
+}

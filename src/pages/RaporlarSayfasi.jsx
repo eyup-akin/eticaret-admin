@@ -9,6 +9,12 @@ import KritikStokRaporu from '../components/raporlar/KritikStokRaporu';
 import IptalRaporu from '../components/raporlar/IptalRaporu';
 
 
+import YorumRaporu from '../components/raporlar/YorumRaporu';
+import MusteriRaporu from '../components/raporlar/MusteriRaporu';
+import KuponRaporu from '../components/raporlar/KuponRaporu';
+import OdemeRaporu from '../components/raporlar/OdemeRaporu';
+
+
 import './RaporlarSayfasi.css';
 
 // ============================================================
@@ -45,9 +51,13 @@ import './RaporlarSayfasi.css';
 const SEKMELER = [
   { kod: 'satislar',    yazi: 'Satışlar & Kâr', ikon: '💰' },
   { kod: 'kategoriler', yazi: 'Kategoriler',    ikon: '🗂️' },
+  { kod: 'musteriler',  yazi: 'Müşteriler',     ikon: '👥' },
+  { kod: 'kuponlar',    yazi: 'Kuponlar',       ikon: '🎟️' },
   { kod: 'oluStok',     yazi: 'Ölü Stok',       ikon: '🧊' },
   { kod: 'kritikStok',  yazi: 'Kritik Stok',    ikon: '🚨' },
   { kod: 'iptaller',    yazi: 'İptaller',       ikon: '❌' },
+  { kod: 'yorumlar',    yazi: 'Yorumlar',       ikon: '⭐' },
+  { kod: 'odemeler',    yazi: 'Ödemeler',       ikon: '💳' },
 ];
 
 export default function RaporlarSayfasi() {
@@ -156,6 +166,24 @@ export default function RaporlarSayfasi() {
         {aktifSekme === 'iptaller' && (
           <IptalRaporu baslangic={baslangic} bitis={bitis} />
         )}
+
+        {aktifSekme === 'musteriler' && (
+          <MusteriRaporu baslangic={baslangic} bitis={bitis} />
+        )}
+
+        {aktifSekme === 'kuponlar' && (
+          <KuponRaporu baslangic={baslangic} bitis={bitis} />
+        )}
+
+        {aktifSekme === 'yorumlar' && (
+          <YorumRaporu baslangic={baslangic} bitis={bitis} />
+        )}
+
+        {aktifSekme === 'odemeler' && (
+          <OdemeRaporu baslangic={baslangic} bitis={bitis} />
+        )}
+
+
 
       </div>
     </div>

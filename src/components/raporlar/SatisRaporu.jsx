@@ -182,16 +182,7 @@ export default function SatisRaporu({ baslangic, bitis }) {
         <span>
           Dönem: <b>{veri.baslangic}</b> – <b>{veri.bitis}</b>
         </span>
-
-        {/* Kâr sayısının ne kadar güvenilir olduğunu SÖYLÜYORUZ.
-            Bu uyarı olmasa admin "toplam kâr" rakamının eksik
-            olduğunu asla anlamazdı. */}
-        {veri.maliyetEksikSatirSayisi > 0 && (
-          <span className="rapor-uyari">
-            ⚠️ {veri.maliyetEksikSatirSayisi} üründe maliyet bilgisi yok —
-            kâr toplamına dahil edilmedi
-          </span>
-        )}
+  
       </div>
 
       <Tablo
