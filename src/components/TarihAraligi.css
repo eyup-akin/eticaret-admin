@@ -1,0 +1,73 @@
+/* Tüm parçalar tek satırda, dar ekranda alta kayar */
+.tarih-araligi
+{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    background-color: var(--kartArka);
+    border: 1px solid var(--kenarlik);
+    border-radius: 10px;
+}
+
+/* Özel aralık grubu — iki input ve aralarındaki tire */
+.tarih-ozel
+{
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+
+    /* Hızlı butonlardan görsel olarak ayrılsın diye sola boşluk.
+       Asimetrik boşluk "bozuk", ayrılmış grup "kasıtlı" okunur. */
+    margin-left: 10px;
+}
+
+/* label + input dikey duruyor: etiket üstte, kutu altta */
+.tarih-etiket
+{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--yaziGri);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.tarih-girdi
+{
+    padding: 6px 8px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--yaziKoyu);
+    background-color: var(--arkaPlan);
+    border: 1px solid var(--kenarlik);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.tarih-girdi:focus
+{
+    outline: none;
+    border-color: var(--anaRenk);
+}
+
+/* İki tarih arasındaki tire — etiketlerin altına hizalanır */
+.tarih-tire
+{
+    padding-bottom: 7px;
+    color: var(--yaziGri);
+}
+
+/* Dar ekranda özel aralık alta insin, sola yapışmasın */
+@media (max-width: 760px)
+{
+    .tarih-ozel
+    {
+        margin-left: 0;
+        width: 100%;
+    }
+}

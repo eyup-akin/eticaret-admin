@@ -1,0 +1,130 @@
+/* ---------- SEKME ŞERİDİ ---------- */
+
+.rapor-sekmeler
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 18px;
+
+    /* Alt çizgi tüm şeridin altında sürekli görünür.
+       Aktif sekme bu çizgiyi kendi rengiyle "keser" — klasik
+       sekme dili, kullanıcının öğrenmesi gerekmez. */
+    border-bottom: 2px solid var(--kenarlik);
+}
+
+.rapor-sekme
+{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    color: var(--yaziGri);
+    background: none;
+    border: none;
+
+    /* Şeridin alt çizgisiyle aynı kalınlıkta saydam çizgi.
+       Aktif olunca renklenecek. Baştan yer ayırmak, geçişte
+       metnin 2px zıplamasını önler. */
+    border-bottom: 2px solid transparent;
+
+    /* Şeridin çizgisinin ÜSTÜNE binsin diye 2px aşağı itiyoruz */
+    margin-bottom: -2px;
+
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.rapor-sekme:hover
+{
+    color: var(--yaziKoyu);
+}
+
+.rapor-sekme-aktif
+{
+    color: var(--anaRenk);
+    font-weight: 600;
+    border-bottom-color: var(--anaRenk);
+}
+
+.rapor-sekme-ikon
+{
+    font-size: 15px;
+}
+
+/* ---------- ORTAK RAPOR PARÇALARI ---------- */
+
+.rapor-govde
+{
+    min-height: 200px;
+}
+
+/* Rapor içi bölüm başlığı (grafik üstü, tablo üstü) */
+.rapor-bolum-baslik
+{
+    margin: 0 0 12px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--yaziKoyu);
+}
+
+/* Grafiklerin oturduğu kutu */
+.rapor-grafik-kutu
+{
+    padding: 18px;
+    margin-bottom: 18px;
+    background-color: var(--kartArka);
+    border: 1px solid var(--kenarlik);
+    border-radius: 10px;
+}
+
+/* Tablonun üstündeki bilgi satırı (dönem, uyarı) */
+.rapor-bilgi
+{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--yaziGri);
+}
+
+/* Eksik veri uyarısı — bilgi taşıyan bir renk, süs değil */
+.rapor-uyari
+{
+    padding: 4px 10px;
+    font-size: 12px;
+    color: #b45309;
+    background-color: #fef3c7;
+    border-radius: 6px;
+}
+
+/* Veri olmayan hücre. Boş bırakmak "sıfır mı, yok mu" belirsizliği
+   yaratır; açık bir tire "bilinmiyor" der. */
+.rapor-bos-deger
+{
+    color: var(--yaziGri);
+}
+
+/* Para ve oran sütunları hizalı okunsun diye sabit genişlikli font */
+.rapor-sayi
+{
+    font-variant-numeric: tabular-nums;
+}
+
+/* Kâr pozitifse yeşil, negatifse kırmızı — renk bilgi taşımalı */
+.rapor-kar-arti
+{
+    color: var(--basari);
+    font-weight: 600;
+}
+
+.rapor-kar-eksi
+{
+    color: var(--tehlike);
+    font-weight: 600;
+}

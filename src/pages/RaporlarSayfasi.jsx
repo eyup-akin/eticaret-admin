@@ -1,11 +1,121 @@
-// İSKELET — Aşama 6'da dolacak.
+import { useState } from 'react';
+
+import TarihAraligi from '../components/TarihAraligi';
+import SatisRaporu from '../components/raporlar/SatisRaporu';
+import KategoriRaporu from '../components/raporlar/KategoriRaporu';
+
+import './RaporlarSayfasi.css';
+
+// ============================================================
+//  RAPORLAR — SEKMELİ KABUK
+//
+//  BU BİLEŞENİN İŞİ NE?
+//  Sadece iki şey:
+//    1) Hangi sekme açık (state)
+//    2) Hangi tarih aralığı seçili (state)
+//
+//  Veri çekmiyor, tablo çizmiyor, hesap yapmıyor. Onlar sekme
+//  bileşenlerinin işi.
+//
+//  NEDEN TARİH BURADA, SEKMELERDE DEĞİL?
+//  Kullanıcı "Son 7 Gün" seçip Satışlar'a baktı, sonra Kategoriler'e
+//  geçti. Aralık KORUNMALI. Her sekme kendi tarihini tutsaydı her
+//  geçişte sıfırlanır, kullanıcı aynı filtreyi tekrar tekrar seçerdi.
+//
+//  Kural: sekmeler arası paylaşılan durum kabukta, sekmeye özel
+//  durum yaprakta.
+//
+//  NEDEN HER SEKME KENDİ VERİSİNİ ÇEKİYOR?
+//  Alternatif, sayfanın 9 raporu birden çekip props ile dağıtmasıydı.
+//  Kullanıcı tek rapora bakacakken 9 istek atmak israf; üstelik
+//  sayfa 9 ayrı state tutardı ve birindeki değişiklik hepsini
+//  yeniden çizerdi.
+//
+//  Koşullu render sayesinde sekme değişince eski bileşen unmount,
+//  yenisi mount olur — useEffect'i çalışır, TEK istek gider.
+// ============================================================
+
+// Sekme tanımları VERİ olarak duruyor, JSX'e gömülü değil.
+// Yeni rapor eklemek = bu diziye bir satır + bir bileşen dosyası.
+const SEKMELER = [
+  { kod: 'satislar',   yazi: 'Satışlar & Kâr', ikon: '💰' },
+  { kod: 'kategoriler', yazi: 'Kategoriler',    ikon: '🗂️' },
+];
+
 export default function RaporlarSayfasi() {
+  const [aktifSekme, setAktifSekme] = useState('satislar');
+
+  // Boş başlıyorlar: kullanıcı bir şey seçmezse backend
+  // varsayılan olarak son 30 günü döndürüyor.
+  //
+  // ⚠️ Burada "son 30 günü" ön yüzde hesaplayıp göndermiyoruz —
+  // varsayılan kuralı SUNUCUDA yaşıyor. İki yerde tanımlasaydık
+  // biri değişince diğeri unutulurdu.
+  const [baslangic, setBaslangic] = useState('');
+  const [bitis, setBitis] = useState('');
+
+  // TarihAraligi tek bir fonksiyon bekliyor, iki setter değil.
+  function tarihDegistir(yeniBaslangic, yeniBitis) {
+    setBaslangic(yeniBaslangic);
+    setBitis(yeniBitis);
+  }
+
   return (
     <div>
-      <h1 className="sayfa-baslik">Raporlar</h1>
-      <p className="sayfa-altyazi">
-        Tarih aralıklı satış, kâr, stok ve yorum raporları yakında burada olacak.
-      </p>
+      <div className="sayfa-ust">
+        <h1 className="sayfa-baslik">Raporlar</h1>
+
+        <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>
+          Seçtiğin tarih aralığında satış, kâr, stok ve müşteri analizi
+        </p>
+      </div>
+
+      {/* ================= TARİH ARALIĞI ================= */}
+      {/* Sekmelerin ÜSTÜNDE duruyor çünkü tüm sekmeler için geçerli.
+          Altına koysaydık "sadece bu sekmeyi etkiliyor" gibi okunurdu. */}
+      <TarihAraligi
+        baslangic={baslangic}
+        bitis={bitis}
+        degistir={tarihDegistir}
+      />
+
+      {/* ================= SEKMELER ================= */}
+      <div className="rapor-sekmeler">
+        {SEKMELER.map((s) => (
+          <button
+            key={s.kod}
+
+            /* type="button" ŞART.
+               Belirtilmezse tarayıcı butonu "submit" sayar; ileride
+               bu sayfa bir form içine girerse sekmeye tıklamak
+               formu gönderir. */
+            type="button"
+
+            className={
+              'rapor-sekme' +
+              (aktifSekme === s.kod ? ' rapor-sekme-aktif' : '')
+            }
+            onClick={() => setAktifSekme(s.kod)}
+          >
+            <span className="rapor-sekme-ikon">{s.ikon}</span>
+            {s.yazi}
+          </button>
+        ))}
+      </div>
+
+      {/* ================= AKTİF RAPOR ================= */}
+      {/* Koşullu render: sadece seçili olan DOM'da var.
+          Gizlemek (display:none) yetmezdi — bileşen yine mount
+          kalır ve verisini çekmeye devam ederdi. */}
+      <div className="rapor-govde">
+        {aktifSekme === 'satislar' && (
+          <SatisRaporu baslangic={baslangic} bitis={bitis} />
+        )}
+
+        {aktifSekme === 'kategoriler' && (
+          <KategoriRaporu baslangic={baslangic} bitis={bitis} />
+        )}
+      </div>
     </div>
   );
 }
