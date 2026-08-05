@@ -61,6 +61,18 @@ const DURUMLAR = {
   excel:        { yazi: 'Excel',        renk: '#64748b' },
 
 
+  // ---- Başvuru durumları (Aşama 3) ----
+  //
+  // ⚠️ 'beklemede' anahtarı ÇAKIŞMA RİSKİ taşıyordu — sipariş
+  //    durumlarında da benzer bir kavram var. Kontrol ettim:
+  //    sipariş tarafında 'hazirlaniyor' kullanılıyor, 'beklemede'
+  //    boştaydı. Yine de sözlüğe yeni anahtar eklerken bu kontrolü
+  //    HER SEFERİNDE yap.
+  beklemede:   { yazi: 'Beklemede',   renk: '#f39c12' },
+  onaylandi:   { yazi: 'Onaylandı',   renk: '#27ae60' },
+  reddedildi:  { yazi: 'Reddedildi',  renk: '#e74c3c' },
+
+
 };
 
 export default function Rozet({ durum }) {

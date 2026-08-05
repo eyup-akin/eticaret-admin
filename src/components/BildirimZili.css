@@ -1,0 +1,218 @@
+/* ===================================================== */
+/*  BİLDİRİM ZİLİ (üst bar)                              */
+/*                                                       */
+/*  Sınıflar "zil-" ön ekli — CSS'te kapsam olmadığı     */
+/*  için çakışmayı isimlendirmeyle çözüyoruz.            */
+/* ===================================================== */
+
+/* Açılır panelin konumu buna göre hesaplanıyor.
+   position: relative olmadan panel sayfanın köşesine kaçar. */
+.zil-sarmal {
+  position: relative;
+}
+
+/* ---------- ZİL BUTONU ---------- */
+
+.zil-buton {
+  /* Rozet butona göre konumlanacak */
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--kenarlik);
+  border-radius: 50%;
+  background-color: var(--kartArka);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.zil-buton:hover {
+  background-color: var(--acikGri);
+}
+
+.zil-buton-acik {
+  background-color: var(--acikGri);
+  border-color: var(--anaRenk);
+}
+
+.zil-ikon {
+  font-size: 17px;
+
+  /* Emoji satır yüksekliği yüzünden dikeyde kayıyor;
+     line-height: 1 ile tam ortalanıyor. */
+  line-height: 1;
+}
+
+/* ---------- SAYI ROZETİ ---------- */
+
+.zil-rozet {
+  position: absolute;
+
+  /* Butonun sağ üst köşesine, yarısı dışarıda taşacak şekilde.
+     Negatif değerler rozeti dairenin dışına çıkarıyor. */
+  top: -4px;
+  right: -4px;
+
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 20px;
+
+  background-color: var(--hata);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Rozet ile buton arasında ince bir ayrım — koyu temada
+     rozetin sınırı kaybolmasın. */
+  border: 2px solid var(--kartArka);
+
+  /* Rozet küçülüp büyürken hizası kaymasın */
+  box-sizing: content-box;
+}
+
+/* ---------- AÇILIR PANEL ---------- */
+
+.zil-panel {
+  position: absolute;
+
+  /* Butonun altına, SAĞ kenarları hizalı.
+     Zil üst barın sağ tarafında — sola doğru açılmalı,
+     yoksa ekrandan taşar. */
+  top: calc(100% + 8px);
+  right: 0;
+
+  width: 330px;
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* KullaniciMenusu ile AYNI değer: ikisi de içerikteki
+     tabloların üstünde, modal perdelerin altında kalmalı. */
+  z-index: 1000;
+
+  overflow: hidden;
+}
+
+.zil-baslik {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--kenarlik);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+}
+
+.zil-bos {
+  padding: 26px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--yaziGri);
+}
+
+/* ---------- UYARI SATIRLARI ---------- */
+
+.zil-satir {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+
+  /* Sol kenardaki öncelik şeridi.
+     Baştan saydam olarak yer ayırıyoruz — sonradan eklenirse
+     satırın içeriği 3px kayardı. */
+  border-left: 3px solid transparent;
+
+  background-color: transparent;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.12s;
+}
+
+.zil-satir:hover {
+  background-color: var(--acikGri);
+}
+
+/* Öncelik rengi SOL ŞERİTTE, arka planda değil.
+   Arka planı boyasaydık satırlar okunması zor renkli bloklara
+   dönerdi. Şerit, rengi bilgi olarak taşıyor ama metni
+   rahatsız etmiyor. */
+.zil-oncelik-yuksek {
+  border-left-color: var(--hata);
+}
+
+.zil-oncelik-orta {
+  border-left-color: #f39c12;
+}
+
+.zil-satir-ikon {
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.zil-satir-metin {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  /* Uzun özet sayıyı dışarı itmesin.
+     min-width: 0 flex öğelerinde metin taşmasını engelleyen
+     klasik hile — varsayılan 'auto' değeri içeriğin küçülmesini
+     engelliyor. */
+  min-width: 0;
+  flex: 1;
+}
+
+.zil-satir-baslik {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+}
+
+.zil-satir-ozet {
+  font-size: 12px;
+  color: var(--yaziGri);
+  line-height: 1.4;
+}
+
+.zil-satir-sayi {
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background-color: var(--acikGri);
+  color: var(--yaziOrta);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ---------- ALT BAĞLANTI ---------- */
+
+.zil-alt {
+  width: 100%;
+  padding: 11px 16px;
+  border: none;
+  border-top: 1px solid var(--kenarlik);
+  background-color: var(--acikKart);
+  color: var(--anaRenk);
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.zil-alt:hover {
+  background-color: var(--acikGri);
+}

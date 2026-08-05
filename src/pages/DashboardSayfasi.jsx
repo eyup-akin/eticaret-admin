@@ -73,15 +73,30 @@ function DikkatKarti({ uyari }) {
 
               <div className="dikkat-satir-sag">
                 {/* Sipariş ise: kaç gündür bekliyor + tutar */}
+                {/* ⚠️ TARİH ve TUTAR ARTIK AYRI KOŞULLARDA.
+                
+                    Eski hali "tarih varsa tutarı da yaz" varsayıyordu —
+                    çünkü o gün tek tüketici siparişlerdi ve ikisi hep
+                    birlikte geliyordu.
+                    
+                    Admin başvurusunda tarih VAR (kaç gündür bekliyor)
+                    ama tutar YOK. Eski kodla "0,00 ₺" yazardı: hiç
+                    olmayan bir bilgi, sıfır değerinde bir bilgiymiş
+                    gibi görünürdü. Yanlış sayı, eksik sayıdan
+                    tehlikelidir.
+                    
+                    Jenerik olduğunu sandığımız şablonun içinde gizli
+                    bir varsayım varmış; ikinci tüketici ortaya çıkarttı. */}
                 {oge.tarih && (
-                  <>
-                    <div className="dikkat-vurgu">
-                      {gunFarki(oge.tarih)} gündür
-                    </div>
-                    <div className="dikkat-satir-alt">
-                      {paraBicimle(oge.tutar)}
-                    </div>
-                  </>
+                  <div className="dikkat-vurgu">
+                    {gunFarki(oge.tarih)} gündür
+                  </div>
+                )}
+
+                {oge.tutar != null && (
+                  <div className="dikkat-satir-alt">
+                    {paraBicimle(oge.tutar)}
+                  </div>
                 )}
 
                 {/* Ürün ise: kalan stok */}

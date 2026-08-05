@@ -119,3 +119,54 @@
 .kimlik-alt-link:hover {
   text-decoration: underline;
 }
+
+
+/* ⭐ YENİ — Başvuru gerekçesi alanı.
+   
+   .kimlik-input ile BİRLİKTE kullanılıyor (iki sınıf yan yana):
+   ortak kabuk oradan geliyor, sadece textarea'ya özel farklar
+   burada. Tüm kuralları kopyalasaydık, ileride input kenarlığı
+   değişince textarea eski kenarlıkla kalırdı. */
+.kimlik-metin-alan {
+  /* Sadece dikeyde büyüsün — yatayda kutuyu taşırmasın */
+  resize: vertical;
+
+  min-height: 110px;
+  line-height: 1.5;
+
+  /* Tarayıcı textarea'ya kendi monospace fontunu verir;
+     formun geri kalanıyla aynı görünsün diye devralıyoruz. */
+  font-family: inherit;
+  font-size: 14px;
+}
+
+/* Karakter sayacı — textarea'nın hemen altında, sağa hizalı */
+.kimlik-sayac {
+  margin-top: -10px;
+  margin-bottom: 16px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--yaziGri);
+
+  /* Sayı değişirken satır zıplamasın */
+  font-variant-numeric: tabular-nums;
+}
+
+
+
+/* ⭐ YENİ — nötr bilgi kutusu.
+   
+   Ne hata (kırmızı) ne başarı (yeşil) — sadece bilgi.
+   Mavi seçtik çünkü panelin ana rengi ve "bunu oku" der,
+   "bir sorun var" demez. Uyarı renklerini (kırmızı/turuncu)
+   gerçekten uyarı gerektiren durumlara saklıyoruz. */
+.kimlik-bilgi {
+  background-color: rgba(37, 99, 235, 0.07);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  color: var(--yaziOrta);
+  border-radius: 8px;
+  padding: 11px 13px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}

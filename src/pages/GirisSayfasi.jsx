@@ -69,6 +69,20 @@ export default function GirisSayfasi() {
         <Link to="/sifremi-unuttum" className="giris-alt-link">
           Şifremi unuttum
         </Link>
+
+        {/* ⭐ YENİ — başvuru linki.
+        
+            Neden görünür bir yerde? Bu bir "gizli kapı" değil.
+            Başvuru zaten şifre doğruluyor ve süperadmin onayı
+            gerektiriyor; linki saklamanın koruduğu bir şey yok,
+            sadece meşru başvuranın işini zorlaştırırdı.
+            
+            "Güvenlik gizlilikle sağlanmaz" — koruma katmanı
+            backend'de. */}
+        <Link to="/admin-basvuru" className="giris-alt-link">
+          Yönetici olmak için başvur
+        </Link>
+
       </form>
     </div>
   );

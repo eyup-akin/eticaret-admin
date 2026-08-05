@@ -3,6 +3,9 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 import { rolYeterliMi } from '../utils/roller';
+
+import BildirimZili from './BildirimZili';   // ⭐ YENİ
+
 import KullaniciMenusu from './KullaniciMenusu';
 import './PanelDuzeni.css';
 
@@ -171,6 +174,19 @@ export default function PanelDuzeni() {
           <span className="ust-bar-isim">
             Hoş geldin, <b>{kullanici?.fullName}</b>
           </span>
+
+          {/* ⭐ YENİ — bildirim zili.
+          
+              Konum: profil menüsünün SOLUNDA.
+              
+              Neden? Üst barın en sağı, kullanıcının kendi hesabına
+              ait alan (profil, çıkış). Zil ise mağazaya ait bir
+              bilgi. İkisini karıştırmamak için sınır koruyoruz.
+              
+              Sıralama .ust-bar'daki flex akışından geliyor:
+              isim (margin-right: auto ile sola yapışık) → zil →
+              profil menüsü. */}
+          <BildirimZili />
 
           <KullaniciMenusu />
         </header>

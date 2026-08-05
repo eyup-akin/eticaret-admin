@@ -1,0 +1,210 @@
+/* ===================================================== */
+/*  ADMİN BAŞVURULARI                                    */
+/* ===================================================== */
+
+/* Sekmedeki bekleyen sayısı rozeti */
+.basvuru-sekme-sayi {
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 20px;
+  background-color: var(--hata);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.basvuru-bos {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--yaziGri);
+  font-size: 14px;
+}
+
+/* ---------- BAŞVURU KARTI ---------- */
+
+.basvuru-kart {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.basvuru-ust {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.basvuru-ad {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+}
+
+.basvuru-email {
+  font-size: 13px;
+  color: var(--yaziGri);
+  margin-top: 2px;
+}
+
+.basvuru-ust-sag {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+
+  /* Uzun isim rozeti sıkıştırmasın */
+  flex-shrink: 0;
+}
+
+.basvuru-tarih {
+  font-size: 12px;
+  color: var(--yaziGri);
+}
+
+/* Gerekçe metni — kararın dayanağı, kısaltmıyoruz */
+.basvuru-gerekce {
+  padding: 14px 16px;
+  background-color: var(--acikKart);
+  border-radius: 8px;
+  font-size: 14px;
+
+  /* Uzun metinde satır aralığı okunabilirliğin yarısı */
+  line-height: 1.7;
+  color: var(--yaziOrta);
+
+  /* Kullanıcının yazdığı satır sonları korunsun.
+     pre-wrap: boşlukları ve alt satırları saklar ama
+     kutu genişliğinde sarmalar. */
+  white-space: pre-wrap;
+
+  /* Boşluksuz çok uzun bir kelime kutuyu taşırmasın */
+  overflow-wrap: break-word;
+}
+
+/* ---------- KARAR BİLGİSİ ---------- */
+
+.basvuru-karar {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--kenarlik);
+  font-size: 13px;
+  color: var(--yaziGri);
+  line-height: 1.6;
+}
+
+.basvuru-red-nedeni {
+  margin-top: 8px;
+  color: var(--yaziOrta);
+}
+
+/* ---------- BUTONLAR ---------- */
+
+.basvuru-butonlar {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.basvuru-onay-buton {
+  padding: 9px 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--basari);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.basvuru-onay-buton:hover {
+  filter: brightness(0.92);
+}
+
+/* Red butonu kırmızı ama DOLU DEĞİL, çerçeveli.
+   Onayla dolu, Reddet çerçeveli: ikisi de kırmızı-yeşil dolu
+   olsaydı hangisinin ana eylem olduğu belirsizleşirdi.
+   "Ana eylem dolu, ikincil eylem çerçeveli." */
+.basvuru-red-buton {
+  padding: 9px 18px;
+  border: 1px solid var(--hata);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--hata);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.basvuru-red-buton:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.basvuru-onay-buton:disabled,
+.basvuru-red-buton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.basvuru-vazgec-buton {
+  padding: 9px 18px;
+  border: 1px solid var(--kenarlik);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--yaziOrta);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.basvuru-vazgec-buton:hover {
+  background-color: var(--acikGri);
+}
+
+/* ---------- RED FORMU ---------- */
+
+.basvuru-red-form {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background-color: rgba(231, 76, 60, 0.05);
+  border: 1px solid var(--hata);
+  border-radius: 8px;
+}
+
+.basvuru-red-etiket {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+  margin-bottom: 8px;
+}
+
+.basvuru-red-alan {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--inputKenar);
+  border-radius: 8px;
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+}
+
+.basvuru-red-alan:focus {
+  border-color: var(--hata);
+}
+
+.basvuru-red-form-butonlar {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}

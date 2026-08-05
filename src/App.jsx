@@ -8,6 +8,8 @@ import GirisSayfasi from './pages/GirisSayfasi';
 import SifremiUnuttumSayfasi from './pages/SifremiUnuttumSayfasi';
 import SifreYenileSayfasi from './pages/SifreYenileSayfasi';
 
+import AdminBasvuruFormuSayfasi from './pages/AdminBasvuruFormuSayfasi';
+
 import DashboardSayfasi from './pages/DashboardSayfasi';
 import UrunlerSayfasi from './pages/UrunlerSayfasi';
 import KategorilerSayfasi from './pages/KategorilerSayfasi';
@@ -46,6 +48,17 @@ export default function App() {
         <Route path="/giris"            element={<GirisSayfasi />} />
         <Route path="/sifremi-unuttum"  element={<SifremiUnuttumSayfasi />} />
         <Route path="/sifre-yenile"     element={<SifreYenileSayfasi />} />
+
+        {/* ⭐ YENİ — yönetici başvuru formu.
+        
+            Bu üçlüyle aynı sebeple bekçinin DIŞINDA: başvuran kişi
+            henüz admin değil, panele giremiyor.
+            
+            ⚠️ Adres benzerliğine dikkat:
+              /admin-basvuru      → HERKESE AÇIK form (bu)
+              /admin-basvurulari  → SÜPERADMİN inceleme ekranı
+            Biri tekil biri çoğul. */}
+        <Route path="/admin-basvuru" element={<AdminBasvuruFormuSayfasi />} />
 
         {/* BEKÇİ — buradan aşağısı sadece admin ve üstüne açık */}
         <Route element={<KorumaliRota />}>
