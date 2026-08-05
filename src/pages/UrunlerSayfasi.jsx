@@ -29,7 +29,15 @@ export default function UrunlerSayfasi() {
   const [arama, setArama] = useState('');
   const [kategoriId, setKategoriId] = useState('');
   const [siralama, setSiralama] = useState('ad');
-
+  // ⭐ YENİ — mağaza ayarları (stok eşiği için).
+  //
+  // Başlangıç değeri null, 5 DEĞİL.
+  //
+  // Neden? 5 koysaydık ayarlar yüklenene kadar sayfa 5'e göre
+  // boyar, sonra ayar gelince renkler değişirdi. Kullanıcı
+  // gözünün önünde değişen bir arayüz görürdü — "acaba yanlış mı
+  // gördüm?" dedirten türden. null iken vurgulama yapmıyoruz.
+  const [stokEsigi, setStokEsigi] = useState(null);
   // ⭐ YENİ — durum filtresi.
   // '' = hepsi, 'true' = sadece satıştakiler, 'false' = sadece kaldırılanlar.
   //
@@ -59,6 +67,39 @@ export default function UrunlerSayfasi() {
     apiGet('/categories')
       .then(setKategoriler)
       .catch(() => setKategoriler([]));
+  }, []);
+
+  // ⭐ YENİ — mağaza ayarlarını bir kez çek.
+  //
+  // Bağımlılık dizisi BOŞ: ayarlar sayfa açıkken değişmez.
+  // Her ürün listesi yenilemesinde tekrar çekmenin anlamı yok.
+  useEffect(() => {
+    let iptal = false;
+
+    async function ayarlariGetir() {
+      try {
+        const veri = await apiGet('/ayarlar/yonetim');
+
+        if (!iptal) {
+          setStokEsigi(veri.stokAzEsigi);
+        }
+      } catch {
+        // ⚠️ SESSİZCE GEÇİYORUZ — bilinçli.
+        //
+        // Bu bir GÖRSEL VURGU ayarı. Alınamazsa stok sayıları
+        // renksiz görünür, o kadar. Sayfanın asıl işi (ürün
+        // listesi) etkilenmiyor.
+        //
+        // Kırmızı bir hata kutusu göstermek, aslında çalışan bir
+        // sayfada "bir şeyler bozuk" izlenimi yaratırdı.
+      }
+    }
+
+    ayarlariGetir();
+
+    return () => {
+      iptal = true;
+    };
   }, []);
 
   // Ürünleri çek (arama + kategori + durum filtresi backend'de)
@@ -276,8 +317,24 @@ export default function UrunlerSayfasi() {
           return <span className="stok-yok">TÜKENDİ</span>;
         }
 
-        if (u.stock < 5) {
-          return <span className="stok-az">{sayiBicimle(u.stock)}</span>;
+        // ⚠️ stokEsigi !== null kontrolü ŞART.
+        //
+        // Ayarlar henüz gelmediyse (veya hata aldıysa) hiçbir şeyi
+        // "az" diye boyamıyoruz. null ile karşılaştırma yapsaydık
+        // JavaScript'te "u.stock < null" ifadesi null'ı 0'a
+        // çevirirdi ve HİÇBİR ürün az görünmezdi — sessiz hata.
+        //
+        // Bu, "=== false" kuralının akrabası: eksik veriyi
+        // varsayılan bir değermiş gibi davranmıyoruz.
+        if (stokEsigi !== null && u.stock < stokEsigi) {
+          return (
+            <span
+              className="stok-az"
+              title={'Stok az (eşik: ' + stokEsigi + ')'}
+            >
+              {sayiBicimle(u.stock)}
+            </span>
+          );
         }
 
         return sayiBicimle(u.stock);
