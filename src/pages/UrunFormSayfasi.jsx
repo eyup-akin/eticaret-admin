@@ -59,6 +59,13 @@ export default function UrunFormSayfasi() {
     // Varsayılan true: yeni ürün formu açıldığında ürün satışa hazır
     // gelsin. Admin isterse kapatır.
     isActive: true,
+    // ⭐ YENİ — ürün açıklaması.
+    //
+    // Boş string ile başlıyor: textarea'nın value'su asla undefined
+    // olmamalı, yoksa React kontrolsüz bileşen uyarısı verir ve
+    // sonradan yazı girilince "uncontrolled to controlled" hatası
+    // fırlatır.
+    description: '',
   });
 
   // ---------- ÜRÜNÜ ÇEK (resimler dahil) ----------
@@ -80,6 +87,13 @@ export default function UrunFormSayfasi() {
       // düşürmeyelim. || kullansaydık false değeri de true'ya
       // çevrilirdi — pasif ürünü açmaya çalışmış olurduk.
       isActive: urun.isActive ?? true,
+      // ⭐ YENİ — açıklama.
+      //
+      // || '' kullanıyoruz (?? '' değil): backend null gönderiyor
+      // ama boş string de gelebilir. İkisi de aynı sonucu vermeli.
+      // Burada sıfır gibi "geçerli falsy değer" riski yok, o yüzden
+      // || uygun.
+      description: urun.description || '',
     });
 
     setResimler(urun.images || []);
@@ -178,6 +192,8 @@ export default function UrunFormSayfasi() {
         stock: Number(form.stock),
         categoryId: Number(form.categoryId),
         isActive: form.isActive,      // ⭐ YENİ
+
+        description: form.description.trim(),   // ⭐ YENİ
       };
 
       if (duzenlemeMi) {
@@ -449,6 +465,45 @@ export default function UrunFormSayfasi() {
             </div>
           </div>
 
+
+          {/* ⭐ YENİ — ÜRÜN AÇIKLAMASI */}
+          <div className="form-alan">
+            <div className="form-etiket-satir">
+              <label className="form-etiket">Ürün Açıklaması</label>
+
+              {/* ⚠️ TÜRETİLMİŞ DEĞER — ayrı state'te tutulmuyor.
+                  
+                  "karakterSayisi" diye bir useState açsaydık her
+                  tuş vuruşunda iki state güncellemek ve ikisini
+                  senkron tutmak gerekirdi. Hesaplanabilen şey
+                  saklanmaz. */}
+              <span
+                className={
+                  'form-sayac' +
+                  (form.description.length > 1800 ? ' form-sayac-dolu' : '')
+                }
+              >
+                {form.description.length} / 2000
+              </span>
+            </div>
+
+            <textarea
+              className="form-input form-metin-alan"
+              value={form.description}
+              onChange={(e) => alanDegistir('description', e.target.value)}
+              placeholder="Beden, malzeme, garanti, kutu içeriği, kullanım bilgisi..."
+              rows={6}
+
+              /* maxLength ÖN YÜZ kolaylığı: kullanıcı 2000'i geçemez,
+                 yazarken durur. Gerçek koruma backend'deki
+                 [MaxLength(2000)] — bu alan Postman'den de gelebilir. */
+              maxLength={2000}
+            />
+
+            <div className="form-ipucu">
+              İsteğe bağlı. Müşteri ürün detay sayfasında görecek.
+            </div>
+          </div>
 
           <div className="form-butonlar">
             <Buton type="submit" disabled={kaydediliyor}>

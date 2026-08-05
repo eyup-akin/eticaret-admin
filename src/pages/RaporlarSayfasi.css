@@ -11,77 +11,8 @@
     overflow: hidden;
 }
 
-/* ---------- SEKME ŞERİDİ ---------- */
 
-.rapor-sekmeler
-{
-    display: flex;
-    flex-wrap: wrap;
 
-    /* gap YOK: sekmeler bitişik dursun ki tek bir şerit gibi
-       okunsun. Aradaki boşluk her sekmeyi ayrı bir düğme gibi
-       gösterirdi. */
-
-    /* Şeridi tarih bölümünden ayıran çizgi.
-       Kartın içinde, kenarlarına kadar uzanıyor. */
-    border-bottom: 1px solid var(--kenarlik);
-}
-
-.rapor-sekme
-{
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 12px 18px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: inherit;
-    color: var(--yaziGri);
-    background: none;
-    border: none;
-
-    /* Aktif olunca renklenecek alt çizgi.
-       Baştan saydam olarak yer ayırıyoruz — sonradan eklenirse
-       metin 2px zıplar. */
-    border-bottom: 2px solid transparent;
-
-    /* Şeridin 1px'lik çizgisinin ÜSTÜNE binsin */
-    margin-bottom: -1px;
-
-    cursor: pointer;
-    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
-}
-
-.rapor-sekme:hover
-{
-    color: var(--yaziKoyu);
-
-    /* Hafif arka plan: "buraya tıklanabilir" sinyali.
-       Renk değişimi tek başına yeterince fark edilmiyor. */
-    background-color: var(--arkaPlan);
-}
-
-.rapor-sekme-aktif
-{
-    color: var(--anaRenk);
-    font-weight: 600;
-    border-bottom-color: var(--anaRenk);
-
-    /* Aktif sekmenin arka planı kart rengiyle aynı kalsın —
-       hover'daki gri burada uygulanmasın, seçili olan "kabarık"
-       değil "vurgulu" görünmeli. */
-    background-color: transparent;
-}
-
-.rapor-sekme-aktif:hover
-{
-    background-color: transparent;
-}
-
-.rapor-sekme-ikon
-{
-    font-size: 15px;
-}
 
 /* Tarih çubuğu kartın alt yarısında, iç boşluklu */
 .rapor-kontrol .tarih-araligi

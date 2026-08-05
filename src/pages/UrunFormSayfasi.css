@@ -207,3 +207,46 @@
   cursor: pointer;
   accent-color: var(--anaRenk);
 }
+
+/* ===================================================== */
+/*  ÜRÜN AÇIKLAMASI ALANI                                */
+/* ===================================================== */
+
+/* Etiket solda, karakter sayacı sağda */
+.form-etiket-satir {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.form-sayac {
+  font-size: 12px;
+  color: var(--yaziGri);
+
+  /* Sayı büyüyüp küçülürken etiket zıplamasın diye
+     eşit genişlikli rakam. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sınıra yaklaşınca uyar.
+   Turuncu, kırmızı değil: henüz bir hata yok, sadece
+   "dikkat et" sinyali. Kırmızı geri alınamaz işlemlere ayrılmış. */
+.form-sayac-dolu {
+  color: #f39c12;
+  font-weight: 600;
+}
+
+.form-metin-alan {
+  /* Sadece dikeyde büyüsün.
+     Yatayda büyümesine izin verirsek kullanıcı textarea'yı
+     çekiştirip iki sütunlu yerleşimi bozabilir. */
+  resize: vertical;
+
+  min-height: 120px;
+  line-height: 1.6;
+
+  /* Tarayıcı textarea'ya kendi monospace fontunu verir;
+     formun geri kalanıyla aynı görünsün. */
+  font-family: inherit;
+  font-size: 14px;
+}
