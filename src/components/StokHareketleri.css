@@ -1,0 +1,114 @@
+/* ===================================================== */
+/*  STOK HAREKET DEFTERİ                                 */
+/* ===================================================== */
+
+.defter-kutu {
+  margin-top: 18px;
+}
+
+/* ---------- DEĞİŞMEZ KONTROLÜ ---------- */
+
+.defter-kontrol {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+
+/* Fark varsa sarı vurgu.
+   Kırmızı DEĞİL: bu bir hata değil, dikkat edilmesi gereken
+   bir durum. Kırmızı geri alınamaz işlemlere saklanıyor. */
+.defter-kontrol-uyari {
+  background-color: rgba(243, 156, 18, 0.08);
+  border-color: #f39c12;
+}
+
+/* Üç sayı yan yana; dar ekranda alt alta insin */
+.defter-kontrol-sayilar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-bottom: 12px;
+}
+
+.defter-kontrol-oge {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.defter-kontrol-etiket {
+  font-size: 12px;
+  color: var(--yaziGri);
+}
+
+.defter-kontrol-deger {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--yaziKoyu);
+
+  /* Sayılar karakter karakter okunuyor ve karşılaştırılıyor —
+     eşit genişlikli rakam gerekli ki hizalar tutsun. */
+  font-variant-numeric: tabular-nums;
+}
+
+.defter-kontrol-not {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--yaziOrta);
+}
+
+/* ---------- TABLO HÜCRELERİ ---------- */
+
+/* Rozet + altındaki küçük destek bilgisi */
+.defter-hareket-hucre {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* Sipariş numarası / iş numarası — karakter karakter okunan
+   metin, monospace ister. */
+.defter-referans {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--yaziGri);
+}
+
+.defter-aciklama {
+  font-size: 12px;
+  color: var(--yaziGri);
+  font-style: italic;
+}
+
+/* Değişim sütunu: işaretli ve renkli */
+.defter-degisim {
+  font-weight: 700;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.defter-artis {
+  color: var(--basari);
+}
+
+.defter-azalis {
+  color: var(--hata);
+}
+
+/* "15 → 12" */
+.defter-stok {
+  font-size: 13px;
+  color: var(--yaziOrta);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Kullanıcısı olmayan (sistem) hareketler */
+.defter-sistem {
+  color: var(--yaziGri);
+  font-style: italic;
+}

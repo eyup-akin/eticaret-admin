@@ -38,6 +38,29 @@ const DURUMLAR = {
   suresi_dolmus: { yazi: 'Süresi Doldu',  renk: '#94a3b8' },
 
 
+  // ---- Stok hareket sebepleri (Aşama 1.3) ----
+  //
+  // Renk BİLGİ TAŞIMALI — her sebep farklı bir olay tipi:
+  //   satis        → normal iş akışı, beklenen çıkış      (mavi)
+  //   iptal_iadesi → plansız geri dönüş, dikkat çeker     (turuncu)
+  //   manuel       → İNSAN ELİ DEĞDİ, denetimde en çok    (turkuaz)
+  //                  bakılan satır bu
+  //   excel        → rutin toplu sistem işi               (gri)
+  //
+  // ⚠️ 'iade' anahtarını BİLEREK EKLEMİYORUZ — yukarıda
+  //    ödeme durumu olarak zaten tanımlı (mor, "İade").
+  //    Kupon durumlarındaki uyarıyı hatırla: aynı sözlükte
+  //    iki iş alanı aynı kelimeyi kullanamaz. Burada kontrol
+  //    ettik: stok iadesi ile para iadesi AYNI kavramı
+  //    anlatıyor ve ikisi de "İade" yazısını istiyor. Yani
+  //    bu kaza değil, bilinçli paylaşım. (Aşama 9'da stok
+  //    iadesi geldiğinde bu satırı tekrar gözden geçir.)
+  satis:        { yazi: 'Satış',        renk: '#2563eb' },
+  iptal_iadesi: { yazi: 'İptal İadesi', renk: '#f39c12' },
+  manuel:       { yazi: 'Manuel',       renk: '#0891b2' },
+  excel:        { yazi: 'Excel',        renk: '#64748b' },
+
+
 };
 
 export default function Rozet({ durum }) {

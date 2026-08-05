@@ -10,6 +10,8 @@ import Buton from '../components/Buton';
 import ResimYukleyici from '../components/ResimYukleyici';
 import BekleyenResimler from '../components/BekleyenResimler'; // ⭐ YENİ
 
+import StokHareketleri from '../components/StokHareketleri'; // ⭐ YENİ
+
 import './UrunFormSayfasi.css';
 
 export default function UrunFormSayfasi() {
@@ -25,6 +27,13 @@ export default function UrunFormSayfasi() {
   const [kaydediliyor, setKaydediliyor] = useState(false);
   const [hata, setHata] = useState('');
   const [basari, setBasari] = useState('');
+
+  // ⭐ YENİ — hangi sekme açık?
+  //
+  // Varsayılan 'bilgiler': sayfanın asıl işi bu. Yeni ürün
+  // modunda sekme şeridi hiç çizilmediği için bu değer zaten
+  // hiç değişmez ve sayfa bugünküyle birebir aynı davranır.
+  const [aktifSekme, setAktifSekme] = useState('bilgiler');
 
   // ⭐ YENİ — yeni üründe resimler kaydedilene kadar burada bekler
   const [bekleyenDosyalar, setBekleyenDosyalar] = useState([]);
@@ -218,6 +227,60 @@ export default function UrunFormSayfasi() {
         <div className="basari-kutusu">{yuklemeDurumu}</div>
       )}
 
+
+      {/* ================= SEKME ŞERİDİ ================= */}
+      {/*
+        Sadece DÜZENLEME modunda çiziliyor.
+
+        Yeni ürün eklerken ortada henüz bir id yok, dolayısıyla
+        hiç stok hareketi de yok. Sekmeyi gösterip pasifleştirmek
+        "burada bir şey var ama sana yok" demek olurdu; tek
+        sekmelik bir şerit de zaten anlamsız.
+
+        "Menü öğesi, arkasındaki sayfa hazır olduğunda eklenir."
+      */}
+      {duzenlemeMi && (
+        <div className="sekme-serit" style={{ marginBottom: 20 }}>
+
+          {/* ⚠️ type="button" ŞART.
+              Belirtilmeyen buton form içinde submit sayılır.
+              Bu iki buton form etiketinin DIŞINDA ama alışkanlık
+              hâline getirmek gerekiyor — yarın biri bu bloğu
+              formun içine taşırsa sekmeye tıklamak ürünü
+              kaydederdi. */}
+          <button
+            type="button"
+            className={
+              'sekme' + (aktifSekme === 'bilgiler' ? ' sekme-aktif' : '')
+            }
+            onClick={() => setAktifSekme('bilgiler')}
+          >
+            <span className="sekme-ikon">📝</span>
+            Bilgiler
+          </button>
+
+          <button
+            type="button"
+            className={
+              'sekme' + (aktifSekme === 'stok' ? ' sekme-aktif' : '')
+            }
+            onClick={() => setAktifSekme('stok')}
+          >
+            <span className="sekme-ikon">📦</span>
+            Stok Hareketleri
+          </button>
+
+        </div>
+      )}
+
+
+      {/* ⚠️ KOŞULLU RENDER — display:none DEĞİL.
+          
+          display:none sadece görsel gizler; bileşen ağaçta kalır
+          ve useEffect'i çalışmaya devam eder. Koşullu render'da
+          bileşen HİÇ mount olmaz, dolayısıyla API isteği de
+          atmaz. Sekme değişince unmount olur, state'i temizlenir. */}
+      {aktifSekme === 'bilgiler' && (
       <div className="form-izgara">
 
         {/* ================= SOL: BİLGİ FORMU ================= */}
@@ -434,6 +497,20 @@ export default function UrunFormSayfasi() {
         </div>
 
       </div>
+      )}
+
+      {/* ================= STOK HAREKETLERİ SEKMESİ ================= */}
+      {/*
+        duzenlemeMi kontrolünü BURADA DA yapıyoruz.
+
+        Gereksiz görünüyor (şerit zaten sadece düzenlemede
+        çiziliyor, sekme değiştirilemez) ama savunmacı: yarın
+        biri varsayılan sekmeyi 'stok' yaparsa yeni ürün modunda
+        urunId undefined ile istek atılırdı.
+      */}
+      {aktifSekme === 'stok' && duzenlemeMi && (
+        <StokHareketleri urunId={Number(id)} />
+      )}
     </div>
   );
 }

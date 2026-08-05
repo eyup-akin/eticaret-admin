@@ -105,7 +105,7 @@ export default function RaporlarSayfasi() {
       */}
       <div className="rapor-kontrol">
 
-        <div className="rapor-sekmeler">
+        <div className="sekme-serit">
           {SEKMELER.map((s) => (
             <button
               key={s.kod}
@@ -117,12 +117,12 @@ export default function RaporlarSayfasi() {
               type="button"
 
               className={
-                'rapor-sekme' +
-                (aktifSekme === s.kod ? ' rapor-sekme-aktif' : '')
+                'sekme' +
+                (aktifSekme === s.kod ? ' sekme-aktif' : '')
               }
               onClick={() => setAktifSekme(s.kod)}
             >
-              <span className="rapor-sekme-ikon">{s.ikon}</span>
+              <span className="sekme-ikon">{s.ikon}</span>
               {s.yazi}
             </button>
           ))}
