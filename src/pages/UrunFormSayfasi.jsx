@@ -148,6 +148,7 @@ export default function UrunFormSayfasi() {
   // ---------- CANLI KÂR HESABI ----------
   const fiyatSayi = Number(form.price);
   const maliyetSayi = Number(form.cost);
+  const kdvOraniSayi = Number(form.vatRate);
 
   const karHesaplanabilir =
     form.price !== '' &&
@@ -156,7 +157,36 @@ export default function UrunFormSayfasi() {
     !Number.isNaN(maliyetSayi) &&
     fiyatSayi > 0;
 
-  const kar = karHesaplanabilir ? fiyatSayi - maliyetSayi : 0;
+  // ⭐ DEĞİŞTİ — KÂR ARTIK KDV'Yİ DÜŞÜYOR.
+  //
+  // Eskiden "kâr = fiyat − maliyet" idi ve bu kârı OLDUĞUNDAN YÜKSEK
+  // gösteriyordu.
+  //
+  // Fiyat ve maliyetin İKİSİ de KDV dahil. Mağaza satışta topladığı
+  // KDV'yi devlete öder, alışta ödediğini indirir. Aradaki fark
+  // mağazanın cebinden çıkar — yani kâr değildir.
+  //
+  //   net KDV = (fiyat − maliyet) × oran / (100 + oran)
+  //
+  // Örnek: 1.200 fiyat, 800 maliyet, %20
+  //   Eski hesap : 400,00 TL
+  //   Gerçek     : 400 − 66,67 = 333,33 TL
+  //
+  // ⚠️ Aynı formül backend'deki kâr raporunda da var
+  // (ReportsController). İkisi ayrışırsa formdaki önizleme ile rapor
+  // farklı sayılar gösterir — bir ürünü kaydedip raporda başka bir kâr
+  // görmek, kullanıcının hangisine güveneceğini bilememesi demektir.
+  const brutFark = karHesaplanabilir ? fiyatSayi - maliyetSayi : 0;
+
+  const netKdv = karHesaplanabilir
+    ? (brutFark * kdvOraniSayi) / (100 + kdvOraniSayi)
+    : 0;
+
+  const kar = karHesaplanabilir ? brutFark - netKdv : 0;
+
+  // Marj paydası KDV dahil fiyat — backend'deki marj hesabıyla aynı
+  // tercih. Ürünleri birbiriyle kıyaslamak için; tüm satırlarda aynı
+  // payda kullanıldığı sürece sıralama doğru kalıyor.
   const marj = karHesaplanabilir ? (kar / fiyatSayi) * 100 : 0;
 
   const karDurum =
@@ -450,6 +480,25 @@ export default function UrunFormSayfasi() {
           >
             {karHesaplanabilir ? (
               <>
+                {/* ⭐ YENİ — KDV satırı.
+
+                    Neden gösteriliyor? Kâr rakamı bu değişiklikle
+                    düştü. Sadece sonucu gösterseydik admin "neden
+                    azaldı?" diye sorar ve cevabı ekranda bulamazdı.
+                    Ara adımı göstermek, rakama güven sağlıyor:
+                    fark − KDV = kâr, gözle doğrulanabiliyor. */}
+                <div className="kar-satir">
+                  <span className="kar-etiket">Fiyat − Maliyet</span>
+                  <span className="kar-deger">{paraBicimle(brutFark)}</span>
+                </div>
+
+                <div className="kar-satir">
+                  <span className="kar-etiket">
+                    Devlete ödenecek KDV (%{kdvOraniSayi})
+                  </span>
+                  <span className="kar-deger">−{paraBicimle(netKdv)}</span>
+                </div>
+
                 <div className="kar-satir">
                   <span className="kar-etiket">Net Kâr (adet başı)</span>
                   <span className="kar-deger">{paraBicimle(kar)}</span>

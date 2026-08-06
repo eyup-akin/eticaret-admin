@@ -75,7 +75,7 @@ export default function SatisRaporu({ baslangic, bitis }) {
   // "hucre" fonksiyonları JSX döndürüyor (<span>...</span>);
   // CSV'ye yazılamaz. Ham veriden ayrı bir dönüşüm gerekiyor.
   function disaAktar() {
-    const basliklar = ['Ürün', 'Adet', 'Ciro', 'Maliyet', 'Kâr', 'Marj %'];
+    const basliklar = ['Ürün', 'Adet', 'Ciro', 'Maliyet', 'KDV', 'Kâr', 'Marj %'];
 
     const satirlar = veri.urunler.map((u) => [
       u.urunAdi,
@@ -85,8 +85,20 @@ export default function SatisRaporu({ baslangic, bitis }) {
       // Maliyet bilinmiyorsa boş hücre bırakıyoruz, 0 değil.
       // 0 yazsaydık Excel'de toplama girer ve kâr şişerdi.
       u.maliyetEksik ? '' : sayiCsv(u.maliyet),
-      u.maliyetEksik ? '' : sayiCsv(u.kar),
-      u.maliyetEksik ? '' : sayiCsv(u.marj),
+
+      // ⭐ DEĞİŞTİ — artık "kar == null" kontrolü.
+      //
+      // Eskiden maliyetEksik'e bakılıyordu. Kâr artık İKİ sebeple
+      // hesaplanamıyor olabilir: maliyet eksik VEYA KDV oranı
+      // bilinmiyor. Eski kontrol kalsaydı, KDV'si bilinmeyen bir
+      // satırda kar null olur ve sayiCsv(null) hücreye 0 yazardı —
+      // Excel'de toplanır, kâr uydurma şekilde şişerdi.
+      //
+      // Değere bakmak burada bayrağa bakmaktan sağlam: "kâr yok"
+      // durumunun kaç sebebi olursa olsun tek kontrol yeterli.
+      u.kar == null ? '' : sayiCsv(u.kdv),
+      u.kar == null ? '' : sayiCsv(u.kar),
+      u.kar == null ? '' : sayiCsv(u.marj),
     ]);
 
     csvIndir('satis-raporu', basliklar, satirlar);
@@ -136,10 +148,36 @@ export default function SatisRaporu({ baslangic, bitis }) {
         ),
     },
     {
+      // ⭐ YENİ — devlete ödenen net KDV.
+      //
+      // Ciro ile Kâr sütunlarının ARASINDA duruyor çünkü hesabın ara
+      // adımı: ciro − maliyet − KDV = kâr. Sütun sırası hesabın
+      // sırasını izlerse admin rakamı gözle doğrulayabiliyor.
+      //
+      // Bu sütun olmasaydı kâr rakamının neden düştüğü ekranda
+      // görünmezdi ve "rapor bozuldu mu?" sorusu doğardı.
+      baslik: 'KDV',
+      hizala: 'sag',
+      hucre: (u) =>
+        u.kar == null ? (
+          <span className="rapor-bos-deger">—</span>
+        ) : (
+          <span className="rapor-sayi">{paraBicimle(u.kdv)}</span>
+        ),
+    },
+    {
       baslik: 'Kâr',
       hizala: 'sag',
+
+      // ⭐ DEĞİŞTİ — koşul "maliyetEksik" değil "kar == null".
+      //
+      // Kâr artık İKİ sebeple hesaplanamıyor olabilir: maliyet eksik
+      // VEYA KDV oranı bilinmiyor (bu alan eklenmeden önceki
+      // siparişler). Eski kontrol kalsaydı KDV'si bilinmeyen satırda
+      // paraBicimle(null) çalışır ve ekranda "0,00 ₺" yazardı —
+      // yani "bu üründen hiç kâr edilmedi" gibi YANLIŞ bir bilgi.
       hucre: (u) => {
-        if (u.maliyetEksik) {
+        if (u.kar == null) {
           return <span className="rapor-bos-deger">—</span>;
         }
 
@@ -161,7 +199,7 @@ export default function SatisRaporu({ baslangic, bitis }) {
       baslik: 'Marj',
       hizala: 'sag',
       hucre: (u) =>
-        u.maliyetEksik ? (
+        u.kar == null ? (
           <span className="rapor-bos-deger">—</span>
         ) : (
           <span className="rapor-sayi">%{u.marj}</span>
@@ -203,10 +241,45 @@ export default function SatisRaporu({ baslangic, bitis }) {
       </div>
 
       {/* ---------- DÖNEM BİLGİSİ + UYARI ---------- */}
+      {/* ⭐ YENİ — kârı hesaplanamayan satırları AÇIKÇA söylüyoruz.
+
+          ⚠️ BU AÇIKLAMA OLMADAN RAPOR BOZUK GÖRÜNÜR.
+
+          KDV alanı eklenmeden önceki tüm sipariş kalemlerinde oran
+          null. Yani bu özellik devreye girdiği anda geçmiş dönem
+          raporlarındaki kâr sütunu baştan aşağı "—" oluyor.
+
+          Sebebini yazmazsak admin "rapor çalışmıyor" diye düşünür ve
+          haklı olur — ekranda bir açıklama yoksa boş sütun bir hatadır.
+
+          İki sebep AYRI sayılıyor çünkü çözümleri farklı: maliyet
+          eksikse ürün kartına maliyet girilir, KDV eksikse yapılacak
+          bir şey yok (geçmiş veri). */}
       <RaporUstBilgi
         baslangic={veri.baslangic}
         bitis={veri.bitis}
         disaAktar={disaAktar}
+        ekBilgi={
+          veri.maliyetEksikSatirSayisi > 0 || veri.kdvEksikSatirSayisi > 0 ? (
+            <>
+              {veri.kdvEksikSatirSayisi > 0 && (
+                <>
+                  <b>{veri.kdvEksikSatirSayisi}</b> üründe KDV oranı
+                  kayıtlı değil (bu özellik eklenmeden önceki siparişler),
+                  kârları hesaplanamıyor.
+                </>
+              )}
+
+              {veri.maliyetEksikSatirSayisi > 0 && (
+                <>
+                  {' '}
+                  <b>{veri.maliyetEksikSatirSayisi}</b> üründe maliyet
+                  bilgisi eksik.
+                </>
+              )}
+            </>
+          ) : null
+        }
       />
 
       <Tablo
