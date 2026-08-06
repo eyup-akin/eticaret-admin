@@ -1,8 +1,14 @@
+/* ⭐ DEĞİŞTİ (Aşama 4.5) — kart diline uyduruldu.
+   Köşe 12 → 16px ve gölge eklendi; sayfadaki diğer kartlarla aynı
+   görsel ağırlıkta duruyor. Kenarlık korundu çünkü tablo, kartın
+   aksine kendi içinde de çizgiler taşıyor — dış kenarı olmayan bir
+   tablo "yarım" görünüyor. */
 .tablo-kutu {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
+  border-radius: var(--kose-buyuk);
   overflow: hidden;
+  box-shadow: var(--golgeSm);
 }
 
 /* Dar ekranda tablo yana kaysın, taşmasın */
@@ -15,23 +21,43 @@
   border-collapse: collapse;
 }
 
+/* ⭐ DEĞİŞTİ — başlık şeridi artık dolgusuz.
+
+   Eskiden başlık satırının gri bir arka planı vardı ve tablo
+   "elektronik tablo" gibi görünüyordu. Referans tasarımlarda
+   başlık satırı zeminle aynı; ayrımı sadece punto, renk ve alttaki
+   çizgi yapıyor.
+
+   Büyük harf + harf aralığı korundu: başlıkların veriden ayrıldığı
+   asıl işaret bu ve renk körlüğünden bağımsız çalışıyor. */
 .tablo th {
   text-align: left;
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   color: var(--yaziGri);
-  background-color: var(--acikGri);
-  padding: 13px 16px;
+  background-color: transparent;
+  padding: var(--bosluk3) var(--bosluk4);
   white-space: nowrap;
+  border-bottom: 1px solid var(--kenarlik);
 }
 
+/* ⭐ DEĞİŞTİ — satır yüksekliği arttı (14 → 16px dikey).
+   Referans tablolarda satırlar belirgin şekilde ferah. Sıkışık
+   satırlar veriyi "çok" gösteriyor ama okumayı zorlaştırıyor. */
 .tablo td {
-  padding: 14px 16px;
-  font-size: 14px;
+  padding: var(--bosluk4);
+  font-size: var(--yazi-normal);
   color: var(--yaziKoyu);
   border-top: 1px solid var(--kenarlik);
+}
+
+/* ⚠️ İlk gövde satırının üst çizgisi kaldırıldı — başlık zaten
+   kendi alt çizgisini taşıyor. İkisi birden kalınca başlığın
+   altında çift çizgi oluşuyordu. */
+.tablo tbody tr:first-child td {
+  border-top: none;
 }
 
 .tablo tbody tr:hover {

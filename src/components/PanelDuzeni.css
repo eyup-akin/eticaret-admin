@@ -45,17 +45,33 @@
   white-space: nowrap;
 }
 
+/* ⭐ DEĞİŞTİ (Aşama 4.5) — kenardan kenara blok yerine HAP.
+
+   Eski hali menünün tam genişliğini kaplayan keskin köşeli bir
+   dikdörtgendi ve solunda 3px'lik bir çizgi vardı. Referans
+   tasarımlardaki menülerde aktif öğe, kenarlardan boşluk bırakan
+   yuvarlak bir hap.
+
+   Fark neden önemli? Kenara yapışan blok, menüyü "liste" gibi
+   gösteriyor; boşluk bırakan hap "seçili öğe" gibi. İkincisi hem
+   daha ferah hem seçimin nerede olduğunu daha net söylüyor. */
 .menu-link {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 20px;
+  padding: 11px var(--bosluk4);
+
+  /* Hap biçiminin nefes alması için yanlardan boşluk */
+  margin: 2px var(--bosluk3);
+  border-radius: 10px;
+
   color: var(--menuYazi);
   text-decoration: none;
-  font-size: 15px;
-  border-left: 3px solid transparent;
+  font-size: var(--yazi-orta);
 
-  /* ⭐ YENİ — "Ödemeler / Gelir" gibi uzun yazılar daralma sırasında
+  transition: background-color 0.15s, color 0.15s;
+
+  /* ⭐ "Ödemeler / Gelir" gibi uzun yazılar daralma sırasında
      alt satıra kaçıp bağlantı yüksekliğini iki katına çıkarmasın.
      Animasyon boyunca satır yüksekliği sabit kalıyor. */
   white-space: nowrap;
@@ -71,7 +87,6 @@
   background-color: var(--menuAktifArka);
   color: var(--menuAktifYazi);
   font-weight: 600;
-  border-left-color: #ffffff;
 }
 
 .menu-ikon {
@@ -182,10 +197,12 @@
   padding: 12px 0;
   justify-content: center;
 
-  /* Sol kenar çizgisi ortalamayı 3px kaydırıyordu.
-     Daraltılmışken aktif sayfayı sol çizgiyle değil arka plan
-     rengiyle belirtiyoruz — dar alanda o daha okunaklı. */
-  border-left-width: 0;
+  /* ⭐ DEĞİŞTİ — yatay boşluk 12px'ten 8px'e.
+     68px'lik dar menüde 12px'lik kenar boşluğu hapı fazla
+     daraltıyor ve ikon sıkışık görünüyordu. Hap biçimi korunuyor,
+     sadece daralıyor. */
+  margin: 2px var(--bosluk2);
+
   gap: 0;
 }
 

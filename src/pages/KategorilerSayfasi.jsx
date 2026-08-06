@@ -256,13 +256,16 @@ export default function KategorilerSayfasi() {
 
   return (
     <div>
-      <div className="sayfa-ust sayfa-ust-yatay">
-        <div>
-          <h1 className="sayfa-baslik">Kategoriler</h1>
-          <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>
-            Kategori ekle, adını değiştir veya boş kategorileri sil
-          </p>
-        </div>
+      {/* ⭐ DEĞİŞTİ — "sayfa-ust-yatay" değiştiricisi EKLENMEDİ.
+          Bu başlıkta sağda hiçbir şey yok; yatay düzen sınıfı
+          görünürde bir fark yaratmaz ama okuyana "burada sağda bir
+          buton var" der. Sınıf, ekranda olmayan bir şeyi
+          anlatmamalı. Buton eklenirse sınıf da o zaman eklenir. */}
+      <div className="sayfa-ust">
+        <h1 className="sayfa-baslik">Kategoriler</h1>
+        <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>
+          Kategori ekle, adını değiştir veya boş kategorileri sil
+        </p>
       </div>
 
       {/* ---------- YENİ KATEGORİ EKLEME ---------- */}
