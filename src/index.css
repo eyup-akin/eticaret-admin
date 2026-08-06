@@ -353,6 +353,169 @@ button {
   background-color: var(--acikGri);
 }
 
+/* ---------- LİSTE SAYFASI ORTAK PARÇALARI ----------
+   ⭐ YENİ — Ürünler / Siparişler / Kategoriler / Kullanıcılar /
+   Ödemeler sayfalarından buraya taşındı.
+
+   Hepsi "filtreli liste sayfası" kalıbının parçası ve zaten aynı
+   şeyi yazıyorlardı. */
+
+/* Tablo altındaki "X kayıt bulundu" satırı (3 dosyada aynıydı) */
+.sonuc-sayisi {
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+  margin-top: var(--bosluk3);
+}
+
+/* Satır sonundaki eylem butonları (4 dosyada).
+
+   ⚠️ İKİSİNDE `gap: 8px` VARDI, İKİSİNDE YOKTU.
+   CSS'te kapsam olmadığı için hangisinin uygulandığı yükleme
+   sırasına bağlıydı — yani bazı sayfalarda butonlar bitişik,
+   bazılarında aralıklı çıkıyordu ve bu KASITLI DEĞİLDİ.
+
+   Boşluklu hali varsayılan yapıldı: tek butonlu satırlarda gap
+   hiçbir şey değiştirmiyor, çok butonlularda ise gerekli. En
+   kapsayıcı davranış kimseyi kaybetmiyor. */
+.islem-butonlari {
+  display: flex;
+  gap: var(--bosluk2);
+  justify-content: flex-end;
+}
+
+/* Tablo hücresindeki kişi adı (3 dosyada aynıydı) */
+.musteri-ad {
+  font-weight: 600;
+  color: var(--yaziKoyu);
+}
+
+.musteri-mail {
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+  margin-top: 2px;
+}
+
+/* Tablo hücresindeki ikincil satır (2 dosyada aynıydı) */
+.alt-bilgi {
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+  margin-top: 2px;
+}
+
+/* Sayfa üstündeki özet kart ızgarası (3 dosyada).
+   ⚠️ Biri minmax(200px), ikisi minmax(220px) kullanıyordu — zaten
+   yalnızca biri uygulanıyordu. Çoğunluk değeri alındı. */
+.ozet-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--bosluk4);
+  margin-bottom: 22px;
+}
+
+/* Veri yokken gösterilen orta hizalı yazı (2 dosyada) */
+.bos-yazi {
+  text-align: center;
+  color: var(--yaziGri);
+  font-size: var(--yazi-normal);
+  padding: var(--bosluk5) 0;
+}
+
+/* Başarı bildirimi kutusu (2 dosyada).
+   ⚠️ Sabit rgba(39,174,96,0.1) eski `basari` renginin tonuydu; tema
+   #16a34a'ya geçtiği için kutu ile kenarlığı farklı yeşillerdeydi.
+   Ayrıca koyu temada da aynı kalıyordu. */
+.basari-kutusu {
+  background-color: var(--yumusakBasari);
+  border: 1px solid var(--basari);
+  color: var(--basari);
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk3) var(--bosluk4);
+  font-size: var(--yazi-normal);
+  margin-bottom: var(--bosluk4);
+}
+
+
+/* ---------- DETAY SAYFASI ORTAK PARÇALARI ----------
+   ⭐ YENİ — Sipariş Detayı ve Müşteri Detayı'ndan taşındı.
+   İkisi de aynı "başlık + iki sütun + kutular" kalıbını kullanıyor. */
+
+.detay-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk4);
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+/* ⚠️ SÜTUN ORANI BİLEREK BURADA TANIMLI DEĞİL.
+   İki sayfanın oranı gerçekten farklı (2fr/1fr ve 1.6fr/1fr) ve bu
+   kasıtlı — içerikleri farklı genişlikte. Ortak kısım burada, oran
+   her sayfanın kendi dosyasında kalıyor.
+
+   Eskiden ikisi de tam tanım yazıyordu ve CSS'te kapsam olmadığı
+   için SADECE BİRİ uygulanıyordu — yani sayfalardan biri yanlış
+   oranla çiziliyordu. */
+.detay-izgara {
+  display: grid;
+  gap: var(--bosluk5);
+  align-items: start;
+}
+
+.kutu {
+  background-color: var(--kartArka);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-buyuk);
+  padding: var(--bosluk5);
+  margin-bottom: var(--bosluk5);
+  box-shadow: var(--golgeSm);
+}
+
+.kutu-baslik {
+  font-size: var(--yazi-buyuk);
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  margin-bottom: var(--bosluk4);
+  padding-bottom: var(--bosluk3);
+  border-bottom: 1px solid var(--kenarlik);
+  letter-spacing: -0.2px;
+}
+
+/* Kart numarası, takip no gibi teknik diziler.
+   ⚠️ Üç dosyada üç farklı tanım vardı (biri sadece font-family,
+   biri renk ekliyor, biri punto). En kapsamlısı alındı. */
+.kart-mono {
+  font-family: monospace;
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziOrta);
+}
+
+/* Sipariş numarası — SP-260724-4821 gibi.
+   ⚠️ Bir dosyada zengin font yığını, diğerinde düz "monospace"
+   vardı. Zengin olan alındı: Windows'ta Consolas, macOS'ta SF Mono
+   gibi gerçek tek aralıklı fontlara düşüyor. */
+.siparis-no {
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  font-size: var(--yazi-kucuk);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* Tablodaki sipariş numarası bağlantısı (2 dosyada aynıydı) */
+.siparis-link {
+  color: var(--anaRenk);
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--yazi-normal);
+}
+
+.sag {
+  text-align: right;
+}
+
 /* ================= ORTAK SAYFA BAŞLIKLARI ================= */
 /* Birden fazla sayfa kullandığı için burada duruyor.
    Tek bir sayfaya ait CSS dosyasında olmamalı. */

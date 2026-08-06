@@ -120,12 +120,6 @@
 }
 
 /* Veri yoksa */
-.bos-yazi {
-  text-align: center;
-  color: var(--yaziGri);
-  font-size: 14px;
-  padding: 24px 0;
-}
 
 /* Değişim yüzdesi rozeti */
 .degisim {
@@ -299,8 +293,3 @@
 /* Sipariş numarası — eşit genişlikli font.
    "SP-260729-4821" gibi kodlar karakter karakter okunur;
    orantılı fontta 1/l ve 0/O ayrımı zorlaşır. */
-.siparis-no {
-  font-family: ui-monospace, "SF Mono", Consolas, monospace;
-  font-size: 13px;
-  letter-spacing: 0.3px;
-}

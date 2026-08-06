@@ -2,17 +2,7 @@
 
 
 
-.sonuc-sayisi {
-  font-size: 13px;
-  color: var(--yaziGri);
-  margin-top: 12px;
-}
 
-.islem-butonlari {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
 
 .stok-yok {
   font-weight: 700;
@@ -28,7 +18,7 @@
 .satir-resim {
   width: 46px;
   height: 46px;
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   object-fit: cover;
   border: 1px solid var(--kenarlik);
   display: block;
@@ -38,13 +28,13 @@
 .satir-resim-yok {
   width: 46px;
   height: 46px;
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   border: 1px solid var(--kenarlik);
   background-color: var(--acikGri);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: var(--yazi-buyuk);
   color: var(--yaziGri);
 }
 
@@ -52,7 +42,7 @@
 /* Header'daki "Excel ile İçe Aktar" + "Yeni Ürün" butonlarını yan yana koyar */
 .sayfa-ust-butonlar {
   display: flex;
-  gap: 10px;
+  gap: var(--bosluk3);
   flex-wrap: wrap;
 }
 

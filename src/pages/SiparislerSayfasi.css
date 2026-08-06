@@ -2,28 +2,10 @@
 
 
 
-.sonuc-sayisi {
-  font-size: var(--yazi-kucuk);
-  color: var(--yaziGri);
-  margin-top: var(--bosluk3);
-}
 
 /* Müşteri hücresi */
-.musteri-ad {
-  font-weight: 600;
-  color: var(--yaziKoyu);
-}
 
-.musteri-mail {
-  font-size: var(--yazi-kucuk);
-  color: var(--yaziGri);
-  margin-top: 2px;
-}
 
-.islem-butonlari {
-  display: flex;
-  justify-content: flex-end;
-}
 
 /* Özet çubuğu */
 .ozet-cubugu {
@@ -44,11 +26,6 @@
 }
 
 /* Tablo içi ikincil bilgi */
-.alt-bilgi {
-  font-size: var(--yazi-kucuk);
-  color: var(--yaziGri);
-  margin-top: 2px;
-}
 
 .kart-no {
   font-family: monospace;
@@ -61,12 +38,6 @@
 /* Sipariş numarası — SP-260724-4821 gibi.
    Tek aralıklı yazı tipi kullanıyoruz ki alt alta gelen numaralar
    hizalı görünsün ve rakamlar birbirine karışmasın. */
-.siparis-no {
-  font-family: monospace;
-  font-size: var(--yazi-kucuk);
-  letter-spacing: 0.3px;
-  white-space: nowrap;
-}
 
 /* Sipariş içerik kolonu — ürün adları + özet */
 .siparis-icerik {

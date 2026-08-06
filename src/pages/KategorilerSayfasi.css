@@ -38,11 +38,6 @@
   outline: none;
 }
 
-.islem-butonlari {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
 
 /* Ürün sayısı rozeti */
 .urun-sayisi {
@@ -60,11 +55,6 @@
   color: var(--yaziGri);
 }
 
-.sonuc-sayisi {
-  font-size: 13px;
-  color: var(--yaziGri);
-  margin-top: 12px;
-}
 
 /* Kategori silinemez uyarısı */
 .silinemez-ipucu {

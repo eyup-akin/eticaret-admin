@@ -1,10 +1,8 @@
-.detay-ust {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 22px;
-  flex-wrap: wrap;
+/* ⭐ Sadece SÜTUN ORANI burada — ortak yerleşim index.css'te.
+   1.6fr/1fr: sipariş detayından daha dengeli, çünkü sağ sütunda
+   müşteri kartı daha fazla bilgi taşıyor. */
+.detay-izgara {
+  grid-template-columns: 1.6fr 1fr;
 }
 
 /* Müşteri başlığı: avatar + isim */
@@ -28,19 +26,7 @@
   flex-shrink: 0;
 }
 
-.ozet-izgara {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 18px;
-  margin-bottom: 22px;
-}
 
-.detay-izgara {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 20px;
-  align-items: start;
-}
 
 @media (max-width: 1100px) {
   .detay-izgara {
@@ -48,41 +34,14 @@
   }
 }
 
-.kutu {
-  background-color: var(--kartArka);
-  border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.kutu-baslik {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--yaziKoyu);
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--kenarlik);
-}
 
 
 
 
 
 
-.sag {
-  text-align: right;
-}
 
-.siparis-link {
-  color: var(--anaRenk);
-  font-weight: 600;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 14px;
-}
+
 
 .siparis-link:hover {
   text-decoration: underline;
@@ -109,18 +68,7 @@
   line-height: 1.5;
 }
 
-.kart-mono {
-  font-family: monospace;
-  color: var(--yaziOrta);
-  font-size: 13px;
-}
 
-.bos-yazi {
-  text-align: center;
-  color: var(--yaziGri);
-  font-size: 14px;
-  padding: 20px 0;
-}
 
 .gizlilik-notu {
   font-size: 12px;
