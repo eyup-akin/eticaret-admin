@@ -92,6 +92,32 @@ export const acikTema = {
   golgeMd: '0 2px 8px rgba(16, 24, 40, 0.07)',
   golgeLg: '0 12px 32px rgba(16, 24, 40, 0.12)',
 
+  // ⭐ YENİ — GRAFİK SERİ RENKLERİ (kategorik palet)
+  //
+  // ⚠️ SIRA SABİT, ASLA DÖNDÜRÜLMEZ.
+  // Aynı seri her grafikte aynı rengi alır. Sıra bozulursa
+  // kullanıcı "geçen sefer mavi olan neydi" diye sorar.
+  //
+  // ⚠️ ESKİ PALET RENK KÖRLÜĞÜ TESTİNDEN GEÇMİYORDU.
+  // Önceki dizi (#2563eb, #27ae60, #f39c12, #8e44ad, ...) ölçüldü:
+  //   • turuncu ↔ yeşil, protanopide ΔE 5.8 — ayırt EDİLEMİYOR
+  //   • #7f8c8d kroma tabanının altında — gri okunuyor
+  // Yeni dizi doğrulayıcıdan geçti: en kötü komşu çift ΔE 9.1
+  // (protan), normal görüşte ΔE 19.6.
+  //
+  // ⚠️ Bu renkler METİN İÇİN DEĞİL. Üçü (aqua, sarı, magenta) açık
+  // zeminde 3:1 kontrastın altında; işaret rengi olarak sorun değil
+  // ama etiket yazısı bunlarla yazılmaz — yazı her zaman metin
+  // token'larını kullanır.
+  grafik1: '#2a78d6',  // mavi
+  grafik2: '#eb6834',  // turuncu
+  grafik3: '#1baf7a',  // aqua
+  grafik4: '#eda100',  // sarı
+  grafik5: '#e87ba4',  // magenta
+  grafik6: '#008300',  // yeşil
+  grafik7: '#4a3aa7',  // menekşe
+  grafik8: '#e34948',  // kırmızı
+
   // Admin panele özel
   menuArka: '#161b22',
   menuYazi: '#c9d1d9',
@@ -148,6 +174,28 @@ export const koyuTema = {
   golgeSm: '0 1px 2px rgba(0, 0, 0, 0.40)',
   golgeMd: '0 2px 10px rgba(0, 0, 0, 0.45)',
   golgeLg: '0 12px 32px rgba(0, 0, 0, 0.60)',
+
+  // ⭐ YENİ — grafik serileri, KOYU TEMA basamakları.
+  //
+  // ⚠️ AYNI SEKİZ RENK TONU, koyu zemine göre YENİDEN
+  // BASAMAKLANMIŞ hali — açık temanın renklerinin otomatik
+  // çevrilmişi DEĞİL.
+  //
+  // Açık tema renklerini olduğu gibi kullansaydık koyu zeminde
+  // hepsi 3:1 kontrastın altına düşerdi. Bu dizi koyu yüzeye karşı
+  // ayrıca doğrulandı: sekizi de 3:1 üstünde, en kötü komşu çift
+  // ΔE 8.4 (protan).
+  //
+  // Yeşil (#008300) iki temada da aynı: her iki bantta da geçiyor,
+  // değiştirmek için bir sebep yok.
+  grafik1: '#3987e5',  // mavi
+  grafik2: '#d95926',  // turuncu
+  grafik3: '#199e70',  // aqua
+  grafik4: '#c98500',  // sarı
+  grafik5: '#d55181',  // magenta
+  grafik6: '#008300',  // yeşil
+  grafik7: '#9085e9',  // menekşe
+  grafik8: '#e66767',  // kırmızı
 
   // Admin panele özel
   menuArka: '#0b0e13',

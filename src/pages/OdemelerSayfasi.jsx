@@ -265,9 +265,27 @@ export default function OdemelerSayfasi() {
 
               <Legend />
 
-              <Bar dataKey="Brüt" fill={renkler.basari} radius={[4, 4, 0, 0]} />
-              <Bar dataKey="İade" fill="#8e44ad" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="Net"  fill={renkler.anaRenk} radius={[4, 4, 0, 0]} />
+              {/* ⭐ DEĞİŞTİ — grafik paleti kullanılıyor.
+
+                  Eskiden Brüt "basari" (yeşil), Net "anaRenk"
+                  (mavi), İade sabit "#8e44ad" (mor) idi.
+
+                  İki sorun vardı:
+                    1) ⚠️ DURUM RENKLERİ SERİ RENGİ OLARAK
+                       KULLANILMIŞTI. "basari" yeşili bu projede
+                       "işlem başarılı" demek; bir seriyi onunla
+                       boyamak, o serinin iyi bir şey olduğunu ima
+                       ediyor. Durum renkleri ayrılmıştır, seri
+                       rengi olarak yeniden kullanılmaz.
+                    2) Mor renk elle yazılmıştı ve koyu temada
+                       değişmiyordu.
+
+                  Artık üçü de kategorik paletin ilk üç yuvası —
+                  bu üçlü, tüm çiftlerde renk körlüğü eşiğini
+                  geçen doğrulanmış grubun ta kendisi. */}
+              <Bar dataKey="Brüt" fill={renkler.grafik1} radius={[4, 4, 0, 0]} />
+              <Bar dataKey="İade" fill={renkler.grafik2} radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Net"  fill={renkler.grafik3} radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

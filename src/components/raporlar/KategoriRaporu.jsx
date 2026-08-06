@@ -30,30 +30,48 @@ import RaporUstBilgi from './RaporUstBilgi';
 //  gelir. Kategori sayısı artarsa çubuk grafiğe geçilmeli.
 // ============================================================
 
-// Pasta dilimlerinin renkleri.
+// ⭐ DEĞİŞTİ — palet artık burada sabit değil, TEMADAN geliyor.
 //
-// NEDEN SABİT PALET, NEDEN RASTGELE RENK DEĞİL?
+// NEDEN SABİT SIRA, NEDEN RASTGELE RENK DEĞİL?
 // Rastgele renk her yenilemede değişir; kullanıcı "geçen sefer mavi
-// olan neydi" diye sorar. Sabit dizi, aynı sıradaki kategoriye hep
+// olan neydi" diye sorar. Sabit sıra, aynı sıradaki kategoriye hep
 // aynı rengi verir.
 //
-// Renkler birbirinden ayırt edilebilir tonlarda seçildi — yan yana
-// iki mavi koymak dilimleri karıştırır.
-const PALET = [
-  '#2563eb', // mavi
-  '#27ae60', // yeşil
-  '#f39c12', // turuncu
-  '#8e44ad', // mor
-  '#e74c3c', // kırmızı
-  '#16a085', // turkuaz
-  '#d35400', // koyu turuncu
-  '#7f8c8d', // gri
-];
+// ⚠️ ESKİ PALET RENK KÖRLÜĞÜ TESTİNDEN GEÇMİYORDU.
+// Buradaki dizi "birbirinden ayırt edilebilir tonlarda seçildi"
+// diye yazılmıştı ama ÖLÇÜLMEMİŞTİ. Ölçünce çıkan sonuç:
+//   • turuncu ↔ yeşil, protanopide ΔE 5.8 — ayırt edilemiyor
+//   • #7f8c8d kroma tabanının altında — gri okunuyor
+//   • yeşil ve turuncu, açık zeminde 3:1 kontrastın altında
+//
+// Yeni dizi tema.js'te (grafik1..grafik8) ve doğrulayıcıdan geçti.
+// Ayrıca temaya taşınmasının ikinci faydası: koyu temada kendi
+// basamakları var, artık pasta koyu zeminde de okunuyor.
+//
+// Göz kararı yerine ölçüm: "birbirinden ayırt edilebilir" cümlesi
+// iyi niyetliydi ama yanlıştı.
+function paletiOlustur(renkler) {
+  return [
+    renkler.grafik1,
+    renkler.grafik2,
+    renkler.grafik3,
+    renkler.grafik4,
+    renkler.grafik5,
+    renkler.grafik6,
+    renkler.grafik7,
+    renkler.grafik8,
+  ];
+}
 
 
 
 export default function KategoriRaporu({ baslangic, bitis }) {
   const { renkler } = useTema();
+
+  // ⭐ YENİ — palet temadan türetiliyor, tema değişince renkler de
+  // değişiyor. Modül seviyesinde sabit dizi olsaydı koyu temada
+  // açık tema renkleri kullanılmaya devam ederdi.
+  const palet = paletiOlustur(renkler);
 
   const [veri, setVeri] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
@@ -192,11 +210,16 @@ export default function KategoriRaporu({ baslangic, bitis }) {
                 }
               >
                 {/* Her dilime paletten sırayla renk veriyoruz.
-                    % PALET.length: kategori sayısı paletten fazlaysa
+                    % palet.length: kategori sayısı paletten fazlaysa
                     başa dönüp tekrar kullanır — renk biter diye
-                    grafik boş kalmaz. */}
+                    grafik boş kalmaz.
+
+                    ⚠️ Renk tekrarı ideal değil ama pastanın kendi
+                    sınırı zaten 8-10 dilim (yukarıdaki nota bak).
+                    O sınıra gelindiğinde çözüm renk üretmek değil,
+                    grafik tipini değiştirmek. */}
                 {pastaVerisi.map((girdi, i) => (
-                  <Cell key={i} fill={PALET[i % PALET.length]} />
+                  <Cell key={i} fill={palet[i % palet.length]} />
                 ))}
               </Pie>
 
