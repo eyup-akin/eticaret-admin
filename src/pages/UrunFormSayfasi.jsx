@@ -66,6 +66,17 @@ export default function UrunFormSayfasi() {
     // sonradan yazı girilince "uncontrolled to controlled" hatası
     // fırlatır.
     description: '',
+
+    // ⭐ YENİ — KDV oranı.
+    //
+    // Neden metin ('20'), neden sayı (20) değil?
+    // <select> değerleri her zaman string'dir; sayı tutsaydık
+    // value={20} ile option value="20" karşılaştırması tutmaz ve
+    // seçili görünmezdi. Gönderirken Number() ile çeviriyoruz —
+    // "sayısal form alanlarını metin state'te tut" kuralı.
+    //
+    // Varsayılan '20': yeni ürün genel orana düşsün.
+    vatRate: '20',
   });
 
   // ---------- ÜRÜNÜ ÇEK (resimler dahil) ----------
@@ -94,6 +105,14 @@ export default function UrunFormSayfasi() {
       // Burada sıfır gibi "geçerli falsy değer" riski yok, o yüzden
       // || uygun.
       description: urun.description || '',
+
+      // ⭐ YENİ — KDV oranı.
+      //
+      // ?? 20 kullanıyoruz (|| 20 DEĞİL): alan gelmezse genel orana
+      // düşmek doğru davranış. Burada || de aynı sonucu verirdi çünkü
+      // 0 geçerli bir oran değil — ama ?? niyeti daha net anlatıyor:
+      // "sadece bilgi gelmediyse varsayılana düş".
+      vatRate: String(urun.vatRate ?? 20),
     });
 
     setResimler(urun.images || []);
@@ -194,6 +213,11 @@ export default function UrunFormSayfasi() {
         isActive: form.isActive,      // ⭐ YENİ
 
         description: form.description.trim(),   // ⭐ YENİ
+
+        // ⭐ YENİ — KDV oranı. State'te metin, gövdede sayı.
+        // Sunucu beyaz liste doğrulaması yapıyor (1/10/20); buradaki
+        // <select> zaten o üç değeri sunuyor ama asıl kilit sunucuda.
+        vatRate: Number(form.vatRate),
       };
 
       if (duzenlemeMi) {
@@ -376,6 +400,48 @@ export default function UrunFormSayfasi() {
                 required
               />
             </div>
+          </div>
+
+          {/* ⭐ YENİ — KDV ORANI
+
+              Fiyatın hemen altında duruyor çünkü fiyatı AÇIKLIYOR:
+              yukarıdaki tutarın içinde ne kadar vergi olduğunu belirler.
+              Stok/kategori satırına koysaydık para bilgisiyle envanter
+              bilgisi karışırdı.
+
+              ⚠️ Serbest sayı girişi DEĞİL, açılır menü. Türkiye'de
+              yalnızca üç oran yürürlükte; %7 veya %13 yazılabilseydi
+              o ürünün faturası yanlış kesilirdi. Bu bir hesap hatası
+              değil vergi hatası olurdu.
+
+              ⚠️ Asıl kilit yine SUNUCUDA: ProductCreateDto'daki
+              [KdvOraniGecerli] beyaz listesi. Buradaki menü kolaylık
+              içindir, koruma değil — istek Postman'den de gelebilir. */}
+          <div className="form-ikili">
+            <div className="form-alan">
+              <label className="form-etiket">KDV Oranı</label>
+
+              <select
+                className="form-input"
+                value={form.vatRate}
+                onChange={(e) => alanDegistir('vatRate', e.target.value)}
+                required
+              >
+                <option value="1">%1 — temel gıda</option>
+                <option value="10">%10 — indirimli oran</option>
+                <option value="20">%20 — genel oran</option>
+              </select>
+
+              <div className="form-ipucu">
+                Girdiğin fiyat <b>KDV dahildir</b>. Bu oran fiyatın
+                üstüne eklenmez, içinden ayrıştırılır.
+              </div>
+            </div>
+
+            {/* İkinci sütun bilerek boş: KDV tek başına bir satırı
+                doldurmuyor ama form-ikili ızgarasını bozmadan hizalı
+                kalması için sarmalayıcıyı kullanıyoruz. */}
+            <div />
           </div>
 
           {/* Canlı kâr önizlemesi */}

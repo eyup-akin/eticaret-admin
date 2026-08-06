@@ -369,6 +369,54 @@ export default function SiparisDetaySayfasi() {
               <span className="toplam-tutar">{paraBicimle(siparis.tutar)}</span>
             </div>
 
+            {/* ⭐ YENİ — KDV DÖKÜMÜ
+
+                ⚠️ TOPLAMIN ALTINDA, ÜSTÜNDE DEĞİL — bilinçli.
+
+                Ara toplam/indirim/kargo satırları toplama GİDEN
+                adımlar; onları toplamın üstüne koyduk. KDV ise
+                toplama hiçbir şey EKLEMİYOR: fiyatlar KDV dahil
+                olduğu için vergi zaten o rakamın içinde.
+
+                Üste koysaydık operatör onu da toplanan bir kalem
+                sanır, "ara toplam + kargo + KDV = toplam" diye
+                okumaya çalışır ve hesabı tutturamazdı.
+
+                ⚠️ varMi false ise blok HİÇ çizilmiyor. Bu özellik
+                eklenmeden önceki siparişlerde oran bilinmiyor;
+                "KDV: 0,00 TL" yazmak eksik değil YANLIŞ bilgi olurdu.
+
+                ⚠️ Oran başına ayrı satır: sepette %1 gıda ile %20
+                elektronik birlikte olabilir. Tek bir "KDV" satırı
+                göstermek, fatura kesilirken gereken kırılımı gizlerdi. */}
+            {siparis.kdv?.varMi && (
+              <div className="kdv-blok">
+                <div className="kdv-baslik">KDV Dökümü (fiyata dahil)</div>
+
+                {siparis.kdv.satirlar.map((s) => (
+                  <div className="ozet-satiri" key={s.oran}>
+                    <span className="ozet-etiket">
+                      KDV %{s.oran} — matrah {paraBicimle(s.matrah)}
+                    </span>
+                    <span className="ozet-deger">{paraBicimle(s.vergi)}</span>
+                  </div>
+                ))}
+
+                {/* Toplam satırı SADECE birden fazla oran varsa.
+                    Tek oran varsa üstteki satırla birebir aynı sayı
+                    olurdu — aynı bilgiyi iki kez göstermek okuyanı
+                    "acaba farklı bir şey mi?" diye durdurur. */}
+                {siparis.kdv.satirlar.length > 1 && (
+                  <div className="ozet-satiri kdv-toplam">
+                    <span className="ozet-etiket">Toplam KDV</span>
+                    <span className="ozet-deger">
+                      {paraBicimle(siparis.kdv.toplamVergi)}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="durum-ipucu">
               💡 Buradaki fiyatlar <b>sipariş anındaki</b> fiyatlardır.
               Ürünün fiyatı sonradan değişse bile bu kayıt değişmez.

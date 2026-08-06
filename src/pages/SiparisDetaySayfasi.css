@@ -163,6 +163,36 @@
   border-top: 2px solid var(--kenarlik);
 }
 
+/* ⭐ YENİ — KDV dökümü.
+
+   Toplam satırının ALTINDA ve daha silik: bu bir bilgilendirme,
+   hesaba giren bir adım değil. Aynı puntoda olsaydı toplanan bir
+   kalem gibi okunurdu. */
+.kdv-blok {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--kenarlik);
+}
+
+/* Kesikli çizgi bilinçli: üstteki toplam satırının düz ve kalın
+   çizgisi "burada bir hesap bitti" der. Kesikli çizgi ise "aynı
+   rakamın açıklaması geliyor" der. Aynı çizgiyi kullansaydık iki
+   bölüm eşit ağırlıkta görünürdü. */
+.kdv-baslik {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--yaziGri);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.kdv-toplam {
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--kenarlik);
+}
+
 .toplam-etiket {
   font-size: 15px;
   color: var(--yaziOrta);
