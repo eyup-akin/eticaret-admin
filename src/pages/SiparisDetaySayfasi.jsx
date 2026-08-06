@@ -308,6 +308,62 @@ export default function SiparisDetaySayfasi() {
               </tbody>
             </table>
 
+            {/* ⭐ YENİ — TUTAR ÖZETİ (döküm)
+
+                Eskiden burada TEK satır vardı: "Sipariş Toplamı".
+                Yukarıdaki kalem tablosunun ara toplamları ile o rakam
+                birbirini tutmuyordu ve sebebini görmenin yolu yoktu —
+                aradaki fark indirim mi, kargo mu belli değildi.
+
+                Bu, destek talebine dönüşen türden bir belirsizlik:
+                müşteri "neden 499,90 çekildi" diye arayınca operatör
+                ekranda cevabı bulamıyordu.
+
+                ⚠️ HESAP SIRASI: ara toplam → indirim → kargo → toplam.
+                Kargo indirimden SONRA çünkü kupon kargoya uygulanmıyor
+                (bkz. SepetHesaplayici). Kargoyu indirimin üstüne
+                koysaydık ekran, sunucunun yapmadığı bir hesabı
+                anlatıyor olurdu.
+
+                ⚠️ Tüm değerler DONDURULMUŞ: sipariş anında Order
+                tablosuna yazıldılar. Kuponun ya da mağaza kargo
+                ücretinin bugünkü hali burayı DEĞİŞTİRMEZ. */}
+            <div className="ozet-blok">
+              <div className="ozet-satiri">
+                <span className="ozet-etiket">Ara toplam</span>
+                <span className="ozet-deger">{paraBicimle(siparis.araToplam)}</span>
+              </div>
+
+              {/* İndirim satırı sadece indirim varsa.
+                  "İndirim: 0,00 ₺" yazmak gürültü olurdu. */}
+              {siparis.indirim > 0 && (
+                <div className="ozet-satiri">
+                  <span className="ozet-etiket">
+                    İndirim{siparis.kuponKodu ? ` (${siparis.kuponKodu})` : ''}
+                  </span>
+                  <span className="ozet-deger ozet-indirim">
+                    −{paraBicimle(siparis.indirim)}
+                  </span>
+                </div>
+              )}
+
+              {/* Kargo satırı KOŞULSUZ — indirimin aksine.
+
+                  0 olduğunda satırı gizlemek yerine "Ücretsiz"
+                  yazıyoruz. Operatör için "kargo alınmamış" ile
+                  "kargo bilgisi yok" farklı şeyler; boşluk bırakmak
+                  ikincisi gibi okunurdu. */}
+              <div className="ozet-satiri">
+                <span className="ozet-etiket">Kargo</span>
+
+                {siparis.kargoUcreti > 0 ? (
+                  <span className="ozet-deger">{paraBicimle(siparis.kargoUcreti)}</span>
+                ) : (
+                  <span className="ozet-deger ozet-ucretsiz">Ücretsiz</span>
+                )}
+              </div>
+            </div>
+
             <div className="toplam-satiri">
               <span className="toplam-etiket">Sipariş Toplamı</span>
               <span className="toplam-tutar">{paraBicimle(siparis.tutar)}</span>

@@ -109,12 +109,56 @@
   text-align: right;
 }
 
+/* ⭐ YENİ — Tutar özeti dökümü (ara toplam / indirim / kargo)
+
+   Toplam satırının ÜSTÜNDE duruyor ve ondan farklı görünüyor:
+   bunlar ara adımlar, toplam ise sonuç. Aynı puntoda yazsaydık
+   operatörün gözü hangisinin nihai tutar olduğunu ayırt etmek için
+   her seferinde okumak zorunda kalırdı. */
+.ozet-blok {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--kenarlik);
+}
+
+.ozet-satiri {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ozet-etiket {
+  font-size: 14px;
+  color: var(--yaziOrta);
+}
+
+.ozet-deger {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yaziKoyu);
+}
+
+/* İndirim ve "Ücretsiz" aynı rengi paylaşıyor: ikisi de müşterinin
+   lehine olan bir durumu anlatıyor. Ayrı renkler vermek okuyana
+   olmayan bir ayrım varmış izlenimi verirdi. */
+.ozet-indirim {
+  color: var(--basari);
+}
+
+.ozet-ucretsiz {
+  color: var(--basari);
+}
+
 /* Toplam satırı */
+/* ⭐ DEĞİŞTİ — üstünde artık özet bloğu var, bu yüzden kendi
+   margin-top'unu sıfırladık. İkisi birden kalsaydı toplam satırı
+   dökümden kopuk görünürdü; oysa onun sonucu. */
 .toplam-satiri {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
+  margin-top: 0;
   padding-top: 16px;
   border-top: 2px solid var(--kenarlik);
 }

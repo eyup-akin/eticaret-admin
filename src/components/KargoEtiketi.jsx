@@ -82,7 +82,26 @@ export default function KargoEtiketi({ etiket, magaza }) {
         <div className="etiket-no">{etiket.siparisNo}</div>
 
         <div className="etiket-ozet">
-          {etiket.urunCesidi} çeşit · {etiket.toplamAdet} adet · {paraBicimle(etiket.tutar)}
+          {etiket.urunCesidi} çeşit · {etiket.toplamAdet} adet
+        </div>
+
+        {/* ⭐ DEĞİŞTİ — TUTAR ARTIK ETİKETLİ VE KENDİ SATIRINDA
+
+            Eskiden bu rakam "3 çeşit · 5 adet · 499,90 ₺" dizisinin
+            sonundaydı ve NEYİN tutarı olduğunu söylemiyordu. Kargo
+            ücreti girmeden önce de belirsizdi ama şimdi gerçek bir
+            yanlış anlama riski var: etiketi okuyan kişi bunu ürünlerin
+            tutarı sanıp kapıda ondan tahsil edebilir.
+
+            ⚠️ Bu rakam order.Total — yani indirim düşülmüş, kargo
+            EKLENMİŞ nihai tutar. Parantez içindeki "kargo dahil" ifadesi
+            süs değil: kapıda ödeme akışında yanlış tahsilat doğrudan
+            para kaybı demek.
+
+            Kendi satırına aldık çünkü etiket dizisinin sonunda kalan
+            uzun bir metin, adet bilgisiyle birbirine karışıyordu. */}
+        <div className="etiket-tutar">
+          Toplam (kargo dahil): {paraBicimle(etiket.tutar)}
         </div>
 
         {/* ⭐ YENİ — KARGO BİLGİSİ
