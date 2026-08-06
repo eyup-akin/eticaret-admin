@@ -1,3 +1,70 @@
+/* ============================================================
+   ⭐ YENİ — TASARIM ÖLÇEKLERİ (Aşama 4.5)
+
+   ⚠️ BURAYA SADECE TEMADAN BAĞIMSIZ DEĞERLER GİRER.
+
+   Renkler ve gölgeler tema.js'te yaşıyor: onlar açık/koyu temada
+   FARKLI. Boşluk, köşe ve punto ise her iki temada AYNI —
+   tema.js'e koysaydık iki nesnede birden tanımlamak gerekirdi ve
+   biri güncellenip diğeri unutulurdu.
+
+   ⚠️ TemaContext bu değişkenleri EZMEZ. O, değerleri
+   documentElement'in satır içi stiline yazıyor; buradakiler
+   stil sayfasındaki :root kuralında. İsimler çakışmadığı sürece
+   ikisi yan yana yaşıyor. (Çakışsaydı satır içi stil kazanırdı.)
+
+   ⚠️ NEDEN ÖLÇEK? Kod tabanında 11 farklı köşe yarıçapı
+   (4,6,7,8,9,10,12,14,20,24,999) ve 14 farklı punto vardı.
+   Bu sayılar bir karardan değil, o an ne yazıldıysa ondan
+   çıkmıştı. Sınırlı bir ölçek, tutarlılığı tercih meselesi
+   olmaktan çıkarıp varsayılan hale getiriyor.
+   ============================================================ */
+:root {
+  /* ---------- BOŞLUK ----------
+     4'ün katları. Ara değer yok: 10px veya 18px gerekiyorsa
+     genelde yanlış olan ölçek değil, yerleşimdir. */
+  --bosluk1: 4px;
+  --bosluk2: 8px;
+  --bosluk3: 12px;
+  --bosluk4: 16px;
+  --bosluk5: 24px;
+  --bosluk6: 32px;
+
+  /* ---------- KÖŞE YARIÇAPI ----------
+     Referans tasarımlardaki kartlar belirgin şekilde yuvarlak
+     (16-20px). Eskiden kartlar 8-12px idi ve bu, tasarımı
+     "premium" değil "varsayılan bootstrap" gösteren en büyük
+     tek etkendi.
+
+     kose-tam: hap şeklindeki rozet ve chip'ler için. 999px,
+     yüksekliği ne olursa olsun tam yuvarlak uç verir. */
+  --kose-kucuk: 8px;
+  --kose-orta: 12px;
+  --kose-buyuk: 16px;
+  --kose-dev: 20px;
+  --kose-tam: 999px;
+
+  /* ---------- PUNTO ----------
+     Yedi basamak. Aradaki değerler (17px, 19px gibi) bilerek
+     yok: gözle ayırt edilemeyen fark, kod tabanında gürültü
+     yaratmaktan başka işe yaramıyor. */
+  --yazi-mikro: 11px;
+  --yazi-kucuk: 12px;
+  --yazi-normal: 14px;
+  --yazi-orta: 15px;
+  --yazi-buyuk: 18px;
+  --yazi-baslik: 22px;
+  --yazi-dev: 30px;
+
+  /* ---------- SATIR YÜKSEKLİĞİ ----------
+     Birimsiz: font boyutuyla çarpılır, alt öğeler kendi
+     puntosuna göre doğru satır aralığı alır. "1.5em" yazsaydık
+     çocuk öğeler ATANIN hesaplanmış değerini miras alırdı. */
+  --satir-sik: 1.3;
+  --satir-normal: 1.5;
+  --satir-genis: 1.7;
+}
+
 /* Tarayıcının varsayılan boşluklarını sıfırla */
 * {
   margin: 0;
@@ -7,8 +74,14 @@
 
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--arkaPlan, #f5f6fa);
-  color: var(--yaziKoyu, #333333);
+  background-color: var(--arkaPlan, #f4f6f9);
+  color: var(--yaziKoyu, #1a1d23);
+
+  /* ⭐ YENİ — yazı yumuşatma.
+     Koyu zemin üzerinde açık yazı, varsayılan render'da olduğundan
+     kalın görünür. Bu iki satır iki temada da aynı ağırlığı verir. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Buton ve inputlar font'u body'den miras alsın */

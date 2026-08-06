@@ -1,5 +1,27 @@
-// Rol bazlı isimler kullanıyoruz ("beyaz" değil "arkaPlan"),
-// çünkü koyu temada aynı rol farklı renge dönüşecek.
+// ============================================================
+//  TEMA — RENK VE GÖLGE TOKEN'LARI
+//
+//  Rol bazlı isimler kullanıyoruz ("beyaz" değil "arkaPlan"),
+//  çünkü koyu temada aynı rol farklı renge dönüşecek.
+//
+//  ⚠️ BURAYA SADECE TEMAYA GÖRE DEĞİŞEN ŞEYLER GİRER.
+//
+//  Boşluk, köşe yarıçapı ve punto ölçekleri açık ve koyu temada
+//  AYNI — onlar index.css'teki :root bloğunda yaşıyor. Buraya
+//  koysaydık iki nesnede birden tanımlamak gerekirdi ve biri
+//  güncellenip diğeri unutulurdu.
+//
+//  Kural: bir değer temaya göre değişmiyorsa temada durmaz.
+//
+//  ⚠️ NESNE YAPISI DÜZ OLMALI — iç içe nesne KOYMA.
+//  TemaContext her anahtarı doğrudan CSS değişkenine yazıyor
+//  (--anaRenk gibi). İç içe bir nesne "[object Object]" olarak
+//  yazılır ve sessizce bozulur.
+//
+//  ⚠️ DEĞERLER BİRİMİYLE YAZILIR ('8px', '0 1px 2px ...').
+//  CSS değişkeni ham metin taşır; birimi burada vermezsek her
+//  kullanım yerinde calc() veya elle px eklemek gerekirdi.
+// ============================================================
 
 export const acikTema = {
   ad: 'acik',
@@ -8,26 +30,71 @@ export const acikTema = {
   anaRenkKoyu: '#1d4ed8',
   anaRenkUstuYazi: '#ffffff',
 
-  arkaPlan: '#f5f6fa',
+  // ⭐ DEĞİŞTİ — sayfa zemini bir tık daha nötr.
+  // #f5f6fa hafif mor çalıyordu; beyaz kartların yanında kirli
+  // görünüyordu. Referans tasarımlardaki zemin nötr gri-mavi.
+  arkaPlan: '#f4f6f9',
   kartArka: '#ffffff',
-  acikKart: '#f8f8f8',
-  acikGri: '#f2f2f2',
+  acikKart: '#f7f8fa',
+  acikGri: '#f1f3f6',
 
-  yaziKoyu: '#333333',
-  yaziOrta: '#666666',
-  yaziGri: '#999999',
+  // ⭐ DEĞİŞTİ — nötrler soğutuldu ve kontrastı artırıldı.
+  //
+  // Eski değerler saf gri idi (#333/#666/#999). Saf gri, mavi bir
+  // ana renkle birlikte kullanıldığında "solmuş" görünür. Hafif
+  // mavi-gri tonlar hem daha okunaklı hem referanslardaki dile
+  // yakın.
+  //
+  // ⚠️ Bu üç satır uygulamanın TAMAMINI etkiliyor — rol bazlı
+  // token'ın anlamı bu. Tek yerden değişiyor olması, değişikliğin
+  // riskini değil MALİYETİNİ düşürüyor; sonucu her ekranda
+  // kontrol etmek yine gerekiyor.
+  yaziKoyu: '#1a1d23',
+  yaziOrta: '#5a6270',
+  yaziGri: '#8b93a1',
 
-  kenarlik: '#e5e7eb',
-  inputKenar: '#dddddd',
+  kenarlik: '#e6e9ee',
+  inputKenar: '#d7dce4',
 
-  basari: '#27ae60',
-  uyari: '#f39c12',
-  hata: '#e74c3c',
-  pasif: '#cccccc',
+  basari: '#16a34a',
+  uyari: '#d97706',
+  hata: '#dc2626',
+  pasif: '#c9ced6',
+
+  // ⭐ YENİ — YUMUŞAK ZEMİNLER (rozet ve bilgi kutuları için)
+  //
+  // Bunlar 8+6+2 yerde rgba(39,174,96,0.1) gibi ELLE yazılıydı.
+  // Elle yazılmalarının iki sorunu vardı:
+  //   1) Koyu temada da aynı kalıyorlardı — tema değişince rozet
+  //      zemini değişmiyordu
+  //   2) Ton tutarsızdı: bazı yerde 0.1, bazı yerde 0.08
+  //
+  // rgba tercih edildi (düz hex değil): altındaki zemin beyaz da
+  // olsa açık gri de olsa doğal görünüyor. Kart içindeki rozet ile
+  // sayfa zeminindeki rozet aynı renkte çıksın diye.
+  yumusakBasari: 'rgba(22, 163, 74, 0.10)',
+  yumusakUyari: 'rgba(217, 119, 6, 0.10)',
+  yumusakHata: 'rgba(220, 38, 38, 0.10)',
+  yumusakVurgu: 'rgba(37, 99, 235, 0.10)',
+
+  // ⭐ YENİ — yükleme iskeleti zemini (Aşama 7'de kullanılacak)
+  iskeletArka: '#e9ecf1',
+
+  // ⭐ YENİ — GÖLGE ÖLÇEĞİ
+  //
+  // Neden temada? Koyu zeminde siyah gölge GÖRÜNMEZ. Açık temanın
+  // gölgesini koyu temada kullansaydık kartlar düz bir şekilde
+  // zemine yapışırdı. Koyu temada gölge daha koyu ve daha yayvan.
+  //
+  // Referans tasarımlarda kartların kenarlığı yok, ayrımı gölge
+  // yapıyor — bu yüzden gölgenin doğru olması kenarlıktan önemli.
+  golgeSm: '0 1px 2px rgba(16, 24, 40, 0.05)',
+  golgeMd: '0 2px 8px rgba(16, 24, 40, 0.07)',
+  golgeLg: '0 12px 32px rgba(16, 24, 40, 0.12)',
 
   // Admin panele özel
-  menuArka: '#1f2937',
-  menuYazi: '#d1d5db',
+  menuArka: '#161b22',
+  menuYazi: '#c9d1d9',
   menuAktifArka: '#2563eb',
   menuAktifYazi: '#ffffff',
 };
@@ -39,26 +106,52 @@ export const koyuTema = {
   anaRenkKoyu: '#2563eb',
   anaRenkUstuYazi: '#ffffff',
 
-  arkaPlan: '#121212',
-  kartArka: '#1e1e1e',
-  acikKart: '#2a2a2a',
-  acikGri: '#2a2a2a',
+  // ⭐ DEĞİŞTİ — saf siyah yerine hafif mavi-gri.
+  // #121212 saf nötr siyahtı; beyaz metinle birlikte sert bir
+  // kontrast veriyordu. Referanslardaki koyu paneller hafif
+  // renkli koyu tonlar kullanıyor, gözü daha az yoruyor.
+  arkaPlan: '#0f1218',
+  kartArka: '#171b22',
+  acikKart: '#1e232c',
+  acikGri: '#1e232c',
 
-  yaziKoyu: '#f5f5f5',
-  yaziOrta: '#b0b0b0',
-  yaziGri: '#888888',
+  yaziKoyu: '#f0f2f5',   // koyu temada "koyu yazı" aslında açık renk
+  yaziOrta: '#a8b0bd',
+  yaziGri: '#767f8c',
 
-  kenarlik: '#333333',
-  inputKenar: '#444444',
+  kenarlik: '#272d38',
+  inputKenar: '#333b48',
 
   basari: '#2ecc71',
-  uyari: '#f1c40f',
-  hata: '#e74c3c',
-  pasif: '#555555',
+  uyari: '#fbbf24',
+  hata: '#ff6b6b',
+  pasif: '#4a515c',
+
+  // ⭐ YENİ — yumuşak zeminler, koyu tema karşılıkları.
+  //
+  // Opaklık açık temadakinden YÜKSEK (0.16 vs 0.10) — bilinçli.
+  // Koyu zeminde düşük opaklıklı bir renk neredeyse kaybolur;
+  // aynı sayıyı kullansaydık rozetler koyu temada görünmez olurdu.
+  yumusakBasari: 'rgba(46, 204, 113, 0.16)',
+  yumusakUyari: 'rgba(251, 191, 36, 0.16)',
+  yumusakHata: 'rgba(255, 107, 107, 0.16)',
+  yumusakVurgu: 'rgba(59, 130, 246, 0.16)',
+
+  iskeletArka: '#232932',
+
+  // ⭐ YENİ — gölge ölçeği, koyu tema.
+  //
+  // Açık temadakinden çok daha koyu: koyu zeminde %5'lik bir siyah
+  // gölge hiç görünmez. Buradaki değerler kartın zeminden
+  // ayrılmasını sağlayacak kadar güçlü ama "yüzen kutu" hissi
+  // verecek kadar abartılı değil.
+  golgeSm: '0 1px 2px rgba(0, 0, 0, 0.40)',
+  golgeMd: '0 2px 10px rgba(0, 0, 0, 0.45)',
+  golgeLg: '0 12px 32px rgba(0, 0, 0, 0.60)',
 
   // Admin panele özel
-  menuArka: '#0f0f0f',
-  menuYazi: '#b0b0b0',
+  menuArka: '#0b0e13',
+  menuYazi: '#a8b0bd',
   menuAktifArka: '#3b82f6',
   menuAktifYazi: '#ffffff',
 };
@@ -67,3 +160,43 @@ export const temalar = {
   acik: acikTema,
   koyu: koyuTema,
 };
+
+
+// ============================================================
+//  ⭐ YENİ — GELİŞTİRME ZAMANI KORUMASI
+//
+//  ⚠️ İKİ TEMANIN ANAHTARLARI BİREBİR AYNI OLMAK ZORUNDA.
+//
+//  Neden? TemaContext her anahtarı CSS değişkenine yazıyor ama
+//  ESKİLERİ SİLMİYOR. Bir token sadece açık temada tanımlıysa:
+//    1) Açık temada değer yazılır
+//    2) Koyu temaya geçilir — o anahtar yazılmaz
+//    3) Açık temanın değeri <html> üzerinde ASILI KALIR
+//
+//  Sonuç: koyu temada beyaz bir kart zemini. Hata mesajı yok,
+//  konsol temiz — sadece ekran yanlış. Bu projede en çok
+//  kaçındığımız hata türü.
+//
+//  Neden throw değil console.error?
+//  Eksik bir token yüzünden panelin hiç açılmaması, biraz yanlış
+//  renkli açılmasından daha kötü. Geliştirici konsolu görür ve
+//  düzeltir; kullanıcı bu koda hiç ulaşmaz.
+//
+//  import.meta.env.DEV: Vite bu bloğu üretim paketinden tamamen
+//  çıkarır, çalışma maliyeti sıfır.
+// ============================================================
+if (import.meta.env.DEV) {
+  const acikAnahtarlar = Object.keys(acikTema);
+  const koyuAnahtarlar = Object.keys(koyuTema);
+
+  const koyudaEksik = acikAnahtarlar.filter((a) => !koyuAnahtarlar.includes(a));
+  const aciktaEksik = koyuAnahtarlar.filter((a) => !acikAnahtarlar.includes(a));
+
+  if (koyudaEksik.length > 0) {
+    console.error('[tema] Koyu temada eksik token:', koyudaEksik.join(', '));
+  }
+
+  if (aciktaEksik.length > 0) {
+    console.error('[tema] Açık temada eksik token:', aciktaEksik.join(', '));
+  }
+}
