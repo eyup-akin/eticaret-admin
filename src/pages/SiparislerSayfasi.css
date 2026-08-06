@@ -3,9 +3,9 @@
 
 
 .sonuc-sayisi {
-  font-size: 13px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 12px;
+  margin-top: var(--bosluk3);
 }
 
 /* Müşteri hücresi */
@@ -15,7 +15,7 @@
 }
 
 .musteri-mail {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   margin-top: 2px;
 }
@@ -28,14 +28,14 @@
 /* Özet çubuğu */
 .ozet-cubugu {
   display: flex;
-  gap: 24px;
+  gap: var(--bosluk5);
   flex-wrap: wrap;
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  font-size: 14px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
+  font-size: var(--yazi-normal);
   color: var(--yaziOrta);
 }
 
@@ -45,14 +45,14 @@
 
 /* Tablo içi ikincil bilgi */
 .alt-bilgi {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   margin-top: 2px;
 }
 
 .kart-no {
   font-family: monospace;
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   margin-top: 4px;
 }
@@ -63,7 +63,7 @@
    hizalı görünsün ve rakamlar birbirine karışmasın. */
 .siparis-no {
   font-family: monospace;
-  font-size: 13px;
+  font-size: var(--yazi-kucuk);
   letter-spacing: 0.3px;
   white-space: nowrap;
 }
@@ -74,7 +74,7 @@
 }
 
 .icerik-urunler {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   color: var(--yaziKoyu);
   line-height: 1.4;
 }
@@ -82,7 +82,7 @@
 /* "+3 ürün daha" — asıl ürünlerden daha silik dursun */
 .icerik-kalan {
   color: var(--yaziGri);
-  font-size: 13px;
+  font-size: var(--yazi-kucuk);
 }
 
 
@@ -99,23 +99,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--bosluk4);
   flex-wrap: wrap;
-  padding: 12px 16px;
-  margin-bottom: 12px;
-  background: rgba(37, 99, 235, 0.08);
-  border: 1px solid rgba(37, 99, 235, 0.25);
-  border-radius: 10px;
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk3);
+
+  /* ⭐ DEĞİŞTİ — sabit rgba yerine token.
+     Eski değer ana rengin ESKİ tonundan (#2563eb) türetilmişti ve
+     koyu temada da aynı kalıyordu; koyu temanın ana rengi #3b82f6
+     olduğu için çubuk ile butonlar farklı mavilerdeydi. */
+  background: var(--yumusakVurgu);
+  border: 1px solid var(--yumusakVurgu);
+  border-radius: var(--kose-orta);
 }
 
 .secim-yazi {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   color: var(--yaziKoyu);
 }
 
 .secim-butonlar {
   display: flex;
-  gap: 8px;
+  gap: var(--bosluk2);
 }
 
 /* ⭐ YENİ — kargo takip numarası.
@@ -125,9 +130,9 @@
    kullanıcı ikisinin farklı türde bilgi olduğunu sanırdı. */
 .takip-no {
   font-family: monospace;
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziOrta);
-  margin-top: 4px;
+  margin-top: var(--bosluk1);
 
   /* letter-spacing: monospace fontta bile uzun numara dizileri
      birbirine yapışık okunuyor. Harfleri hafif açmak, numarayı

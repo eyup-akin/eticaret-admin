@@ -65,36 +65,10 @@
   border-bottom: 1px solid var(--kenarlik);
 }
 
-.mini-tablo {
-  width: 100%;
-  border-collapse: collapse;
-}
 
-.mini-tablo th {
-  text-align: left;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: var(--yaziGri);
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--kenarlik);
-}
 
-.mini-tablo td {
-  padding: 12px 10px;
-  font-size: 14px;
-  color: var(--yaziKoyu);
-  border-bottom: 1px solid var(--kenarlik);
-}
 
-.mini-tablo tr:last-child td {
-  border-bottom: none;
-}
 
-.mini-tablo tbody tr:hover {
-  background-color: var(--acikGri);
-}
 
 .sag {
   text-align: right;
