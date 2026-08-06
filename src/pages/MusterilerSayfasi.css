@@ -1,6 +1,3 @@
-.sayfa-ust {
-  margin-bottom: 22px;
-}
 
 .ozet-izgara {
   display: grid;
@@ -9,26 +6,8 @@
   margin-bottom: 22px;
 }
 
-.filtre-cubugu {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
 
-.filtre-secim {
-  padding: 10px 12px;
-  border: 1px solid var(--inputKenar);
-  border-radius: 8px;
-  background-color: var(--kartArka);
-  color: var(--yaziKoyu);
-  outline: none;
-  min-width: 170px;
-}
 
-.filtre-secim:focus {
-  border-color: var(--anaRenk);
-}
 
 /* Müşteri avatarı — baş harfler */
 .avatar {

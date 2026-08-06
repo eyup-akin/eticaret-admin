@@ -256,7 +256,7 @@ export default function KategorilerSayfasi() {
 
   return (
     <div>
-      <div className="sayfa-ust">
+      <div className="sayfa-ust sayfa-ust-yatay">
         <div>
           <h1 className="sayfa-baslik">Kategoriler</h1>
           <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>

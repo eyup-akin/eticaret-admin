@@ -1,6 +1,3 @@
-.sayfa-ust {
-  margin-bottom: 22px;
-}
 
 /* ---------- ÖZET KARTLAR ---------- */
 .ozet-izgara {
@@ -41,13 +38,6 @@
 }
 
 /* ---------- FİLTRELER ---------- */
-.filtre-cubugu {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-  align-items: flex-end;
-}
 
 .filtre-grup {
   display: flex;
@@ -61,24 +51,23 @@
   color: var(--yaziOrta);
 }
 
-.filtre-secim,
+/* ⭐ DEĞİŞTİ — .filtre-secim bu gruptan ÇIKARILDI.
+   Ortak tanımı artık index.css'te; burada kalsaydı aynı sınıf yine
+   iki yerde yaşamaya devam ederdi. .filtre-tarih ise bu sayfaya
+   özel (tarih girdisi sadece burada var), o yüzden burada kalıyor. */
 .filtre-tarih {
-  padding: 10px 12px;
+  padding: 10px var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
 }
 
-.filtre-secim:focus,
 .filtre-tarih:focus {
   border-color: var(--anaRenk);
 }
 
-.filtre-secim {
-  min-width: 160px;
-}
 
 /* Hızlı tarih butonları */
 .hizli-tarihler {

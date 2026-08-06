@@ -232,6 +232,84 @@ button {
   color: var(--yaziGri);
 }
 
+/* ============================================================
+   ⭐ YENİ — ÇAKIŞAN SINIFLAR BURAYA TOPLANDI (Aşama 4.5)
+
+   ⚠️ BUNLAR ZATEN ORTAKTI — SADECE KİMSE ÖYLE YAZMAMIŞTI.
+
+   .sayfa-ust      5 dosyada
+   .filtre-cubugu  4 dosyada
+   .filtre-secim   9 dosyada
+
+   CSS'te kapsam yok: Vite hepsini tek pakette birleştiriyor ve
+   AYNI isimli son tanım kazanıyor. Yani bu sınıflar hep tekti,
+   sadece hangi dosyanın kazandığı yükleme sırasına bağlıydı.
+
+   ⚠️ .sayfa-ust GERÇEKTEN ÇELİŞİYORDU:
+     • 5 sayfada  → sadece margin-bottom  (başlık ve altyazı ALT ALTA)
+     • 2 sayfada  → display:flex + space-between (sağda buton var)
+
+   Flex tanımı kazandığında, başlık ve altyazının alt alta olması
+   gereken 5 sayfada ikisi YAN YANA diziliyordu. Kimse fark etmemiş
+   çünkü hangi tanımın kazandığı import sırasına bağlı ve o sıra
+   sayfa sayfa değişmiyor — ama bir dosya yeniden adlandırılsa
+   yerleşim sessizce bozulurdu.
+
+   ÇÖZÜM: Varsayılan = ÇOĞUNLUK (sadece margin). Yan yana düzen
+   isteyen 2 sayfa ayrı bir değiştirici sınıf ekliyor.
+
+   Neden tersi değil? Varsayılanı flex yapsaydık, unutulan her
+   sayfa BOZUK görünürdü. Varsayılanı basit tutunca, unutulan
+   sayfa sadece "buton alta düşmüş" olur — bozuk değil, eksik.
+   Sessiz bozulma yerine görünür eksiklik.
+   ============================================================ */
+
+.sayfa-ust {
+  margin-bottom: 22px;
+}
+
+/* Başlık solda, eylem butonları sağda (Ürünler, Kategoriler). */
+.sayfa-ust-yatay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk4);
+  flex-wrap: wrap;
+}
+
+.filtre-cubugu {
+  display: flex;
+  gap: var(--bosluk3);
+  margin-bottom: var(--bosluk4);
+  flex-wrap: wrap;
+
+  /* ⚠️ align-items: flex-end — Ödemeler sayfasından geldi.
+     Orada filtre çubuğunda etiketli tarih alanları var ve
+     etiketsiz açılır menülerle ALT hizadan hizalanmaları
+     gerekiyor. Diğer sayfalarda tüm öğeler aynı yükseklikte
+     olduğu için bu değer hiçbir şeyi değiştirmiyor.
+
+     Yani en kapsayıcı davranışı varsayılan yaptık; kimse
+     kaybetmiyor. */
+  align-items: flex-end;
+}
+
+.filtre-secim {
+  padding: 10px var(--bosluk3);
+  border: 1px solid var(--inputKenar);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-size: var(--yazi-normal);
+  min-width: 170px;
+  outline: none;
+  cursor: pointer;
+}
+
+.filtre-secim:focus {
+  border-color: var(--anaRenk);
+}
+
 /* ================= ORTAK SAYFA BAŞLIKLARI ================= */
 /* Birden fazla sayfa kullandığı için burada duruyor.
    Tek bir sayfaya ait CSS dosyasında olmamalı. */

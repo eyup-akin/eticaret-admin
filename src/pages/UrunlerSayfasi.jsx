@@ -401,7 +401,7 @@ export default function UrunlerSayfasi() {
 
   return (
     <div>
-      <div className="sayfa-ust">
+      <div className="sayfa-ust sayfa-ust-yatay">
         <div>
           <h1 className="sayfa-baslik">Ürünler</h1>
           <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>
