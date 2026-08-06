@@ -3,6 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { apiGet, apiPost, apiPut, apiYukle } from '../services/api'; // ⭐ apiYukle eklendi
 import { paraBicimle } from '../utils/bicimlendir';
+// ⭐ YENİ — kâr formülü ortak dosyadan (utils/kar.js).
+// Takma adlar: bu dosyada "kar", "netKdvTutari" gibi yerel
+// değişkenler var; aynı isimleri hem fonksiyon hem değişken için
+// kullanmak okuyanı yanıltırdı.
+import {
+  urunKari as karHesapla,
+  netKdv as netKdvHesapla,
+  karMarji,
+} from '../utils/kar';
 
 import Yukleniyor from '../components/Yukleniyor';
 import HataKutusu from '../components/HataKutusu';
@@ -157,37 +166,32 @@ export default function UrunFormSayfasi() {
     !Number.isNaN(maliyetSayi) &&
     fiyatSayi > 0;
 
-  // ⭐ DEĞİŞTİ — KÂR ARTIK KDV'Yİ DÜŞÜYOR.
+  // ⭐ DEĞİŞTİ — KÂR ARTIK KDV'Yİ DÜŞÜYOR VE FORMÜL ORTAK DOSYADA.
   //
-  // Eskiden "kâr = fiyat − maliyet" idi ve bu kârı OLDUĞUNDAN YÜKSEK
-  // gösteriyordu.
+  // Eskiden burada "fiyat − maliyet" yazılıydı ve kârı OLDUĞUNDAN
+  // YÜKSEK gösteriyordu: fiyat ve maliyetin ikisi de KDV dahil,
+  // mağaza fiyatın KDV kısmını devlete ödüyor.
   //
-  // Fiyat ve maliyetin İKİSİ de KDV dahil. Mağaza satışta topladığı
-  // KDV'yi devlete öder, alışta ödediğini indirir. Aradaki fark
-  // mağazanın cebinden çıkar — yani kâr değildir.
+  // ⚠️ Formül artık utils/kar.js'te. Burada elle yazsaydık panelde
+  // dördüncü bir kopya olurdu — ürün listesindeki iki kopya bu
+  // yüzden KDV düzeltmesini kaçırmıştı zaten.
   //
-  //   net KDV = (fiyat − maliyet) × oran / (100 + oran)
-  //
-  // Örnek: 1.200 fiyat, 800 maliyet, %20
-  //   Eski hesap : 400,00 TL
-  //   Gerçek     : 400 − 66,67 = 333,33 TL
-  //
-  // ⚠️ Aynı formül backend'deki kâr raporunda da var
-  // (ReportsController). İkisi ayrışırsa formdaki önizleme ile rapor
-  // farklı sayılar gösterir — bir ürünü kaydedip raporda başka bir kâr
-  // görmek, kullanıcının hangisine güveneceğini bilememesi demektir.
+  // ⚠️ Backend'deki ReportsController'da da aynı formül var. Onu
+  // buraya taşıyamayız (farklı dil); kabul ettiğimiz tek kopya o ve
+  // her iki tarafa da bu not düşüldü.
   const brutFark = karHesaplanabilir ? fiyatSayi - maliyetSayi : 0;
 
-  const netKdv = karHesaplanabilir
-    ? (brutFark * kdvOraniSayi) / (100 + kdvOraniSayi)
+  const netKdvTutari = karHesaplanabilir
+    ? netKdvHesapla(fiyatSayi, maliyetSayi, kdvOraniSayi)
     : 0;
 
-  const kar = karHesaplanabilir ? brutFark - netKdv : 0;
+  const kar = karHesaplanabilir
+    ? karHesapla(fiyatSayi, maliyetSayi, kdvOraniSayi)
+    : 0;
 
-  // Marj paydası KDV dahil fiyat — backend'deki marj hesabıyla aynı
-  // tercih. Ürünleri birbiriyle kıyaslamak için; tüm satırlarda aynı
-  // payda kullanıldığı sürece sıralama doğru kalıyor.
-  const marj = karHesaplanabilir ? (kar / fiyatSayi) * 100 : 0;
+  const marj = karHesaplanabilir
+    ? karMarji(fiyatSayi, maliyetSayi, kdvOraniSayi)
+    : 0;
 
   const karDurum =
     kar > 0 ? 'kar-pozitif' : kar < 0 ? 'kar-negatif' : 'kar-sifir';
@@ -496,7 +500,7 @@ export default function UrunFormSayfasi() {
                   <span className="kar-etiket">
                     Devlete ödenecek KDV (%{kdvOraniSayi})
                   </span>
-                  <span className="kar-deger">−{paraBicimle(netKdv)}</span>
+                  <span className="kar-deger">−{paraBicimle(netKdvTutari)}</span>
                 </div>
 
                 <div className="kar-satir">

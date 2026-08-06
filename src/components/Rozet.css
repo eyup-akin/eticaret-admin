@@ -1,8 +1,21 @@
+/* ⭐ DEĞİŞTİ (Aşama 4.5) — ölçek token'larına bağlandı.
+
+   Rozet bir DURUM göstergesidir (aktif/pasif, ödendi/bekliyor).
+   Tıklanamaz. Tıklanabilir hap biçimli seçim için index.css'teki
+   .chip sınıfı var — ikisi aynı görünse de farklı işler yapıyor
+   ve ayrı tutuluyorlar ki biri değişince diğeri etkilenmesin. */
 .rozet {
   display: inline-block;
   padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
+  border-radius: var(--kose-tam);
+  font-size: var(--yazi-kucuk);
   font-weight: 600;
   white-space: nowrap;
+
+  /* ⭐ YENİ — satır yüksekliği sabitlendi.
+     Rozetler tablo hücrelerinde metinle yan yana duruyor ve
+     miras aldıkları satır yüksekliği hücreden hücreye
+     değişebiliyordu; aynı rozet farklı satırlarda farklı
+     yükseklikte görünüyordu. */
+  line-height: 1.4;
 }

@@ -5,6 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { apiGet, apiDelete, apiPut } from '../services/api';
 import { paraBicimle, sayiBicimle } from '../utils/bicimlendir';
 import { resimUrl } from '../utils/resim';
+// ⭐ YENİ — kâr formülü ortak dosyadan.
+// "karHesapla" takma adıyla alıyoruz çünkü bu dosyada zaten
+// "urunKari" adında bir sarmalayıcı var; aynı ada iki şey
+// bağlamak okuyanı yanıltırdı.
+import { urunKari as karHesapla, karMarji } from '../utils/kar';
 
 import Yukleniyor from '../components/Yukleniyor';
 import HataKutusu from '../components/HataKutusu';
@@ -203,12 +208,20 @@ export default function UrunlerSayfasi() {
     }
   }
 
-  // Bir ürünün kârını hesapla. Maliyeti yoksa (eski ürün) null döner.
+  // ⭐ DEĞİŞTİ — kâr formülü artık burada değil, utils/kar.js'te.
+  //
+  // ⚠️ ESKİ HALİ "u.price - u.cost" İDİ VE KDV DÜŞMÜYORDU.
+  //
+  // Fiyat ve maliyetin ikisi de KDV dahil; mağaza fiyatın KDV
+  // kısmını devlete ödüyor. Eski formül kârı olduğundan yüksek
+  // gösteriyordu (1.200 fiyat / 800 maliyet / %20 → 400 yerine
+  // gerçekte 333,33).
+  //
+  // ⚠️ Aynı formül aşağıdaki sıralamada BİR KEZ DAHA yazılıydı.
+  // İki kopya da KDV düzeltmesini kaçırmıştı — ortak dosyaya
+  // taşımanın sebebi tam olarak bu.
   function urunKari(u) {
-    if (u.cost == null) {
-      return null;
-    }
-    return u.price - u.cost;
+    return karHesapla(u.price, u.cost, u.vatRate);
   }
 
   // Sıralama tarayıcıda (veri zaten elimizde)
@@ -219,9 +232,10 @@ export default function UrunlerSayfasi() {
     if (siralama === 'stokArtan')   return a.stock - b.stock;
 
     if (siralama === 'karAzalan') {
+      // ⭐ DEĞİŞTİ — formül kopyalanmıyor, urunKari çağrılıyor.
       // Maliyeti olmayan ürünler en dibe insin (-Infinity)
-      const ka = a.cost != null ? a.price - a.cost : -Infinity;
-      const kb = b.cost != null ? b.price - b.cost : -Infinity;
+      const ka = urunKari(a) ?? -Infinity;
+      const kb = urunKari(b) ?? -Infinity;
       return kb - ka;
     }
 
@@ -295,7 +309,12 @@ export default function UrunlerSayfasi() {
           return <span style={{ color: 'var(--yaziGri)' }}>—</span>;
         }
 
-        const marj = u.price > 0 ? (kar / u.price) * 100 : 0;
+        // ⭐ DEĞİŞTİ — marj da ortak dosyadan.
+        // Elle "kar / price" yazsaydık, payda kararı burada bir
+        // daha verilmiş olurdu; ortak dosya o kararı tek yerde
+        // tutuyor (bkz. karMarji yorumu).
+        const marj = karMarji(u.price, u.cost, u.vatRate) ?? 0;
+
         const renk =
           kar > 0 ? 'var(--basari)' : kar < 0 ? 'var(--hata)' : 'var(--yaziGri)';
 

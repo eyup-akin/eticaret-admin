@@ -328,20 +328,20 @@ export default function SiparisDetaySayfasi() {
                 ⚠️ Tüm değerler DONDURULMUŞ: sipariş anında Order
                 tablosuna yazıldılar. Kuponun ya da mağaza kargo
                 ücretinin bugünkü hali burayı DEĞİŞTİRMEZ. */}
-            <div className="ozet-blok">
-              <div className="ozet-satiri">
-                <span className="ozet-etiket">Ara toplam</span>
-                <span className="ozet-deger">{paraBicimle(siparis.araToplam)}</span>
+            <div className="tutar-blok">
+              <div className="tutar-satiri">
+                <span className="tutar-etiket">Ara toplam</span>
+                <span className="tutar-deger">{paraBicimle(siparis.araToplam)}</span>
               </div>
 
               {/* İndirim satırı sadece indirim varsa.
                   "İndirim: 0,00 ₺" yazmak gürültü olurdu. */}
               {siparis.indirim > 0 && (
-                <div className="ozet-satiri">
-                  <span className="ozet-etiket">
+                <div className="tutar-satiri">
+                  <span className="tutar-etiket">
                     İndirim{siparis.kuponKodu ? ` (${siparis.kuponKodu})` : ''}
                   </span>
-                  <span className="ozet-deger ozet-indirim">
+                  <span className="tutar-deger tutar-indirim">
                     −{paraBicimle(siparis.indirim)}
                   </span>
                 </div>
@@ -353,13 +353,13 @@ export default function SiparisDetaySayfasi() {
                   yazıyoruz. Operatör için "kargo alınmamış" ile
                   "kargo bilgisi yok" farklı şeyler; boşluk bırakmak
                   ikincisi gibi okunurdu. */}
-              <div className="ozet-satiri">
-                <span className="ozet-etiket">Kargo</span>
+              <div className="tutar-satiri">
+                <span className="tutar-etiket">Kargo</span>
 
                 {siparis.kargoUcreti > 0 ? (
-                  <span className="ozet-deger">{paraBicimle(siparis.kargoUcreti)}</span>
+                  <span className="tutar-deger">{paraBicimle(siparis.kargoUcreti)}</span>
                 ) : (
-                  <span className="ozet-deger ozet-ucretsiz">Ücretsiz</span>
+                  <span className="tutar-deger tutar-ucretsiz">Ücretsiz</span>
                 )}
               </div>
             </div>
@@ -394,11 +394,11 @@ export default function SiparisDetaySayfasi() {
                 <div className="kdv-baslik">KDV Dökümü (fiyata dahil)</div>
 
                 {siparis.kdv.satirlar.map((s) => (
-                  <div className="ozet-satiri" key={s.oran}>
-                    <span className="ozet-etiket">
+                  <div className="tutar-satiri" key={s.oran}>
+                    <span className="tutar-etiket">
                       KDV %{s.oran} — matrah {paraBicimle(s.matrah)}
                     </span>
-                    <span className="ozet-deger">{paraBicimle(s.vergi)}</span>
+                    <span className="tutar-deger">{paraBicimle(s.vergi)}</span>
                   </div>
                 ))}
 
@@ -407,9 +407,9 @@ export default function SiparisDetaySayfasi() {
                     olurdu — aynı bilgiyi iki kez göstermek okuyanı
                     "acaba farklı bir şey mi?" diye durdurur. */}
                 {siparis.kdv.satirlar.length > 1 && (
-                  <div className="ozet-satiri kdv-toplam">
-                    <span className="ozet-etiket">Toplam KDV</span>
-                    <span className="ozet-deger">
+                  <div className="tutar-satiri kdv-toplam">
+                    <span className="tutar-etiket">Toplam KDV</span>
+                    <span className="tutar-deger">
                       {paraBicimle(siparis.kdv.toplamVergi)}
                     </span>
                   </div>

@@ -115,25 +115,25 @@
    bunlar ara adımlar, toplam ise sonuç. Aynı puntoda yazsaydık
    operatörün gözü hangisinin nihai tutar olduğunu ayırt etmek için
    her seferinde okumak zorunda kalırdı. */
-.ozet-blok {
+.tutar-blok {
   margin-top: 16px;
   padding-top: 14px;
   border-top: 1px solid var(--kenarlik);
 }
 
-.ozet-satiri {
+.tutar-satiri {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 }
 
-.ozet-etiket {
+.tutar-etiket {
   font-size: 14px;
   color: var(--yaziOrta);
 }
 
-.ozet-deger {
+.tutar-deger {
   font-size: 14px;
   font-weight: 600;
   color: var(--yaziKoyu);
@@ -142,11 +142,11 @@
 /* İndirim ve "Ücretsiz" aynı rengi paylaşıyor: ikisi de müşterinin
    lehine olan bir durumu anlatıyor. Ayrı renkler vermek okuyana
    olmayan bir ayrım varmış izlenimi verirdi. */
-.ozet-indirim {
+.tutar-indirim {
   color: var(--basari);
 }
 
-.ozet-ucretsiz {
+.tutar-ucretsiz {
   color: var(--basari);
 }
 

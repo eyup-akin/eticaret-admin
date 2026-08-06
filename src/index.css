@@ -97,6 +97,141 @@ button {
   cursor: pointer;
 }
 
+/* ============================================================
+   ⭐ YENİ — ORTAK PRIMITIVE'LER (Aşama 4.5)
+
+   Referans tasarımlardaki dili taşıyan en küçük yapı taşları.
+   Sayfa CSS'lerinde tekrar tekrar yazılan kart/rozet/başlık
+   kalıpları buraya toplandı.
+
+   ⚠️ Bunlar BİLEŞEN DEĞİL, SINIF. React bileşeni yapmadık çünkü
+   hiçbiri davranış taşımıyor — sadece görünüm. Bileşene çevirmek
+   her kullanım yerine bir import ve bir sarmalayıcı <div> eklerdi,
+   karşılığında hiçbir şey kazandırmadan.
+   ============================================================ */
+
+/* ---------- KART ----------
+   Referans tasarımların temel yapı taşı: beyaz zemin, belirgin
+   yuvarlak köşe, çok yumuşak gölge.
+
+   ⚠️ KENARLIK YOK, GÖLGE VAR — bilinçli.
+   Eski kartlar 1px kenarlık kullanıyordu ve bu, arayüzü "tablo
+   gibi" gösteren en büyük etkendi. Referanslarda kartlar zeminden
+   gölgeyle ayrılıyor; sonuç daha ferah ve daha pahalı duruyor.
+
+   Koyu temada gölge zayıf kalabildiği için ince bir kenarlık da
+   ekleniyor (aşağıdaki koyu tema bloğunda). */
+.kart {
+  background-color: var(--kartArka);
+  border-radius: var(--kose-buyuk);
+  padding: var(--bosluk5);
+  box-shadow: var(--golgeSm);
+}
+
+/* Tıklanabilir kartlar için hafif yükselme.
+   Sadece .kart-etkilesimli sınıfı eklenmişse — her karta hover
+   vermek, tıklanamayan kartlarda yanlış bir vaat olurdu. */
+.kart-etkilesimli {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kart-etkilesimli:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--golgeMd);
+}
+
+/* ---------- BÖLÜM BAŞLIĞI ----------
+   Kart içi başlık + sağda eylem ("Tümünü gör" gibi).
+   Referanslarda her bölümün üstünde bu satır var. */
+.bolum-basligi {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+  margin-bottom: var(--bosluk4);
+}
+
+.bolum-basligi-yazi {
+  font-size: var(--yazi-buyuk);
+  font-weight: 700;
+  color: var(--yaziKoyu);
+  letter-spacing: -0.2px;
+}
+
+.bolum-basligi-alt {
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+  margin-top: 2px;
+}
+
+/* ---------- CHIP ----------
+   Hap şeklinde filtre/etiket. Rozet'ten farkı: chip TIKLANABİLİR
+   bir seçim, rozet ise bir DURUM göstergesi. Aynı görünüp farklı
+   iş yapan iki şeyi ayrı sınıfta tutuyoruz ki biri değişince
+   diğeri etkilenmesin. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bosluk1);
+  padding: 6px 14px;
+  border-radius: var(--kose-tam);
+  border: 1px solid var(--kenarlik);
+  background-color: var(--kartArka);
+  color: var(--yaziOrta);
+  font-size: var(--yazi-kucuk);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.chip:hover {
+  border-color: var(--anaRenk);
+  color: var(--anaRenk);
+}
+
+.chip-secili {
+  background-color: var(--yaziKoyu);
+  border-color: var(--yaziKoyu);
+  color: var(--kartArka);
+}
+
+.chip-secili:hover {
+  color: var(--kartArka);
+}
+
+/* ---------- TREND ROZETİ ----------
+   Referans tasarımlardaki "+10% / −12%" hapları.
+
+   ⚠️ Renk BİLGİ TAŞIYOR: yeşil artış, kırmızı düşüş. Dekoratif
+   değil — bu yüzden yumuşak zemin token'ları kullanılıyor ve
+   ikisi de aynı tonda değil. */
+.trend-rozet {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: var(--kose-tam);
+  font-size: var(--yazi-mikro);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.trend-artis {
+  background-color: var(--yumusakBasari);
+  color: var(--basari);
+}
+
+.trend-dusus {
+  background-color: var(--yumusakHata);
+  color: var(--hata);
+}
+
+.trend-notr {
+  background-color: var(--acikGri);
+  color: var(--yaziGri);
+}
+
 /* ================= ORTAK SAYFA BAŞLIKLARI ================= */
 /* Birden fazla sayfa kullandığı için burada duruyor.
    Tek bir sayfaya ait CSS dosyasında olmamalı. */

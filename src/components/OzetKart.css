@@ -1,45 +1,119 @@
+/* ============================================================
+   ÖZET KART — büyük rakam gösteren istatistik kartı
+
+   ⭐ YENİDEN TASARLANDI (Aşama 4.5)
+
+   ESKİ HALİ: solda ikon, sağında küçük etiket ve 24px rakam,
+   hepsi tek satırda yan yana. Rakam ikonla aynı görsel ağırlıktaydı.
+
+   SORUN: Bu kartın TEK İŞİ bir sayıyı göstermek. İkon o sayının
+   ne olduğunu hatırlatan yardımcı bir işaret — ama eski düzende
+   ikisi eşit yer kaplıyordu ve göz önce nereye bakacağını
+   bilemiyordu.
+
+   YENİ DÜZEN (referans tasarımlardaki gibi):
+     üst satır : küçük ikon + etiket        ← bağlam
+     alt satır : BÜYÜK rakam + trend rozeti ← asıl bilgi
+
+   Rakam 24px'ten 30px'e çıktı ve ağırlığı 800'e alındı. Artık
+   ekranı tararken önce rakamlar görünüyor.
+   ============================================================ */
+
 .ozet-kart {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  gap: var(--bosluk3);
+
   background-color: var(--kartArka);
-  border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 20px;
-  transition: transform 0.15s, box-shadow 0.15s;
+  border-radius: var(--kose-buyuk);
+  padding: var(--bosluk5);
+
+  /* ⭐ DEĞİŞTİ — kenarlık gitti, yerine gölge.
+     1px kenarlık arayüzü "tablo hücresi" gibi gösteriyordu;
+     gölge ile kart zeminden ayrılıyor ama çerçeveye girmiyor. */
+  box-shadow: var(--golgeSm);
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .ozet-kart:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--golgeMd);
 }
 
+/* ---------- ÜST SATIR: ikon + etiket ---------- */
+
+.ozet-ust {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+/* ⭐ DEĞİŞTİ — 52px'ten 34px'e küçüldü.
+   İkon artık başrol değil, etiketin yanındaki küçük bir işaret.
+   Büyük ikon, yanındaki rakamla dikkat için yarışıyordu. */
 .ozet-ikon {
-  width: 52px;
-  height: 52px;
+  width: 34px;
+  height: 34px;
   flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  font-size: 24px;
-}
 
-.ozet-metin {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+  border-radius: var(--kose-kucuk);
+  font-size: 17px;
+  line-height: 1;
 }
 
 .ozet-etiket {
-  font-size: 13px;
+  font-size: var(--yazi-kucuk);
+  font-weight: 600;
   color: var(--yaziOrta);
-  margin-bottom: 4px;
+
+  /* Uzun etiketler ikonu ezmesin, üç nokta ile kesilsin */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+/* ---------- ALT SATIR: rakam + trend ---------- */
+
+.ozet-alt {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bosluk2);
+  flex-wrap: wrap;
+}
+
+/* ⭐ DEĞİŞTİ — 24px/700 → 30px/800.
+   Bu kartın var oluş sebebi bu satır; görsel ağırlığı da öyle
+   olmalı.
+
+   letter-spacing negatif: büyük puntoda rakamlar arası boşluk
+   olduğundan geniş görünür, hafif sıkıştırmak daha derli toplu
+   bir blok veriyor. */
 .ozet-deger {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: var(--yazi-dev);
+  font-weight: 800;
+  line-height: 1.1;
   color: var(--yaziKoyu);
+  letter-spacing: -0.8px;
   white-space: nowrap;
+}
+
+/* ---------- KOYU TEMA ----------
+   Koyu zeminde gölge kartı zeminden yeterince ayırmıyor;
+   ince bir kenarlık ekliyoruz.
+
+   ⚠️ Neden :root[data-tema] gibi bir seçici değil?
+   Bu projede tema, CSS değişkenleriyle çalışıyor ve gövdeye
+   sınıf eklemiyor. Kenarlığı HER İKİ temada da tanımlayıp
+   rengini token'a bağlamak daha basit: açık temada --kenarlik
+   zaten neredeyse görünmez, koyu temada belirgin.
+
+   Tek satırla iki temayı da doğru yapmak, tema koşulu yazmaktan
+   iyi. */
+.ozet-kart {
+  border: 1px solid var(--kenarlik);
 }

@@ -1,16 +1,35 @@
+/* ⭐ DEĞİŞTİ (Aşama 4.5) — ölçek token'larına bağlandı.
+
+   Köşe 8px → 10px: referans tasarımlardaki butonlar belirgin
+   şekilde yuvarlak. Tam hap (999px) yapmadık çünkü bu buton hem
+   metinle hem ikonla kullanılıyor ve hap biçimi geniş butonlarda
+   şişkin görünüyor — hap biçimini chip'lere sakladık.
+
+   Dikey boşluk 10 → 11: 8'in katı değil ama buton yüksekliğini
+   40px'e tamamlıyor. Dokunma hedefi olarak 40px, mobil olmayan
+   arayüzlerde de kabul gören alt sınır. */
 .buton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 10px 16px;
+  gap: var(--bosluk2);
+  padding: 11px var(--bosluk4);
   border: 1px solid transparent;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 10px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition: opacity 0.15s, background-color 0.15s;
+  transition: opacity 0.15s, background-color 0.15s, box-shadow 0.15s;
+}
+
+/* ⭐ YENİ — klavye odağı görünür olmalı.
+   Eskiden tarayıcının varsayılan mavi halkası kalkmamıştı ama
+   ana renkli buton üzerinde okunmuyordu. Kendi halkamızı
+   veriyoruz: her iki temada da görünür. */
+.buton:focus-visible {
+  outline: 2px solid var(--anaRenk);
+  outline-offset: 2px;
 }
 
 .buton:disabled {
@@ -22,10 +41,18 @@
 .buton-ana {
   background-color: var(--anaRenk);
   color: var(--anaRenkUstuYazi);
+
+  /* ⭐ YENİ — ana butona hafif gölge.
+     Referanslarda birincil eylem sayfadan bir tık "yukarıda"
+     duruyor. Gölge, hangi butonun asıl eylem olduğunu renkten
+     bağımsız olarak da anlatıyor — renk körlüğü olan kullanıcı
+     için ikinci bir ipucu. */
+  box-shadow: var(--golgeSm);
 }
 
 .buton-ana:hover:not(:disabled) {
   background-color: var(--anaRenkKoyu);
+  box-shadow: var(--golgeMd);
 }
 
 .buton-ikincil {
