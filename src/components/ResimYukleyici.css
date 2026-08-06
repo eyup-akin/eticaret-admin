@@ -1,8 +1,8 @@
 /* Sürükle-bırak alanı */
 .yukle-alan {
   border: 2px dashed var(--inputKenar);
-  border-radius: 12px;
-  padding: 28px 20px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk6) var(--bosluk5);
   text-align: center;
   cursor: pointer;
   transition: border-color 0.15s, background-color 0.15s;
@@ -20,19 +20,19 @@
 }
 
 .yukle-ikon {
-  font-size: 30px;
-  margin-bottom: 8px;
+  font-size: var(--yazi-dev);
+  margin-bottom: var(--bosluk2);
 }
 
 .yukle-yazi {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   color: var(--yaziKoyu);
-  margin-bottom: 4px;
+  margin-bottom: var(--bosluk1);
 }
 
 .yukle-ipucu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
 }
 
@@ -45,14 +45,14 @@
 .resim-izgara {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
-  margin-top: 16px;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk4);
 }
 
 .resim-kutu {
   position: relative;
   border: 2px solid var(--kenarlik);
-  border-radius: 10px;
+  border-radius: var(--kose-orta);
   overflow: hidden;
   aspect-ratio: 1 / 1;
   background-color: var(--acikGri);
@@ -77,10 +77,10 @@
   left: 6px;
   background-color: var(--anaRenk);
   color: var(--anaRenkUstuYazi);
-  font-size: 10px;
+  font-size: var(--yazi-mikro);
   font-weight: 700;
-  padding: 3px 7px;
-  border-radius: 999px;
+  padding: 3px var(--bosluk2);
+  border-radius: var(--kose-tam);
 }
 
 /* Fare üstüne gelince çıkan karartma + butonlar */
@@ -91,7 +91,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--bosluk2);
   opacity: 0;
   transition: opacity 0.15s;
 }
@@ -104,9 +104,9 @@
   width: 34px;
   height: 34px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: rgba(255, 255, 255, 0.9);
-  font-size: 15px;
+  font-size: var(--yazi-orta);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,8 +123,8 @@
 
 /* Yükleme sırasında */
 .yukleme-durumu {
-  margin-top: 12px;
-  font-size: 13px;
+  margin-top: var(--bosluk3);
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
 }
 
@@ -136,19 +136,19 @@
 
 .link-satir {
   display: flex;
-  gap: 8px;
-  margin-top: 12px;
+  gap: var(--bosluk2);
+  margin-top: var(--bosluk3);
 }
 
 .link-input {
   flex: 1;
-  padding: 10px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
 }
 
 .link-input:focus {
@@ -156,9 +156,9 @@
 }
 
 .link-buton {
-  padding: 0 18px;
+  padding: 0 var(--bosluk4);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--anaRenk);
   color: var(--anaRenkUstuYazi);
   font-weight: 600;

@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   z-index: 100;
-  padding: 20px;
+  padding: var(--bosluk5);
 }
 
 .onay-kutu {
@@ -14,27 +14,27 @@
   max-width: 420px;
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 14px;
-  padding: 26px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  border-radius: var(--kose-buyuk);
+  padding: var(--bosluk5);
+  box-shadow: var(--golgeLg);
 }
 
 .onay-baslik {
-  font-size: 18px;
+  font-size: var(--yazi-buyuk);
   font-weight: 700;
   color: var(--yaziKoyu);
-  margin-bottom: 8px;
+  margin-bottom: var(--bosluk2);
 }
 
 .onay-mesaj {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   line-height: 1.55;
   color: var(--yaziOrta);
-  margin-bottom: 22px;
+  margin-bottom: var(--bosluk5);
 }
 
 .onay-butonlar {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: var(--bosluk3);
 }

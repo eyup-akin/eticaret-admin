@@ -9,7 +9,7 @@
 .musteri-basligi {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--bosluk4);
 }
 
 .avatar-buyuk {
@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 22px;
+  font-size: var(--yazi-baslik);
   color: var(--anaRenkUstuYazi);
   background-color: var(--anaRenk);
   flex-shrink: 0;
@@ -50,20 +50,20 @@
 /* Adres / kart kartçıkları */
 .mini-kart {
   border: 1px solid var(--kenarlik);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 10px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk3);
 }
 
 .mini-kart-baslik {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   color: var(--yaziKoyu);
-  margin-bottom: 4px;
+  margin-bottom: var(--bosluk1);
 }
 
 .mini-kart-metin {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
   line-height: 1.5;
 }
@@ -71,64 +71,64 @@
 
 
 .gizlilik-notu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 12px;
+  margin-top: var(--bosluk3);
   line-height: 1.5;
 }
 
 /* ---------- YETKİ YÖNETİMİ KARTI ---------- */
 .yetki-kutu {
   background-color: var(--kartArka);
-  border: 2px solid #e67e22;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
+  border: 2px solid var(--uyari);
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk5);
+  margin-bottom: var(--bosluk5);
 }
 
 .yetki-baslik {
-  font-size: 16px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
-  color: #e67e22;
-  margin-bottom: 6px;
+  color: var(--uyari);
+  margin-bottom: var(--bosluk2);
 }
 
 .yetki-aciklama {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
   line-height: 1.55;
-  margin-bottom: 16px;
+  margin-bottom: var(--bosluk4);
 }
 
 .yetki-secim {
   width: 100%;
-  padding: 11px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
-  margin-bottom: 12px;
+  margin-bottom: var(--bosluk3);
 }
 
 .yetki-ayirac {
   border: none;
   border-top: 1px solid var(--kenarlik);
-  margin: 18px 0;
+  margin: var(--bosluk4) 0;
 }
 
 .uyari-notu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 12px;
+  margin-top: var(--bosluk3);
   line-height: 1.5;
 }
 
 /* ---------- İŞLEM GEÇMİŞİ ---------- */
 .log-satiri {
-  padding: 10px 0;
+  padding: var(--bosluk3) 0;
   border-bottom: 1px solid var(--kenarlik);
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
 }
 
 .log-satiri:last-child {
@@ -147,7 +147,7 @@
 
 .log-tarih {
   color: var(--yaziGri);
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   margin-top: 2px;
 }
 

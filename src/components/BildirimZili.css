@@ -39,7 +39,7 @@
 }
 
 .zil-ikon {
-  font-size: 17px;
+  font-size: var(--yazi-buyuk);
 
   /* Emoji satır yüksekliği yüzünden dikeyde kayıyor;
      line-height: 1 ile tam ortalanıyor. */
@@ -58,12 +58,12 @@
 
   min-width: 18px;
   height: 18px;
-  padding: 0 5px;
-  border-radius: 20px;
+  padding: 0 var(--bosluk2);
+  border-radius: var(--kose-dev);
 
   background-color: var(--hata);
   color: #ffffff;
-  font-size: 11px;
+  font-size: var(--yazi-mikro);
   font-weight: 700;
 
   display: flex;
@@ -92,8 +92,8 @@
   width: 330px;
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-radius: var(--kose-orta);
+  box-shadow: var(--golgeLg);
 
   /* KullaniciMenusu ile AYNI değer: ikisi de içerikteki
      tabloların üstünde, modal perdelerin altında kalmalı. */
@@ -103,17 +103,17 @@
 }
 
 .zil-baslik {
-  padding: 13px 16px;
+  padding: var(--bosluk3) var(--bosluk4);
   border-bottom: 1px solid var(--kenarlik);
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 700;
   color: var(--yaziKoyu);
 }
 
 .zil-bos {
-  padding: 26px 16px;
+  padding: var(--bosluk5) var(--bosluk4);
   text-align: center;
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
 }
 
@@ -122,9 +122,9 @@
 .zil-satir {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: var(--bosluk3);
   width: 100%;
-  padding: 12px 16px;
+  padding: var(--bosluk3) var(--bosluk4);
   border: none;
 
   /* Sol kenardaki öncelik şeridi.
@@ -152,11 +152,11 @@
 }
 
 .zil-oncelik-orta {
-  border-left-color: #f39c12;
+  border-left-color: var(--uyari);
 }
 
 .zil-satir-ikon {
-  font-size: 17px;
+  font-size: var(--yazi-buyuk);
   flex-shrink: 0;
 }
 
@@ -180,18 +180,18 @@
 }
 
 .zil-satir-ozet {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   line-height: 1.4;
 }
 
 .zil-satir-sayi {
   min-width: 24px;
-  padding: 2px 7px;
-  border-radius: 20px;
+  padding: 2px var(--bosluk2);
+  border-radius: var(--kose-dev);
   background-color: var(--acikGri);
   color: var(--yaziOrta);
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   font-weight: 700;
   text-align: center;
   flex-shrink: 0;
@@ -201,7 +201,7 @@
 
 .zil-alt {
   width: 100%;
-  padding: 11px 16px;
+  padding: var(--bosluk3) var(--bosluk4);
   border: none;
   border-top: 1px solid var(--kenarlik);
   background-color: var(--acikKart);

@@ -5,20 +5,20 @@
 /* Sekmedeki bekleyen sayısı rozeti */
 .basvuru-sekme-sayi {
   min-width: 20px;
-  padding: 1px 6px;
-  border-radius: 20px;
+  padding: 1px var(--bosluk2);
+  border-radius: var(--kose-dev);
   background-color: var(--hata);
   color: #ffffff;
-  font-size: 11px;
+  font-size: var(--yazi-mikro);
   font-weight: 700;
   text-align: center;
 }
 
 .basvuru-bos {
-  padding: 40px 20px;
+  padding: 40px var(--bosluk5);
   text-align: center;
   color: var(--yaziGri);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
 }
 
 /* ---------- BAŞVURU KARTI ---------- */
@@ -26,27 +26,27 @@
 .basvuru-kart {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-bottom: 14px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk4) var(--bosluk5);
+  margin-bottom: var(--bosluk4);
 }
 
 .basvuru-ust {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 12px;
+  gap: var(--bosluk4);
+  margin-bottom: var(--bosluk3);
 }
 
 .basvuru-ad {
-  font-size: 16px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
   color: var(--yaziKoyu);
 }
 
 .basvuru-email {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
   margin-top: 2px;
 }
@@ -55,23 +55,23 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 6px;
+  gap: var(--bosluk2);
 
   /* Uzun isim rozeti sıkıştırmasın */
   flex-shrink: 0;
 }
 
 .basvuru-tarih {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
 }
 
 /* Gerekçe metni — kararın dayanağı, kısaltmıyoruz */
 .basvuru-gerekce {
-  padding: 14px 16px;
+  padding: var(--bosluk4) var(--bosluk4);
   background-color: var(--acikKart);
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: var(--kose-kucuk);
+  font-size: var(--yazi-normal);
 
   /* Uzun metinde satır aralığı okunabilirliğin yarısı */
   line-height: 1.7;
@@ -89,16 +89,16 @@
 /* ---------- KARAR BİLGİSİ ---------- */
 
 .basvuru-karar {
-  margin-top: 12px;
-  padding-top: 12px;
+  margin-top: var(--bosluk3);
+  padding-top: var(--bosluk3);
   border-top: 1px solid var(--kenarlik);
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
   line-height: 1.6;
 }
 
 .basvuru-red-nedeni {
-  margin-top: 8px;
+  margin-top: var(--bosluk2);
   color: var(--yaziOrta);
 }
 
@@ -106,17 +106,17 @@
 
 .basvuru-butonlar {
   display: flex;
-  gap: 10px;
-  margin-top: 14px;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk4);
 }
 
 .basvuru-onay-buton {
-  padding: 9px 18px;
+  padding: var(--bosluk3) var(--bosluk4);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--basari);
   color: #ffffff;
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -131,19 +131,19 @@
    olsaydı hangisinin ana eylem olduğu belirsizleşirdi.
    "Ana eylem dolu, ikincil eylem çerçeveli." */
 .basvuru-red-buton {
-  padding: 9px 18px;
+  padding: var(--bosluk3) var(--bosluk4);
   border: 1px solid var(--hata);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: transparent;
   color: var(--hata);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
 }
 
 .basvuru-red-buton:hover {
-  background-color: rgba(231, 76, 60, 0.1);
+  background-color: var(--yumusakHata);
 }
 
 .basvuru-onay-buton:disabled,
@@ -153,12 +153,12 @@
 }
 
 .basvuru-vazgec-buton {
-  padding: 9px 18px;
+  padding: var(--bosluk3) var(--bosluk4);
   border: 1px solid var(--kenarlik);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: transparent;
   color: var(--yaziOrta);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-family: inherit;
   cursor: pointer;
 }
@@ -170,30 +170,30 @@
 /* ---------- RED FORMU ---------- */
 
 .basvuru-red-form {
-  margin-top: 14px;
-  padding: 14px 16px;
-  background-color: rgba(231, 76, 60, 0.05);
+  margin-top: var(--bosluk4);
+  padding: var(--bosluk4) var(--bosluk4);
+  background-color: var(--yumusakHata);
   border: 1px solid var(--hata);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
 }
 
 .basvuru-red-etiket {
   display: block;
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 600;
   color: var(--yaziKoyu);
-  margin-bottom: 8px;
+  margin-bottom: var(--bosluk2);
 }
 
 .basvuru-red-alan {
   width: 100%;
-  padding: 10px;
+  padding: var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   line-height: 1.5;
   resize: vertical;
   outline: none;
@@ -205,6 +205,6 @@
 
 .basvuru-red-form-butonlar {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk3);
 }

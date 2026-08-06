@@ -1,13 +1,13 @@
 .hata-kutusu {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background-color: rgba(231, 76, 60, 0.1);
+  gap: var(--bosluk3);
+  background-color: var(--yumusakHata);
   border: 1px solid var(--hata);
   color: var(--hata);
-  border-radius: 10px;
-  padding: 14px 16px;
-  font-size: 14px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk4) var(--bosluk4);
+  font-size: var(--yazi-normal);
 }
 
 .hata-mesaj {
@@ -15,12 +15,12 @@
 }
 
 .hata-tekrar-buton {
-  padding: 7px 14px;
+  padding: var(--bosluk2) var(--bosluk4);
   border: 1px solid var(--hata);
-  border-radius: 7px;
+  border-radius: var(--kose-kucuk);
   background-color: transparent;
   color: var(--hata);
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 600;
   white-space: nowrap;
 }

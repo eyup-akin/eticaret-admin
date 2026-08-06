@@ -12,7 +12,7 @@
   background-color: var(--menuArka);
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
+  padding: var(--bosluk5) 0;
   height: 100vh;        /* ⭐ tam boy */
   overflow-y: auto;     /* ⭐ menü çok uzarsa KENDİ İÇİNDE kaysın */
   overflow-x: hidden;   /* ⭐ YENİ — daralırken yazılar taşıp yatay kaydırma çubuğu doğurmasın */
@@ -34,14 +34,14 @@
   color: #ffffff;
   font-size: 20px;
   font-weight: 700;
-  padding: 0 20px 24px 20px;
+  padding: 0 var(--bosluk5) var(--bosluk5) var(--bosluk5);
 
   /* ⭐ YENİ — ikon ve yazı ayrı öğeler oldu, yan yana hizala.
      white-space: nowrap → daralma animasyonu sırasında "E-Ticaret"
      alt satıra kaçıp logoyu iki katına çıkarmasın. */
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--bosluk3);
   white-space: nowrap;
 }
 
@@ -58,12 +58,12 @@
 .menu-link {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px var(--bosluk4);
+  gap: var(--bosluk3);
+  padding: var(--bosluk3) var(--bosluk4);
 
   /* Hap biçiminin nefes alması için yanlardan boşluk */
   margin: 2px var(--bosluk3);
-  border-radius: 10px;
+  border-radius: var(--kose-orta);
 
   color: var(--menuYazi);
   text-decoration: none;
@@ -90,7 +90,7 @@
 }
 
 .menu-ikon {
-  font-size: 18px;
+  font-size: var(--yazi-buyuk);
   width: 22px;
   text-align: center;
 }
@@ -112,15 +112,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
-  padding: 0 24px;
+  gap: var(--bosluk3);
+  padding: 0 var(--bosluk5);
 }
 
 /* Selamlama metni. Artık tıklanabilir değil — eylemler sağdaki
    KullaniciMenusu'na taşındı. */
 .ust-bar-isim {
   color: var(--yaziOrta);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   margin-right: auto; /* ismi sola iter, menüyü sağa yapıştırır */
 }
 
@@ -129,12 +129,12 @@
 }
 
 .ust-buton {
-  padding: 8px 14px;
+  padding: var(--bosluk2) var(--bosluk4);
   border: 1px solid var(--kenarlik);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
 }
 
 .ust-buton:hover {
@@ -154,7 +154,7 @@
 /* Sayfa içeriğinin oturduğu alan */
 .icerik {
   flex: 1;
-  padding: 24px;
+  padding: var(--bosluk5);
   overflow-y: auto;
 }
 
@@ -189,12 +189,12 @@
    padding: 12px 0 → yatay boşluğu sıfırlıyoruz, çünkü 20px'lik
    boşluk 68px içinde ikona yer bırakmazdı. */
 .yan-menu-dar .yan-menu-logo {
-  padding: 0 0 24px 0;
+  padding: 0 0 var(--bosluk5) 0;
   justify-content: center;
 }
 
 .yan-menu-dar .menu-link {
-  padding: 12px 0;
+  padding: var(--bosluk3) 0;
   justify-content: center;
 
   /* ⭐ DEĞİŞTİ — yatay boşluk 12px'ten 8px'e.
@@ -213,10 +213,10 @@
   height: 32px;
   flex-shrink: 0;
   border: 1px solid var(--kenarlik);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziOrta);
-  font-size: 16px;
+  font-size: var(--yazi-orta);
   line-height: 1;
 
   display: flex;
@@ -227,7 +227,7 @@
      .ust-bar'da justify-content: flex-end var; bu buton ondan önce
      geldiği ve .ust-bar-isim'de margin-right: auto olduğu için
      sola yapışıyor. */
-  margin-right: 4px;
+  margin-right: var(--bosluk1);
 }
 
 .menu-daralt-buton:hover {

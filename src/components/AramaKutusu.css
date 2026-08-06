@@ -10,15 +10,15 @@
   top: 50%;
   transform: translateY(-50%);
   color: var(--yaziGri);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   pointer-events: none;
 }
 
 .arama-input {
   width: 100%;
-  padding: 10px 12px 10px 36px;
+  padding: var(--bosluk3) var(--bosluk3) var(--bosluk3) 36px;
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;

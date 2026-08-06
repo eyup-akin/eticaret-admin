@@ -6,7 +6,7 @@
    ve ayrı tutuluyorlar ki biri değişince diğeri etkilenmesin. */
 .rozet {
   display: inline-block;
-  padding: 4px 10px;
+  padding: var(--bosluk1) var(--bosluk3);
   border-radius: var(--kose-tam);
   font-size: var(--yazi-kucuk);
   font-weight: 600;

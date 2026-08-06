@@ -13,25 +13,25 @@
 .hesabim-kart {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 26px 28px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk5) var(--bosluk6);
 
   /* Kartlar arası dikey boşluk. Ayırıcı çizgi koymuyoruz —
      boşluğun kendisi ayırıcı görevi görüyor ve daha sakin duruyor. */
-  margin-bottom: 20px;
+  margin-bottom: var(--bosluk5);
 }
 
 .hesabim-kart-baslik {
-  font-size: 17px;
+  font-size: var(--yazi-buyuk);
   font-weight: 700;
   color: var(--yaziKoyu);
-  margin-bottom: 4px;
+  margin-bottom: var(--bosluk1);
 }
 
 .hesabim-kart-altyazi {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
-  margin-bottom: 22px;
+  margin-bottom: var(--bosluk5);
   line-height: 1.5;
 }
 
@@ -42,9 +42,9 @@
    o yüzden kutu içinde değil, ince çizgilerle ayrılmış satırlar. */
 .hesabim-bilgi-blok {
   border: 1px solid var(--kenarlik);
-  border-radius: 10px;
-  padding: 4px 16px;
-  margin-bottom: 24px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk1) var(--bosluk4);
+  margin-bottom: var(--bosluk5);
   background-color: var(--acikKart);
 }
 
@@ -52,8 +52,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 12px 0;
+  gap: var(--bosluk3);
+  padding: var(--bosluk3) 0;
   border-bottom: 1px solid var(--kenarlik);
 }
 
@@ -63,12 +63,12 @@
 }
 
 .hesabim-bilgi-etiket {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
 }
 
 .hesabim-bilgi-deger {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   color: var(--yaziKoyu);
   text-align: right;
@@ -78,15 +78,15 @@
 /* ---------- FORM ---------- */
 
 .hesabim-alan {
-  margin-bottom: 18px;
+  margin-bottom: var(--bosluk4);
 }
 
 .hesabim-etiket {
   display: block;
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 600;
   color: var(--yaziKoyu);
-  margin-bottom: 6px;
+  margin-bottom: var(--bosluk2);
 }
 
 /* ⭐ GİRDİ GENİŞLİĞİ SINIRLI — bu bilinçli.
@@ -99,12 +99,12 @@
 .hesabim-input {
   width: 100%;
   max-width: 440px;
-  padding: 11px 13px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   outline: none;
   transition: border-color 0.15s;
 }
@@ -121,9 +121,9 @@
 }
 
 .hesabim-ipucu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 6px;
+  margin-top: var(--bosluk2);
   line-height: 1.6;
 
   /* İpucu metni girdiden geniş olmasın — göz aynı hizada kalsın */
@@ -136,25 +136,25 @@
 .hesabim-bilgi-kutu {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: var(--bosluk3);
   background-color: var(--acikKart);
-  border-radius: 8px;
-  padding: 13px 15px;
-  margin-bottom: 22px;
-  font-size: 13px;
+  border-radius: var(--kose-kucuk);
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk5);
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
   line-height: 1.6;
   max-width: 560px;
 }
 
 .hesabim-basari {
-  background-color: rgba(39, 174, 96, 0.1);
+  background-color: var(--yumusakBasari);
   border: 1px solid var(--basari);
   color: var(--basari);
-  border-radius: 8px;
-  padding: 11px 14px;
-  font-size: 13px;
-  margin-bottom: 18px;
+  border-radius: var(--kose-kucuk);
+  padding: var(--bosluk3) var(--bosluk4);
+  font-size: var(--yazi-ikincil);
+  margin-bottom: var(--bosluk4);
   max-width: 560px;
 }
 
@@ -163,9 +163,9 @@
 
 .hesabim-rol {
   display: inline-block;
-  padding: 3px 11px;
-  border-radius: 20px;
-  font-size: 12px;
+  padding: 3px var(--bosluk3);
+  border-radius: var(--kose-dev);
+  font-size: var(--yazi-kucuk);
   font-weight: 700;
   background-color: var(--anaRenk);
   color: var(--anaRenkUstuYazi);
@@ -176,6 +176,6 @@
 
 @media (max-width: 640px) {
   .hesabim-kart {
-    padding: 20px 18px;
+    padding: var(--bosluk5) var(--bosluk4);
   }
 }

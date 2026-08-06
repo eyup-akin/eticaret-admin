@@ -124,9 +124,9 @@
 /* Değişim yüzdesi rozeti */
 .degisim {
   display: inline-block;
-  padding: 3px 9px;
-  border-radius: 999px;
-  font-size: 12px;
+  padding: 3px var(--bosluk3);
+  border-radius: var(--kose-tam);
+  font-size: var(--yazi-kucuk);
   font-weight: 700;
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -136,15 +136,15 @@
 .dikkat-bolum {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 24px;
+  gap: var(--bosluk3);
+  margin-bottom: var(--bosluk5);
 }
 
 .dikkat-karti {
   /* Renk artık öncelik sınıfından geliyor — burada sadece iskelet */
   border: 1px solid;
   border-left: 5px solid;
-  border-radius: 10px;
+  border-radius: var(--kose-orta);
   overflow: hidden;
 }
 
@@ -184,13 +184,13 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
+  gap: var(--bosluk3);
+  padding: var(--bosluk4) var(--bosluk4);
   background: transparent;
   border: none;
   cursor: pointer;
   text-align: left;
-  font-size: 15px;
+  font-size: var(--yazi-orta);
   font-weight: 600;
   color: var(--yaziKoyu);
   transition: background-color 0.15s;
@@ -206,14 +206,14 @@
 }
 
 .dikkat-ok {
-  font-size: 11px;
+  font-size: var(--yazi-mikro);
   color: var(--yaziGri);
 }
 
 /* ---------- DETAY (açık hal) ---------- */
 .dikkat-detay {
   border-top: 1px solid var(--kenarlik);
-  padding: 6px 0;
+  padding: var(--bosluk2) 0;
 }
 
 /* Her satır tıklanabilir — ilgili sayfaya götürür */
@@ -222,8 +222,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 10px 18px;
+  gap: var(--bosluk4);
+  padding: var(--bosluk3) var(--bosluk4);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -237,13 +237,13 @@
 
 .dikkat-satir-baslik {
   font-family: monospace;
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 600;
   color: var(--yaziKoyu);
 }
 
 .dikkat-satir-alt {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   margin-top: 2px;
 }
@@ -254,20 +254,20 @@
 }
 
 .dikkat-vurgu {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 700;
   color: var(--uyari);
 }
 
 .dikkat-vurgu-kritik {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 700;
   color: var(--hata);
 }
 
 .dikkat-fazla {
-  padding: 8px 18px;
-  font-size: 12px;
+  padding: var(--bosluk2) var(--bosluk4);
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   font-style: italic;
 }
@@ -275,13 +275,13 @@
 .dikkat-tumunu {
   display: block;
   width: 100%;
-  padding: 10px 18px;
+  padding: var(--bosluk3) var(--bosluk4);
   background: transparent;
   border: none;
   border-top: 1px solid var(--kenarlik);
   cursor: pointer;
   text-align: center;
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 600;
   color: var(--anaRenk);
 }

@@ -45,13 +45,29 @@
   --kose-tam: 999px;
 
   /* ---------- PUNTO ----------
-     Yedi basamak. Aradaki değerler (17px, 19px gibi) bilerek
-     yok: gözle ayırt edilemeyen fark, kod tabanında gürültü
-     yaratmaktan başka işe yaramıyor. */
+
+     ⭐ DÜZELTİLDİ (Aşama 4.6) — ölçek gerçeğe uyduruldu.
+
+     İlk hâlinde 13px ve 16px yoktu. Sonradan ölçüldüğünde 13px'in
+     kod tabanında **52 kez** (ikinci en sık) kullanıldığı görüldü.
+     En sık kullanılan iki değeri dışarıda bırakan bir ölçek,
+     ölçek değil engeldir — her kullanımda "hangisine yuvarlasam"
+     sorusu doğuruyordu.
+
+     ⚠️ 15px → 16px'e çekildi (11 yerde 1px büyüme). 15 ve 16
+     birlikte 20 kullanıma sahipti ve ikisini birden tutmak
+     "ölçek" fikrini anlamsızlaştırırdı; 1px fark bilgi taşımıyor.
+
+     ⚠️ 20px ÜSTÜ değerler bilerek ölçekte YOK. Oralar "kahraman"
+     boyutları (gelir tutarı 38px gibi) ve her biri kendi
+     kompozisyonuna ait tekil kararlar. Ölçek gövde metni içindir;
+     her sayıyı token yapmak ölçeği bir eşanlamlılar sözlüğüne
+     çevirirdi. */
   --yazi-mikro: 11px;
   --yazi-kucuk: 12px;
+  --yazi-ikincil: 13px;
   --yazi-normal: 14px;
-  --yazi-orta: 15px;
+  --yazi-orta: 16px;
   --yazi-buyuk: 18px;
   --yazi-baslik: 22px;
   --yazi-dev: 30px;

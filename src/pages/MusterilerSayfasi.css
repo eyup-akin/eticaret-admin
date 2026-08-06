@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   color: var(--anaRenkUstuYazi);
   background-color: var(--anaRenk);
   flex-shrink: 0;
@@ -21,7 +21,7 @@
 .musteri-hucre {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--bosluk3);
 }
 
 

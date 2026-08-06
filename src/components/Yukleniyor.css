@@ -3,8 +3,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
-  gap: 14px;
+  padding: 60px var(--bosluk5);
+  gap: var(--bosluk4);
 }
 
 .yukleniyor-daire {
@@ -18,7 +18,7 @@
 
 .yukleniyor-yazi {
   color: var(--yaziOrta);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
 }
 
 /* Sonsuz dönen animasyon */

@@ -11,40 +11,40 @@
   max-width: 400px;
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk6);
+  box-shadow: var(--golgeMd);
 }
 
 .giris-baslik {
   font-size: 24px;
   font-weight: 700;
   color: var(--yaziKoyu);
-  margin-bottom: 6px;
+  margin-bottom: var(--bosluk2);
   text-align: center;
 }
 
 .giris-altyazi {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   color: var(--yaziOrta);
-  margin-bottom: 28px;
+  margin-bottom: var(--bosluk6);
   text-align: center;
 }
 
 .giris-etiket {
   display: block;
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   color: var(--yaziKoyu);
-  margin-bottom: 6px;
+  margin-bottom: var(--bosluk2);
 }
 
 .giris-input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 16px;
+  padding: var(--bosluk3);
+  margin-bottom: var(--bosluk4);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
@@ -56,14 +56,14 @@
 
 .giris-buton {
   width: 100%;
-  padding: 13px;
+  padding: var(--bosluk3);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--anaRenk);
   color: var(--anaRenkUstuYazi);
-  font-size: 16px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
-  margin-top: 6px;
+  margin-top: var(--bosluk2);
 }
 
 .giris-buton:hover {
@@ -76,13 +76,13 @@
 }
 
 .giris-hata {
-  background-color: rgba(231, 76, 60, 0.1);
+  background-color: var(--yumusakHata);
   border: 1px solid var(--hata);
   color: var(--hata);
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 14px;
-  margin-bottom: 16px;
+  border-radius: var(--kose-kucuk);
+  padding: var(--bosluk3) var(--bosluk3);
+  font-size: var(--yazi-normal);
+  margin-bottom: var(--bosluk4);
 }
 
 
@@ -90,8 +90,8 @@
 .giris-alt-link {
   display: block;
   text-align: center;
-  margin-top: 18px;
-  font-size: 14px;
+  margin-top: var(--bosluk4);
+  font-size: var(--yazi-normal);
   color: var(--anaRenk);
   text-decoration: none;
 }

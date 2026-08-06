@@ -13,9 +13,9 @@
   align-items: center;
   justify-content: center;
   gap: var(--bosluk2);
-  padding: 11px var(--bosluk4);
+  padding: var(--bosluk3) var(--bosluk4);
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: var(--kose-orta);
   font-size: var(--yazi-normal);
   font-weight: 600;
   white-space: nowrap;
@@ -78,6 +78,6 @@
 
 /* ---------- BOYUTLAR ---------- */
 .buton-kucuk {
-  padding: 6px 11px;
-  font-size: 13px;
+  padding: var(--bosluk2) var(--bosluk3);
+  font-size: var(--yazi-ikincil);
 }

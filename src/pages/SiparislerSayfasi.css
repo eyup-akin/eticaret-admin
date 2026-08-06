@@ -31,7 +31,7 @@
   font-family: monospace;
   font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 4px;
+  margin-top: var(--bosluk1);
 }
 
 

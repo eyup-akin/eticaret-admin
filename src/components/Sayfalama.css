@@ -2,35 +2,35 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-top: 16px;
+  gap: var(--bosluk4);
+  margin-top: var(--bosluk4);
   flex-wrap: wrap;
 }
 
 .sayfalama-bilgi {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
 }
 
 .sayfalama-butonlar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--bosluk2);
 }
 
 .sayfa-numara {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   color: var(--yaziKoyu);
-  padding: 0 6px;
+  padding: 0 var(--bosluk2);
 }
 
 .sayfa-boyut {
-  padding: 7px 10px;
+  padding: var(--bosluk2) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   outline: none;
 }

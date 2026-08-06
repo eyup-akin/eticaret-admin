@@ -18,13 +18,13 @@
 .km-buton {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px 6px 6px;
+  gap: var(--bosluk2);
+  padding: var(--bosluk2) var(--bosluk3) var(--bosluk2) var(--bosluk2);
   border: 1px solid var(--kenarlik);
-  border-radius: 24px;
+  border-radius: var(--kose-dev);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   cursor: pointer;
   transition: background-color 0.15s;
 }
@@ -51,14 +51,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 700;
   flex-shrink: 0;
 }
 
 /* Aşağı ok — menünün açılıp kapandığını gösteren ipucu */
 .km-ok {
-  font-size: 10px;
+  font-size: var(--yazi-mikro);
   color: var(--yaziGri);
   transition: transform 0.15s;
 }
@@ -82,10 +82,10 @@
   min-width: 240px;
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
+  border-radius: var(--kose-orta);
 
   /* Gölge, panelin sayfanın ÜSTÜNDE durduğunu hissettiriyor */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--golgeLg);
 
   /* z-index: içerikteki tablolar/kartların üstünde kalsın.
      1000 seçtik çünkü modal perdeler (ExcelIceAktar, OnayPenceresi)
@@ -99,12 +99,12 @@
 /* ---------- PANEL BAŞLIĞI ---------- */
 
 .km-baslik {
-  padding: 14px 16px;
+  padding: var(--bosluk4) var(--bosluk4);
   border-bottom: 1px solid var(--kenarlik);
 }
 
 .km-baslik-ad {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 700;
   color: var(--yaziKoyu);
 
@@ -115,7 +115,7 @@
 }
 
 .km-baslik-rol {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   margin-top: 3px;
 }
@@ -124,7 +124,7 @@
 /* ---------- MENÜ SATIRLARI ---------- */
 
 .km-grup {
-  padding: 6px;
+  padding: var(--bosluk2);
   border-bottom: 1px solid var(--kenarlik);
 }
 
@@ -138,14 +138,14 @@
 .km-satir {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--bosluk3);
   width: 100%;
-  padding: 10px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: transparent;
   color: var(--yaziKoyu);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   text-align: left;
   text-decoration: none;
   cursor: pointer;
@@ -157,7 +157,7 @@
 }
 
 .km-satir-ikon {
-  font-size: 16px;
+  font-size: var(--yazi-orta);
   width: 20px;
   text-align: center;
   flex-shrink: 0;
@@ -175,11 +175,11 @@
 .km-sayac {
   margin-left: auto;
   min-width: 24px;
-  padding: 2px 7px;
-  border-radius: 20px;
+  padding: 2px var(--bosluk2);
+  border-radius: var(--kose-dev);
   background-color: var(--acikGri);
   color: var(--yaziOrta);
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   font-weight: 700;
   text-align: center;
   flex-shrink: 0;
@@ -191,16 +191,16 @@
 }
 
 .km-satir-cikis:hover {
-  background-color: rgba(231, 76, 60, 0.1);
+  background-color: var(--yumusakHata);
 }
 
 
 /* ---------- ALT BİLGİ ---------- */
 
 .km-alt {
-  padding: 10px 16px;
+  padding: var(--bosluk3) var(--bosluk4);
   background-color: var(--acikKart);
-  font-size: 11px;
+  font-size: var(--yazi-mikro);
   color: var(--yaziGri);
   text-align: center;
 }

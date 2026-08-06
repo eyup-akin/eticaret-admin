@@ -5,28 +5,28 @@
 .grafik-kutu {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 22px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk5);
+  margin-bottom: var(--bosluk5);
 }
 
 .grafik-ust {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: var(--bosluk4);
+  margin-bottom: var(--bosluk4);
   flex-wrap: wrap;
 }
 
 .grafik-baslik {
-  font-size: 16px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
   color: var(--yaziKoyu);
 }
 
 .grafik-altyazi {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
   margin-top: 2px;
 }
@@ -36,11 +36,11 @@
 .filtre-grup {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--bosluk2);
 }
 
 .filtre-etiket {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   font-weight: 600;
   color: var(--yaziOrta);
 }
@@ -50,7 +50,7 @@
    iki yerde yaşamaya devam ederdi. .filtre-tarih ise bu sayfaya
    özel (tarih girdisi sadece burada var), o yüzden burada kalıyor. */
 .filtre-tarih {
-  padding: 10px var(--bosluk3);
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
   border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
@@ -66,8 +66,8 @@
 /* Hızlı tarih butonları */
 .hizli-tarihler {
   display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: var(--bosluk2);
+  margin-bottom: var(--bosluk4);
   flex-wrap: wrap;
 }
 
@@ -77,7 +77,7 @@
 
 /* İade tutarları eksi işaretli ve mor */
 .tutar-iade {
-  color: #8e44ad;
+  color: var(--iadeRenk);
   font-weight: 700;
 }
 

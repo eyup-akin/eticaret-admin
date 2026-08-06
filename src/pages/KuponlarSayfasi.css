@@ -15,9 +15,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--bosluk4);
   flex-wrap: wrap;
-  margin-bottom: 22px;
+  margin-bottom: var(--bosluk5);
 }
 
 
@@ -25,15 +25,15 @@
 
 .kupon-filtreler {
   display: flex;
-  gap: 12px;
+  gap: var(--bosluk3);
   flex-wrap: wrap;
-  margin-bottom: 18px;
+  margin-bottom: var(--bosluk4);
 }
 
 .kupon-secim {
-  padding: 10px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
@@ -53,14 +53,14 @@
 .kupon-kod {
   font-family: ui-monospace, "SF Mono", Consolas, monospace;
   font-weight: 700;
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   letter-spacing: 0.5px;
   color: var(--yaziKoyu);
 }
 
 /* Hücre içindeki ikinci satır — küçük ve soluk */
 .kupon-alt-bilgi {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   margin-top: 3px;
 }
@@ -68,7 +68,7 @@
 /* Kullanım sayacındaki "/ 100" kısmı */
 .kupon-limit {
   color: var(--yaziGri);
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
 }
 
 /* Satır sonundaki işlem butonları.
@@ -76,7 +76,7 @@
    flex-wrap: dar ekranda alt satıra insinler, taşmasınlar */
 .kupon-islemler {
   display: flex;
-  gap: 6px;
+  gap: var(--bosluk2);
   justify-content: flex-end;
   flex-wrap: wrap;
 }

@@ -2,7 +2,7 @@
 .form-izgara {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
-  gap: 20px;
+  gap: var(--bosluk5);
   align-items: start; /* kutular birbirinin boyuna uymasın, kendi boyunda kalsın */
 }
 
@@ -16,28 +16,28 @@
 .form-kutu {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 26px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk5);
   margin-bottom: 0;
 }
 
 .form-alan {
-  margin-bottom: 18px;
+  margin-bottom: var(--bosluk4);
 }
 
 .form-etiket {
   display: block;
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   color: var(--yaziKoyu);
-  margin-bottom: 6px;
+  margin-bottom: var(--bosluk2);
 }
 
 .form-input {
   width: 100%;
-  padding: 11px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
@@ -48,47 +48,47 @@
 }
 
 .form-ipucu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 5px;
+  margin-top: var(--bosluk2);
 }
 
 .form-ikili {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: var(--bosluk4);
 }
 
 .form-butonlar {
   display: flex;
-  gap: 10px;
-  margin-top: 24px;
-  padding-top: 20px;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk5);
+  padding-top: var(--bosluk5);
   border-top: 1px solid var(--kenarlik);
 }
 
 /* Resim bölümü başlığı */
 .bolum-baslik-form {
-  font-size: 17px;
+  font-size: var(--yazi-buyuk);
   font-weight: 700;
   color: var(--yaziKoyu);
-  margin-bottom: 4px;
+  margin-bottom: var(--bosluk1);
 }
 
 .bolum-altyazi-form {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
-  margin-bottom: 16px;
+  margin-bottom: var(--bosluk4);
 }
 
 /* Yeni üründe resim bölümü kilitli görünsün */
 .kilitli-bolum {
   text-align: center;
-  padding: 32px 20px;
+  padding: var(--bosluk6) var(--bosluk5);
   border: 2px dashed var(--kenarlik);
-  border-radius: 12px;
+  border-radius: var(--kose-orta);
   color: var(--yaziGri);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   line-height: 1.6;
 }
 
@@ -114,9 +114,9 @@
 /* ===================================================== */
 
 .kar-onizleme {
-  border-radius: 10px;
-  padding: 14px 16px;
-  margin-bottom: 18px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk4) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
   border: 1px solid var(--kenarlik);
 }
 
@@ -126,19 +126,19 @@
 }
 
 .kar-bos-yazi {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
 }
 
 /* Kâr pozitif → yeşil vurgu */
 .kar-pozitif {
-  background-color: rgba(39, 174, 96, 0.1);
+  background-color: var(--yumusakBasari);
   border-color: var(--basari);
 }
 
 /* Zarar → kırmızı vurgu */
 .kar-negatif {
-  background-color: rgba(231, 76, 60, 0.1);
+  background-color: var(--yumusakHata);
   border-color: var(--hata);
 }
 
@@ -155,16 +155,16 @@
 }
 
 .kar-satir + .kar-satir {
-  margin-top: 6px;
+  margin-top: var(--bosluk2);
 }
 
 .kar-etiket {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
 }
 
 .kar-deger {
-  font-size: 15px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
   color: var(--yaziKoyu);
 }
@@ -186,7 +186,7 @@
 .form-onay-satir {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--bosluk3);
   cursor: pointer;
   user-select: none;
 }
@@ -211,7 +211,7 @@
 }
 
 .form-sayac {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
 
   /* Sayı büyüyüp küçülürken etiket zıplamasın diye
@@ -223,7 +223,7 @@
    Turuncu, kırmızı değil: henüz bir hata yok, sadece
    "dikkat et" sinyali. Kırmızı geri alınamaz işlemlere ayrılmış. */
 .form-sayac-dolu {
-  color: #f39c12;
+  color: var(--uyari);
   font-weight: 600;
 }
 
@@ -239,5 +239,5 @@
   /* Tarayıcı textarea'ya kendi monospace fontunu verir;
      formun geri kalanıyla aynı görünsün. */
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--yazi-normal);
 }

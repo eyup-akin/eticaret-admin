@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   z-index: 100;
-  padding: 20px;
+  padding: var(--bosluk5);
 }
 
 /* ---------- MODAL KUTUSU ---------- */
@@ -16,9 +16,9 @@
   max-width: 460px;
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  border-radius: var(--kose-buyuk);
+  padding: var(--bosluk5);
+  box-shadow: var(--golgeLg);
 }
 
 /* ---------- BAŞLIK SATIRI (başlık + ✕) ---------- */
@@ -26,11 +26,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: var(--bosluk4);
 }
 
 .ice-baslik {
-  font-size: 18px;
+  font-size: var(--yazi-buyuk);
   font-weight: 700;
   color: var(--yaziKoyu);
   margin: 0;
@@ -39,11 +39,11 @@
 .ice-kapat-x {
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: var(--yazi-buyuk);
   line-height: 1;
   color: var(--yaziGri);
   cursor: pointer;
-  padding: 4px;
+  padding: var(--bosluk1);
 }
 
 .ice-kapat-x:hover {
@@ -52,42 +52,42 @@
 
 /* ---------- AÇIKLAMA ---------- */
 .ice-aciklama {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   line-height: 1.55;
   color: var(--yaziOrta);
-  margin-bottom: 16px;
+  margin-bottom: var(--bosluk4);
 }
 
 /* ---------- SÜTUN İPUCU KUTUSU ---------- */
 .ice-sutun-ipucu {
   background-color: var(--acikKart);
   border: 1px solid var(--kenarlik);
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 13px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk3) var(--bosluk4);
+  font-size: var(--yazi-ikincil);
   line-height: 1.7;
   color: var(--yaziOrta);
-  margin-bottom: 16px;
+  margin-bottom: var(--bosluk4);
 }
 
 .ice-ipucu-baslik {
   font-weight: 700;
   color: var(--yaziKoyu);
-  margin-bottom: 4px;
+  margin-bottom: var(--bosluk1);
 }
 
 .ice-sutun-ipucu code {
   background-color: var(--acikGri);
-  padding: 1px 5px;
-  border-radius: 4px;
-  font-size: 12px;
+  padding: 1px var(--bosluk2);
+  border-radius: var(--kose-kucuk);
+  font-size: var(--yazi-kucuk);
 }
 
 /* ---------- DOSYA SEÇME ALANI ---------- */
 .ice-secim-alan {
   border: 2px dashed var(--inputKenar);
-  border-radius: 12px;
-  padding: 26px 16px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk5) var(--bosluk4);
   text-align: center;
   cursor: pointer;
   transition: border-color 0.15s ease;
@@ -99,18 +99,18 @@
 
 .ice-secim-bos {
   color: var(--yaziOrta);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
 }
 
 .ice-secim-ikon {
-  font-size: 30px;
-  margin-bottom: 8px;
+  font-size: var(--yazi-dev);
+  margin-bottom: var(--bosluk2);
 }
 
 .ice-secim-ipucu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 6px;
+  margin-top: var(--bosluk2);
 }
 
 /* Dosya seçilince gösterilen satır */
@@ -118,14 +118,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: var(--bosluk3);
   color: var(--yaziKoyu);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
 }
 
 .ice-dosya-ikon {
-  font-size: 22px;
+  font-size: var(--yazi-baslik);
 }
 
 .ice-dosya-ad {
@@ -139,8 +139,8 @@
 
 /* ---------- HATA SATIRI ---------- */
 .ice-hata {
-  margin-top: 14px;
-  font-size: 13px;
+  margin-top: var(--bosluk4);
+  font-size: var(--yazi-ikincil);
   color: var(--favoriRenk);
 }
 
@@ -148,8 +148,8 @@
 .ice-butonlar {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 22px;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk5);
 }
 
 .ice-tek-buton {
@@ -160,9 +160,9 @@
   background-color: var(--anaRenk);
   color: var(--anaRenkUstuYazi);
   border: none;
-  border-radius: 9px;
-  padding: 10px 18px;
-  font-size: 14px;
+  border-radius: var(--kose-kucuk);
+  padding: var(--bosluk3) var(--bosluk4);
+  font-size: var(--yazi-normal);
   font-weight: 600;
   cursor: pointer;
 }
@@ -176,9 +176,9 @@
   background-color: transparent;
   color: var(--yaziOrta);
   border: 1px solid var(--inputKenar);
-  border-radius: 9px;
-  padding: 10px 18px;
-  font-size: 14px;
+  border-radius: var(--kose-kucuk);
+  padding: var(--bosluk3) var(--bosluk4);
+  font-size: var(--yazi-normal);
   font-weight: 600;
   cursor: pointer;
 }
@@ -186,20 +186,20 @@
 /* ---------- DURUM ALANI (işleniyor / bitti / hata ortak) ---------- */
 .ice-durum-alan {
   text-align: center;
-  padding: 10px 4px;
+  padding: var(--bosluk3) var(--bosluk1);
 }
 
 .ice-durum-yazi {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   color: var(--yaziOrta);
-  margin-top: 14px;
+  margin-top: var(--bosluk4);
 }
 
 /* ---------- SPINNER (dönen halka) ---------- */
 .ice-spinner {
   width: 42px;
   height: 42px;
-  margin: 6px auto 0;
+  margin: var(--bosluk2) auto 0;
   border: 4px solid var(--acikGri);
   border-top-color: var(--anaRenk);
   border-radius: 50%;
@@ -214,35 +214,35 @@
 
 /* ---------- İLERLEME ÇUBUĞU ---------- */
 .ice-ilerleme {
-  margin-top: 18px;
+  margin-top: var(--bosluk4);
 }
 
 .ice-ilerleme-yazi {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 600;
   color: var(--yaziKoyu);
-  margin-bottom: 6px;
+  margin-bottom: var(--bosluk2);
 }
 
 .ice-ilerleme-cizgi {
   height: 8px;
   background-color: var(--acikGri);
-  border-radius: 999px;
+  border-radius: var(--kose-tam);
   overflow: hidden;
 }
 
 .ice-ilerleme-dolu {
   height: 100%;
   background-color: var(--anaRenk);
-  border-radius: 999px;
+  border-radius: var(--kose-tam);
   transition: width 0.3s ease;
 }
 
 /* ---------- NOT (küçük gri açıklama) ---------- */
 .ice-not {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 16px;
+  margin-top: var(--bosluk4);
   line-height: 1.5;
 }
 
@@ -250,7 +250,7 @@
 .ice-sonuc-ikon {
   width: 52px;
   height: 52px;
-  margin: 0 auto 12px;
+  margin: 0 auto var(--bosluk3);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -269,26 +269,26 @@
 }
 
 .ice-sonuc-baslik {
-  font-size: 16px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
   color: var(--yaziKoyu);
-  margin-bottom: 16px;
+  margin-bottom: var(--bosluk4);
 }
 
 /* ---------- ÖZET TABLOSU (Toplam / Eklenen / Atlanan) ---------- */
 .ice-ozet {
   background-color: var(--acikKart);
   border: 1px solid var(--kenarlik);
-  border-radius: 10px;
-  padding: 6px 14px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk2) var(--bosluk4);
 }
 
 .ice-ozet-satir {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  font-size: 14px;
+  padding: var(--bosluk2) 0;
+  font-size: var(--yazi-normal);
   color: var(--yaziOrta);
   border-bottom: 1px solid var(--kenarlik);
 }
@@ -301,9 +301,9 @@
 .ice-hata-mesaj {
   background-color: var(--acikKart);
   border: 1px solid var(--kenarlik);
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 13px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk3) var(--bosluk4);
+  font-size: var(--yazi-ikincil);
   line-height: 1.55;
   color: var(--yaziOrta);
   word-break: break-word;
@@ -315,13 +315,13 @@
 .ice-sablon-buton {
   display: block;
   width: 100%;
-  margin-bottom: 12px;
-  padding: 10px;
+  margin-bottom: var(--bosluk3);
+  padding: var(--bosluk3);
   background: transparent;
   color: var(--anaRenk);
   border: 1px dashed var(--anaRenk);
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: var(--kose-kucuk);
+  font-size: var(--yazi-normal);
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.15s;

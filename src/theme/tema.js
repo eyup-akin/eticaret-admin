@@ -80,6 +80,19 @@ export const acikTema = {
   // ⭐ YENİ — yükleme iskeleti zemini (Aşama 7'de kullanılacak)
   iskeletArka: '#e9ecf1',
 
+  // ⭐ YENİ — İADE TUTARI RENGİ
+  //
+  // Ödemeler tablosunda iade satırları mor gösteriliyor. Bu renk
+  // durum paletinde yok ve olmamalı: iade bir HATA değil, bir
+  // uyarı da değil — ayrı bir olay türü.
+  //
+  // ⚠️ Neden tek kullanımlık bir token açıyoruz?
+  // Aynı gerekçeyle favoriRenk zaten var: uygulamanın semantik
+  // bir rengi varsa ve durum paletine girmiyorsa kendi token'ını
+  // alır. Alternatif, koda gömülü #8e44ad bırakmaktı — o da koyu
+  // temada koyu mor olarak zemine karışıyordu.
+  iadeRenk: '#8e44ad',
+
   // ⭐ YENİ — GÖLGE ÖLÇEĞİ
   //
   // Neden temada? Koyu zeminde siyah gölge GÖRÜNMEZ. Açık temanın
@@ -164,6 +177,11 @@ export const koyuTema = {
   yumusakVurgu: 'rgba(59, 130, 246, 0.16)',
 
   iskeletArka: '#232932',
+
+  // ⭐ YENİ — iade rengi, koyu tema basamağı.
+  // Açık temanın #8e44ad'si koyu zeminde neredeyse okunmuyordu;
+  // aynı mor, koyu banda göre açıldı.
+  iadeRenk: '#a569bd',
 
   // ⭐ YENİ — gölge ölçeği, koyu tema.
   //

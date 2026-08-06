@@ -62,7 +62,7 @@
   justify-content: center;
 
   border-radius: var(--kose-kucuk);
-  font-size: 17px;
+  font-size: var(--yazi-buyuk);
   line-height: 1;
 }
 

@@ -73,8 +73,8 @@
 }
 
 .tablo-bos {
-  padding: 50px 20px;
+  padding: 50px var(--bosluk5);
   text-align: center;
   color: var(--yaziGri);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
 }

@@ -2,19 +2,19 @@
 /* ---------- YENİ KATEGORİ EKLEME ÇUBUĞU ---------- */
 .ekle-cubugu {
   display: flex;
-  gap: 10px;
+  gap: var(--bosluk3);
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 18px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk4);
+  margin-bottom: var(--bosluk4);
 }
 
 .ekle-input {
   flex: 1;
-  padding: 10px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
@@ -28,12 +28,12 @@
 .satir-input {
   width: 100%;
   max-width: 320px;
-  padding: 7px 10px;
+  padding: var(--bosluk2) var(--bosluk3);
   border: 2px solid var(--anaRenk);
-  border-radius: 6px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   outline: none;
 }
@@ -42,23 +42,23 @@
 /* Ürün sayısı rozeti */
 .urun-sayisi {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
+  padding: 3px var(--bosluk3);
+  border-radius: var(--kose-tam);
+  font-size: var(--yazi-kucuk);
   font-weight: 600;
   background-color: var(--acikGri);
   color: var(--yaziOrta);
 }
 
 .urun-sayisi-bos {
-  background-color: rgba(153, 153, 153, 0.15);
+  background-color: var(--acikGri);
   color: var(--yaziGri);
 }
 
 
 /* Kategori silinemez uyarısı */
 .silinemez-ipucu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 6px;
+  margin-top: var(--bosluk2);
 }

@@ -17,7 +17,7 @@
 .bilgi-izgara {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 20px;
+  gap: var(--bosluk5);
 }
 
 @media (max-width: 1000px) {
@@ -32,9 +32,9 @@
 .bilgi-satiri {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-  padding: 9px 0;
-  font-size: 14px;
+  gap: var(--bosluk4);
+  padding: var(--bosluk3) 0;
+  font-size: var(--yazi-normal);
 }
 
 .bilgi-etiket {
@@ -58,18 +58,18 @@
 
 .kalem-tablo th {
   text-align: left;
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   color: var(--yaziGri);
-  padding: 8px 10px;
+  padding: var(--bosluk2) var(--bosluk3);
   border-bottom: 1px solid var(--kenarlik);
 }
 
 .kalem-tablo td {
-  padding: 12px 10px;
-  font-size: 14px;
+  padding: var(--bosluk3) var(--bosluk3);
+  font-size: var(--yazi-normal);
   color: var(--yaziKoyu);
   border-bottom: 1px solid var(--kenarlik);
 }
@@ -86,8 +86,8 @@
    operatörün gözü hangisinin nihai tutar olduğunu ayırt etmek için
    her seferinde okumak zorunda kalırdı. */
 .tutar-blok {
-  margin-top: 16px;
-  padding-top: 14px;
+  margin-top: var(--bosluk4);
+  padding-top: var(--bosluk4);
   border-top: 1px solid var(--kenarlik);
 }
 
@@ -95,16 +95,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: var(--bosluk2);
 }
 
 .tutar-etiket {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   color: var(--yaziOrta);
 }
 
 .tutar-deger {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   color: var(--yaziKoyu);
 }
@@ -129,7 +129,7 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 0;
-  padding-top: 16px;
+  padding-top: var(--bosluk4);
   border-top: 2px solid var(--kenarlik);
 }
 
@@ -139,8 +139,8 @@
    hesaba giren bir adım değil. Aynı puntoda olsaydı toplanan bir
    kalem gibi okunurdu. */
 .kdv-blok {
-  margin-top: 14px;
-  padding-top: 12px;
+  margin-top: var(--bosluk4);
+  padding-top: var(--bosluk3);
   border-top: 1px dashed var(--kenarlik);
 }
 
@@ -149,22 +149,22 @@
    rakamın açıklaması geliyor" der. Aynı çizgiyi kullansaydık iki
    bölüm eşit ağırlıkta görünürdü. */
 .kdv-baslik {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   font-weight: 600;
   color: var(--yaziGri);
-  margin-bottom: 8px;
+  margin-bottom: var(--bosluk2);
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
 
 .kdv-toplam {
-  margin-top: 4px;
-  padding-top: 6px;
+  margin-top: var(--bosluk1);
+  padding-top: var(--bosluk2);
   border-top: 1px solid var(--kenarlik);
 }
 
 .toplam-etiket {
-  font-size: 15px;
+  font-size: var(--yazi-orta);
   color: var(--yaziOrta);
 }
 
@@ -177,13 +177,13 @@
 /* Durum değiştirme */
 .durum-secim {
   width: 100%;
-  padding: 11px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
-  margin-bottom: 12px;
+  margin-bottom: var(--bosluk3);
 }
 
 .durum-secim:focus {
@@ -191,9 +191,9 @@
 }
 
 .durum-ipucu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 10px;
+  margin-top: var(--bosluk3);
   line-height: 1.5;
 }
 
@@ -203,35 +203,35 @@
 .iptal-kutu {
   background-color: var(--kartArka);
   border: 1px solid var(--hata);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk5);
 }
 
 .iptal-baslik {
-  font-size: 16px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
   color: var(--hata);
-  margin-bottom: 12px;
+  margin-bottom: var(--bosluk3);
 }
 
 .iptal-aciklama {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
   line-height: 1.55;
-  margin-bottom: 14px;
+  margin-bottom: var(--bosluk4);
 }
 
 .iptal-alan {
   width: 100%;
   min-height: 90px;
-  padding: 11px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
   resize: vertical;
-  margin-bottom: 6px;
+  margin-bottom: var(--bosluk2);
   font-family: inherit;
 }
 
@@ -240,36 +240,36 @@
 }
 
 .karakter-sayaci {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
   text-align: right;
-  margin-bottom: 12px;
+  margin-bottom: var(--bosluk3);
 }
 
 /* Zaten iptal edilmiş siparişin sebep kutusu */
 .iptal-bilgi-kutu {
-  background-color: rgba(231, 76, 60, 0.08);
+  background-color: var(--yumusakHata);
   border: 1px solid var(--hata);
-  border-radius: 12px;
-  padding: 18px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk4);
 }
 
 .iptal-sebep-metin {
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   color: var(--yaziKoyu);
   line-height: 1.6;
-  margin-top: 8px;
+  margin-top: var(--bosluk2);
   font-style: italic;
 }
 
 /* Son durum bilgisi */
 .son-durum {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
   line-height: 1.5;
-  padding: 12px;
+  padding: var(--bosluk3);
   background-color: var(--acikGri);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
 }
 
 
@@ -287,20 +287,20 @@
      Kupon ve pasif ürün uyarılarında da aynı deseni kullandık —
      kullanıcı bu görsel dili bir kez öğrenip her yerde tanıyor. */
   border-left: 4px solid var(--uyari);
-  border-radius: 8px;
-  padding: 14px 16px;
-  margin-bottom: 16px;
+  border-radius: var(--kose-kucuk);
+  padding: var(--bosluk4) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
 }
 
 .musteri-notu-baslik {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 700;
   color: var(--uyari);
-  margin-bottom: 6px;
+  margin-bottom: var(--bosluk2);
 }
 
 .musteri-notu-metin {
-  font-size: 15px;
+  font-size: var(--yazi-orta);
   line-height: 1.6;
   color: var(--yaziKoyu);
 
@@ -323,14 +323,14 @@
 .kargo-bilgi {
   background-color: var(--acikKart);
   border: 1px solid var(--kenarlik);
-  border-radius: 8px;
-  padding: 10px 12px;
-  margin-bottom: 16px;
+  border-radius: var(--kose-kucuk);
+  padding: var(--bosluk3) var(--bosluk3);
+  margin-bottom: var(--bosluk4);
 }
 
 .takip-no-mono {
   font-family: monospace;
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   letter-spacing: 0.5px;
   color: var(--yaziKoyu);
 }
@@ -339,11 +339,11 @@
    Buton bileşenini kullanmadık: o 14px yazı ve 8px dolgu ile
    bilgi satırının yüksekliğini bozardı. */
 .kopyala-buton {
-  margin-left: 8px;
-  padding: 2px 8px;
-  font-size: 11px;
+  margin-left: var(--bosluk2);
+  padding: 2px var(--bosluk2);
+  font-size: var(--yazi-mikro);
   border: 1px solid var(--kenarlik);
-  border-radius: 6px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziOrta);
 

@@ -2,10 +2,10 @@
 
 .rapor-kontrol
 {
-    margin-bottom: 18px;
+    margin-bottom: var(--bosluk4);
     background-color: var(--kartArka);
     border: 1px solid var(--kenarlik);
-    border-radius: 10px;
+    border-radius: var(--kose-orta);
 
     /* Üstte sekme, altta tarih — dikey akış */
     overflow: hidden;
@@ -17,7 +17,7 @@
 /* Tarih çubuğu kartın alt yarısında, iç boşluklu */
 .rapor-kontrol .tarih-araligi
 {
-    padding: 12px 14px;
+    padding: var(--bosluk3) var(--bosluk4);
 }
 
 /* ---------- ORTAK RAPOR PARÇALARI ---------- */
@@ -30,8 +30,8 @@
 /* Rapor içi bölüm başlığı (grafik üstü, tablo üstü) */
 .rapor-bolum-baslik
 {
-    margin: 0 0 12px 0;
-    font-size: 15px;
+    margin: 0 0 var(--bosluk3) 0;
+    font-size: var(--yazi-orta);
     font-weight: 600;
     color: var(--yaziKoyu);
 }
@@ -39,11 +39,11 @@
 /* Grafiklerin oturduğu kutu */
 .rapor-grafik-kutu
 {
-    padding: 18px;
-    margin-bottom: 18px;
+    padding: var(--bosluk4);
+    margin-bottom: var(--bosluk4);
     background-color: var(--kartArka);
     border: 1px solid var(--kenarlik);
-    border-radius: 10px;
+    border-radius: var(--kose-orta);
 }
 
 /* Tablonun üstündeki bilgi satırı (dönem, uyarı) */
@@ -52,20 +52,20 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    font-size: 13px;
+    gap: var(--bosluk3);
+    margin-bottom: var(--bosluk3);
+    font-size: var(--yazi-ikincil);
     color: var(--yaziGri);
 }
 
 /* Eksik veri uyarısı — bilgi taşıyan bir renk, süs değil */
 .rapor-uyari
 {
-    padding: 4px 10px;
-    font-size: 12px;
-    color: #b45309;
-    background-color: #fef3c7;
-    border-radius: 6px;
+    padding: var(--bosluk1) var(--bosluk3);
+    font-size: var(--yazi-kucuk);
+    color: var(--uyari);
+    background-color: var(--yumusakUyari);
+    border-radius: var(--kose-kucuk);
 }
 
 /* Veri olmayan hücre. Boş bırakmak "sıfır mı, yok mu" belirsizliği
@@ -98,8 +98,8 @@
 
 .yorum-yildiz
 {
-    font-size: 15px;
-    color: #f39c12;
+    font-size: var(--yazi-orta);
+    color: var(--uyari);
     letter-spacing: 1px;
     white-space: nowrap;
 }

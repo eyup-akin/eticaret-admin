@@ -7,7 +7,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
-    gap: 8px;
+    gap: var(--bosluk2);
 }
 
 /* Sadece TEK BAŞINA kullanıldığında eklenen kart görünümü.
@@ -16,11 +16,11 @@
    anlaşılmaz. */
 .tarih-araligi-kart
 {
-    margin-bottom: 18px;
-    padding: 12px 14px;
+    margin-bottom: var(--bosluk4);
+    padding: var(--bosluk3) var(--bosluk4);
     background-color: var(--kartArka);
     border: 1px solid var(--kenarlik);
-    border-radius: 10px;
+    border-radius: var(--kose-orta);
 }
 
 /* Özel aralık grubu — iki input ve aralarındaki tire */
@@ -28,11 +28,11 @@
 {
     display: flex;
     align-items: flex-end;
-    gap: 8px;
+    gap: var(--bosluk2);
 
     /* Hızlı butonlardan görsel olarak ayrılsın diye sola boşluk.
        Asimetrik boşluk "bozuk", ayrılmış grup "kasıtlı" okunur. */
-    margin-left: 10px;
+    margin-left: var(--bosluk3);
 }
 
 /* label + input dikey duruyor: etiket üstte, kutu altta */
@@ -40,8 +40,8 @@
 {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    font-size: 11px;
+    gap: var(--bosluk1);
+    font-size: var(--yazi-mikro);
     font-weight: 600;
     color: var(--yaziGri);
     text-transform: uppercase;
@@ -50,13 +50,13 @@
 
 .tarih-girdi
 {
-    padding: 6px 8px;
-    font-size: 13px;
+    padding: var(--bosluk2) var(--bosluk2);
+    font-size: var(--yazi-ikincil);
     font-family: inherit;
     color: var(--yaziKoyu);
     background-color: var(--arkaPlan);
     border: 1px solid var(--kenarlik);
-    border-radius: 6px;
+    border-radius: var(--kose-kucuk);
     cursor: pointer;
 }
 
@@ -69,7 +69,7 @@
 /* İki tarih arasındaki tire — etiketlerin altına hizalanır */
 .tarih-tire
 {
-    padding-bottom: 7px;
+    padding-bottom: var(--bosluk2);
     color: var(--yaziGri);
 }
 

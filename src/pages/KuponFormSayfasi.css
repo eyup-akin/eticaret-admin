@@ -19,30 +19,30 @@
 .kupon-form-kutu {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: 12px;
-  padding: 26px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk5);
 }
 
 
 /* ---------- TEK BİR ALAN ---------- */
 
 .kupon-form-alan {
-  margin-bottom: 18px;
+  margin-bottom: var(--bosluk4);
 }
 
 .kupon-form-etiket {
   display: block;
-  font-size: 14px;
+  font-size: var(--yazi-normal);
   font-weight: 600;
   color: var(--yaziKoyu);
-  margin-bottom: 6px;
+  margin-bottom: var(--bosluk2);
 }
 
 .kupon-form-input {
   width: 100%;
-  padding: 11px 12px;
+  padding: var(--bosluk3) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 8px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
@@ -69,16 +69,16 @@
 }
 
 .kupon-form-ipucu {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 5px;
+  margin-top: var(--bosluk2);
 }
 
 /* Yan yana iki alan */
 .kupon-form-ikili {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: var(--bosluk4);
 }
 
 /* Dar ekranda alt alta insinler */
@@ -93,12 +93,12 @@
 
 /* Form uzun; bölümlere ayırmazsak göz kayboluyor */
 .kupon-form-bolum {
-  font-size: 15px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
   color: var(--yaziKoyu);
-  margin-top: 26px;
-  margin-bottom: 14px;
-  padding-top: 20px;
+  margin-top: var(--bosluk5);
+  margin-bottom: var(--bosluk4);
+  padding-top: var(--bosluk5);
   border-top: 1px solid var(--kenarlik);
 }
 
@@ -115,7 +115,7 @@
 .kupon-form-onay {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: var(--bosluk3);
   cursor: pointer;
 }
 
@@ -132,10 +132,10 @@
 /* ---------- CANLI ÖNİZLEME KUTUSU ---------- */
 
 .kupon-onizleme {
-  border-radius: 10px;
+  border-radius: var(--kose-orta);
   border: 1px solid var(--kenarlik);
-  padding: 16px;
-  margin-bottom: 18px;
+  padding: var(--bosluk4);
+  margin-bottom: var(--bosluk4);
 }
 
 /* Henüz hesaplanacak veri yok */
@@ -145,42 +145,42 @@
 
 /* Kupon bu sepette geçerli → yeşil */
 .kupon-onizleme-gecerli {
-  background-color: rgba(39, 174, 96, 0.1);
+  background-color: var(--yumusakBasari);
   border-color: var(--basari);
 }
 
 /* Kupon bu sepette geçmez (alt sınır) → turuncu uyarı */
 .kupon-onizleme-uyari {
-  background-color: rgba(243, 156, 18, 0.1);
+  background-color: var(--yumusakUyari);
   border-color: var(--uyari);
 }
 
 .kupon-onizleme-baslik {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   font-weight: 600;
   color: var(--yaziOrta);
-  margin-bottom: 12px;
+  margin-bottom: var(--bosluk3);
 }
 
 /* Deneme sepet tutarı girişi */
 .kupon-onizleme-giris {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
+  gap: var(--bosluk3);
+  margin-bottom: var(--bosluk4);
 }
 
 .kupon-onizleme-giris label {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
   white-space: nowrap;
 }
 
 .kupon-onizleme-giris input {
   width: 130px;
-  padding: 7px 10px;
+  padding: var(--bosluk2) var(--bosluk3);
   border: 1px solid var(--inputKenar);
-  border-radius: 6px;
+  border-radius: var(--kose-kucuk);
   background-color: var(--kartArka);
   color: var(--yaziKoyu);
   outline: none;
@@ -193,16 +193,16 @@
 }
 
 .kupon-onizleme-satir + .kupon-onizleme-satir {
-  margin-top: 7px;
+  margin-top: var(--bosluk2);
 }
 
 .kupon-onizleme-etiket {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziOrta);
 }
 
 .kupon-onizleme-deger {
-  font-size: 15px;
+  font-size: var(--yazi-orta);
   font-weight: 700;
   color: var(--yaziKoyu);
 }
@@ -212,14 +212,14 @@
 }
 
 .kupon-onizleme-not {
-  font-size: 12px;
+  font-size: var(--yazi-kucuk);
   color: var(--yaziGri);
-  margin-top: 10px;
+  margin-top: var(--bosluk3);
   line-height: 1.5;
 }
 
 .kupon-onizleme-bos-yazi {
-  font-size: 13px;
+  font-size: var(--yazi-ikincil);
   color: var(--yaziGri);
 }
 
@@ -228,9 +228,9 @@
 
 .kupon-form-butonlar {
   display: flex;
-  gap: 10px;
-  margin-top: 26px;
-  padding-top: 20px;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk5);
+  padding-top: var(--bosluk5);
   border-top: 1px solid var(--kenarlik);
 }
 
@@ -238,11 +238,11 @@
 /* ---------- BAŞARI MESAJI ---------- */
 
 .kupon-form-basari {
-  background-color: rgba(39, 174, 96, 0.1);
+  background-color: var(--yumusakBasari);
   border: 1px solid var(--basari);
   color: var(--basari);
-  border-radius: 10px;
-  padding: 13px 16px;
-  font-size: 14px;
-  margin-bottom: 20px;
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk3) var(--bosluk4);
+  font-size: var(--yazi-normal);
+  margin-bottom: var(--bosluk5);
 }
