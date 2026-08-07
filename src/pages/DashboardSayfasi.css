@@ -22,7 +22,7 @@
    temada da koyu mavi. Temaya göre değişmesi GEREKMEYEN tek yer. */
 .gelir-kutusu {
   background: linear-gradient(135deg, var(--anaRenk), var(--anaRenkKoyu));
-  border-radius: var(--kose-buyuk);
+  border-radius: var(--kose-dev);
   padding: var(--bosluk6);
   color: var(--anaRenkUstuYazi);
   margin-bottom: var(--bosluk5);
@@ -71,7 +71,7 @@
 .bolum {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: var(--kose-buyuk);
+  border-radius: var(--kose-dev);
   padding: var(--bosluk5);
   margin-bottom: var(--bosluk5);
   box-shadow: var(--golgeSm);

@@ -33,10 +33,16 @@ export const acikTema = {
   // ⭐ DEĞİŞTİ — sayfa zemini bir tık daha nötr.
   // #f5f6fa hafif mor çalıyordu; beyaz kartların yanında kirli
   // görünüyordu. Referans tasarımlardaki zemin nötr gri-mavi.
-  arkaPlan: '#f4f6f9',
+  // ⭐ DEĞİŞTİ (referans tasarım) — zemin hafif lavanta.
+  //
+  // Nötr gri (#f4f6f9) beyaz kartların yanında "boş" duruyordu.
+  // Referanslardaki zemin hafif mor-mavi çalıyor ve beyaz kartları
+  // öne çıkarıyor: kart ile zemin arasındaki fark renk tonundan da
+  // geliyor, sadece parlaklıktan değil.
+  arkaPlan: '#eef0f7',
   kartArka: '#ffffff',
-  acikKart: '#f7f8fa',
-  acikGri: '#f1f3f6',
+  acikKart: '#f6f7fb',
+  acikGri: '#f0f2f7',
 
   // ⭐ DEĞİŞTİ — nötrler soğutuldu ve kontrastı artırıldı.
   //
@@ -101,9 +107,18 @@ export const acikTema = {
   //
   // Referans tasarımlarda kartların kenarlığı yok, ayrımı gölge
   // yapıyor — bu yüzden gölgenin doğru olması kenarlıktan önemli.
-  golgeSm: '0 1px 2px rgba(16, 24, 40, 0.05)',
-  golgeMd: '0 2px 8px rgba(16, 24, 40, 0.07)',
-  golgeLg: '0 12px 32px rgba(16, 24, 40, 0.12)',
+  // ⭐ DEĞİŞTİ — daha yumuşak ve daha yayvan.
+  //
+  // Referans tasarımlardaki kartlar "yüzüyor" ama gölgeleri sert
+  // değil: geniş yarıçap, düşük opaklık. Önceki değerler kısa ve
+  // belirgindi (2px yayılma), kartları zemine yapıştırıyordu.
+  //
+  // İki katmanlı gölge: yakın ve keskin olan kenarı tanımlıyor,
+  // uzak ve yumuşak olan derinliği veriyor. Tek katmanla ikisi
+  // aynı anda elde edilemiyor.
+  golgeSm: '0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.04)',
+  golgeMd: '0 2px 4px rgba(16, 24, 40, 0.04), 0 8px 20px rgba(16, 24, 40, 0.06)',
+  golgeLg: '0 4px 8px rgba(16, 24, 40, 0.04), 0 20px 48px rgba(16, 24, 40, 0.12)',
 
   // ⭐ YENİ — GRAFİK SERİ RENKLERİ (kategorik palet)
   //

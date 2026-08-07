@@ -28,6 +28,17 @@ const DURUMLAR = {
   pasif:      { yazi: 'Pasif',          renk: '#e74c3c' },
   aktif:      { yazi: 'Aktif',          renk: '#27ae60' },
 
+  // ---- Ürün arşivi (Aşama 4.8) ----
+  //
+  // ⚠️ 'pasif' anahtarını YENİDEN KULLANMADIK. İkisi farklı şeyler:
+  // pasif = "satılmıyor ama listemde duruyor", arşivli = "listemden
+  // de çıktı". Aynı rozeti paylaşsalardı admin ikisini ayırt
+  // edemezdi.
+  //
+  // Gri: arşiv bir hata ya da uyarı değil, sadece bir durum —
+  // dikkat çekmesi gerekmiyor.
+  arsivli:    { yazi: 'Arşivli',        renk: '#64748b' },
+
   // ---- Kupon durumları (Aşama 5C) ----
   // 'aktif' ve 'pasif' yukarıda zaten tanımlı, tekrar yazmıyoruz.
   // 'baslamadi' için 'beklemede' anahtarını KULLANMADIK — o ödeme

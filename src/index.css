@@ -139,7 +139,7 @@ button {
    ekleniyor (aşağıdaki koyu tema bloğunda). */
 .kart {
   background-color: var(--kartArka);
-  border-radius: var(--kose-buyuk);
+  border-radius: var(--kose-dev);
   padding: var(--bosluk5);
   box-shadow: var(--golgeSm);
 }
@@ -326,6 +326,27 @@ button {
   border-color: var(--anaRenk);
 }
 
+/* ⭐ YENİ (4.8) — filtre çubuğundaki onay kutusu.
+
+   Select'lerle aynı yükseklik ve kenarlıkta ki çubuk hizalı kalsın;
+   ama zemini yok — bir DARALTMA değil, GENİŞLETME kontrolü olduğu
+   görsel olarak da belli olsun. */
+.filtre-onay {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  padding: 10px var(--bosluk3);
+  font-size: var(--yazi-normal);
+  color: var(--yaziOrta);
+  cursor: pointer;
+  user-select: none;
+}
+
+.filtre-onay input {
+  cursor: pointer;
+  accent-color: var(--anaRenk);
+}
+
 /* ---------- MİNİ TABLO ----------
    ⭐ YENİ — Dashboard ve Müşteri Detayı'ndan buraya taşındı.
 
@@ -481,7 +502,7 @@ button {
 .kutu {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: var(--kose-buyuk);
+  border-radius: var(--kose-dev);
   padding: var(--bosluk5);
   margin-bottom: var(--bosluk5);
   box-shadow: var(--golgeSm);

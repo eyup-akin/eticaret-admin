@@ -1,7 +1,22 @@
+/* ============================================================
+   PANEL DÜZENİ — yüzen yan menü (Aşama 4.6 / referans tasarım)
+
+   ⭐ DEĞİŞTİ — menü artık pencere kenarına YAPIŞIK DEĞİL.
+
+   Referans tasarımlarda yan menü, sayfanın içinde yüzen yuvarlak
+   köşeli bir panel. Kenara yapışık menü arayüzü "uygulama
+   penceresi" gibi gösteriyor; yüzen panel "pano" gibi gösteriyor
+   ve içerikle arasında nefes payı bırakıyor.
+
+   ⚠️ Bedeli: iki yandan 14'er piksel yer kaybı. Dar ekranda bu
+   fark ediliyor ama panel zaten 1200px altı için tasarlanmadı.
+   ============================================================ */
 .panel {
   display: flex;
-  height: 100vh;        /* min-height DEĞİL — tam ekran boyu, sabit */
-  overflow: hidden;     /* sayfanın kendisi kaymasın */
+  gap: var(--bosluk3);
+  height: 100vh;
+  overflow: hidden;
+  padding: var(--bosluk3);
   background-color: var(--arkaPlan);
 }
 
@@ -12,68 +27,80 @@
   background-color: var(--menuArka);
   display: flex;
   flex-direction: column;
-  padding: var(--bosluk5) 0;
-  height: 100vh;        /* ⭐ tam boy */
-  overflow-y: auto;     /* ⭐ menü çok uzarsa KENDİ İÇİNDE kaysın */
-  overflow-x: hidden;   /* ⭐ YENİ — daralırken yazılar taşıp yatay kaydırma çubuğu doğurmasın */
+  padding: var(--bosluk5) 0 var(--bosluk3) 0;
 
-  /* ⭐ YENİ — yumuşak geçiş.
-     
-     Neden "transition: all" değil de sadece width?
-     "all" yazarsak tarayıcı renk, gölge, kenarlık dahil DEĞİŞEN HER
-     ŞEYİ canlandırmaya çalışır. Tema değiştirildiğinde menü renginin
-     de yavaşça geçmesi gibi istenmeyen etkiler doğar ve gereksiz
-     hesaplama yapılır. Neyi canlandırdığını açıkça yaz.
-     
-     0.18s: 0.3s ve üstü "yavaş" hissettirir, 0.1s altı fark edilmez.
-     Arayüz geçişleri için 0.15-0.25s aralığı standart. */
+  /* ⭐ YENİ — yüzen panel: yuvarlak köşe + gölge */
+  border-radius: var(--kose-dev);
+  box-shadow: var(--golgeMd);
+
+  height: 100%;
+  overflow: hidden;   /* köşeler kesilsin, içerik taşmasın */
+
+  /* ⭐ Yumuşak geçiş — sadece width canlandırılıyor.
+     "all" yazsaydık tema değişince renk de yavaşça geçerdi. */
   transition: width 0.18s ease;
+}
+
+/* ⭐ YENİ — bağlantılar kendi alanında kaysın.
+   Alttaki kullanıcı kartı sabit kalmalı; menü uzayınca sadece
+   liste kaymalı. Kaydırmayı .yan-menu'ye verseydik kart da
+   yukarı kaçardı. */
+.menu-liste {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;      /* flex çocuğun kaymaya izin vermesi için şart */
 }
 
 .yan-menu-logo {
   color: #ffffff;
-  font-size: 20px;
+  font-size: var(--yazi-baslik);
   font-weight: 700;
-  padding: 0 var(--bosluk5) var(--bosluk5) var(--bosluk5);
+  letter-spacing: -0.3px;
+  padding: 0 var(--bosluk4) var(--bosluk5) var(--bosluk4);
 
-  /* ⭐ YENİ — ikon ve yazı ayrı öğeler oldu, yan yana hizala.
-     white-space: nowrap → daralma animasyonu sırasında "E-Ticaret"
-     alt satıra kaçıp logoyu iki katına çıkarmasın. */
   display: flex;
   align-items: center;
-  gap: var(--bosluk3);
+  gap: 10px;
   white-space: nowrap;
 }
 
-/* ⭐ DEĞİŞTİ (Aşama 4.5) — kenardan kenara blok yerine HAP.
+/* ⭐ YENİ — logo işareti.
+   Kare rozet içinde geometrik bir çizim (tamga gibi). Emoji
+   kullanmıyoruz: her platformda farklı çiziliyor ve rengi
+   kontrol edilemiyor. */
+.logo-isaret {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background-color: var(--anaRenk);
+  color: #ffffff;
 
-   Eski hali menünün tam genişliğini kaplayan keskin köşeli bir
-   dikdörtgendi ve solunda 3px'lik bir çizgi vardı. Referans
-   tasarımlardaki menülerde aktif öğe, kenarlardan boşluk bırakan
-   yuvarlak bir hap.
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-   Fark neden önemli? Kenara yapışan blok, menüyü "liste" gibi
-   gösteriyor; boşluk bırakan hap "seçili öğe" gibi. İkincisi hem
-   daha ferah hem seçimin nerede olduğunu daha net söylüyor. */
+/* ---------- MENÜ BAĞLANTILARI ----------
+
+   Aktif öğe: kenardan boşluk bırakan yuvarlak hap (referans
+   tasarım). Kenara yapışan blok menüyü "liste" gibi gösteriyordu;
+   hap "seçili öğe" gibi gösteriyor. */
 .menu-link {
   display: flex;
   align-items: center;
-  gap: var(--bosluk3);
-  padding: var(--bosluk3) var(--bosluk4);
-
-  /* Hap biçiminin nefes alması için yanlardan boşluk */
-  margin: 2px var(--bosluk3);
+  gap: 10px;
+  padding: 7px var(--bosluk3);
+  margin: 3px var(--bosluk3);
   border-radius: var(--kose-orta);
 
   color: var(--menuYazi);
   text-decoration: none;
-  font-size: var(--yazi-orta);
+  font-size: var(--yazi-normal);
+  font-weight: 500;
 
   transition: background-color 0.15s, color 0.15s;
-
-  /* ⭐ "Ödemeler / Gelir" gibi uzun yazılar daralma sırasında
-     alt satıra kaçıp bağlantı yüksekliğini iki katına çıkarmasın.
-     Animasyon boyunca satır yüksekliği sabit kalıyor. */
   white-space: nowrap;
 }
 
@@ -82,18 +109,110 @@
   color: #ffffff;
 }
 
-/* NavLink aktif sayfadayken bu sınıfı OTOMATİK ekler */
 .menu-link.active {
   background-color: var(--menuAktifArka);
   color: var(--menuAktifYazi);
   font-weight: 600;
 }
 
+/* ⭐ YENİ — İKON ROZETİ (referans tasarım)
+
+   İkon, menü zemininden bir tık açık dairenin içinde duruyor.
+
+   ⚠️ Neden sadece ikon koymak yetmedi?
+   Referanstaki menünün karakterini bu rozet veriyor: ikonlar
+   yazıdan görsel olarak ayrılıyor ve satırlar tek tip bir ritim
+   kazanıyor. Rozetsiz hâlde ikon boyları (kare, yuvarlak, uzun)
+   satır başlarını düzensiz gösteriyordu.
+
+   ⚠️ Aktif öğede rozet BEYAZLAŞIYOR — seçim yalnızca arka plan
+   rengiyle anlatılmıyor, ikinci bir işaret var. Renk körü bir
+   kullanıcı için bu fark ediliyor. */
 .menu-ikon {
-  font-size: var(--yazi-buyuk);
-  width: 22px;
-  text-align: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: var(--kose-tam);
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--menuYazi);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.15s, color 0.15s;
 }
+
+.menu-link:hover .menu-ikon {
+  color: #ffffff;
+}
+
+.menu-link.active .menu-ikon {
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+
+/* ---------- KULLANICI KARTI ----------
+
+   Menünün en altında kimlik göstergesi.
+
+   ⚠️ Bu bir menü DEĞİL — tıklanmıyor. Çıkış ve profil eylemleri
+   üst bardaki KullaniciMenusu'nda. "Aynı işi yapan iki düğme
+   koyma" kuralı. */
+.menu-kullanici {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: var(--bosluk3) var(--bosluk3) 0 var(--bosluk3);
+  padding: 10px;
+  border-radius: var(--kose-orta);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.menu-avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: var(--kose-tam);
+  background-color: var(--anaRenk);
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: var(--yazi-normal);
+  font-weight: 700;
+}
+
+/* min-width: 0 → uzun isim taşarsa üç noktaya inebilsin.
+   Flex çocuğun varsayılan min-width'i "auto"dur ve kısalmayı
+   engeller; bu satır olmadan ellipsis hiç çalışmaz. */
+.menu-kullanici-metin {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.menu-kullanici-ad {
+  color: #ffffff;
+  font-size: var(--yazi-ikincil);
+  font-weight: 600;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-kullanici-rol {
+  color: var(--menuYazi);
+  font-size: var(--yazi-mikro);
+  margin-top: 1px;
+}
+
 
 /* ---------- SAĞ TARAF ---------- */
 .panel-sag {
@@ -102,18 +221,23 @@
   flex-direction: column;
   min-width: 0;
   overflow: hidden;     /* ⭐ taşmayı içerik kutusuna bırak */
+  gap: var(--bosluk3);
 }
 
+/* ⭐ DEĞİŞTİ — üst bar da yüzen bir kart.
+   Yan menü kenardan koptuğu için tam genişlik bir şerit yapışık
+   kalırsa ikisi farklı düzlemde görünüyordu. */
 .ust-bar {
   height: 62px;
-  flex-shrink: 0;       /* ⭐ içerik uzayınca üst bar ezilmesin */
+  flex-shrink: 0;
   background-color: var(--kartArka);
-  border-bottom: 1px solid var(--kenarlik);
+  border-radius: var(--kose-buyuk);
+  box-shadow: var(--golgeSm);
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: var(--bosluk3);
-  padding: 0 var(--bosluk5);
+  padding: 0 var(--bosluk4);
 }
 
 /* Selamlama metni. Artık tıklanabilir değil — eylemler sağdaki
@@ -152,10 +276,12 @@
 }
 
 /* Sayfa içeriğinin oturduğu alan */
+/* İçerik alanı: kendi kaydırma alanı, kenarlarda dolgu yok —
+   yüzen düzende dolguyu .panel veriyor. */
 .icerik {
   flex: 1;
-  padding: var(--bosluk5);
   overflow-y: auto;
+  padding-right: var(--bosluk1);   /* kaydırma çubuğu içeriğe yapışmasın */
 }
 
 /* ========================================================
@@ -180,7 +306,8 @@
    görünmez bir metin taşmaya ve hizasızlığa yol açardı.
    display: none öğeyi yerleşimden tamamen çıkarıyor. */
 .yan-menu-dar .logo-yazi,
-.yan-menu-dar .menu-yazi {
+.yan-menu-dar .menu-yazi,
+.yan-menu-dar .menu-kullanici-metin {
   display: none;
 }
 
@@ -191,6 +318,14 @@
 .yan-menu-dar .yan-menu-logo {
   padding: 0 0 var(--bosluk5) 0;
   justify-content: center;
+}
+
+/* ⭐ YENİ — daraltılmışken kullanıcı kartı sadece avatar */
+.yan-menu-dar .menu-kullanici {
+  justify-content: center;
+  padding: var(--bosluk2);
+  margin-left: var(--bosluk2);
+  margin-right: var(--bosluk2);
 }
 
 .yan-menu-dar .menu-link {

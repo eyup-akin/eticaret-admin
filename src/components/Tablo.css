@@ -6,7 +6,7 @@
 .tablo-kutu {
   background-color: var(--kartArka);
   border: 1px solid var(--kenarlik);
-  border-radius: var(--kose-buyuk);
+  border-radius: var(--kose-dev);
   overflow: hidden;
   box-shadow: var(--golgeSm);
 }

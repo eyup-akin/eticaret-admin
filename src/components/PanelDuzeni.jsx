@@ -4,6 +4,26 @@ import { useAuth } from '../context/AuthContext';
 
 import { rolYeterliMi } from '../utils/roller';
 
+// ⭐ YENİ — çizgi ikonlar (lucide-react).
+//
+// ⚠️ Neden emoji bırakılmadı?
+// Emoji her işletim sisteminde FARKLI çiziliyor: Windows'ta düz,
+// macOS'ta parlak, Android'de bambaşka. Menü gibi her ekranda
+// duran bir yerde bu tutarsızlık göze batıyor. Ayrıca emojinin
+// rengi kontrol edilemiyor — tema değişince ikon aynı kalıyor.
+//
+// Çizgi ikonlar SVG: rengi currentColor'dan, kalınlığı prop'tan
+// geliyor. Yani tema token'larına bağlanabiliyorlar.
+//
+// ⚠️ Tek tek import ediliyor, "import * as Icons" DEĞİL.
+// Toplu import ağaç sallamayı engeller ve 1000+ ikonun tamamı
+// pakete girer.
+import {
+  LayoutDashboard, Package, Tags, Receipt, CreditCard,
+  Users, Ticket, TrendingUp, LifeBuoy, ShieldCheck, ScrollText,
+  ChevronLeft, ChevronRight,
+} from 'lucide-react';
+
 import BildirimZili from './BildirimZili';   // ⭐ YENİ
 
 import KullaniciMenusu from './KullaniciMenusu';
@@ -17,25 +37,27 @@ import './PanelDuzeni.css';
 //
 // ⚠️ Buradan gizlemek güvenlik değildir. Adres elle yazılabilir.
 // Rota tarafında KorumaliRota, sunucu tarafında [Authorize] de olmalı.
+// ⭐ DEĞİŞTİ — "ikon" artık emoji metni değil, BİLEŞEN.
+// Render sırasında <Ikon size={18} /> olarak çiziliyor.
 const MENU = [
-  { yol: '/',                  ikon: '📊', yazi: 'Dashboard' },
-  { yol: '/urunler',           ikon: '📦', yazi: 'Ürünler' },
-  { yol: '/kategoriler',       ikon: '🏷️', yazi: 'Kategoriler' },
-  { yol: '/siparisler',        ikon: '🧾', yazi: 'Siparişler' },
-  { yol: '/odemeler',          ikon: '💳', yazi: 'Ödemeler / Gelir' },
-  { yol: '/kullanicilar',      ikon: '👥', yazi: 'Kullanıcılar' },
-  { yol: '/kuponlar',          ikon: '🎟️', yazi: 'Kuponlar' },
-  { yol: '/raporlar',          ikon: '📈', yazi: 'Raporlar' },
-  { yol: '/destek',            ikon: '🎫', yazi: 'Destek Talepleri' },
+  { yol: '/',                  ikon: LayoutDashboard, yazi: 'Dashboard' },
+  { yol: '/urunler',           ikon: Package,         yazi: 'Ürünler' },
+  { yol: '/kategoriler',       ikon: Tags,            yazi: 'Kategoriler' },
+  { yol: '/siparisler',        ikon: Receipt,         yazi: 'Siparişler' },
+  { yol: '/odemeler',          ikon: CreditCard,      yazi: 'Ödemeler / Gelir' },
+  { yol: '/kullanicilar',      ikon: Users,           yazi: 'Kullanıcılar' },
+  { yol: '/kuponlar',          ikon: Ticket,          yazi: 'Kuponlar' },
+  { yol: '/raporlar',          ikon: TrendingUp,      yazi: 'Raporlar' },
+  { yol: '/destek',            ikon: LifeBuoy,        yazi: 'Destek Talepleri' },
   {
     yol: '/admin-basvurulari',
-    ikon: '🛡️',
+    ikon: ShieldCheck,
     yazi: 'Admin Başvuruları',
     gerekenRol: 'superadmin',
   },
   {
     yol: '/denetim-kaydi',
-    ikon: '🔍',
+    ikon: ScrollText,
     yazi: 'Denetim Kaydı',
     gerekenRol: 'superadmin',
   },
@@ -48,6 +70,24 @@ const MENU = [
 // olurdu — hiçbir yerde patlamaz, sadece çalışmaz. Sihirli metinleri
 // isimlendirmek bu tür hataları imkânsız kılıyor.
 const MENU_DURUM_ANAHTARI = 'panel-menu-daraltilmis';
+
+// ⭐ YENİ — rol kodunu okunabilir yazıya çevirir.
+//
+// Kullanıcı kartında "superadmin" değil "Süper Yönetici" yazsın diye.
+// Rol kodları sistemin dili, ekranda görünen ise kullanıcının dili;
+// ikisini karıştırmak paneli "geliştirici aracı" gibi gösterir.
+//
+// Bilinmeyen bir rol gelirse kodun kendisini gösteriyoruz — boş
+// bırakmaktansa ham değeri göstermek, sorunu görünür kılıyor.
+const ROL_YAZILARI = {
+  superadmin: 'Süper Yönetici',
+  admin: 'Yönetici',
+  customer: 'Müşteri',
+};
+
+function rolYazisi(rol) {
+  return ROL_YAZILARI[rol] || rol || '';
+}
 
 // ⭐ YENİ — kayıtlı tercihi oku.
 //
@@ -121,27 +161,83 @@ export default function PanelDuzeni() {
           için JavaScript'e dokunmak gerekmiyor. */}
       <aside className={'yan-menu' + (daraltilmis ? ' yan-menu-dar' : '')}>
 
+        {/* ⭐ DEĞİŞTİ — marka: "Satık"
+
+            Eski Türkçe "satığ": satılık mal, meta, alım satım.
+            Kutadgu Bilig'de geçiyor; modern "satış" ve "satmak"
+            bu kökten türüyor.
+
+            Logo işareti bir tamga gibi geometrik: "S" harfini
+            çağrıştıran ama harf olmayan bir işaret. Emoji
+            kullanmıyoruz — her platformda farklı çiziliyor. */}
         <div className="yan-menu-logo">
-          <span className="logo-ikon">🛒</span>
-          <span className="logo-yazi">E-Ticaret</span>
+          <span className="logo-isaret" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M14.5 5.5H8.2a2.7 2.7 0 0 0 0 5.4h3.6a2.7 2.7 0 0 1 0 5.4H5.5"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+          <span className="logo-yazi">Satık</span>
         </div>
 
-        {gorunenMenu.map((oge) => (
-          <NavLink
-            key={oge.yol}
-            to={oge.yol}
-            end={oge.yol === '/'}
-            className="menu-link"
-            /* ⭐ İpucu SADECE daraltılmışken.
-               Genişken yazı zaten görünüyor; balon göstermek gereksiz
-               tekrar ve fare gezdirirken can sıkıcı olurdu.
-               undefined vermek özniteliği hiç eklemiyor. */
-            title={daraltilmis ? oge.yazi : undefined}
-          >
-            <span className="menu-ikon">{oge.ikon}</span>
-            <span className="menu-yazi">{oge.yazi}</span>
-          </NavLink>
-        ))}
+        {/* ⭐ DEĞİŞTİ — menü artık kendi kaydırma alanında.
+            Alttaki kullanıcı kartı sabit kalsın, sadece bağlantılar
+            kaysın diye ayrı bir sarmalayıcı gerekiyordu. */}
+        <nav className="menu-liste">
+          {gorunenMenu.map((oge) => {
+            const Ikon = oge.ikon;
+
+            return (
+              <NavLink
+                key={oge.yol}
+                to={oge.yol}
+                end={oge.yol === '/'}
+                className="menu-link"
+                /* ⭐ İpucu SADECE daraltılmışken.
+                   Genişken yazı zaten görünüyor; balon göstermek gereksiz
+                   tekrar ve fare gezdirirken can sıkıcı olurdu.
+                   undefined vermek özniteliği hiç eklemiyor. */
+                title={daraltilmis ? oge.yazi : undefined}
+              >
+                {/* ⭐ YENİ — ikon dairesel rozet içinde (referans tasarım).
+
+                    Rozet, ikonu menü yazısından görsel olarak ayırıyor
+                    ve aktif öğede rengi değişerek ikinci bir seçim
+                    işareti veriyor — yani seçim yalnızca arka plan
+                    rengiyle anlatılmıyor. */}
+                <span className="menu-ikon">
+                  <Ikon size={17} strokeWidth={2} />
+                </span>
+
+                <span className="menu-yazi">{oge.yazi}</span>
+              </NavLink>
+            );
+          })}
+        </nav>
+
+        {/* ⭐ YENİ — KULLANICI KARTI (referans tasarım)
+
+            Menünün en altında, avatar + ad + rol.
+
+            ⚠️ Bu bir MENÜ DEĞİL, sadece kimlik göstergesi. Çıkış ve
+            profil eylemleri üst bardaki KullaniciMenusu'nda kalıyor —
+            aynı işi yapan iki kontrol koymuyoruz.
+
+            Daraltılmış menüde yalnızca avatar görünüyor. */}
+        <div className="menu-kullanici">
+          <span className="menu-avatar" aria-hidden="true">
+            {(kullanici?.fullName || '?').charAt(0).toUpperCase()}
+          </span>
+
+          <span className="menu-kullanici-metin">
+            <span className="menu-kullanici-ad">{kullanici?.fullName}</span>
+            <span className="menu-kullanici-rol">{rolYazisi(kullanici?.role)}</span>
+          </span>
+        </div>
 
       </aside>
 
@@ -167,7 +263,11 @@ export default function PanelDuzeni() {
             aria-label={daraltilmis ? 'Menüyü genişlet' : 'Menüyü daralt'}
             aria-expanded={!daraltilmis}
           >
-            {daraltilmis ? '»' : '«'}
+            {/* ⭐ DEĞİŞTİ — « » metin karakterleri yerine ikon.
+                O karakterler fontlara göre farklı yükseklikte
+                çiziliyor ve butonun içinde hep bir tık kaymış
+                duruyorlardı. */}
+            {daraltilmis ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
           </button>
 
           {/* Selamlama artık BAĞLANTI DEĞİL, düz bilgi. */}

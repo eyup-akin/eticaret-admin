@@ -21,6 +21,12 @@ import OnayPenceresi from '../components/OnayPenceresi';
 
 import ExcelIceAktar from '../components/ExcelIceAktar';
 
+// ⭐ YENİ (4.7) — buton emojileri çizgi ikona çevrildi.
+// Gerekçe PanelDuzeni'nde uzun uzun yazılı: emoji her işletim
+// sisteminde farklı çiziliyor ve rengi tema ile değişmiyor.
+// Tek tek import — "import * as Icons" ağaç sallamayı engeller.
+import { Ban, CheckCircle2, Pencil, Trash2, Archive, ArchiveRestore } from 'lucide-react';
+
 import './UrunlerSayfasi.css';
 
 export default function UrunlerSayfasi() {
@@ -52,6 +58,13 @@ export default function UrunlerSayfasi() {
   // dönüştürme yapmak zorunda kalırdık. Ayrıca üç durumumuz var
   // (hepsi / aktif / pasif) ve boolean bunu karşılamıyor.
   const [durumFiltre, setDurumFiltre] = useState('');
+
+  // ⭐ YENİ (4.8) — arşivli ürünler listeye dahil edilsin mi?
+  //
+  // Varsayılan false: arşiv "gözümün önünden çek" demek, açılışta
+  // görünmemeleri işin özü. Admin arşivden çıkarmak istediğinde
+  // bu anahtarı açıyor.
+  const [arsivGoster, setArsivGoster] = useState(false);
 
   const [silinecek, setSilinecek] = useState(null);
   const [siliniyor, setSiliniyor] = useState(false);
@@ -133,6 +146,15 @@ export default function UrunlerSayfasi() {
         parametreler.append('aktif', durumFiltre);
       }
 
+      // ⭐ YENİ (4.8) — arşivliler yalnızca istenirse.
+      //
+      // Kapalıyken parametreyi HİÇ göndermiyoruz; backend'de
+      // varsayılan zaten false. Her istekte "arsiv=false" göndermek
+      // URL'i uzatmaktan başka bir işe yaramazdı.
+      if (arsivGoster) {
+        parametreler.append('arsiv', 'true');
+      }
+
       const sorgu = parametreler.toString();
       const yol = sorgu === '' ? '/products' : '/products?' + sorgu;
 
@@ -156,7 +178,9 @@ export default function UrunlerSayfasi() {
     }, 400);
 
     return () => clearTimeout(sayac);
-  }, [arama, kategoriId, durumFiltre]);
+    // ⭐ arsivGoster de bağımlılıkta — eklemeseydik anahtar
+    // değişince liste yenilenmezdi.
+  }, [arama, kategoriId, durumFiltre, arsivGoster]);
 
   async function silmeyiOnayla() {
     setSiliniyor(true);
@@ -166,10 +190,60 @@ export default function UrunlerSayfasi() {
       setUrunler(urunler.filter((u) => u.id !== silinecek.id));
       setSilinecek(null);
     } catch (e) {
+      // ⭐ YENİ (4.8) — sunucu "bu ürünün geçmişi var" diyebilir.
+      //
+      // Backend artık sipariş kalemi / yorum / stok hareketi olan
+      // ürünü silmiyor ve 409 dönüyor. Mesaj kaç kayıt olduğunu ve
+      // ne yapılabileceğini söylüyor; olduğu gibi gösteriyoruz.
+      //
+      // ⚠️ Buton mantığı bunu zaten ÖNLÜYOR (geçmişi olan üründe
+      // "Sil" yerine "Arşivle" çıkıyor). Yine de buraya düşebiliriz:
+      // liste yüklendikten sonra o ürüne sipariş gelmiş olabilir.
+      // Ön yüz doğrulaması bir kolaylık, sunucu doğrulaması ise
+      // kural — ikisi de gerekli.
       setHata(e.message);
       setSilinecek(null);
     } finally {
       setSiliniyor(false);
+    }
+  }
+
+  // ⭐ YENİ (4.8) — ürünü arşivle / arşivden çıkar
+  async function arsivDegistir(urun) {
+    setDurumDegisen(urun.id);
+    setHata('');
+
+    try {
+      // durumDegistir'deki desenin aynısı: hedef değeri açıkça
+      // gönderiyoruz, "tersine çevir" demiyoruz.
+      const cevap = await apiPut('/products/' + urun.id + '/arsiv', {
+        isActive: !urun.arsivlendiMi,
+      });
+
+      // ⚠️ Arşivlenen ürün LİSTEDEN ÇIKIYOR (arşiv görünümü kapalıysa).
+      // Satırı güncellemek yerine çıkarıyoruz çünkü mevcut filtreye
+      // artık uymuyor — bırakırsak admin arşivlediği ürünü hâlâ
+      // listede görür ve işlemin çalışmadığını sanır.
+      if (cevap.arsivlendiMi && !arsivGoster) {
+        setUrunler((oncekiler) => oncekiler.filter((u) => u.id !== urun.id));
+        return;
+      }
+
+      // Değerleri sunucunun cevabından alıyoruz — arşivleme aynı
+      // zamanda ürünü satıştan da kaldırıyor, o yüzden isActive de
+      // değişmiş olabilir. Kendi hesabımızla tahmin etseydik satır
+      // "arşivli ama hâlâ satışta" gibi yanlış görünürdü.
+      setUrunler((oncekiler) =>
+        oncekiler.map((u) =>
+          u.id === urun.id
+            ? { ...u, arsivlendiMi: cevap.arsivlendiMi, isActive: cevap.isActive }
+            : u
+        )
+      );
+    } catch (e) {
+      setHata(e.message);
+    } finally {
+      setDurumDegisen(null);
     }
   }
 
@@ -287,7 +361,20 @@ export default function UrunlerSayfasi() {
       // ekranı parlak ışıkta bakan biri farkı göremez. Yazıyla da
       // söylemek erişilebilirliğin temel kuralı.
       baslik: 'Durum',
-      hucre: (u) => <Rozet durum={u.isActive ? 'aktif' : 'pasif'} />,
+
+      // ⭐ DEĞİŞTİ (4.8) — arşiv, aktif/pasif'in ÖNÜNDE gösteriliyor.
+      //
+      // Arşivli ürün zaten pasif (arşivleme onu satıştan da
+      // kaldırıyor). İkisini birden yazsaydık her arşivli satırda
+      // "Arşivli · Pasif" görünürdü — ikinci rozet hiçbir yeni bilgi
+      // taşımadan yer kaplardı. Arşiv daha üst seviye bir durum,
+      // onu söylemek yeterli.
+      hucre: (u) =>
+        u.arsivlendiMi ? (
+          <Rozet durum="arsivli" />
+        ) : (
+          <Rozet durum={u.isActive ? 'aktif' : 'pasif'} />
+        ),
     },
     {
       baslik: 'Kategori',
@@ -376,11 +463,13 @@ export default function UrunlerSayfasi() {
                 : 'Ürün tekrar satışa açılır'
             }
           >
-            {durumDegisen === u.id
-              ? '...'
-              : u.isActive
-                ? '🚫 Satıştan Kaldır'
-                : '✅ Satışa Aç'}
+            {durumDegisen === u.id ? (
+              '...'
+            ) : u.isActive ? (
+              <><Ban size={14} /> Satıştan Kaldır</>
+            ) : (
+              <><CheckCircle2 size={14} /> Satışa Aç</>
+            )}
           </Buton>
 
           <Buton
@@ -388,12 +477,55 @@ export default function UrunlerSayfasi() {
             boyut="kucuk"
             onClick={() => navigate('/urunler/' + u.id + '/duzenle')}
           >
-            ✏️ Düzenle
+            <Pencil size={14} /> Düzenle
           </Buton>
 
-          <Buton tip="tehlike" boyut="kucuk" onClick={() => setSilinecek(u)}>
-            🗑️ Sil
-          </Buton>
+          {/* ⭐ YENİ (4.8) — ÜÇÜNCÜ SEVİYE: ARŞİV
+
+              Arşivli üründe tek anlamlı eylem geri çıkarmaktır;
+              o yüzden buton "Arşivden Çıkar"a dönüşüyor. */}
+          {u.arsivlendiMi && (
+            <Buton
+              tip="ikincil"
+              boyut="kucuk"
+              onClick={() => arsivDegistir(u)}
+              disabled={durumDegisen === u.id}
+              title="Ürün tekrar admin listesinde görünür (satışa açılmaz)"
+            >
+              <ArchiveRestore size={14} /> Arşivden Çıkar
+            </Buton>
+          )}
+
+          {/* ⭐ DEĞİŞTİ (4.8) — "Sil" ARTIK HER ÜRÜNDE ÇIKMIYOR.
+
+              Ürünün işlem geçmişi varsa (sipariş kalemi, yorum, stok
+              hareketi) fiziksel silme sunucuda 409 ile reddediliyor.
+              Basılamayacak bir buton göstermek admini yanıltır —
+              yerine gerçekten yapabileceği eylemi koyuyoruz.
+
+              ⚠️ Pratikte "Sil" NADİREN görünür: ürün oluşturmak bile
+              stok defterine bir hareket yazıyor. Bu bir kusur değil,
+              kuralın kendisi — fiziksel silme yalnızca "yanlışlıkla
+              oluşturuldu, hiç kullanılmadı" durumu için.
+
+              Arşivli üründe ikisi de çıkmıyor: zaten arşivde. */}
+          {!u.arsivlendiMi && (
+            u.silinebilirMi ? (
+              <Buton tip="tehlike" boyut="kucuk" onClick={() => setSilinecek(u)}>
+                <Trash2 size={14} /> Sil
+              </Buton>
+            ) : (
+              <Buton
+                tip="ikincil"
+                boyut="kucuk"
+                onClick={() => arsivDegistir(u)}
+                disabled={durumDegisen === u.id}
+                title="Bu ürünün sipariş, yorum veya stok geçmişi var; silinemez. Arşivlemek listeden kaldırır, kaydı korur."
+              >
+                <Archive size={14} /> Arşivle
+              </Buton>
+            )
+          )}
         </div>
       ),
     },
@@ -461,6 +593,22 @@ export default function UrunlerSayfasi() {
           <option value="karAzalan">Kâr (çoktan aza)</option>
           <option value="stokArtan">Stok (azdan çoğa)</option>
         </select>
+
+        {/* ⭐ YENİ (4.8) — arşivlileri listeye dahil et.
+
+            ⚠️ Neden select değil onay kutusu?
+            Diğer filtreler bir DARALTMA yapıyor ("sadece şunlar").
+            Bu ise GENİŞLETME: normalde gizli olanları da ekliyor.
+            Aynı görsel dili kullansaydı admin bunun da bir daraltma
+            olduğunu sanardı. */}
+        <label className="filtre-onay">
+          <input
+            type="checkbox"
+            checked={arsivGoster}
+            onChange={(e) => setArsivGoster(e.target.checked)}
+          />
+          Arşivlileri göster
+        </label>
       </div>
 
       {hata !== '' && <HataKutusu mesaj={hata} tekrarDene={urunleriGetir} />}
