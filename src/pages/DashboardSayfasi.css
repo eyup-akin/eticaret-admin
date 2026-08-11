@@ -33,6 +33,18 @@
   font-size: var(--yazi-normal);
   opacity: 0.85;
   margin-bottom: var(--bosluk2);
+
+  /* ⭐ YENİ (4.7) — etiket ikon taşıyor. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+/* ⚠️ Burada ikona renk VERİLMİYOR. Bu etiket koyu zeminli gelir
+   kartının içinde; currentColor sayesinde ikon da etiketle aynı
+   beyaz tonu alıyor. Sabit bir renk yazsaydık kartta kaybolurdu. */
+.gelir-etiket > svg {
+  flex-shrink: 0;
 }
 
 /* 38px ölçekte yok ve olmamalı: bu sayfanın tek kahraman rakamı,
@@ -83,6 +95,16 @@
   color: var(--yaziKoyu);
   margin-bottom: var(--bosluk1);
   letter-spacing: -0.2px;
+
+  /* ⭐ YENİ (4.7) — başlık ikon taşıyor. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+.bolum-baslik > svg {
+  color: var(--anaRenk);
+  flex-shrink: 0;
 }
 
 .bolum-altyazi {

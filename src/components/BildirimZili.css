@@ -39,11 +39,17 @@
 }
 
 .zil-ikon {
-  font-size: var(--yazi-buyuk);
+  /* ⭐ DEĞİŞTİ (4.7) — emoji yerine SVG.
 
-  /* Emoji satır yüksekliği yüzünden dikeyde kayıyor;
-     line-height: 1 ile tam ortalanıyor. */
-  line-height: 1;
+     ⚠️ font-size KALDIRILDI: ikonun boyutunu artık JSX'teki size
+     prop'u belirliyor. CSS'te bırakmak, iki yerden boyut veren ve
+     biri değişince diğeri sessizce eskiyen bir ikilik yaratırdı.
+
+     line-height: 1 gerekçesi de düştü — SVG'nin satır yüksekliği
+     yok. Yerine flex ile ortalıyoruz. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ---------- SAYI ROZETİ ---------- */

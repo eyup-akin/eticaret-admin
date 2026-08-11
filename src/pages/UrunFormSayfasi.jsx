@@ -23,6 +23,9 @@ import StokHareketleri from '../components/StokHareketleri'; // ⭐ YENİ
 
 import './UrunFormSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { Image, Package, Plus, Save, StickyNote } from 'lucide-react';
+
 export default function UrunFormSayfasi() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -86,6 +89,15 @@ export default function UrunFormSayfasi() {
     //
     // Varsayılan '20': yeni ürün genel orana düşsün.
     vatRate: '20',
+
+    // ⭐ YENİ (B1) — indirim öncesi fiyat.
+    //
+    // Boş string ile başlıyor ve boş kalması NORMAL durum: ürünlerin
+    // çoğu indirimsizdir. Buradaki boşluk sunucuya null olarak gidiyor
+    // (Number('') = 0 tuzağına düşmemek için gövdede ayrıca kontrol
+    // ediliyor) — 0 gitseydi sunucu onu "eski fiyat güncelden küçük"
+    // diye zaten eler, ama niyeti yanlış anlatırdık.
+    eskiFiyat: '',
   });
 
   // ---------- ÜRÜNÜ ÇEK (resimler dahil) ----------
@@ -122,6 +134,13 @@ export default function UrunFormSayfasi() {
       // 0 geçerli bir oran değil — ama ?? niyeti daha net anlatıyor:
       // "sadece bilgi gelmediyse varsayılana düş".
       vatRate: String(urun.vatRate ?? 20),
+
+      // ⭐ YENİ (B1) — indirim öncesi fiyat.
+      //
+      // != null kontrolü şart (maliyetteki desenin aynısı): alan
+      // nullable ve indirimsiz üründe null geliyor. String(null)
+      // yazsaydık kutuda "null" metni görünürdü.
+      eskiFiyat: urun.eskiFiyat != null ? String(urun.eskiFiyat) : '',
     });
 
     setResimler(urun.images || []);
@@ -196,6 +215,38 @@ export default function UrunFormSayfasi() {
   const karDurum =
     kar > 0 ? 'kar-pozitif' : kar < 0 ? 'kar-negatif' : 'kar-sifir';
 
+  // ---------- ⭐ YENİ (B1): İNDİRİM ÖNİZLEMESİ ----------
+  //
+  // Amaç: admin kaydetmeden ÖNCE müşterinin göreceği rozeti görsün.
+  // Sunucu eski fiyatı sessizce eliyor (fiyattan küçükse null yazıyor);
+  // uyarı olmasaydı admin "kaydettim ama indirim çıkmadı" derdi ve
+  // sebebini hiçbir ekranda bulamazdı.
+  const eskiFiyatSayi = Number(form.eskiFiyat);
+
+  const eskiFiyatGirildi =
+    form.eskiFiyat.trim() !== '' && !Number.isNaN(eskiFiyatSayi);
+
+  // ⚠️ Kural sunucudaki EskiFiyatiDogrula ile AYNI: eski fiyat
+  // güncelden BÜYÜK olmalı. Eşitlik de geçersiz — "indirimli" diye
+  // gösterilen ama fiyatı değişmemiş ürün müşteriyi yanıltır.
+  const indirimGecerli = eskiFiyatGirildi && eskiFiyatSayi > fiyatSayi && fiyatSayi > 0;
+
+  // ⚠️ AŞAĞI YUVARLAMA — mobildeki kuralın aynısı.
+  //
+  // ⚠️⚠️ BU FORMÜLÜN İKİNCİ KOPYASI:
+  //     ETicaretMobil/src/utils/indirim.js → indirimBilgisi()
+  //
+  // Ortak dosyaya alınamıyor (ayrı depo, ayrı paket). Kâr formülünde
+  // de aynı durum var ve orada da iki tarafa not düşülmüştü. Biri
+  // değişirse diğeri de değişmeli: yuvarlama yönü ayrışırsa panel
+  // "-%16" der, müşteri "-%15" görür.
+  //
+  // Yukarı yuvarlamıyoruz çünkü indirim oranı bir REKLAM iddiasıdır;
+  // %15,6'yı "%16" diye duyurmak abartma olur.
+  const indirimYuzdesi = indirimGecerli
+    ? Math.floor(((eskiFiyatSayi - fiyatSayi) / eskiFiyatSayi) * 100)
+    : 0;
+
   // ---------- BEKLEYEN RESİMLERİ YÜKLE ----------
   // Ürün oluştuktan (id geldikten) sonra çağrılır.
   // Bir resim patlarsa ürünü iptal etmeyiz, atlar devam ederiz.
@@ -252,11 +303,37 @@ export default function UrunFormSayfasi() {
         // Sunucu beyaz liste doğrulaması yapıyor (1/10/20); buradaki
         // <select> zaten o üç değeri sunuyor ama asıl kilit sunucuda.
         vatRate: Number(form.vatRate),
+
+        // ⭐ YENİ (B1) — indirim öncesi fiyat.
+        //
+        // ⚠️ BOŞ KUTU null GİDİYOR, 0 DEĞİL.
+        // Number('') = 0 ve 0 gönderseydik sunucudaki doğrulama onu
+        // yine elerdi (0 <= fiyat) — yani sonuç aynı olurdu ama
+        // gövde "eski fiyat sıfırdı" diye YANLIŞ bir şey söylerdi.
+        // Projede "değer yok"un tek temsili null.
+        eskiFiyat:
+          form.eskiFiyat.trim() === '' ? null : Number(form.eskiFiyat),
       };
 
       if (duzenlemeMi) {
         await apiPut('/products/' + id, govde);
-        setBasari('Ürün güncellendi. ✅');
+
+        // ⭐ YENİ (B1) — KAYDETTİKTEN SONRA SUNUCUDAN GERİ OKU.
+        //
+        // ⚠️ Sebep: artık gönderdiğimiz her değer olduğu gibi
+        // saklanmıyor. Eski fiyat güncel fiyattan büyük değilse
+        // sunucu onu sessizce null'a çeviriyor (EskiFiyatiDogrula).
+        // Geri okumasaydık kutuda az önce yazılan sayı durmaya
+        // devam ederdi ve ekran, veritabanında OLMAYAN bir şeyi
+        // gösterirdi — admin sayfayı yenileyene kadar farkı
+        // göremezdi.
+        //
+        // ⚠️ Diğer alanlar için de doğru davranış: sunucu ad ve
+        // açıklamayı trim'liyor, barkodu normalleştiriyor. Form
+        // artık hepsinin kaydedilmiş halini gösteriyor.
+        await urunuYenile();
+
+        setBasari('Ürün güncellendi.');
       } else {
         // 1) Önce ürünü oluştur, id'yi al
         const cevap = await apiPost('/products', govde);
@@ -329,7 +406,7 @@ export default function UrunFormSayfasi() {
             }
             onClick={() => setAktifSekme('bilgiler')}
           >
-            <span className="sekme-ikon">📝</span>
+            <span className="sekme-ikon"><StickyNote size={16} /></span>
             Bilgiler
           </button>
 
@@ -340,7 +417,7 @@ export default function UrunFormSayfasi() {
             }
             onClick={() => setAktifSekme('stok')}
           >
-            <span className="sekme-ikon">📦</span>
+            <span className="sekme-ikon"><Package size={16} /></span>
             Stok Hareketleri
           </button>
 
@@ -472,10 +549,91 @@ export default function UrunFormSayfasi() {
               </div>
             </div>
 
-            {/* İkinci sütun bilerek boş: KDV tek başına bir satırı
-                doldurmuyor ama form-ikili ızgarasını bozmadan hizalı
-                kalması için sarmalayıcıyı kullanıyoruz. */}
-            <div />
+            {/* ⭐ YENİ (B1) — İNDİRİM ÖNCESİ FİYAT
+
+                Buraya kondu çünkü bu satır zaten "fiyatı açıklayan
+                alanlar" satırı: KDV fiyatın içinde ne olduğunu,
+                bu alan fiyatın neye göre düştüğünü söylüyor.
+                Önceden burada hizayı korumak için boş bir <div />
+                duruyordu; yeri hazırdı.
+
+                ⚠️ ZORUNLU DEĞİL ve olmaması NORMAL. Ürünlerin çoğu
+                indirimsiz; required koysaydık her ürün için uydurma
+                bir "eski fiyat" girilmek zorunda kalınırdı ve
+                mağazanın tamamı sahte indirimli görünürdü.
+
+                ⚠️ min="0.01" var ama asıl kural (eski fiyat >
+                güncel fiyat) tarayıcıda ZORLANMIYOR: HTML min
+                özniteliği başka bir alanın değerine bakamaz. Kural
+                sunucuda (EskiFiyatiDogrula) ve aşağıdaki ipucu
+                admini önceden uyarıyor. */}
+            <div className="form-alan">
+              <label className="form-etiket">İndirim Öncesi Fiyat (₺)</label>
+
+              <input
+                className="form-input"
+                type="number"
+                step="0.01"
+                min="0.01"
+                value={form.eskiFiyat}
+                onChange={(e) => alanDegistir('eskiFiyat', e.target.value)}
+                placeholder="Boş bırak — indirim yok"
+              />
+
+              {/* Üç durum, üç farklı cevap:
+                    boş         → ne işe yaradığını anlat
+                    geçerli     → müşterinin GÖRECEĞİ rozeti göster
+                    geçersiz    → kaydedilmeyeceğini söyle
+
+                  ⚠️ Geçersiz durumda kutu kırmızıya boyanmıyor,
+                  yalnızca ipucu turuncuya dönüyor: admin henüz
+                  yazmayı bitirmemiş olabilir (fiyatı sonra
+                  yükseltecek). Kırmızı "hata yaptın" der; burada
+                  olan şey "bu haliyle kaydedilmez". */}
+              {!eskiFiyatGirildi && (
+                <div className="form-ipucu">
+                  Doluysa müşteri üstü çizili eski fiyatı ve indirim
+                  rozetini görür. <b>Güncel fiyattan büyük olmalı.</b>
+                </div>
+              )}
+
+              {eskiFiyatGirildi && indirimGecerli && (
+                <>
+                  <div className="form-ipucu">
+                    {indirimYuzdesi >= 1 ? (
+                      <>Müşteri <b>-%{indirimYuzdesi}</b> rozeti görecek.</>
+                    ) : (
+                      <>
+                        İndirim <b>%1'in altında</b>: rozet çizilmez,
+                        yalnızca üstü çizili eski fiyat görünür.
+                      </>
+                    )}
+                  </div>
+
+                  {/* ⚠️ Yasal not AYRI bir satır ve uyarı renginde.
+                      Aynı cümleye eklenseydi "-%16 görecek" bilgisinin
+                      kuyruğunda kaybolurdu; bu satır bir sorumluluk
+                      hatırlatması, bir önizleme değil.
+
+                      ⚠️ Metinde emoji YOK (Aşama 4.7). İlk yazımda
+                      cümlenin başına bir uyarı emojisi konmuştu ve
+                      panelde göründü — işaretin işini burada RENK
+                      yapıyor, ikon gerekmiyor. */}
+                  <div className="form-ipucu form-ipucu-uyari">
+                    Bu tutar, son 30 günde <b>fiilen uygulanmış</b> en düşük
+                    fiyat olmalı (Fiyat Etiketi Yönetmeliği). Sistem bunu
+                    denetlemiyor — sorumluluk sende.
+                  </div>
+                </>
+              )}
+
+              {eskiFiyatGirildi && !indirimGecerli && (
+                <div className="form-ipucu form-ipucu-uyari">
+                  Güncel fiyattan büyük değil — <b>kaydedilmeyecek</b> ve
+                  üründe indirim görünmeyecek.
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Canlı kâr önizlemesi */}
@@ -629,8 +787,8 @@ export default function UrunFormSayfasi() {
               {kaydediliyor
                 ? 'Kaydediliyor...'
                 : duzenlemeMi
-                  ? '💾 Bilgileri Güncelle'
-                  : '➕ Ürünü Kaydet'}
+                  ? <><Save size={15} /> Bilgileri Güncelle</>
+                  : <><Plus size={15} /> Ürünü Kaydet</>}
             </Buton>
 
             <Buton
@@ -646,11 +804,11 @@ export default function UrunFormSayfasi() {
 
         {/* ================= SAĞ: RESİMLER ================= */}
         <div className="form-kutu form-kutu-sag">
-          <div className="bolum-baslik-form">🖼️ Ürün Resimleri</div>
+          <div className="bolum-baslik-form"><Image size={17} /> Ürün Resimleri</div>
 
           <div className="bolum-altyazi-form">
             {duzenlemeMi
-              ? 'İlk yüklenen resim otomatik ana resim olur. Değiştirmek için resmin üstüne gelip ⭐ butonuna bas.'
+              ? 'İlk yüklenen resim otomatik ana resim olur. Değiştirmek için resmin üstüne gelip yıldız butonuna bas.'
               : 'Resimleri şimdi ekleyebilirsin; ürünü kaydedince otomatik yüklenecekler.'}
           </div>
 

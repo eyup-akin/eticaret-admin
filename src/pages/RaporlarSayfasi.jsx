@@ -17,6 +17,9 @@ import OdemeRaporu from '../components/raporlar/OdemeRaporu';
 
 import './RaporlarSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { CreditCard, FolderTree, Siren, Snowflake, Star, Ticket, Users, Wallet, XCircle } from 'lucide-react';
+
 // ============================================================
 //  RAPORLAR — SEKMELİ KABUK
 //
@@ -49,15 +52,15 @@ import './RaporlarSayfasi.css';
 // Sekme tanımları VERİ olarak duruyor, JSX'e gömülü değil.
 // Yeni rapor eklemek = bu diziye bir satır + bir bileşen dosyası.
 const SEKMELER = [
-  { kod: 'satislar',    yazi: 'Satışlar & Kâr', ikon: '💰' },
-  { kod: 'kategoriler', yazi: 'Kategoriler',    ikon: '🗂️' },
-  { kod: 'musteriler',  yazi: 'Müşteriler',     ikon: '👥' },
-  { kod: 'kuponlar',    yazi: 'Kuponlar',       ikon: '🎟️' },
-  { kod: 'oluStok',     yazi: 'Ölü Stok',       ikon: '🧊' },
-  { kod: 'kritikStok',  yazi: 'Kritik Stok',    ikon: '🚨' },
-  { kod: 'iptaller',    yazi: 'İptaller',       ikon: '❌' },
-  { kod: 'yorumlar',    yazi: 'Yorumlar',       ikon: '⭐' },
-  { kod: 'odemeler',    yazi: 'Ödemeler',       ikon: '💳' },
+  { kod: 'satislar',    yazi: 'Satışlar & Kâr', ikon: <Wallet size={16} /> },
+  { kod: 'kategoriler', yazi: 'Kategoriler',    ikon: <FolderTree size={16} /> },
+  { kod: 'musteriler',  yazi: 'Müşteriler',     ikon: <Users size={16} /> },
+  { kod: 'kuponlar',    yazi: 'Kuponlar',       ikon: <Ticket size={16} /> },
+  { kod: 'oluStok',     yazi: 'Ölü Stok',       ikon: <Snowflake size={16} /> },
+  { kod: 'kritikStok',  yazi: 'Kritik Stok',    ikon: <Siren size={16} /> },
+  { kod: 'iptaller',    yazi: 'İptaller',       ikon: <XCircle size={16} /> },
+  { kod: 'yorumlar',    yazi: 'Yorumlar',       ikon: <Star size={16} /> },
+  { kod: 'odemeler',    yazi: 'Ödemeler',       ikon: <CreditCard size={16} /> },
 ];
 
 export default function RaporlarSayfasi() {

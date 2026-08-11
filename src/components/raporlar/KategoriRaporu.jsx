@@ -15,6 +15,15 @@ import Tablo from '../Tablo';
 
 import { csvIndir, sayiCsv } from '../../utils/disaAktar';
 import RaporUstBilgi from './RaporUstBilgi';
+
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+//
+// ⚠️ TAKMA AD ŞART: recharts da "PieChart" adında bir bileşen
+// export ediyor ve bu dosya onu grafiği çizmek için kullanıyor.
+// Düz import etseydik iki farklı şey aynı ada bağlanır ve
+// derleme "Identifier PieChart has already been declared" ile
+// patlardı. Takma ad, ikisini bir arada tutmanın tek yolu.
+import { PieChart as PastaIkonu } from 'lucide-react';
 // ============================================================
 //  KATEGORİ CİRO DAĞILIMI
 //
@@ -180,7 +189,7 @@ export default function KategoriRaporu({ baslangic, bitis }) {
       {veri.kategoriler.length > 0 && (
         <div className="rapor-grafik-kutu">
           <h3 className="rapor-bolum-baslik">
-            🥧 Ciro Dağılımı — {veri.baslangic} – {veri.bitis}
+            <PastaIkonu size={16} /> Ciro Dağılımı — {veri.baslangic} – {veri.bitis}
           </h3>
 
           <ResponsiveContainer width="100%" height={320}>

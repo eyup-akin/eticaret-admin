@@ -91,6 +91,19 @@
   font-weight: 700;
   color: var(--uyari);
   margin-bottom: var(--bosluk2);
+
+  /* ⭐ YENİ (4.7) — başlık ikon taşıyor. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+/* ⚠️ Burada ikon anaRenk DEĞİL, başlıkla aynı uyarı rengi.
+   kutu-baslik'te ikonu ayırmak bilgi veriyordu; bu başlık zaten
+   tehlikeli bölgeyi işaretliyor ve ikonun ondan ayrışması
+   uyarının bütünlüğünü bozardı. */
+.yetki-baslik > svg {
+  flex-shrink: 0;
 }
 
 .yetki-aciklama {

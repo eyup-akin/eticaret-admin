@@ -8,6 +8,9 @@ import { useTema } from '../context/TemaContext';
 
 import './KullaniciMenusu.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { ChevronDown, LogOut, Monitor, Moon, Sun, User } from 'lucide-react';
+
 // Rol kodunu okunabilir metne çevirir.
 // Bileşen dışında sabit — her render'da yeniden oluşturulmasın.
 const ROL_ADLARI = {
@@ -206,7 +209,7 @@ export default function KullaniciMenusu() {
       >
         <span className="km-avatar">{basHarf}</span>
         <span>Profil</span>
-        <span className={'km-ok ' + (acik ? 'km-ok-acik' : '')}>▼</span>
+        <span className={'km-ok ' + (acik ? 'km-ok-acik' : '')}><ChevronDown size={14} /></span>
       </button>
 
       {/* Kapalıyken hiç çizmiyoruz.
@@ -233,7 +236,7 @@ export default function KullaniciMenusu() {
               role="menuitem"
               onClick={() => setAcik(false)}
             >
-              <span className="km-satir-ikon">👤</span>
+              <span className="km-satir-ikon"><User size={16} /></span>
               <span>Profilim</span>
             </Link>
 
@@ -252,7 +255,7 @@ export default function KullaniciMenusu() {
               role="menuitem"
               onClick={() => setAcik(false)}
             >
-              <span className="km-satir-ikon">🖥️</span>
+              <span className="km-satir-ikon"><Monitor size={16} /></span>
               <span>Aktif Oturumlar</span>
 
               {/* Sayı henüz gelmediyse "..." gösteriyoruz.
@@ -272,7 +275,7 @@ export default function KullaniciMenusu() {
               onClick={temaSatiriTiklandi}
             >
               <span className="km-satir-ikon">
-                {temaAdi === 'acik' ? '🌙' : '☀️'}
+                {temaAdi === 'acik' ? <Moon size={16} /> : <Sun size={16} />}
               </span>
               <span>{temaAdi === 'acik' ? 'Koyu tema' : 'Açık tema'}</span>
             </button>
@@ -285,7 +288,7 @@ export default function KullaniciMenusu() {
               role="menuitem"
               onClick={cikisTiklandi}
             >
-              <span className="km-satir-ikon">🚪</span>
+              <span className="km-satir-ikon"><LogOut size={16} /></span>
               <span>Çıkış Yap</span>
             </button>
           </div>

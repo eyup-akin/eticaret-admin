@@ -9,6 +9,9 @@ import Sayfalama from './Sayfalama';
 
 import './KuponKullanimlariModal.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { Ticket, X } from 'lucide-react';
+
 // "Bu kuponu kim, ne zaman, hangi siparişte kullandı?" penceresi.
 //
 // Neden ayrı bir SAYFA değil de modal?
@@ -86,7 +89,7 @@ export default function KuponKullanimlariModal({ kupon, kapat }) {
         <div className="kk-baslik">
           <div>
             <div className="kk-baslik-yazi">
-              🎟️ {kupon.code} — Kullanımlar
+              <Ticket size={17} /> {kupon.code} — Kullanımlar
             </div>
 
             <div className="kk-baslik-alt">
@@ -95,7 +98,7 @@ export default function KuponKullanimlariModal({ kupon, kapat }) {
           </div>
 
           <Buton tip="ikincil" boyut="kucuk" onClick={kapat}>
-            ✕
+            <X size={18} />
           </Buton>
         </div>
 

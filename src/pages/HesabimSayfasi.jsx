@@ -12,6 +12,9 @@ import Yukleniyor from '../components/Yukleniyor';
 
 import './HesabimSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { Lock, Save, ShieldCheck, User } from 'lucide-react';
+
 // Sunucudaki kuralla AYNI sayı.
 // Farklı olsaydı arayüzde kabul edilen şifre sunucuda reddedilirdi.
 const MIN_SIFRE = 6;
@@ -112,7 +115,7 @@ export default function HesabimSayfasi() {
       setAdSoyad(veri.fullName);
       setProfil({ ...profil, fullName: veri.fullName });
 
-      setProfilBasari('Profilin güncellendi. ✅');
+      setProfilBasari('Profilin güncellendi.');
     } catch (e) {
       setProfilHatasi(e.message);
     } finally {
@@ -161,7 +164,7 @@ export default function HesabimSayfasi() {
       setYeniTekrar('');
 
       setSifreBasari(
-        'Şifren güncellendi. Diğer cihazlardaki oturumların kapatıldı. ✅'
+        'Şifren güncellendi. Diğer cihazlardaki oturumların kapatıldı.'
       );
     } catch (e) {
       setSifreHatasi(e.message);
@@ -197,7 +200,7 @@ export default function HesabimSayfasi() {
 
         {/* ================= SOL: PROFİL ================= */}
         <div className="hesabim-kart">
-          <div className="hesabim-kart-baslik">👤 Profil Bilgileri</div>
+          <div className="hesabim-kart-baslik"><User size={18} /> Profil Bilgileri</div>
           <div className="hesabim-kart-altyazi">
             Ad soyadını güncelleyebilirsin
           </div>
@@ -284,7 +287,7 @@ export default function HesabimSayfasi() {
               type="submit"
               disabled={!profilDegistiMi || profilKaydediliyor}
             >
-              {profilKaydediliyor ? 'Kaydediliyor...' : '💾 Kaydet'}
+              {profilKaydediliyor ? 'Kaydediliyor...' : <><Save size={15} /> Kaydet</>}
             </Buton>
           </form>
         </div>
@@ -292,7 +295,7 @@ export default function HesabimSayfasi() {
 
         {/* ================= SAĞ: ŞİFRE ================= */}
         <div className="hesabim-kart">
-          <div className="hesabim-kart-baslik">🔒 Şifre Değiştir</div>
+          <div className="hesabim-kart-baslik"><Lock size={18} /> Şifre Değiştir</div>
           <div className="hesabim-kart-altyazi">
             Güvenliğin için mevcut şifreni de istiyoruz
           </div>
@@ -300,7 +303,7 @@ export default function HesabimSayfasi() {
           {/* Kullanıcıya NE OLACAĞINI önceden söylüyoruz.
               "Şifre değişti, neden çıkış yaptım?" sorusu doğmasın. */}
           <div className="hesabim-bilgi-kutu">
-            <span>🛡️</span>
+            <span><ShieldCheck size={15} /></span>
             <span>
               Şifre değişince <b>diğer tüm cihaz ve tarayıcılardaki</b>{' '}
               oturumlar kapatılır. Bu oturumun açık kalmaya devam eder.
@@ -378,7 +381,7 @@ export default function HesabimSayfasi() {
               type="submit"
               disabled={!sifreHepsiDolu || sifreKaydediliyor}
             >
-              {sifreKaydediliyor ? 'Değiştiriliyor...' : '🔒 Şifreyi Değiştir'}
+              {sifreKaydediliyor ? 'Değiştiriliyor...' : <><Lock size={15} /> Şifreyi Değiştir</>}
             </Buton>
           </form>
         </div>

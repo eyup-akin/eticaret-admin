@@ -18,6 +18,11 @@ import Sayfalama from '../components/Sayfalama';
 
 import './MusterilerSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { ShieldCheck, Sparkles, Users } from 'lucide-react';
+
 // "Eyüp Akın" → "EA"
 export function basHarfler(ad) {
   if (!ad) {
@@ -179,21 +184,21 @@ export default function MusterilerSayfasi() {
       {ozet && (
         <div className="ozet-izgara">
           <OzetKart
-            ikon="👥"
+            ikon={<Users size={20} />}
             etiket="Toplam Müşteri"
             deger={sayiBicimle(ozet.musteriSayisi)}
             renk="#2563eb"
           />
 
           <OzetKart
-            ikon="🆕"
+            ikon={<Sparkles size={20} />}
             etiket="Bu Ay Katılan"
             deger={sayiBicimle(ozet.buAyYeni)}
             renk="#27ae60"
           />
 
           <OzetKart
-            ikon="🛡️"
+            ikon={<ShieldCheck size={20} />}
             etiket="Yönetici"
             deger={sayiBicimle(ozet.adminSayisi)}
             renk="#8e44ad"

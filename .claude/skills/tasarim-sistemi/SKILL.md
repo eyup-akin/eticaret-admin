@@ -76,6 +76,44 @@ Ortak bileşenler: `Buton` `Rozet` `Tablo` `Sayfalama` `Yukleniyor`
 `HataKutusu` `OnayPenceresi` `OzetKart` `AramaKutusu` `TarihAraligi`.
 **Yenisini yazma, önce bunlara bak.**
 
+## İkonlar ve ikon rengi
+
+Arayüzde **emoji yok** — hepsi `lucide-react` çizgi ikonu. Tek tek
+import et (`import { Pencil } from 'lucide-react'`), asla
+`import * as Icons`.
+
+⚠️ İkon ayrı bir SVG **öğesi**, emoji gibi satır içi bir karakter
+değil. Bir başlığa ya da etikete ikon koyuyorsan o sınıfa
+`display: flex; align-items: center; gap: var(--bosluk2)` gerekir —
+yoksa ikon kendi satırına düşer. Boyutu **JSX'teki `size` prop'unda**
+tut, CSS'e `font-size` yazma (iki yerden boyut = biri eskiyecek).
+
+### `Buton`'da `ikonRengi`
+
+İkincil butonda ikon `currentColor` miras alır ve her eylem aynı griye
+düşer. Eylemin ağırlığını göstermek için rol ver:
+
+| `ikonRengi` | Anlam | Örnek |
+|---|---|---|
+| `"uyari"` | geri alınabilir **olumsuz** değişiklik | Satıştan Kaldır, Arşivle, Duraklat, Gizle |
+| `"basari"` | **olumlu** değişiklik | Satışa Aç, Aktifleştir, Onayla, Arşivden Çıkar |
+| `"ana"` | **nötr** eylem | Düzenle, Kopyala, İndir, Etiket Yazdır |
+
+Tek butonun iki durumu varsa rol de duruma bağlanır:
+`ikonRengi={u.isActive ? 'uyari' : 'basari'}`
+
+⚠️ `tip="ana"` ve `tip="tehlike"` butonlarda **rol verme** — ilkinde
+ikon zaten beyaz, ikincisinde zaten kırmızı ve hover'da zemin
+kırmızıya döndüğü için sabit renk ikonu görünmez yapar. CSS'te
+güvenlik ağı var ama baştan verme.
+
+⚠️ **Yalnızca ikon renklenir, metin değil.** Metni de renklendirmek
+butonu durum rozetine benzetir; buton bir EYLEM, rozet bir DURUM.
+
+⚠️ **Metinsiz (yalnız ikon) butonlarda renk ZORUNLU.** Orada renk,
+şekilden sonraki tek ayırt edici — `title` yalnızca üzerine gelince
+okunur. Örnek: `.resim-mini-buton-vurgu` / `.resim-mini-buton-sil`.
+
 ## Grafikler
 
 Renkler `renkler.grafik1..8`'den, **sabit sırayla** alınır — asla

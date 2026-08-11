@@ -157,10 +157,19 @@
 }
 
 .km-satir-ikon {
-  font-size: var(--yazi-orta);
+  /* ⭐ DEĞİŞTİ (4.7) — emoji yerine SVG.
+
+     ⚠️ Sabit 20px genişlik KORUNDU: menü satırlarındaki metinler
+     bu sayede aynı hizadan başlıyor. Kaldırsaydık ikonlar kendi
+     genişliklerince yer kaplar ve yazılar tırtıklı görünürdü.
+
+     text-align yerine flex — SVG bir metin değil, hizalaması
+     satır içi değil kutu içi. */
   width: 20px;
-  text-align: center;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ⭐ Oturum sayacı rozeti.

@@ -100,6 +100,17 @@
   margin-bottom: var(--bosluk4);
   padding-top: var(--bosluk5);
   border-top: 1px solid var(--kenarlik);
+
+  /* ⭐ YENİ (4.7) — başlık ikon taşıyor.
+     Emoji metnin içindeydi; SVG ayrı öğe olduğu için flex şart. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+.kupon-form-bolum > svg {
+  color: var(--anaRenk);
+  flex-shrink: 0;
 }
 
 /* İlk bölüm başlığının üstünde çizgi olmasın */
@@ -232,6 +243,17 @@
   margin-top: var(--bosluk5);
   padding-top: var(--bosluk5);
   border-top: 1px solid var(--kenarlik);
+
+  /* ⭐ YENİ (4.7) — başlık ikon taşıyor.
+     Emoji metnin içindeydi; SVG ayrı öğe olduğu için flex şart. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+.kupon-form-bolum > svg {
+  color: var(--anaRenk);
+  flex-shrink: 0;
 }
 
 

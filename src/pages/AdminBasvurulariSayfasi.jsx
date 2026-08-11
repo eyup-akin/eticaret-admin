@@ -12,6 +12,9 @@ import OnayPenceresi from '../components/OnayPenceresi';   // ⭐ YENİ
 
 import './AdminBasvurulariSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { Check, FolderOpen, Hourglass, X } from 'lucide-react';
+
 export default function AdminBasvurulariSayfasi() {
 
   // 'beklemede' veya 'karar'
@@ -256,7 +259,7 @@ export default function AdminBasvurulariSayfasi() {
           className={'sekme' + (aktifSekme === 'beklemede' ? ' sekme-aktif' : '')}
           onClick={() => sekmeDegistir('beklemede')}
         >
-          <span className="sekme-ikon">⏳</span>
+          <span className="sekme-ikon"><Hourglass size={16} /></span>
           Bekleyenler
 
           {/* Sayı sekmenin üstünde: süperadmin sekmeye girmeden
@@ -272,7 +275,7 @@ export default function AdminBasvurulariSayfasi() {
           className={'sekme' + (aktifSekme === 'karar' ? ' sekme-aktif' : '')}
           onClick={() => sekmeDegistir('karar')}
         >
-          <span className="sekme-ikon">📁</span>
+          <span className="sekme-ikon"><FolderOpen size={16} /></span>
           Tüm Başvurular
         </button>
       </div>
@@ -343,7 +346,7 @@ export default function AdminBasvurulariSayfasi() {
                 onClick={() => onayPenceresiniAc(b)}
                 disabled={islemdekiId === b.id}
               >
-                {islemdekiId === b.id ? 'İşleniyor...' : '✓ Onayla'}
+                {islemdekiId === b.id ? 'İşleniyor...' : <><Check size={15} /> Onayla</>}
               </button>
 
               <button
@@ -355,7 +358,7 @@ export default function AdminBasvurulariSayfasi() {
                 }}
                 disabled={islemdekiId === b.id}
               >
-                ✕ Reddet
+                <X size={15} /> Reddet
               </button>
             </div>
           )}

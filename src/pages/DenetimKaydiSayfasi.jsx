@@ -13,6 +13,9 @@ import Sayfalama from '../components/Sayfalama';
 
 import './DenetimKaydiSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { Search } from 'lucide-react';
+
 // ============================================================
 //  DENETİM KAYDI
 //
@@ -219,7 +222,7 @@ export default function DenetimKaydiSayfasi() {
   return (
     <div>
       <div className="sayfa-ust">
-        <h1 className="sayfa-baslik">🔍 Denetim Kaydı</h1>
+        <h1 className="sayfa-baslik"><Search size={20} /> Denetim Kaydı</h1>
 
         <p className="sayfa-altyazi" style={{ marginBottom: 0 }}>
           Yetki değişiklikleri, hesap işlemleri ve moderasyon

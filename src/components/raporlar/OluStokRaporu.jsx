@@ -11,6 +11,11 @@ import OzetKart from '../OzetKart';
 import { csvIndir, sayiCsv } from '../../utils/disaAktar';
 import RaporUstBilgi from './RaporUstBilgi';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { Lock, Snowflake } from 'lucide-react';
+
 // ============================================================
 //  ÖLÜ STOK — seçilen aralıkta HİÇ satılmayan aktif ürünler
 //
@@ -121,14 +126,14 @@ export default function OluStokRaporu({ baslangic, bitis }) {
     <div>
       <div className="ozet-izgara">
         <OzetKart
-          ikon="🧊"
+          ikon={<Snowflake size={20} />}
           etiket="Satılmayan Ürün"
           deger={sayiBicimle(veri.urunSayisi)}
           renk="#8e44ad"
         />
 
         <OzetKart
-          ikon="🔒"
+          ikon={<Lock size={20} />}
           etiket="Bağlı Sermaye"
           deger={paraBicimle(veri.toplamBagliSermaye)}
           renk="#e74c3c"

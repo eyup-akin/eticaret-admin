@@ -10,6 +10,9 @@ import Buton from '../components/Buton';
 
 import './KuponFormSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { AlertTriangle, Calendar, Hash, Info, Plus, Save, Search, Settings, Ticket, Wallet } from 'lucide-react';
+
 
 /* ==========================================================
    TARİH DÖNÜŞTÜRÜCÜLERİ
@@ -317,7 +320,7 @@ export default function KuponFormSayfasi() {
         //    Kupon kodu değiştirilemez çünkü geçmiş siparişler
         //    Order.CouponCode alanında o metni dondurmuş durumda.
         await apiPut('/admin/coupons/' + id, govde);
-        setBasari('Kupon güncellendi. ✅');
+        setBasari('Kupon güncellendi.');
       } else {
         await apiPost('/admin/coupons', {
           ...govde,
@@ -369,7 +372,7 @@ export default function KuponFormSayfasi() {
 
         {/* ============ TEMEL BİLGİLER ============ */}
 
-        <div className="kupon-form-bolum">🎟️ Temel Bilgiler</div>
+        <div className="kupon-form-bolum"><Ticket size={16} /> Temel Bilgiler</div>
 
         <div className="kupon-form-alan">
           <label className="kupon-form-etiket">Kupon Kodu</label>
@@ -421,7 +424,7 @@ export default function KuponFormSayfasi() {
 
         {/* ============ İNDİRİM KURALI ============ */}
 
-        <div className="kupon-form-bolum">💰 İndirim Kuralı</div>
+        <div className="kupon-form-bolum"><Wallet size={16} /> İndirim Kuralı</div>
 
         <div className="kupon-form-ikili">
           <div className="kupon-form-alan">
@@ -531,7 +534,7 @@ export default function KuponFormSayfasi() {
 
         <div className={'kupon-onizleme ' + onizlemeSinifi}>
           <div className="kupon-onizleme-baslik">
-            🔍 Tahmini Hesap
+            <Search size={15} /> Tahmini Hesap
           </div>
 
           <div className="kupon-onizleme-giris">
@@ -556,7 +559,7 @@ export default function KuponFormSayfasi() {
 
           {onizleme !== null && !onizleme.gecerli && (
             <div className="kupon-onizleme-bos-yazi">
-              ⚠️ {onizleme.mesaj}
+              <AlertTriangle size={14} /> {onizleme.mesaj}
             </div>
           )}
 
@@ -585,13 +588,13 @@ export default function KuponFormSayfasi() {
 
               {onizleme.tavanaTakildi && (
                 <div className="kupon-onizleme-not">
-                  ℹ️ İndirim tavana takıldı — tavan olmasaydı daha yüksek olacaktı.
+                  <Info size={14} /> İndirim tavana takıldı — tavan olmasaydı daha yüksek olacaktı.
                 </div>
               )}
 
               {onizleme.sepetiAsti && (
                 <div className="kupon-onizleme-not">
-                  ⚠️ İndirim sepet tutarını aşıyordu, sepete eşitlendi.
+                  <AlertTriangle size={14} /> İndirim sepet tutarını aşıyordu, sepete eşitlendi.
                   Müşteri hiçbir zaman para almaz.
                 </div>
               )}
@@ -607,7 +610,7 @@ export default function KuponFormSayfasi() {
 
         {/* ============ GEÇERLİLİK ============ */}
 
-        <div className="kupon-form-bolum">📅 Geçerlilik</div>
+        <div className="kupon-form-bolum"><Calendar size={16} /> Geçerlilik</div>
 
         <div className="kupon-form-ikili">
           <div className="kupon-form-alan">
@@ -642,7 +645,7 @@ export default function KuponFormSayfasi() {
 
         {/* ============ KULLANIM SINIRLARI ============ */}
 
-        <div className="kupon-form-bolum">🔢 Kullanım Sınırları</div>
+        <div className="kupon-form-bolum"><Hash size={16} /> Kullanım Sınırları</div>
 
         <div className="kupon-form-ikili">
           <div className="kupon-form-alan">
@@ -715,7 +718,7 @@ export default function KuponFormSayfasi() {
 
         {/* ============ DURUM ============ */}
 
-        <div className="kupon-form-bolum">⚙️ Durum</div>
+        <div className="kupon-form-bolum"><Settings size={16} /> Durum</div>
 
         <div className="kupon-form-alan">
           <label className="kupon-form-onay">
@@ -746,8 +749,8 @@ export default function KuponFormSayfasi() {
             {kaydediliyor
               ? 'Kaydediliyor...'
               : duzenlemeMi
-                ? '💾 Değişiklikleri Kaydet'
-                : '➕ Kuponu Oluştur'}
+                ? <><Save size={15} /> Değişiklikleri Kaydet</>
+                : <><Plus size={15} /> Kuponu Oluştur</>}
           </Buton>
 
           <Buton

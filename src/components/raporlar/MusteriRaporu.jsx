@@ -11,6 +11,11 @@ import OzetKart from '../OzetKart';
 import { csvIndir, sayiCsv } from '../../utils/disaAktar';
 import RaporUstBilgi from './RaporUstBilgi';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { Banknote, Receipt, Users } from 'lucide-react';
+
 // ============================================================
 //  EN ÇOK HARCAYAN MÜŞTERİLER
 //
@@ -129,21 +134,21 @@ export default function MusteriRaporu({ baslangic, bitis }) {
     <div>
       <div className="ozet-izgara">
         <OzetKart
-          ikon="👥"
+          ikon={<Users size={20} />}
           etiket="Alışveriş Yapan"
           deger={sayiBicimle(veri.musteriSayisi)}
           renk="#2563eb"
         />
 
         <OzetKart
-          ikon="💵"
+          ikon={<Banknote size={20} />}
           etiket="Toplam Ciro"
           deger={paraBicimle(veri.toplamCiro)}
           renk="#27ae60"
         />
 
         <OzetKart
-          ikon="🧾"
+          ikon={<Receipt size={20} />}
           etiket="Müşteri Başına"
 
           // Türetilmiş değer — sunucudan gelmiyor, burada

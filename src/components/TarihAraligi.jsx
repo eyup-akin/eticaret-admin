@@ -1,6 +1,9 @@
 import Buton from './Buton';
 import './TarihAraligi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { X } from 'lucide-react';
+
 // ============================================================
 //  ORTAK TARİH ARALIĞI SEÇİCİ
 //
@@ -175,7 +178,7 @@ export default function TarihAraligi({
           disabled={bosMu}
           onClick={() => degistir('', '')}
         >
-          ✕ Temizle
+          <X size={14} /> Temizle
         </Buton>
       )}
     </div>

@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { apiGet } from '../services/api';
 import './BildirimZili.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { AlertTriangle, Bell, Clock, Package, ShieldCheck, Ticket, Undo2 } from 'lucide-react';
+
 // Sayaç kaç saniyede bir tazelensin?
 //
 // Neden route değişiminde değil de zamanlayıcıyla?
@@ -23,11 +26,11 @@ const TAZELEME_MS = 60000;
 // başka bir bileşenin içinde ve taşımak o dosyayı da değiştirmeyi
 // gerektiriyor. Aşama 11'deki refactor listesine yazıyoruz.
 const UYARI_IKON = {
-  bekleyen_siparis: '⏱️',
-  kritik_stok: '📦',
-  bekleyen_basvuru: '🛡️',
-  bekleyen_destek: '🎫',
-  bekleyen_iade: '↩️',
+  bekleyen_siparis: <Clock size={16} />,
+  kritik_stok: <Package size={16} />,
+  bekleyen_basvuru: <ShieldCheck size={16} />,
+  bekleyen_destek: <Ticket size={16} />,
+  bekleyen_iade: <Undo2 size={16} />,
 };
 
 export default function BildirimZili() {
@@ -152,7 +155,7 @@ export default function BildirimZili() {
         }
         title="Bildirimler"
       >
-        <span className="zil-ikon">🔔</span>
+        <span className="zil-ikon"><Bell size={19} /></span>
 
         {/* ⚠️ SAYAÇ SIFIRSA ROZET HİÇ ÇİZİLMEZ.
         
@@ -171,7 +174,7 @@ export default function BildirimZili() {
 
           {uyarilar.length === 0 && (
             <div className="zil-bos">
-              Şu an bekleyen bir iş yok. 👍
+              Şu an bekleyen bir iş yok.
             </div>
           )}
 
@@ -184,7 +187,7 @@ export default function BildirimZili() {
               onClick={() => uyariyaGit(u.tumunuGorLink)}
             >
               <span className="zil-satir-ikon">
-                {UYARI_IKON[u.tur] ?? '⚠️'}
+                {UYARI_IKON[u.tur] ?? <AlertTriangle size={16} />}
               </span>
 
               <span className="zil-satir-metin">

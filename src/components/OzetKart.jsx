@@ -1,9 +1,27 @@
 import './OzetKart.css';
 
+// ⭐ YENI (4.7) — emoji yerine cizgi ikon.
+import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
+
 // ============================================================
 //  ÖZET KART — büyük bir sayıyı bağlamıyla gösterir
 //
-//  ikon   : emoji
+//  ikon   : React düğümü — <Package size={20} /> gibi bir lucide ikonu
+//
+//  ⭐ DEĞİŞTİ (4.7) — eskiden emoji metniydi ("📦").
+//
+//  ⚠️ İKON GEÇİŞİ İÇİN BU DOSYADA HİÇBİR ŞEY DEĞİŞMEDİ.
+//  Aşağıdaki {ikon} zaten React düğümü basıyor; metin de düğümdür,
+//  SVG de. Yani 39 çağrı yeri emoji yerine ikon göndermeye
+//  geçebildi ve bu dosyanın mantığına dokunmak gerekmedi.
+//
+//  (Trend okları ayrı bir hikâye: onlar bu dosyanın KENDİ çizimi,
+//  prop'tan gelmiyor. Onlar da ▲▼ karakterinden lucide'a çevrildi.)
+//
+//  Bu, "prop'a somut bir tip dayatma" kuralının karşılığı: ikonu
+//  içeride bir sözlükten seçseydik (ikon="paket" → <Package/>)
+//  her yeni ikon için bu dosyayı da düzenlemek gerekirdi.
+//
 //  etiket : "Toplam Sipariş"
 //  deger  : "28"  ya da  "5.847,50 ₺"
 //  renk   : ikonun arkasındaki renk (CSS değişkeni adı)
@@ -69,7 +87,7 @@ export default function OzetKart({
                 Metne bakıp ok seçseydik ("%-5 ise düşüş") eksi
                 işaretinin biçimi değiştiğinde ok sessizce yanlışa
                 dönerdi. */}
-            {trend.yon === 'artis' ? '▲' : trend.yon === 'dusus' ? '▼' : '•'}
+            {trend.yon === 'artis' ? <ArrowUp size={12} /> : trend.yon === 'dusus' ? <ArrowDown size={12} /> : <Minus size={12} />}
             {trend.yazi}
           </span>
         )}

@@ -10,6 +10,11 @@ import Buton from '../Buton';
 import OzetKart from '../OzetKart';
 import OnayPenceresi from '../OnayPenceresi';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { Ban, Eye, EyeOff, Star } from 'lucide-react';
+
 // ============================================================
 //  DÜŞÜK PUANLI YORUMLAR + MODERASYON
 //
@@ -126,8 +131,17 @@ export default function YorumRaporu({ baslangic, bitis }) {
       // repeat() ile dolu ve boş yıldızları birleştiriyoruz.
       hucre: (y) => (
         <span className="yorum-yildiz" title={y.puan + ' yıldız'}>
-          {'★'.repeat(y.puan)}
-          <span className="yorum-yildiz-bos">{'★'.repeat(5 - y.puan)}</span>
+          {/* ⭐ DEĞİŞTİ (4.7) — '★' karakteri yerine ikon.
+              Karakter yazı tipine göre farklı çiziliyordu; dolu ve
+              boş yıldız aynı ikonun fill'i ile ayrışıyor. */}
+          {Array.from({ length: 5 }, (_, i) => (
+            <Star
+              key={i}
+              size={13}
+              fill={i < y.puan ? 'currentColor' : 'none'}
+              className={i < y.puan ? '' : 'yorum-yildiz-bos'}
+            />
+          ))}
         </span>
       ),
     },
@@ -160,9 +174,13 @@ export default function YorumRaporu({ baslangic, bitis }) {
         <Buton
           tip={y.gizli ? 'ikincil' : 'tehlike'}
           boyut="kucuk"
+          // Gizli yorumu geri göstermek olumlu bir eylem. Görünür
+          // yorumu gizlemek zaten 'tehlike' tipinde ve ikon kırmızı;
+          // orada rol rengi verilmiyor.
+          ikonRengi={y.gizli ? 'basari' : undefined}
           onClick={() => setOnayHedefi(y)}
         >
-          {y.gizli ? '👁 Göster' : '🚫 Gizle'}
+          {y.gizli ? <><Eye size={14} /> Göster</> : <><EyeOff size={14} /> Gizle</>}
         </Buton>
       ),
     },
@@ -172,14 +190,14 @@ export default function YorumRaporu({ baslangic, bitis }) {
     <div>
       <div className="ozet-izgara">
         <OzetKart
-          ikon="⭐"
+          ikon={<Star size={20} />}
           etiket="Düşük Puanlı Yorum"
           deger={sayiBicimle(veri?.toplam ?? 0)}
           renk="#f39c12"
         />
 
         <OzetKart
-          ikon="🚫"
+          ikon={<Ban size={20} />}
           etiket="Gizlenmiş"
           deger={sayiBicimle(veri?.gizliSayisi ?? 0)}
           renk="#8e44ad"

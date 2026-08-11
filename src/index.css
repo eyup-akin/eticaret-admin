@@ -516,6 +516,27 @@ button {
   padding-bottom: var(--bosluk3);
   border-bottom: 1px solid var(--kenarlik);
   letter-spacing: -0.2px;
+
+  /* ⭐ YENİ (4.7) — başlık artık ikon taşıyabiliyor.
+
+     Emoji metnin İÇİNDE bir karakterdi, blok eleman yeterliydi.
+     Çizgi ikon ayrı bir SVG öğesi; flex olmadan kendi satırına
+     düşer ve başlıktan kopardı.
+
+     ⚠️ align-items: center — ikonu metnin ORTA hizasına getiriyor.
+     baseline deneseydik SVG'nin taban çizgisi olmadığı için tarayıcı
+     onu alta yaslardı. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+/* İkonun rengi başlıktan bağımsız: metin koyu, ikon ana renk.
+   İkisini aynı renk yapsaydık ikon başlığın bir parçası gibi
+   okunur ve "bu bölüm ne hakkında" sinyalini kaybederdi. */
+.kutu-baslik > svg {
+  color: var(--anaRenk);
+  flex-shrink: 0;
 }
 
 /* Kart numarası, takip no gibi teknik diziler.
@@ -664,5 +685,8 @@ button {
 }
 
 .sekme-ikon {
-  font-size: 15px;
+  /* ⭐ DEĞİŞTİ (4.7) — emoji yerine SVG.
+     font-size kaldırıldı, boyut JSX'teki size prop'unda. */
+  display: inline-flex;
+  align-items: center;
 }

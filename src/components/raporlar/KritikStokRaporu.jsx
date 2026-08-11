@@ -8,6 +8,11 @@ import HataKutusu from '../HataKutusu';
 import Tablo from '../Tablo';
 import OzetKart from '../OzetKart';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { AlertTriangle, Siren } from 'lucide-react';
+
 // ============================================================
 //  KRİTİK STOK — eşiğin altındaki aktif ürünler
 //
@@ -91,14 +96,14 @@ export default function KritikStokRaporu() {
     <div>
       <div className="ozet-izgara">
         <OzetKart
-          ikon="🚨"
+          ikon={<Siren size={20} />}
           etiket="Tükenen Ürün"
           deger={sayiBicimle(veri?.tukenenSayisi ?? 0)}
           renk="#e74c3c"
         />
 
         <OzetKart
-          ikon="⚠️"
+          ikon={<AlertTriangle size={20} />}
           etiket="Eşik Altı Ürün"
           deger={sayiBicimle(veri?.urunSayisi ?? 0)}
           renk="#f39c12"

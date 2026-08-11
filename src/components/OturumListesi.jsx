@@ -11,6 +11,9 @@ import OnayPenceresi from './OnayPenceresi';
 
 import './OturumListesi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { HelpCircle, Lightbulb, Monitor, Smartphone } from 'lucide-react';
+
 
 // User-Agent metnini okunabilir hâle çevirir.
 //
@@ -34,17 +37,17 @@ import './OturumListesi.css';
 // kullanıcıya ipucu vermek için kullanılır, karar vermek için asla.
 function cihazOku(ua) {
   if (!ua || ua.trim() === '') {
-    return { tarayici: 'Bilinmeyen cihaz', sistem: '', ikon: '❓' };
+    return { tarayici: 'Bilinmeyen cihaz', sistem: '', ikon: <HelpCircle size={18} /> };
   }
 
   let tarayici = 'Bilinmeyen tarayıcı';
-  let ikon = '🖥️';
+  let ikon = <Monitor size={18} />;
 
   // Mobil uygulama isteklerini önce yakalıyoruz — React Native'in
   // ağ katmanı (Android'de okhttp) tarayıcı imzası taşımıyor.
   if (ua.includes('okhttp') || ua.includes('Expo') || ua.includes('ReactNative')) {
     tarayici = 'Mobil uygulama';
-    ikon = '📱';
+    ikon = <Smartphone size={18} />;
   } else if (ua.includes('Edg/')) {
     tarayici = 'Edge';
   } else if (ua.includes('OPR/') || ua.includes('Opera')) {
@@ -61,13 +64,13 @@ function cihazOku(ua) {
 
   if (ua.includes('Android')) {
     sistem = 'Android';
-    ikon = '📱';
+    ikon = <Smartphone size={18} />;
   } else if (ua.includes('iPhone')) {
     sistem = 'iPhone';
-    ikon = '📱';
+    ikon = <Smartphone size={18} />;
   } else if (ua.includes('iPad')) {
     sistem = 'iPad';
-    ikon = '📱';
+    ikon = <Smartphone size={18} />;
   } else if (ua.includes('Windows')) {
     sistem = 'Windows';
   } else if (ua.includes('Mac OS X')) {
@@ -278,7 +281,7 @@ export default function OturumListesi() {
       )}
 
       <div className="otr-ipucu">
-        <span>💡</span>
+        <span><Lightbulb size={15} /></span>
         <span>
           Her cihaz veya tarayıcı ayrı bir oturum açar. Gizli sekmede
           giriş yaptıysan o da listede görünür. Bir oturumu kapattığında

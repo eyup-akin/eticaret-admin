@@ -16,6 +16,9 @@ import KuponKullanimlariModal from '../components/KuponKullanimlariModal';
 
 import './KuponlarSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { Copy, Pause, Pencil, Play, Plus, Tag, Trash2 } from 'lucide-react';
+
 // Durum filtresi seçenekleri.
 //
 // Neden bileşenin DIŞINDA sabit olarak duruyor?
@@ -212,7 +215,7 @@ export default function KuponlarSayfasi() {
 
           <div className="kupon-alt-bilgi">
             {/* Kategori boşsa kupon her üründe geçerli demektir */}
-            {k.kategoriAdi ? '🏷️ ' + k.kategoriAdi : 'Tüm ürünler'}
+            {k.kategoriAdi ? <><Tag size={13} /> {k.kategoriAdi}</> : 'Tüm ürünler'}
           </div>
         </div>
       ),
@@ -276,29 +279,34 @@ export default function KuponlarSayfasi() {
           <Buton
             tip="ikincil"
             boyut="kucuk"
+            ikonRengi="ana"
             onClick={() => navigate('/kuponlar/' + k.id + '/duzenle')}
           >
-            ✏️
+            <Pencil size={15} />
           </Buton>
 
           <Buton
             tip="ikincil"
             boyut="kucuk"
+            ikonRengi="ana"
             onClick={() => setKullanimlariGosterilen(k)}
             title="Kullanımları gör"
           >
-            📋
+            <Copy size={15} />
           </Buton>
 
           <Buton
             tip="ikincil"
             boyut="kucuk"
+            // Aktif kuponu duraklatmak olumsuz (turuncu), duraklatılmışı
+            // yeniden başlatmak olumlu (yeşil).
+            ikonRengi={k.isActive ? 'uyari' : 'basari'}
             onClick={() => durumDegistir(k)}
             disabled={islemdekiId === k.id}
             title={k.isActive ? 'Pasifleştir' : 'Aktifleştir'}
           >
             {/* Türetilmiş metin — ayrı state tutmuyoruz, isActive'den okuyoruz */}
-            {islemdekiId === k.id ? '...' : k.isActive ? '⏸️' : '▶️'}
+            {islemdekiId === k.id ? '...' : k.isActive ? <Pause size={15} /> : <Play size={15} />}
           </Buton>
 
           {/* SİL butonu SADECE hiç kullanılmamış kuponlarda görünür.
@@ -313,7 +321,7 @@ export default function KuponlarSayfasi() {
               onClick={() => setSilinecek(k)}
               title="Sil"
             >
-              🗑️
+              <Trash2 size={15} />
             </Buton>
           )}
         </div>
@@ -336,7 +344,7 @@ export default function KuponlarSayfasi() {
         </div>
 
         <Buton onClick={() => navigate('/kuponlar/yeni')}>
-          ➕ Yeni Kupon
+          <Plus size={15} /> Yeni Kupon
         </Buton>
       </div>
 

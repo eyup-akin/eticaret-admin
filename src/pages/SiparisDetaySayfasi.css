@@ -197,6 +197,18 @@
   line-height: 1.5;
 }
 
+/* ⭐ YENİ (4.7) — ipucu satırındaki ikon.
+
+   İpucu metni çok satırlı olabiliyor. flex kullansaydık ikon dikeyde
+   ORTAlanır ve iki satırlık metinde ikinci satırın hizasına düşerdi.
+   inline + hafif yukarı kaydırma, ikonu ilk satırın yanında tutuyor. */
+.durum-ipucu > svg {
+  display: inline;
+  vertical-align: -2px;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
 
 
 /* ---------- İPTAL KARTI ---------- */
@@ -347,12 +359,20 @@
   background-color: var(--kartArka);
   color: var(--yaziOrta);
 
-  /* Metin "📋 Kopyala" ile "✅ Kopyalandı" arasında değişiyor.
+  /* Metin "Kopyala" ile "Kopyalandı" arasında değişiyor.
      Genişlik sabitlenmezse buton zıplar ve gözü rahatsız eder. */
   min-width: 92px;
 
   /* Satır kaymasın diye dikeyde ortalama */
   vertical-align: middle;
+
+  /* ⭐ YENİ (4.7) — ikon + metin yan yana.
+     Buton tek satırlık olduğu için burada flex güvenli; ipucu
+     satırından farkı bu. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 .kopyala-buton:hover {

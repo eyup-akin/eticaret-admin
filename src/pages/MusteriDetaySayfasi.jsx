@@ -16,6 +16,11 @@ import { basHarfler } from './MusterilerSayfasi';
 
 import './MusteriDetaySayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { Ban, BarChart3, CheckCircle2, CreditCard, Flame, Lock, MapPin, Receipt, Save, ScrollText, ShieldCheck, Undo2, User, Wallet } from 'lucide-react';
+
 export default function MusteriDetaySayfasi() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -178,28 +183,28 @@ export default function MusteriDetaySayfasi() {
       {/* ================= ÖZET KARTLAR ================= */}
       <div className="ozet-izgara">
         <OzetKart
-          ikon="🧾"
+          ikon={<Receipt size={20} />}
           etiket="Toplam Sipariş"
           deger={sayiBicimle(musteri.ozet.siparisSayisi)}
           renk="#2563eb"
         />
 
         <OzetKart
-          ikon="💰"
+          ikon={<Wallet size={20} />}
           etiket="Net Harcama"
           deger={paraBicimle(musteri.ozet.netHarcama)}
           renk="#27ae60"
         />
 
         <OzetKart
-          ikon="↩️"
+          ikon={<Undo2 size={20} />}
           etiket="İade Edilen"
           deger={paraBicimle(musteri.ozet.iadeToplam)}
           renk="#8e44ad"
         />
 
         <OzetKart
-          ikon="📊"
+          ikon={<BarChart3 size={20} />}
           etiket="Ortalama Sepet"
           deger={paraBicimle(musteri.ozet.ortalamaSepet)}
           renk="#f39c12"
@@ -213,7 +218,7 @@ export default function MusteriDetaySayfasi() {
 
           {/* --- SİPARİŞ GEÇMİŞİ --- */}
           <div className="kutu">
-            <div className="kutu-baslik">🧾 Sipariş Geçmişi</div>
+            <div className="kutu-baslik"><Receipt size={18} /> Sipariş Geçmişi</div>
 
             {musteri.siparisler.length === 0 ? (
               <div className="bos-yazi">Bu kullanıcı henüz sipariş vermemiş.</div>
@@ -256,7 +261,7 @@ export default function MusteriDetaySayfasi() {
 
           {/* --- EN ÇOK ALDIĞI ÜRÜNLER --- */}
           <div className="kutu">
-            <div className="kutu-baslik">🔥 En Çok Aldığı Ürünler</div>
+            <div className="kutu-baslik"><Flame size={18} /> En Çok Aldığı Ürünler</div>
 
             {musteri.enCokAldiklari.length === 0 ? (
               <div className="bos-yazi">Henüz veri yok.</div>
@@ -288,7 +293,7 @@ export default function MusteriDetaySayfasi() {
           {/* --- 🛡️ YETKİ YÖNETİMİ (sadece süper admin görür) --- */}
           {superAdminMi && (
             <div className="yetki-kutu">
-              <div className="yetki-baslik">🛡️ Yetki Yönetimi</div>
+              <div className="yetki-baslik"><ShieldCheck size={18} /> Yetki Yönetimi</div>
 
               {musteri.rol === 'superadmin' ? (
                 <div className="yetki-aciklama">
@@ -323,7 +328,7 @@ export default function MusteriDetaySayfasi() {
                     disabled={islemde || yeniRol === musteri.rol}
                     style={{ width: '100%' }}
                   >
-                    {islemde ? 'İşleniyor...' : '💾 Rolü Güncelle'}
+                    {islemde ? 'İşleniyor...' : <><Save size={15} /> Rolü Güncelle</>}
                   </Buton>
 
                   <div className="uyari-notu">
@@ -342,7 +347,7 @@ export default function MusteriDetaySayfasi() {
                         disabled={islemde}
                         style={{ width: '100%' }}
                       >
-                        🚫 Hesabı Devre Dışı Bırak
+                        <Ban size={15} /> Hesabı Devre Dışı Bırak
                       </Buton>
 
                       <div className="uyari-notu">
@@ -357,7 +362,7 @@ export default function MusteriDetaySayfasi() {
                         disabled={islemde}
                         style={{ width: '100%' }}
                       >
-                        ✅ Hesabı Yeniden Aktifleştir
+                        <CheckCircle2 size={15} /> Hesabı Yeniden Aktifleştir
                       </Buton>
 
                       <div className="uyari-notu">
@@ -373,14 +378,14 @@ export default function MusteriDetaySayfasi() {
           {/* --- 📜 YETKİ GEÇMİŞİ --- */}
           {superAdminMi && musteri.loglar && musteri.loglar.length > 0 && (
             <div className="kutu">
-              <div className="kutu-baslik">📜 Yetki Geçmişi</div>
+              <div className="kutu-baslik"><ScrollText size={18} /> Yetki Geçmişi</div>
 
               {musteri.loglar.map((l) => (
                 <div key={l.id} className="log-satiri">
                   <div className="log-islem">
-                    {l.islem === 'rol_degisti' && '🛡️ Rol değiştirildi'}
-                    {l.islem === 'pasiflestirildi' && '🚫 Devre dışı bırakıldı'}
-                    {l.islem === 'aktiflestirildi' && '✅ Aktifleştirildi'}
+                    {l.islem === 'rol_degisti' && <><ShieldCheck size={14} /> Rol değiştirildi</>}
+                    {l.islem === 'pasiflestirildi' && <><Ban size={14} /> Devre dışı bırakıldı</>}
+                    {l.islem === 'aktiflestirildi' && <><CheckCircle2 size={14} /> Aktifleştirildi</>}
                   </div>
 
                   <div className="log-detay">
@@ -395,7 +400,7 @@ export default function MusteriDetaySayfasi() {
 
           {/* --- HESAP BİLGİLERİ --- */}
           <div className="kutu">
-            <div className="kutu-baslik">👤 Hesap Bilgileri</div>
+            <div className="kutu-baslik"><User size={18} /> Hesap Bilgileri</div>
 
             <div className="mini-kart-metin">
               <div style={{ marginBottom: 8 }}>
@@ -415,7 +420,7 @@ export default function MusteriDetaySayfasi() {
           {/* --- ADRESLER --- */}
           <div className="kutu">
             <div className="kutu-baslik">
-              📍 Adresleri ({sayiBicimle(musteri.ozet.adresSayisi)})
+              <MapPin size={15} /> Adresleri ({sayiBicimle(musteri.ozet.adresSayisi)})
             </div>
 
             {musteri.adresler.length === 0 ? (
@@ -438,7 +443,7 @@ export default function MusteriDetaySayfasi() {
           {/* --- KARTLAR --- */}
           <div className="kutu">
             <div className="kutu-baslik">
-              💳 Kayıtlı Kartları ({sayiBicimle(musteri.ozet.kartSayisi)})
+              <CreditCard size={15} /> Kayıtlı Kartları ({sayiBicimle(musteri.ozet.kartSayisi)})
             </div>
 
             {musteri.kartlar.length === 0 ? (
@@ -456,7 +461,7 @@ export default function MusteriDetaySayfasi() {
             )}
 
             <div className="gizlilik-notu">
-              🔒 Kartların yalnızca son 4 hanesi saklanır. Tam numara ve CVV
+              <Lock size={14} /> Kartların yalnızca son 4 hanesi saklanır. Tam numara ve CVV
               hiçbir zaman veritabanına yazılmaz — bu yüzden admin bile göremez.
             </div>
           </div>

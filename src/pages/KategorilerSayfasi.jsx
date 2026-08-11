@@ -11,6 +11,9 @@ import OnayPenceresi from '../components/OnayPenceresi';
 
 import './KategorilerSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { Check, Lightbulb, Pencil, Plus, Trash2 } from 'lucide-react';
+
 export default function KategorilerSayfasi() {
   const [kategoriler, setKategoriler] = useState([]);
   const [yukleniyor, setYukleniyor] = useState(true);
@@ -208,7 +211,7 @@ export default function KategorilerSayfasi() {
                 onClick={duzenlemeyiKaydet}
                 disabled={kaydediliyor}
               >
-                {kaydediliyor ? 'Kaydediliyor...' : '✓ Kaydet'}
+                {kaydediliyor ? 'Kaydediliyor...' : <><Check size={15} /> Kaydet</>}
               </Buton>
 
               <Buton
@@ -229,9 +232,10 @@ export default function KategorilerSayfasi() {
             <Buton
               tip="ikincil"
               boyut="kucuk"
+              ikonRengi="ana"
               onClick={() => duzenlemeyeBasla(k)}
             >
-              ✏️ Düzenle
+              <Pencil size={14} /> Düzenle
             </Buton>
 
             <Buton
@@ -246,7 +250,7 @@ export default function KategorilerSayfasi() {
                   : 'Kategoriyi sil'
               }
             >
-              🗑️ Sil
+              <Trash2 size={14} /> Sil
             </Buton>
           </div>
         );
@@ -280,7 +284,7 @@ export default function KategorilerSayfasi() {
         />
 
         <Buton type="submit" disabled={ekleniyor || yeniAd.trim() === ''}>
-          {ekleniyor ? 'Ekleniyor...' : '➕ Ekle'}
+          {ekleniyor ? 'Ekleniyor...' : <><Plus size={15} /> Ekle</>}
         </Buton>
       </form>
 
@@ -308,7 +312,7 @@ export default function KategorilerSayfasi() {
           </p>
 
           <p className="silinemez-ipucu">
-            💡 İçinde ürün olan kategoriler silinemez. Önce ürünleri taşı veya sil.
+            <Lightbulb size={14} /> İçinde ürün olan kategoriler silinemez. Önce ürünleri taşı veya sil.
           </p>
         </>
       )}

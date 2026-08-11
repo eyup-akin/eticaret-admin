@@ -121,6 +121,23 @@
   cursor: not-allowed;
 }
 
+/* ⭐ YENİ (4.7) — İKON-ONLY BUTONLARDA RENK ZORUNLU
+
+   Bu iki butonun METNİ YOK; ekranda yalnızca ikon var. Metinli
+   butonlarda renk ikinci bir ipucuydu, burada ise şekilden sonraki
+   TEK ayırt edici. Aynı gri tonda bırakırsak "ana resim yap" ile
+   "sil" bir bakışta ayrılmıyor — üstelik biri geri alınamaz.
+
+   ⚠️ title özniteliği ikisinde de var, yani renk yine tek kanal
+   değil; ama title yalnızca üzerine gelince okunuyor. */
+.resim-mini-buton-vurgu > svg {
+  color: var(--anaRenk);
+}
+
+.resim-mini-buton-sil > svg {
+  color: var(--hata);
+}
+
 /* Yükleme sırasında */
 .yukleme-durumu {
   margin-top: var(--bosluk3);

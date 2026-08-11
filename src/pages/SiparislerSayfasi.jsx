@@ -16,6 +16,9 @@ import KargoEtiketi from '../components/KargoEtiketi';
 
 import './SiparislerSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { StickyNote, Tag } from 'lucide-react';
+
 export default function SiparislerSayfasi() {
   const navigate = useNavigate();
 
@@ -227,7 +230,7 @@ export default function SiparislerSayfasi() {
                   zorunda kalmasın. */}
               {s.notVarMi && (
                 <span className="not-isareti" title="Müşteri sipariş notu bırakmış">
-                  {' · '}📝 not var
+                  {' · '}<StickyNote size={13} /> not var
                 </span>
               )}
             </div>
@@ -289,10 +292,11 @@ export default function SiparislerSayfasi() {
           <Buton
             tip="ikincil"
             boyut="kucuk"
+            ikonRengi="ana"
             onClick={() => etiketYazdir([s.id])}
             title="Kargo etiketi yazdır"
           >
-            🏷️
+            <Tag size={15} />
           </Buton>
 
           <Buton
@@ -380,7 +384,7 @@ export default function SiparislerSayfasi() {
                   boyut="kucuk"
                   onClick={() => etiketYazdir(secili)}
                 >
-                  🏷️ Seçilenlerin Etiketini Yazdır
+                  <Tag size={15} /> Seçilenlerin Etiketini Yazdır
                 </Buton>
 
                 <Buton

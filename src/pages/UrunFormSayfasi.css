@@ -53,6 +53,19 @@
   margin-top: var(--bosluk2);
 }
 
+/* ⭐ YENİ (B1) — ipucunun uyarı hali.
+   Girilen değer kaydedilmeyecekse ipucu turuncuya döner.
+
+   ⚠️ hata (kırmızı) DEĞİL, uyari (turuncu): ortada bir hata yok,
+   form gönderilebilir ve gönderilmeli — yalnızca o alan sunucuda
+   elenecek. Kırmızıyı gerçekten geri alınamaz işlemlere saklıyoruz.
+
+   ⚠️ Yalnızca RENK değişiyor, punto ve boşluk aynı: uyarı belirince
+   satırın yüksekliği değişip formu zıplatmasın. */
+.form-ipucu-uyari {
+  color: var(--uyari);
+}
+
 .form-ikili {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -73,6 +86,17 @@
   font-weight: 700;
   color: var(--yaziKoyu);
   margin-bottom: var(--bosluk1);
+
+  /* ⭐ YENİ (4.7) — başlık ikon taşıyor. Emoji metnin içindeydi,
+     SVG ayrı öğe olduğu için flex şart. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+.bolum-baslik-form > svg {
+  color: var(--anaRenk);
+  flex-shrink: 0;
 }
 
 .bolum-altyazi-form {

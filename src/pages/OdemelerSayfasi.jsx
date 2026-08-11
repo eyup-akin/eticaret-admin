@@ -24,6 +24,11 @@ import './OdemelerSayfasi.css';
 
 import TarihAraligi from '../components/TarihAraligi';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { BarChart3, Landmark, Receipt, Undo2, Wallet } from 'lucide-react';
+
 export default function OdemelerSayfasi() {
   const navigate = useNavigate();
   const { renkler } = useTema();
@@ -191,28 +196,28 @@ export default function OdemelerSayfasi() {
       {ozet && (
         <div className="ozet-izgara">
           <OzetKart
-            ikon="💰"
+            ikon={<Wallet size={20} />}
             etiket="Brüt Gelir"
             deger={paraBicimle(ozet.brutGelir)}
             renk="#27ae60"
           />
 
           <OzetKart
-            ikon="↩️"
+            ikon={<Undo2 size={20} />}
             etiket="İadeler"
             deger={paraBicimle(ozet.iadeToplam)}
             renk="#8e44ad"
           />
 
           <OzetKart
-            ikon="🏦"
+            ikon={<Landmark size={20} />}
             etiket="Net Gelir"
             deger={paraBicimle(ozet.netGelir)}
             renk="#2563eb"
           />
 
           <OzetKart
-            ikon="🧾"
+            ikon={<Receipt size={20} />}
             etiket="Ortalama Sepet"
             deger={paraBicimle(ozet.ortalamaSepet)}
             renk="#f39c12"
@@ -225,7 +230,7 @@ export default function OdemelerSayfasi() {
         <div className="grafik-kutu">
           <div className="grafik-ust">
             <div>
-              <div className="grafik-baslik">📊 Aylık Gelir (son 6 ay)</div>
+              <div className="grafik-baslik"><BarChart3 size={17} /> Aylık Gelir (son 6 ay)</div>
 
               <div className="grafik-altyazi">
                 Tüm zamanlar net gelir:{' '}

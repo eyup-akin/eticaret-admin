@@ -9,6 +9,11 @@ import Tablo from '../Tablo';
 import Rozet from '../Rozet';
 import OzetKart from '../OzetKart';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { Banknote, CheckCircle2, Hash, Info } from 'lucide-react';
+
 // ============================================================
 //  ÖDEME BAŞARI ORANI
 //
@@ -107,21 +112,21 @@ export default function OdemeRaporu({ baslangic, bitis }) {
     <div>
       <div className="ozet-izgara">
         <OzetKart
-          ikon="✅"
+          ikon={<CheckCircle2 size={20} />}
           etiket="Başarı Oranı"
           deger={'%' + veri.basariOrani}
           renk="#27ae60"
         />
 
         <OzetKart
-          ikon="🔢"
+          ikon={<Hash size={20} />}
           etiket="Toplam İşlem"
           deger={sayiBicimle(veri.toplamIslem)}
           renk="#2563eb"
         />
 
         <OzetKart
-          ikon="💵"
+          ikon={<Banknote size={20} />}
           etiket="Başarılı Tutar"
           deger={paraBicimle(veri.basariliTutar)}
           renk="#f39c12"
@@ -134,7 +139,7 @@ export default function OdemeRaporu({ baslangic, bitis }) {
         </span>
 
         <span>
-          ⓘ Ödeme şu an simüle ediliyor. Gerçek ödeme sağlayıcısı
+          <Info size={14} /> Ödeme şu an simüle ediliyor. Gerçek ödeme sağlayıcısı
           eklendiğinde bu rapor başarısız işlemleri de gösterecek.
         </span>
       </div>

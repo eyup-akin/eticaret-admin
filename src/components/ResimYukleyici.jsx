@@ -5,6 +5,9 @@ import { resimUrl } from '../utils/resim';
 
 import './ResimYukleyici.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { AlertTriangle, FolderOpen, Star, Trash2 } from 'lucide-react';
+
 // urunId   : resimlerin ekleneceği ürünün id'si
 // resimler : mevcut resim listesi [{ id, url, isMain, sortOrder }]
 // yenile   : işlem sonrası ürünü tekrar çekmesi için üst bileşenin fonksiyonu
@@ -121,7 +124,7 @@ export default function ResimYukleyici({ urunId, resimler, yenile }) {
         onDragLeave={surukleCikti}
         onDrop={birakildi}
       >
-        <div className="yukle-ikon">📁</div>
+        <div className="yukle-ikon"><FolderOpen size={30} /></div>
         <div className="yukle-yazi">Resimleri buraya sürükle veya tıkla</div>
         <div className="yukle-ipucu">JPG, PNG, WEBP · En fazla 5 MB</div>
       </div>
@@ -173,7 +176,7 @@ export default function ResimYukleyici({ urunId, resimler, yenile }) {
 
       {hata !== '' && (
         <div className="yukleme-durumu" style={{ color: 'var(--hata)' }}>
-          ⚠️ {hata}
+          <AlertTriangle size={14} /> {hata}
         </div>
       )}
 
@@ -194,24 +197,24 @@ export default function ResimYukleyici({ urunId, resimler, yenile }) {
               <div className="resim-katman">
                 {!r.isMain && (
                   <button
-                    className="resim-mini-buton"
+                    className="resim-mini-buton resim-mini-buton-vurgu"
                     type="button"
                     title="Ana resim yap"
                     onClick={() => anaYap(r.id)}
                     disabled={yukleniyor}
                   >
-                    ⭐
+                    <Star size={15} />
                   </button>
                 )}
 
                 <button
-                  className="resim-mini-buton"
+                  className="resim-mini-buton resim-mini-buton-sil"
                   type="button"
                   title="Sil"
                   onClick={() => resmiSil(r.id)}
                   disabled={yukleniyor}
                 >
-                  🗑️
+                  <Trash2 size={15} />
                 </button>
               </div>
             </div>

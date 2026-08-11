@@ -13,6 +13,9 @@ import KargoyaVerModal from '../components/KargoyaVerModal';   // ⭐ YENİ
 
 import KargoEtiketi from '../components/KargoEtiketi';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { ArrowRight, Ban, Check, Copy, CreditCard, Info, Lock, MapPin, Package, StickyNote, Tag, Truck, User } from 'lucide-react';
+
 import './SiparisDetaySayfasi.css';
 
 // Durum kodlarını okunabilir yazıya çeviriyoruz.
@@ -130,7 +133,7 @@ export default function SiparisDetaySayfasi() {
     try {
       await apiPut('/admin/orders/' + id + '/status', { status: yeniDurum });
 
-      setBasari('Kargo durumu güncellendi. ✅');
+      setBasari('Kargo durumu güncellendi.');
       await siparisiGetir();
     } catch (e) {
       setHata(e.message);
@@ -158,7 +161,7 @@ export default function SiparisDetaySayfasi() {
       // hatası), admin girdiği bilgileri kaybeder ve baştan yazardı.
       // Hata durumunda pencere açık kalıyor, mesaj arkada görünüyor.
       setKargoModalAcik(false);
-      setBasari(`Sipariş kargoya verildi. Takip no: ${takipNo} ✅`);
+      setBasari(`Sipariş kargoya verildi. Takip no: ${takipNo}`);
 
       await siparisiGetir();
     } catch (e) {
@@ -193,7 +196,7 @@ export default function SiparisDetaySayfasi() {
         reason: iptalSebebi.trim(),
       });
 
-      setBasari('Sipariş iptal edildi. Stok iade edildi, ödeme geri alındı. ✅');
+      setBasari('Sipariş iptal edildi. Stok iade edildi, ödeme geri alındı.');
       setIptalOnayi(false);
       setIptalSebebi('');
 
@@ -240,8 +243,8 @@ export default function SiparisDetaySayfasi() {
         </div>
 
         <div style={{ display: 'flex', gap: 10 }}>
-          <Buton tip="ikincil" onClick={etiketYazdir}>
-            🏷️ Etiket Yazdır
+          <Buton tip="ikincil" ikonRengi="ana" onClick={etiketYazdir}>
+            <Tag size={16} /> Etiket Yazdır
           </Buton>
 
           <Buton tip="ikincil" onClick={() => navigate('/siparisler')}>
@@ -270,7 +273,7 @@ export default function SiparisDetaySayfasi() {
       {siparis.musteriNotu && (
         <div className="musteri-notu-kutu">
           <div className="musteri-notu-baslik">
-            📝 Müşteri Notu — kargo hazırlanırken dikkate al
+            <StickyNote size={16} /> Müşteri Notu — kargo hazırlanırken dikkate al
           </div>
 
           <div className="musteri-notu-metin">{siparis.musteriNotu}</div>
@@ -284,7 +287,7 @@ export default function SiparisDetaySayfasi() {
 
           {/* --- ÜRÜNLER --- */}
           <div className="kutu">
-            <div className="kutu-baslik">📦 Sipariş Edilen Ürünler</div>
+            <div className="kutu-baslik"><Package size={18} /> Sipariş Edilen Ürünler</div>
 
             <table className="kalem-tablo">
               <thead>
@@ -418,7 +421,7 @@ export default function SiparisDetaySayfasi() {
             )}
 
             <div className="durum-ipucu">
-              💡 Buradaki fiyatlar <b>sipariş anındaki</b> fiyatlardır.
+              <Info size={14} /> Buradaki fiyatlar <b>sipariş anındaki</b> fiyatlardır.
               Ürünün fiyatı sonradan değişse bile bu kayıt değişmez.
             </div>
           </div>
@@ -428,7 +431,7 @@ export default function SiparisDetaySayfasi() {
 
             {/* MÜŞTERİ */}
             <div className="kutu">
-              <div className="kutu-baslik">👤 Müşteri</div>
+              <div className="kutu-baslik"><User size={18} /> Müşteri</div>
 
               <div className="bilgi-satiri">
                 <span className="bilgi-etiket">Ad Soyad</span>
@@ -448,7 +451,7 @@ export default function SiparisDetaySayfasi() {
 
             {/* ADRES */}
             <div className="kutu">
-              <div className="kutu-baslik">📍 Teslimat Adresi</div>
+              <div className="kutu-baslik"><MapPin size={18} /> Teslimat Adresi</div>
 
               {siparis.adres ? (
                 <>
@@ -490,7 +493,7 @@ export default function SiparisDetaySayfasi() {
 
             {/* ÖDEME */}
             <div className="kutu">
-              <div className="kutu-baslik">💳 Ödeme</div>
+              <div className="kutu-baslik"><CreditCard size={18} /> Ödeme</div>
 
               <div className="bilgi-satiri">
                 <span className="bilgi-etiket">Durum</span>
@@ -516,7 +519,7 @@ export default function SiparisDetaySayfasi() {
               )}
 
               <div className="durum-ipucu">
-                🔒 Kartın yalnızca son 4 hanesi saklanır.
+                <Lock size={14} /> Kartın yalnızca son 4 hanesi saklanır.
               </div>
             </div>
 
@@ -528,7 +531,7 @@ export default function SiparisDetaySayfasi() {
 
           {/* --- KARGO DURUMU --- */}
           <div className="kutu">
-            <div className="kutu-baslik">🚚 Kargo Durumu</div>
+            <div className="kutu-baslik"><Truck size={18} /> Kargo Durumu</div>
 
             <div style={{ marginBottom: 16 }}>
               <Rozet durum={siparis.durum} />
@@ -561,7 +564,7 @@ export default function SiparisDetaySayfasi() {
                       onClick={takipNoKopyala}
                       title="Takip numarasını kopyala"
                     >
-                      {kopyalandi ? '✅ Kopyalandı' : '📋 Kopyala'}
+                      {kopyalandi ? <><Check size={14} /> Kopyalandı</> : <><Copy size={14} /> Kopyala</>}
                     </button>
                   </span>
                 </div>
@@ -596,7 +599,7 @@ export default function SiparisDetaySayfasi() {
                     disabled={islemde}
                     style={{ width: '100%' }}
                   >
-                    {islemde ? 'İşleniyor...' : '➡️ ' + (DURUM_YAZILARI[d] || d)}
+                    {islemde ? 'İşleniyor...' : <><ArrowRight size={15} /> {DURUM_YAZILARI[d] || d}</>}
                   </Buton>
                 ))}
               </div>
@@ -617,7 +620,7 @@ export default function SiparisDetaySayfasi() {
           {siparis.durum === 'iptal' ? (
             // ZATEN İPTAL EDİLMİŞ → sebebi göster
             <div className="iptal-bilgi-kutu">
-              <div className="iptal-baslik">⛔ Sipariş İptal Edildi</div>
+              <div className="iptal-baslik"><Ban size={18} /> Sipariş İptal Edildi</div>
 
               <div className="bilgi-satiri" style={{ padding: '4px 0' }}>
                 <span className="bilgi-etiket">İptal Tarihi</span>
@@ -637,7 +640,7 @@ export default function SiparisDetaySayfasi() {
           ) : siparis.iptalEdilebilir ? (
             // İPTAL EDİLEBİLİR → form göster
             <div className="iptal-kutu">
-              <div className="iptal-baslik">⛔ Siparişi İptal Et</div>
+              <div className="iptal-baslik"><Ban size={18} /> Siparişi İptal Et</div>
 
               <div className="iptal-aciklama">
                 İptal edilince: ürünlerin <b>stoğu geri eklenir</b>,
@@ -664,13 +667,13 @@ export default function SiparisDetaySayfasi() {
                 disabled={!sebepGecerli || islemde}
                 style={{ width: '100%' }}
               >
-                {islemde ? 'İptal ediliyor...' : '⛔ Siparişi İptal Et'}
+                {islemde ? 'İptal ediliyor...' : <><Ban size={15} /> Siparişi İptal Et</>}
               </Buton>
             </div>
           ) : (
             // İPTAL EDİLEMEZ (teslim edilmiş)
             <div className="kutu">
-              <div className="kutu-baslik">⛔ İptal</div>
+              <div className="kutu-baslik"><Ban size={18} /> İptal</div>
 
               <div className="son-durum">
                 Bu sipariş <b>teslim edilmiş</b>. Teslim edilen siparişler

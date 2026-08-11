@@ -16,14 +16,19 @@ import Rozet from '../components/Rozet';
 
 import './DashboardSayfasi.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { AlertTriangle, ArrowDown, ArrowUp, BarChart3, ChevronDown, ChevronUp, Clock, CreditCard, Flame, Package, Receipt, ShieldCheck, Ticket, Undo2, Users, Wallet } from 'lucide-react';
+
 
 // Her uyarı türü için ikon. Yeni tür eklenince buraya bir satır eklenir.
 const UYARI_IKON = {
-  bekleyen_siparis: '⏱️',
-  kritik_stok: '📦',
-  bekleyen_basvuru: '🛡️',
-  bekleyen_destek: '🎫',
-  bekleyen_iade: '↩️',
+  bekleyen_siparis: <Clock size={16} />,
+  kritik_stok: <Package size={16} />,
+  bekleyen_basvuru: <ShieldCheck size={16} />,
+  bekleyen_destek: <Ticket size={16} />,
+  bekleyen_iade: <Undo2 size={16} />,
 };
 
 // Bir tarihin üstünden kaç gün geçmiş?
@@ -39,7 +44,7 @@ function DikkatKarti({ uyari }) {
   const [acik, setAcik] = useState(false);
   const navigate = useNavigate();
 
-  const ikon = UYARI_IKON[uyari.tur] || '⚠️';
+  const ikon = UYARI_IKON[uyari.tur] || <AlertTriangle size={16} />;
   const gizlenen = uyari.adet - uyari.ogeler.length;
 
   return (
@@ -53,7 +58,7 @@ function DikkatKarti({ uyari }) {
       >
         <span className="dikkat-ikon">{ikon}</span>
         <span className="dikkat-ozet-yazi">{uyari.ozet}</span>
-        <span className="dikkat-ok">{acik ? '▲' : '▼'}</span>
+        <span className="dikkat-ok">{acik ? <ChevronUp size={15} /> : <ChevronDown size={15} />}</span>
       </button>
 
       {/* ---------- DETAY (sadece açıkken) ---------- */}
@@ -188,7 +193,7 @@ export default function DashboardSayfasi() {
 
       {/* ================= GELİR KUTUSU ================= */}
       <div className="gelir-kutusu">
-        <div className="gelir-etiket">💰 Toplam Gelir (tüm zamanlar)</div>
+        <div className="gelir-etiket"><Wallet size={15} /> Toplam Gelir (tüm zamanlar)</div>
         <div className="gelir-tutar">{paraBicimle(ozet.toplamGelir)}</div>
 
         <div className="gelir-alt-satir">
@@ -206,7 +211,7 @@ export default function DashboardSayfasi() {
             Geçen aya göre
             <b>
               <span className="degisim">
-                {artiyorMu ? '▲' : '▼'} %{Math.abs(stats.degisimYuzde)}
+                {artiyorMu ? <ArrowUp size={12} /> : <ArrowDown size={12} />} %{Math.abs(stats.degisimYuzde)}
               </span>
             </b>
           </div>
@@ -216,28 +221,28 @@ export default function DashboardSayfasi() {
       {/* ================= ÖZET KARTLAR ================= */}
       <div className="kart-izgara">
         <OzetKart
-          ikon="🧾"
+          ikon={<Receipt size={20} />}
           etiket="Toplam Sipariş"
           deger={sayiBicimle(ozet.toplamSiparis)}
           renk="#2563eb"
         />
 
         <OzetKart
-          ikon="📦"
+          ikon={<Package size={20} />}
           etiket="Toplam Ürün"
           deger={sayiBicimle(ozet.toplamUrun)}
           renk="#f39c12"
         />
 
         <OzetKart
-          ikon="👥"
+          ikon={<Users size={20} />}
           etiket="Toplam Müşteri"
           deger={sayiBicimle(ozet.toplamMusteri)}
           renk="#27ae60"
         />
 
         <OzetKart
-          ikon="💳"
+          ikon={<CreditCard size={20} />}
           etiket="Ortalama Sipariş"
           deger={paraBicimle(
             ozet.toplamSiparis > 0 ? ozet.toplamGelir / ozet.toplamSiparis : 0
@@ -314,7 +319,7 @@ export default function DashboardSayfasi() {
 
         {/* --- EN ÇOK SATANLAR --- */}
         <div className="bolum">
-          <div className="bolum-baslik">🔥 En Çok Satan Ürünler</div>
+          <div className="bolum-baslik"><Flame size={17} /> En Çok Satan Ürünler</div>
           <div className="bolum-altyazi">Tüm zamanlar, satılan adede göre</div>
 
           {stats.enCokSatanlar.length === 0 ? (
@@ -343,11 +348,11 @@ export default function DashboardSayfasi() {
 
         {/* --- KRİTİK STOK --- */}
         <div className="bolum">
-          <div className="bolum-baslik">⚠️ Stoğu Azalan Ürünler</div>
+          <div className="bolum-baslik"><AlertTriangle size={17} /> Stoğu Azalan Ürünler</div>
           <div className="bolum-altyazi">5 adetten az kalanlar</div>
 
           {stats.kritikStok.length === 0 ? (
-            <p className="bos-yazi">Tüm ürünlerin stoğu yeterli. 👍</p>
+            <p className="bos-yazi">Tüm ürünlerin stoğu yeterli.</p>
           ) : (
             <table className="mini-tablo">
               <thead>
@@ -376,7 +381,7 @@ export default function DashboardSayfasi() {
 
       {/* ================= SON SİPARİŞLER ================= */}
       <div className="bolum">
-        <div className="bolum-baslik">🧾 Son Siparişler</div>
+        <div className="bolum-baslik"><Receipt size={17} /> Son Siparişler</div>
         <div className="bolum-altyazi">En son verilen 5 sipariş</div>
 
         {stats.sonSiparisler.length === 0 ? (
@@ -413,7 +418,7 @@ export default function DashboardSayfasi() {
 
       {/* ================= DURUM DAĞILIMI ================= */}
       <div className="bolum">
-        <div className="bolum-baslik">📊 Sipariş Durum Dağılımı</div>
+        <div className="bolum-baslik"><BarChart3 size={17} /> Sipariş Durum Dağılımı</div>
         <div className="bolum-altyazi">Kargo durumuna göre sipariş sayısı</div>
 
         {stats.durumDagilimi.length === 0 ? (

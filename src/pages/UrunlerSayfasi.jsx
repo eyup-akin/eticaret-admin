@@ -25,7 +25,7 @@ import ExcelIceAktar from '../components/ExcelIceAktar';
 // Gerekçe PanelDuzeni'nde uzun uzun yazılı: emoji her işletim
 // sisteminde farklı çiziliyor ve rengi tema ile değişmiyor.
 // Tek tek import — "import * as Icons" ağaç sallamayı engeller.
-import { Ban, CheckCircle2, Pencil, Trash2, Archive, ArchiveRestore } from 'lucide-react';
+import { Archive, ArchiveRestore, Ban, Camera, CheckCircle2, Download, Pencil, Plus, Trash2 } from 'lucide-react';
 
 import './UrunlerSayfasi.css';
 
@@ -328,7 +328,7 @@ export default function UrunlerSayfasi() {
         u.mainImageUrl ? (
           <img className="satir-resim" src={resimUrl(u.mainImageUrl)} alt="" />
         ) : (
-          <div className="satir-resim-yok">📷</div>
+          <div className="satir-resim-yok"><Camera size={16} /></div>
         ),
     },
     {
@@ -455,6 +455,10 @@ export default function UrunlerSayfasi() {
           <Buton
             tip="ikincil"
             boyut="kucuk"
+            // ⭐ Rol DURUMA göre: satıştaki ürünü kaldırmak olumsuz
+            // (turuncu), kaldırılmışı geri açmak olumlu (yeşil).
+            // Tek butonun iki anlamı var; rengi de öyle olmalı.
+            ikonRengi={u.isActive ? 'uyari' : 'basari'}
             onClick={() => durumDegistir(u)}
             disabled={durumDegisen === u.id}
             title={
@@ -475,6 +479,7 @@ export default function UrunlerSayfasi() {
           <Buton
             tip="ikincil"
             boyut="kucuk"
+            ikonRengi="ana"
             onClick={() => navigate('/urunler/' + u.id + '/duzenle')}
           >
             <Pencil size={14} /> Düzenle
@@ -488,6 +493,7 @@ export default function UrunlerSayfasi() {
             <Buton
               tip="ikincil"
               boyut="kucuk"
+              ikonRengi="basari"
               onClick={() => arsivDegistir(u)}
               disabled={durumDegisen === u.id}
               title="Ürün tekrar admin listesinde görünür (satışa açılmaz)"
@@ -518,6 +524,7 @@ export default function UrunlerSayfasi() {
               <Buton
                 tip="ikincil"
                 boyut="kucuk"
+                ikonRengi="uyari"
                 onClick={() => arsivDegistir(u)}
                 disabled={durumDegisen === u.id}
                 title="Bu ürünün sipariş, yorum veya stok geçmişi var; silinemez. Arşivlemek listeden kaldırır, kaydı korur."
@@ -542,11 +549,11 @@ export default function UrunlerSayfasi() {
         </div>
 
         <div className="sayfa-ust-butonlar">
-          <Buton tip="ikincil" onClick={() => setIceAktarAcik(true)}>
-            📥 Excel ile İçe Aktar
+          <Buton tip="ikincil" ikonRengi="ana" onClick={() => setIceAktarAcik(true)}>
+            <Download size={15} /> Excel ile İçe Aktar
           </Buton>
 
-          <Buton onClick={() => navigate('/urunler/yeni')}>➕ Yeni Ürün</Buton>
+          <Buton onClick={() => navigate('/urunler/yeni')}><Plus size={15} /> Yeni Ürün</Buton>
         </div>
       </div>
 

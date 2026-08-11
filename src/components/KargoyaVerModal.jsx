@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import Buton from './Buton';
 import './KargoyaVerModal.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { AlertTriangle, Truck } from 'lucide-react';
+
 // Siparişi kargoya verirken firma ve takip numarası toplayan pencere.
 //
 // acik     : görünsün mü
@@ -90,7 +93,7 @@ export default function KargoyaVerModal({
           Olay balonlanarak perdeye çıkar ve onun onClick'ini tetiklerdi. */}
       <div className="kargo-kutu" onClick={(e) => e.stopPropagation()}>
 
-        <div className="kargo-modal-baslik">🚚 Siparişi Kargoya Ver</div>
+        <div className="kargo-modal-baslik"><Truck size={18} /> Siparişi Kargoya Ver</div>
 
         <div className="kargo-modal-aciklama">
           Kargo firmasını seç ve firmadan aldığın takip numarasını gir.
@@ -124,7 +127,7 @@ export default function KargoyaVerModal({
         {/* Sunucudan liste gelmezse admin çıkmazda kalmasın, sebebini bilsin */}
         {firmalar.length === 0 && (
           <div className="kargo-uyari">
-            ⚠️ Kargo firması listesi yüklenemedi. Sunucudaki
+            <AlertTriangle size={14} /> Kargo firması listesi yüklenemedi. Sunucudaki
             <code> appsettings.json → Kargo:Firmalar </code>
             ayarını kontrol et.
           </div>
@@ -176,7 +179,7 @@ export default function KargoyaVerModal({
             onClick={() => kaydet(firma, takipNo.trim())}
             disabled={!gecerli || islemde}
           >
-            {islemde ? 'Kaydediliyor...' : '🚚 Kargoya Ver'}
+            {islemde ? 'Kaydediliyor...' : <><Truck size={15} /> Kargoya Ver</>}
           </Buton>
         </div>
 

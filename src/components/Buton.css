@@ -81,3 +81,45 @@
   padding: var(--bosluk2) var(--bosluk3);
   font-size: var(--yazi-ikincil);
 }
+
+/* ============================================================
+   ⭐ YENİ (4.7) — İKON RENK ROLLERİ
+
+   Gerekçe Buton.jsx'in başında uzun uzun yazılı. Kısaca: emoji
+   döneminde eylemin ağırlığını emojinin kendi rengi söylüyordu;
+   çizgi ikona geçince tüm ikonlar aynı griye düştü ve "Düzenle"
+   ile "Satıştan Kaldır" görsel olarak eşitlendi.
+
+   ⚠️ Yalnızca ikon (> svg) renkleniyor, metin değil.
+   ============================================================ */
+
+/* Geri alınabilir OLUMSUZ değişiklik: satıştan kaldır, duraklat,
+   gizle, reddet, iptal et. Turuncu "dur, düşün" der; kırmızı ise
+   "geri dönüşü yok" demek ve o ağırlık silmeye ait. */
+.buton-ikon-uyari > svg {
+  color: var(--uyari);
+}
+
+/* OLUMLU değişiklik: satışa aç, aktifleştir, onayla, göster. */
+.buton-ikon-basari > svg {
+  color: var(--basari);
+}
+
+/* Nötr eylem: düzenle, kopyala, indir, yazdır, arşivle, ilerlet.
+   Mavi bu arayüzde "tıklanabilir" demek — nötr eylemin doğal rengi. */
+.buton-ikon-ana > svg {
+  color: var(--anaRenk);
+}
+
+/* ⚠️ DOLU ZEMİNLİ BUTONLARDA ROL RENGİ İPTAL.
+
+   .buton-ana zaten mavi zemin + beyaz yazı; üstüne mavi ikon
+   koymak ikonu görünmez yapardı. .buton-tehlike ise hover'da
+   kırmızı zemine dönüyor ve orada da aynı sorun çıkardı.
+
+   Çağıran yanlışlıkla ikonRengi verse bile burası güvenlik ağı:
+   ikon her zaman butonun kendi yazı rengini kullanır. */
+.buton-ana > svg,
+.buton-tehlike:hover > svg {
+  color: currentColor;
+}

@@ -70,7 +70,21 @@ export default function KargoEtiketi({ etiket, magaza }) {
           10x15 cm'lik alanda boş kutu israf olurdu. */}
       {etiket.musteriNotu && (
         <div className="etiket-not">
-          <div className="etiket-not-baslik">⚠ MÜŞTERİ NOTU</div>
+          {/* ⭐ DEĞİŞTİ (4.7) — baştaki ⚠ işareti KALDIRILDI, yerine
+              lucide ikonu KONULMADI.
+
+              ⚠️ Bu bir TERMAL YAZICI ETİKETİ, ekran arayüzü değil.
+              4.7'nin emoji gerekçeleri (işletim sistemine göre farklı
+              çizim, tema rengi, satır hizası) burada geçersiz: etiket
+              tek renk basılıyor ve tema diye bir şey yok.
+
+              SVG koymak ise yeni bir risk açardı — yazıcı sürücüleri
+              ve print CSS'i vektör çizimini farklı ölçekleyebiliyor
+              ve 10×15 cm'lik alanda yer zaten kıt.
+
+              Başlık kalın ve harf aralıklı; "MÜŞTERİ NOTU" yazısı tek
+              başına dikkat çekmeye yetiyor. */}
+          <div className="etiket-not-baslik">MÜŞTERİ NOTU</div>
           <div className="etiket-not-metin">{etiket.musteriNotu}</div>
         </div>
       )}

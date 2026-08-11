@@ -3,6 +3,9 @@ import { useRef, useEffect, useState } from 'react';
 // ResimYukleyici ile aynı stilleri kullanıyoruz (yeni CSS yazmıyoruz)
 import './ResimYukleyici.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { FolderOpen, Trash2 } from 'lucide-react';
+
 // dosyalar/setDosyalar : seçilen File nesneleri (üst bileşende tutuluyor)
 // linkler/setLinkler   : eklenen resim URL'leri
 // Bu bileşen SADECE toplar ve önizler — yüklemeyi form, ürün kaydolunca yapar.
@@ -86,7 +89,7 @@ export default function BekleyenResimler({
         onDragLeave={surukleCikti}
         onDrop={birakildi}
       >
-        <div className="yukle-ikon">📁</div>
+        <div className="yukle-ikon"><FolderOpen size={30} /></div>
         <div className="yukle-yazi">Resimleri buraya sürükle veya tıkla</div>
         <div className="yukle-ipucu">Kaydedince otomatik yüklenecek</div>
       </div>
@@ -151,12 +154,12 @@ export default function BekleyenResimler({
 
                 <div className="resim-katman">
                   <button
-                    className="resim-mini-buton"
+                    className="resim-mini-buton resim-mini-buton-sil"
                     type="button"
                     title="Çıkar"
                     onClick={() => dosyaSil(i)}
                   >
-                    🗑️
+                    <Trash2 size={15} />
                   </button>
                 </div>
               </div>
@@ -179,12 +182,12 @@ export default function BekleyenResimler({
 
                 <div className="resim-katman">
                   <button
-                    className="resim-mini-buton"
+                    className="resim-mini-buton resim-mini-buton-sil"
                     type="button"
                     title="Çıkar"
                     onClick={() => linkSil(i)}
                   >
-                    🗑️
+                    <Trash2 size={15} />
                   </button>
                 </div>
               </div>

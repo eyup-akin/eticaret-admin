@@ -4,6 +4,9 @@ import { apiGet, apiYukle, apiDosyaIndir } from '../services/api';
 
 import './ExcelIceAktar.css';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { AlertTriangle, Check, Download, FileText, FolderOpen, Upload, X } from 'lucide-react';
+
 // acik            : modal açık mı? (bool)
 // kapat           : modalı kapatan fonksiyon (parent'tan gelir)
 // iceAktarimBitti : bir iş BAŞARIYLA bitince parent'ın ürün listesini tazelemesi için
@@ -168,14 +171,14 @@ export default function ExcelIceAktar({ acik, kapat, iceAktarimBitti }) {
       {/* İç kutuya tıklama perdeye ULAŞMASIN (yoksa her tıkta kapanırdı) */}
       <div className="ice-kutu" onClick={(e) => e.stopPropagation()}>
         <div className="ice-baslik-satir">
-          <h2 className="ice-baslik">📥 Excel ile Ürün İçe Aktar</h2>
+          <h2 className="ice-baslik"><Upload size={18} /> Excel ile Ürün İçe Aktar</h2>
 
           <button
             className="ice-kapat-x"
             type="button"
             onClick={kapatVeTemizle}
           >
-            ✕
+            <X size={18} />
           </button>
         </div>
 
@@ -208,7 +211,7 @@ export default function ExcelIceAktar({ acik, kapat, iceAktarimBitti }) {
               className="ice-sablon-buton"
               onClick={sablonIndir}
             >
-              📥 Örnek şablonu indir (.xlsx)
+              <Download size={15} /> Örnek şablonu indir (.xlsx)
             </button>
               <div>
                 <b>Zorunlu:</b> Barkod, Ürün Adı, Fiyat, Kategori
@@ -226,12 +229,12 @@ export default function ExcelIceAktar({ acik, kapat, iceAktarimBitti }) {
             >
               {dosya ? (
                 <div className="ice-dosya-secili">
-                  <span className="ice-dosya-ikon">📄</span>
+                  <span className="ice-dosya-ikon"><FileText size={18} /></span>
                   <span className="ice-dosya-ad">{dosya.name}</span>
                 </div>
               ) : (
                 <div className="ice-secim-bos">
-                  <div className="ice-secim-ikon">📁</div>
+                  <div className="ice-secim-ikon"><FolderOpen size={30} /></div>
                   <div>Dosya seçmek için tıkla</div>
                   <div className="ice-secim-ipucu">Sadece .xlsx · En fazla 10 MB</div>
                 </div>
@@ -246,7 +249,7 @@ export default function ExcelIceAktar({ acik, kapat, iceAktarimBitti }) {
               onChange={dosyaSecildi}
             />
 
-            {hata !== '' && <div className="ice-hata">⚠️ {hata}</div>}
+            {hata !== '' && <div className="ice-hata"><AlertTriangle size={14} /> {hata}</div>}
 
             <div className="ice-butonlar">
               <button
@@ -305,7 +308,7 @@ export default function ExcelIceAktar({ acik, kapat, iceAktarimBitti }) {
         {/* ================= AŞAMA 3: TAMAMLANDI ================= */}
         {tamamlandi && (
           <div className="ice-durum-alan">
-            <div className="ice-sonuc-ikon ice-basari-ikon">✓</div>
+            <div className="ice-sonuc-ikon ice-basari-ikon"><Check size={26} /></div>
             <div className="ice-sonuc-baslik">İçe aktarma tamamlandı</div>
 
             <div className="ice-ozet">

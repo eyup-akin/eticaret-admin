@@ -11,6 +11,11 @@ import OzetKart from '../OzetKart';
 
 import { csvIndir, sayiCsv } from '../../utils/disaAktar';
 import RaporUstBilgi from './RaporUstBilgi';
+
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { Banknote, Package, Tag, TrendingUp } from 'lucide-react';
 // ============================================================
 //  SATIŞLAR & KÂR RAPORU
 //
@@ -212,28 +217,28 @@ export default function SatisRaporu({ baslangic, bitis }) {
       {/* ---------- ÖZET KARTLAR ---------- */}
       <div className="ozet-izgara">
         <OzetKart
-          ikon="💵"
+          ikon={<Banknote size={20} />}
           etiket="Toplam Ciro"
           deger={paraBicimle(veri.toplamCiro)}
           renk="#2563eb"
         />
 
         <OzetKart
-          ikon="📈"
+          ikon={<TrendingUp size={20} />}
           etiket="Toplam Kâr"
           deger={paraBicimle(veri.toplamKar)}
           renk="#27ae60"
         />
 
         <OzetKart
-          ikon="📦"
+          ikon={<Package size={20} />}
           etiket="Satılan Adet"
           deger={sayiBicimle(veri.toplamAdet)}
           renk="#f39c12"
         />
 
         <OzetKart
-          ikon="🏷️"
+          ikon={<Tag size={20} />}
           etiket="Ürün Çeşidi"
           deger={sayiBicimle(veri.urunler.length)}
           renk="#8e44ad"

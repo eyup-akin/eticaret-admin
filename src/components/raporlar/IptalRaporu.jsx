@@ -12,6 +12,11 @@ import OzetKart from '../OzetKart';
 import { csvIndir, sayiCsv } from '../../utils/disaAktar';
 import RaporUstBilgi from './RaporUstBilgi';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
+// emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
+// değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
+import { Receipt, TrendingDown, XCircle } from 'lucide-react';
+
 
 // ============================================================
 //  İPTALLER — sebep dağılımı ve kaybedilen ciro
@@ -143,14 +148,14 @@ export default function IptalRaporu({ baslangic, bitis }) {
     <div>
       <div className="ozet-izgara">
         <OzetKart
-          ikon="❌"
+          ikon={<XCircle size={20} />}
           etiket="İptal Sayısı"
           deger={sayiBicimle(veri.iptalSayisi)}
           renk="#e74c3c"
         />
 
         <OzetKart
-          ikon="📉"
+          ikon={<TrendingDown size={20} />}
           etiket="İptal Oranı"
 
           // Ham sayı tek başına anlamsız: "12 iptal" iyi mi kötü mü?
@@ -160,14 +165,14 @@ export default function IptalRaporu({ baslangic, bitis }) {
         />
 
         <OzetKart
-          ikon="💸"
+          ikon={<TrendingDown size={20} />}
           etiket="Kaybedilen Ciro"
           deger={paraBicimle(veri.kaybedilenCiro)}
           renk="#8e44ad"
         />
 
         <OzetKart
-          ikon="🧾"
+          ikon={<Receipt size={20} />}
           etiket="Dönem Toplam Sipariş"
           deger={sayiBicimle(veri.donemToplamSiparis)}
           renk="#2563eb"

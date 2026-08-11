@@ -34,6 +34,17 @@
   font-weight: 700;
   color: var(--yaziKoyu);
   margin: 0;
+
+  /* ⭐ YENİ (4.7) — başlık ikon taşıyor. Emoji metnin içindeydi,
+     SVG ayrı öğe olduğu için flex şart. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+.ice-baslik > svg {
+  color: var(--anaRenk);
+  flex-shrink: 0;
 }
 
 .ice-kapat-x {
@@ -103,8 +114,11 @@
 }
 
 .ice-secim-ikon {
-  font-size: var(--yazi-dev);
+  /* ⭐ DEĞİŞTİ (4.7) — font-size kaldırıldı; SVG boyutu JSX'teki
+     size prop'undan geliyor. İki yerden boyut vermek, biri
+     değişince diğerinin sessizce eskimesi demekti. */
   margin-bottom: var(--bosluk2);
+  color: var(--yaziGri);
 }
 
 .ice-secim-ipucu {
@@ -125,7 +139,10 @@
 }
 
 .ice-dosya-ikon {
-  font-size: var(--yazi-baslik);
+  /* ⭐ DEĞİŞTİ (4.7) — boyut JSX'te, burada sadece hizalama. */
+  display: inline-flex;
+  align-items: center;
+  color: var(--anaRenk);
 }
 
 .ice-dosya-ad {
@@ -142,6 +159,13 @@
   margin-top: var(--bosluk4);
   font-size: var(--yazi-ikincil);
   color: var(--favoriRenk);
+
+  /* ⭐ YENİ (4.7) — hata satırı ikon taşıyor.
+     ⚠️ İkona ayrı renk verilmiyor: currentColor ile hata rengini
+     miras alıyor. Ayrı renk, uyarının bütünlüğünü bozardı. */
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
 }
 
 /* ---------- BUTONLAR ---------- */

@@ -1,5 +1,8 @@
 import Buton from '../Buton';
 
+// ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
+import { Download } from 'lucide-react';
+
 // ============================================================
 //  RAPOR ÜST BİLGİSİ — dönem + dışa aktar butonu
 //
@@ -38,8 +41,8 @@ export default function RaporUstBilgi({
           boşluğu yer, kendisi sağa itilir. */}
       {disaAktar && (
         <div style={{ marginLeft: 'auto' }}>
-          <Buton tip="ikincil" boyut="kucuk" onClick={disaAktar}>
-            ⬇ Excel'e Aktar
+          <Buton tip="ikincil" boyut="kucuk" ikonRengi="ana" onClick={disaAktar}>
+            <Download size={15} /> Excel'e Aktar
           </Buton>
         </div>
       )}
