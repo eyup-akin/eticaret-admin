@@ -11,7 +11,7 @@ import Rozet from '../components/Rozet';
 import OnayPenceresi from '../components/OnayPenceresi';   // ⭐ YENİ
 
 import './AdminBasvurulariSayfasi.css';
-
+// aliaslı git push denemesi
 // ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
 import { Check, FolderOpen, Hourglass, X } from 'lucide-react';
 
