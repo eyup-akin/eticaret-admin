@@ -1,0 +1,35 @@
+/* ===================================================== */
+/*  DESTEK TALEPLERİ — LİSTE                             */
+/* ===================================================== */
+
+/* ⚠️ Sekmedeki sayı rozeti. Admin başvurularındaki
+   `.basvuru-sekme-sayi` ile aynı görünüm ama AYRI sınıf: ikisi
+   farklı ekranlara ait ve birini değiştirmek diğerini
+   değiştirmemeli. Ortaklaştırma ancak üçüncü tüketici çıkarsa
+   `index.css`'e taşınır. */
+.destek-sekme-sayi {
+  min-width: 20px;
+  padding: 1px var(--bosluk2);
+  border-radius: var(--kose-dev);
+  background-color: var(--hata);
+  color: #ffffff;
+  font-size: var(--yazi-mikro);
+  font-weight: 700;
+  text-align: center;
+}
+
+.destek-tablo {
+  margin-bottom: var(--bosluk4);
+}
+
+/* Konu hücresi: iki satır — üstte konu, altta kim + hangi sipariş */
+.destek-konu {
+  font-weight: 600;
+  color: var(--yaziKoyu);
+}
+
+.destek-alt {
+  margin-top: 2px;
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziGri);
+}

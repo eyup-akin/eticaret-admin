@@ -102,6 +102,43 @@ const DURUMLAR = {
   asil:        { yazi: 'Asıl',        renk: '#2563eb' },
 
 
+  // ---- Destek talepleri (Aşama 8) ----
+  //
+  // ⚠️ Anahtar çakışması kontrol edildi: sözlükte 'acik',
+  // 'yanitlandi', 'kapali' yoktu.
+  //
+  // Renk BİLGİ TAŞIYOR ve buradaki bilgi "sıra kimde":
+  //   acik       → sıra BİZDE, iş bekliyor        (turuncu, uyarı)
+  //   yanitlandi → sıra müşteride, iş bizde değil (mavi, nötr akış)
+  //   kapali     → iş bitti                       (gri, sakin)
+  //
+  // ⚠️ 'acik' KIRMIZI DEĞİL: cevap bekleyen talep bir hata değil,
+  // olağan iş akışı. "Kırmızıyı gerçekten geri alınamaz işlemlere
+  // sakla" — her uyarıyı kırmızı yapmak kırmızının gücünü zayıflatır.
+  //
+  // ⚠️ 'kapali' YEŞİL DEĞİL: kapanmış talep iyi bir sonuç olmak
+  // zorunda değil (müşteri vazgeçmiş de olabilir). Yeşil "olumlu
+  // durum" demek; buradaki gerçek sadece "artık açık değil".
+  acik:        { yazi: 'Cevap Bekliyor', renk: '#f39c12' },
+  yanitlandi:  { yazi: 'Yanıtlandı',     renk: '#2563eb' },
+  kapali:      { yazi: 'Kapalı',         renk: '#64748b' },
+
+  // ---- Destek kategorileri ----
+  //
+  // ⚠️ ÖNEKLİ ANAHTAR ('destek_kargo'), çıplak 'kargo' DEĞİL.
+  // Sözlük tek ve paylaşımlı; "kargo" gibi genel bir kelimeyi
+  // kategoriye ayırmak, yarın kargo durumları eklendiğinde
+  // çakışırdı. Kupon ve stok bölümlerinde aynı uyarı zaten var.
+  //
+  // ⚠️ Kategoriler HEPSİ GRİ TONDA — bilerek. Kategori bir aciliyet
+  // değil bir etiket; renklendirseydik durum rozetiyle yarışır ve
+  // satırda hangisinin önemli olduğu anlaşılmazdı.
+  destek_kargo: { yazi: 'Kargo',  renk: '#64748b' },
+  destek_urun:  { yazi: 'Ürün',   renk: '#64748b' },
+  destek_odeme: { yazi: 'Ödeme',  renk: '#64748b' },
+  destek_diger: { yazi: 'Diğer',  renk: '#64748b' },
+
+
 };
 
 export default function Rozet({ durum }) {

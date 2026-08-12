@@ -1,0 +1,183 @@
+/* ===================================================== */
+/*  DESTEK TALEBİ — DETAY / YAZIŞMA                      */
+/* ===================================================== */
+
+.destek-detay-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk2);
+  flex-wrap: wrap;
+}
+
+.destek-detay-tarih {
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziGri);
+}
+
+.destek-detay-eylem {
+  display: flex;
+  gap: var(--bosluk2);
+  align-items: flex-start;
+}
+
+/* ---------- MÜŞTERİ KARTI ---------- */
+
+.destek-musteri {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk3) var(--bosluk5);
+  margin-bottom: var(--bosluk4);
+}
+
+.destek-musteri-satir {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+}
+
+.destek-musteri-satir a {
+  color: var(--anaRenk);
+  text-decoration: none;
+}
+
+.destek-musteri-satir a:hover {
+  text-decoration: underline;
+}
+
+/* Sipariş numarası: <button> ama bağlantı gibi görünüyor.
+   ⚠️ <a> kullanmadık çünkü gidilen yer bir URL değil, React
+   Router'ın kendi gezinmesi; <a> sayfayı baştan yüklerdi. */
+.destek-siparis-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--anaRenk);
+  font-size: var(--yazi-ikincil);
+  font-family: inherit;
+}
+
+.destek-siparis-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- YAZIŞMA ---------- */
+
+/* ⚠️ Yükseklik sınırlı ve içeride kaydırılıyor: uzun bir yazışma
+   sayfayı metrelerce uzatıp cevap kutusunu ekranın dışına
+   atıyordu. Adminin işi cevaplamak; o kutu her zaman görünür
+   kalmalı. */
+.destek-yazisma {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk3);
+  max-height: 52vh;
+  overflow-y: auto;
+  padding: var(--bosluk4);
+  background-color: var(--acikGri);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-orta);
+  margin-bottom: var(--bosluk4);
+}
+
+.destek-balon {
+  max-width: 72%;
+  padding: var(--bosluk3) var(--bosluk4);
+  border-radius: var(--kose-orta);
+  border: 1px solid var(--kenarlik);
+  background-color: var(--kartArka);
+}
+
+/* Müşteri SOLDA, admin SAĞDA.
+   ⚠️ Ayrım yalnızca renkle değil KONUMLA da yapılıyor: renk körlüğü
+   olan biri için renk tek başına bilgi taşımaz. */
+.destek-balon-musteri {
+  align-self: flex-start;
+  border-bottom-left-radius: var(--kose-kucuk);
+}
+
+.destek-balon-admin {
+  align-self: flex-end;
+  border-bottom-right-radius: var(--kose-kucuk);
+
+  /* Kendi mesajımız hafif vurgulu — ama DOLU ana renk değil.
+     Dolu zemin, okunması gereken metni bir butona benzetirdi. */
+  background-color: var(--yumusakVurgu);
+  border-color: var(--anaRenk);
+}
+
+.destek-balon-ust {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--bosluk4);
+  margin-bottom: var(--bosluk2);
+  font-size: var(--yazi-mikro);
+  color: var(--yaziGri);
+}
+
+.destek-balon-ust strong {
+  color: var(--yaziKoyu);
+}
+
+/* ⚠️ `pre-wrap`: müşterinin yazdığı satır sonları korunuyor.
+   Normal akışta hepsi tek paragrafa çöker ve "1) ... 2) ..." diye
+   yazılmış bir şikâyet okunmaz hale gelir.
+   ⚠️ `break-word`: boşluksuz uzun bir metin (takip numarası, URL)
+   balonu ekranın dışına taşırıyordu. */
+.destek-balon-metin {
+  font-size: var(--yazi-normal);
+  color: var(--yaziKoyu);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+/* ---------- CEVAP KUTUSU ---------- */
+
+.destek-cevap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk3);
+}
+
+.destek-cevap-alan {
+  width: 100%;
+  padding: var(--bosluk3);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-family: inherit;
+  font-size: var(--yazi-normal);
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.destek-cevap-alan:focus {
+  outline: none;
+  border-color: var(--anaRenk);
+}
+
+.destek-cevap-alt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+}
+
+.destek-sayac {
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziGri);
+}
+
+.destek-kapali-not {
+  padding: var(--bosluk4);
+  border: 1px dashed var(--kenarlik);
+  border-radius: var(--kose-orta);
+  text-align: center;
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziGri);
+}
