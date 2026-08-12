@@ -19,7 +19,7 @@ import './MusteriDetaySayfasi.css';
 // ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde:
 // emoji her işletim sisteminde farklı çiziliyor ve rengi tema ile
 // değişmiyor. Tek tek import — toplu import ağaç sallamayı engeller.
-import { Ban, BarChart3, CheckCircle2, CreditCard, Flame, Lock, MapPin, Receipt, Save, ScrollText, ShieldCheck, Undo2, User, Wallet } from 'lucide-react';
+import { Ban, BarChart3, CheckCircle2, CreditCard, Flame, Lock, MapPin, Phone, Receipt, Save, ScrollText, ShieldCheck, Undo2, User, Wallet } from 'lucide-react';
 
 export default function MusteriDetaySayfasi() {
   const { id } = useParams();
@@ -435,6 +435,41 @@ export default function MusteriDetaySayfasi() {
                     <br />
                     {a.city}
                   </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* --- TELEFON NUMARALARI (4.9) ---
+
+              ⚠️ SALT OKUNUR — bilinçli. Panelde kart ve adres
+              YÖNETİMİ yok (karar #11: kişisel veri iş terminaline
+              taşınmaz) ama GÖRMEK başka bir şey: destek ya da kargo
+              sorusunda "hangi numaraları kayıtlı?" sorusunun cevabı
+              burada. Ekleme/silme müşterinin kendi işi.
+
+              ⚠️ Numara ham değil, sunucudan gelen gösterim biçiminde.
+              Biçimlendirmeyi burada yapsaydık aynı kuralın mobildeki
+              kopyasıyla ikiye ayrılırdı.  */}
+          <div className="kutu">
+            <div className="kutu-baslik">
+              <Phone size={15} /> Telefon Numaraları ({sayiBicimle(musteri.ozet.numaraSayisi)})
+            </div>
+
+            {musteri.numaralar.length === 0 ? (
+              <div className="bos-yazi">Kayıtlı numara yok.</div>
+            ) : (
+              musteri.numaralar.map((n) => (
+                <div key={n.id} className="mini-kart">
+                  <div className="mini-kart-baslik">
+                    {n.etiket}
+                    {/* Asıl numara işaretleniyor: hesap kurtarma ve
+                        bildirim bunu kullanacak, adres telefonundan
+                        farkı bu. */}
+                    {n.varsayilanMi && <Rozet durum="asil" />}
+                  </div>
+
+                  <div className="kart-mono">{n.gorunum}</div>
                 </div>
               ))
             )}

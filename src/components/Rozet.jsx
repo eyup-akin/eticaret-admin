@@ -84,6 +84,24 @@ const DURUMLAR = {
   reddedildi:  { yazi: 'Reddedildi',  renk: '#e74c3c' },
 
 
+  // ---- Telefon defteri (Aşama 4.9) ----
+  //
+  // Müşterinin asıl numarası: hesap kurtarma, bildirim ve OTP bunu
+  // kullanacak. Adres telefonundan farkı bu — biri "kurye bu
+  // teslimat için kimi arasın", diğeri "hesap sahibine nasıl
+  // ulaşırız".
+  //
+  // ⚠️ Anahtar çakışması kontrol edildi: 'asil' sözlükte yok.
+  //
+  // ⚠️ "Doğrulanmadı" diye bir rozet BİLEREK EKLENMEDİ. SMS
+  //    doğrulaması henüz yok, yani bugün HER numara doğrulanmamış;
+  //    her satırda görünen bir işaret hiçbir şey söylemez (5.4b'de
+  //    "Stokta var" rozetinin kaldırılma gerekçesi). Doğrulama
+  //    geldiğinde sapma "doğrulandı" olacak ve rozet o zaman
+  //    anlam taşıyacak.
+  asil:        { yazi: 'Asıl',        renk: '#2563eb' },
+
+
 };
 
 export default function Rozet({ durum }) {
