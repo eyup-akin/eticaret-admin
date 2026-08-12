@@ -1,0 +1,110 @@
+/* ===================================================== */
+/*  SÖZLEŞMELER                                          */
+/* ===================================================== */
+
+.sozlesme-uyari {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bosluk2);
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
+  border-radius: var(--kose-kucuk);
+  border-left: 3px solid var(--uyari);
+  background-color: var(--yumusakUyari, var(--acikKart));
+  color: var(--yaziOrta);
+  font-size: var(--yazi-ikincil);
+  line-height: 1.5;
+}
+
+.sozlesme-duzen {
+  display: flex;
+  gap: var(--bosluk4);
+  align-items: flex-start;
+}
+
+/* Dar ekranda alt alta: iki sütun 900px'in altında sıkışıyordu. */
+@media (max-width: 900px) {
+  .sozlesme-duzen {
+    flex-direction: column;
+  }
+
+  .sozlesme-liste {
+    width: 100%;
+  }
+}
+
+.sozlesme-liste {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk2);
+}
+
+.sozlesme-satir {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  width: 100%;
+  padding: var(--bosluk3);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-family: inherit;
+  font-size: var(--yazi-ikincil);
+  cursor: pointer;
+  text-align: left;
+}
+
+.sozlesme-satir-aktif {
+  border-color: var(--anaRenk);
+  background-color: var(--yumusakVurgu);
+  color: var(--anaRenk);
+}
+
+.sozlesme-ad {
+  flex: 1;
+}
+
+.sozlesme-surum {
+  color: var(--yaziGri);
+}
+
+.sozlesme-metin-kart {
+  flex: 1;
+  min-width: 0;
+}
+
+.sozlesme-metin-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+  padding-bottom: var(--bosluk3);
+  margin-bottom: var(--bosluk3);
+  border-bottom: 1px solid var(--kenarlik);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziGri);
+}
+
+.sozlesme-metin-ust b {
+  color: var(--yaziKoyu);
+  font-size: var(--yazi-orta);
+}
+
+/* ⚠️ pre-wrap: metnin satır sonları korunuyor, yoksa madde
+   numaraları tek paragrafa çöküyor. */
+.sozlesme-metin {
+  white-space: pre-wrap;
+  font-size: var(--yazi-normal);
+  line-height: 1.6;
+  color: var(--yaziKoyu);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.sozlesme-bos {
+  color: var(--yaziGri);
+  font-size: var(--yazi-ikincil);
+}

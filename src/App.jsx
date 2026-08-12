@@ -31,6 +31,7 @@ import RaporlarSayfasi from './pages/RaporlarSayfasi';
 import DestekTalepleriSayfasi from './pages/DestekTalepleriSayfasi';
 import DestekDetaySayfasi from './pages/DestekDetaySayfasi';   // ⭐ YENİ (Aşama 8)
 import IadelerSayfasi from './pages/IadelerSayfasi';           // ⭐ YENİ (Aşama 9)
+import SozlesmelerSayfasi from './pages/SozlesmelerSayfasi';   // ⭐ YENİ (Aşama 10)
 import AdminBasvurulariSayfasi from './pages/AdminBasvurulariSayfasi';
 
 import HesabimSayfasi from './pages/HesabimSayfasi';   // ⭐ YENİ
@@ -112,6 +113,11 @@ export default function App() {
                 path="/admin-basvurulari"
                 element={<AdminBasvurulariSayfasi />}
               />
+
+              {/* ⭐ YENİ (Aşama 10) — sözleşme metinleri.
+                  Süperadmin bekçisinin altında: yasal metin mağazanın
+                  taahhüdü, her adminin bakması gereken bir şey değil. */}
+              <Route path="/sozlesmeler" element={<SozlesmelerSayfasi />} />
 
               {/* ⭐ YENİ — denetim kaydı.
                   Aynı süperadmin bekçisinin altında: denetim

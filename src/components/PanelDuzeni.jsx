@@ -21,7 +21,7 @@ import { rolYeterliMi } from '../utils/roller';
 import {
   LayoutDashboard, Package, Tags, Receipt, CreditCard,
   Users, Ticket, TrendingUp, LifeBuoy, ShieldCheck, ScrollText,
-  ChevronLeft, ChevronRight, Undo2,
+  ChevronLeft, ChevronRight, Undo2, FileText,
 } from 'lucide-react';
 
 import BildirimZili from './BildirimZili';   // ⭐ YENİ
@@ -50,6 +50,7 @@ const MENU = [
   { yol: '/raporlar',          ikon: TrendingUp,      yazi: 'Raporlar' },
   { yol: '/destek',            ikon: LifeBuoy,        yazi: 'Destek Talepleri' },
   { yol: '/iadeler',           ikon: Undo2,           yazi: 'İade Talepleri' },
+  { yol: '/sozlesmeler',       ikon: FileText,        yazi: 'Sözleşmeler',       gerekenRol: 'superadmin' },
   {
     yol: '/admin-basvurulari',
     ikon: ShieldCheck,
