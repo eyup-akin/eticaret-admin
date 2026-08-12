@@ -21,7 +21,7 @@ import { rolYeterliMi } from '../utils/roller';
 import {
   LayoutDashboard, Package, Tags, Receipt, CreditCard,
   Users, Ticket, TrendingUp, LifeBuoy, ShieldCheck, ScrollText,
-  ChevronLeft, ChevronRight,
+  ChevronLeft, ChevronRight, Undo2,
 } from 'lucide-react';
 
 import BildirimZili from './BildirimZili';   // ⭐ YENİ
@@ -49,6 +49,7 @@ const MENU = [
   { yol: '/kuponlar',          ikon: Ticket,          yazi: 'Kuponlar' },
   { yol: '/raporlar',          ikon: TrendingUp,      yazi: 'Raporlar' },
   { yol: '/destek',            ikon: LifeBuoy,        yazi: 'Destek Talepleri' },
+  { yol: '/iadeler',           ikon: Undo2,           yazi: 'İade Talepleri' },
   {
     yol: '/admin-basvurulari',
     ikon: ShieldCheck,

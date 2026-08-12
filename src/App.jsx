@@ -30,6 +30,7 @@ import KuponlarSayfasi from './pages/KuponlarSayfasi';
 import RaporlarSayfasi from './pages/RaporlarSayfasi';
 import DestekTalepleriSayfasi from './pages/DestekTalepleriSayfasi';
 import DestekDetaySayfasi from './pages/DestekDetaySayfasi';   // ⭐ YENİ (Aşama 8)
+import IadelerSayfasi from './pages/IadelerSayfasi';           // ⭐ YENİ (Aşama 9)
 import AdminBasvurulariSayfasi from './pages/AdminBasvurulariSayfasi';
 
 import HesabimSayfasi from './pages/HesabimSayfasi';   // ⭐ YENİ
@@ -91,6 +92,7 @@ export default function App() {
             <Route path="/raporlar"  element={<RaporlarSayfasi />} />
             <Route path="/destek"     element={<DestekTalepleriSayfasi />} />
             <Route path="/destek/:id" element={<DestekDetaySayfasi />} />
+            <Route path="/iadeler"    element={<IadelerSayfasi />} />
 
 
             {/* ⭐ YENİ — Hesabım.

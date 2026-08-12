@@ -1,0 +1,104 @@
+/* ===================================================== */
+/*  İADE TALEPLERİ                                       */
+/* ===================================================== */
+
+.iade-sekme-sayi {
+  min-width: 20px;
+  padding: 1px var(--bosluk2);
+  border-radius: var(--kose-dev);
+  background-color: var(--hata);
+  color: #ffffff;
+  font-size: var(--yazi-mikro);
+  font-weight: 700;
+  text-align: center;
+}
+
+.iade-alt {
+  margin-top: 2px;
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziGri);
+}
+
+.iade-bitti {
+  color: var(--yaziGri);
+}
+
+.iade-eylem {
+  display: flex;
+  gap: var(--bosluk2);
+  justify-content: flex-end;
+}
+
+/* Sipariş numarası: React Router gezinmesi olduğu için <a> değil
+   <button>, ama bağlantı gibi görünüyor. */
+.iade-siparis-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--anaRenk);
+  font-family: inherit;
+  font-size: var(--yazi-normal);
+  font-weight: 600;
+}
+
+.iade-siparis-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- RED PENCERESİ ---------- */
+
+.iade-red-perde {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--bosluk5);
+  z-index: 100;
+}
+
+.iade-red-kutu {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--kartArka);
+  border-radius: var(--kose-orta);
+  padding: var(--bosluk5);
+}
+
+.iade-red-baslik {
+  margin: 0 0 var(--bosluk2) 0;
+  font-size: var(--yazi-orta);
+  color: var(--yaziKoyu);
+}
+
+.iade-red-metin {
+  margin: 0 0 var(--bosluk4) 0;
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziGri);
+}
+
+.iade-red-alan {
+  width: 100%;
+  padding: var(--bosluk3);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-family: inherit;
+  font-size: var(--yazi-normal);
+  resize: vertical;
+}
+
+.iade-red-alan:focus {
+  outline: none;
+  border-color: var(--anaRenk);
+}
+
+.iade-red-butonlar {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--bosluk2);
+  margin-top: var(--bosluk4);
+}

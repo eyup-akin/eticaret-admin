@@ -139,6 +139,15 @@ const DURUMLAR = {
   destek_diger: { yazi: 'Diğer',  renk: '#64748b' },
 
 
+  // ---- İade durumları (Aşama 9) ----
+  // ⚠️ 'iade' ve 'iade_edildi' zaten ödeme durumu olarak var;
+  // çakışmasın diye buradaki anahtarlar farklı.
+  talep_edildi:     { yazi: 'Karar Bekliyor',  renk: '#f39c12' },
+  teslim_alindi:    { yazi: 'Teslim Alındı',   renk: '#0891b2' },
+  para_iade_edildi: { yazi: 'Ödendi',          renk: '#27ae60' },
+  kismi_iade:       { yazi: 'Kısmi İade',      renk: '#8e44ad' },
+
+
 };
 
 export default function Rozet({ durum }) {
