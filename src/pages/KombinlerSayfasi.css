@@ -1,0 +1,237 @@
+/* ===================================================== */
+/*  KOMBİNLER                                            */
+/* ===================================================== */
+
+.kombin-basari {
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
+  border-radius: var(--kose-kucuk);
+  border-left: 3px solid var(--basari);
+  background-color: var(--acikKart);
+  color: var(--yaziKoyu);
+  font-size: var(--yazi-ikincil);
+}
+
+/* ---------- FORM ---------- */
+
+.kombin-form {
+  margin-bottom: var(--bosluk5);
+}
+
+.kombin-form-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--bosluk4);
+  font-size: var(--yazi-orta);
+  color: var(--yaziKoyu);
+}
+
+.kombin-kapat {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--yaziGri);
+  padding: var(--bosluk1);
+}
+
+.kombin-alanlar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk3);
+  align-items: flex-end;
+  margin-bottom: var(--bosluk4);
+}
+
+.kombin-alan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk1);
+  flex: 1;
+  min-width: 200px;
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+}
+
+.kombin-alan-dar {
+  flex: 0 0 120px;
+  min-width: 120px;
+}
+
+.kombin-alan input {
+  padding: var(--bosluk2) var(--bosluk3);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-family: inherit;
+  font-size: var(--yazi-normal);
+}
+
+.kombin-alan input:focus {
+  outline: none;
+  border-color: var(--anaRenk);
+}
+
+.kombin-onay {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+  padding-bottom: var(--bosluk2);
+  cursor: pointer;
+}
+
+/* ---------- ÜRÜN SEÇİMİ ---------- */
+
+.kombin-secim-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+  margin-bottom: var(--bosluk3);
+  color: var(--yaziKoyu);
+}
+
+/* ⚠️ Sınırlı yükseklik + kaydırma: 40 ürünlük liste formu
+   metrelerce uzatıyordu ve kaydet butonu ekrandan çıkıyordu. */
+.kombin-urun-liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk2);
+  max-height: 220px;
+  overflow-y: auto;
+  padding: var(--bosluk2);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--acikGri);
+}
+
+.kombin-urun {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  padding: var(--bosluk2) var(--bosluk3);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-dev);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-family: inherit;
+  font-size: var(--yazi-ikincil);
+  cursor: pointer;
+}
+
+.kombin-urun-secili {
+  border-color: var(--anaRenk);
+  background-color: var(--yumusakVurgu);
+  color: var(--anaRenk);
+}
+
+.kombin-urun-fiyat {
+  color: var(--yaziGri);
+}
+
+.kombin-urun-secili .kombin-urun-fiyat {
+  color: var(--anaRenk);
+}
+
+.kombin-ozet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk4);
+  margin-top: var(--bosluk3);
+  padding: var(--bosluk3);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--acikKart);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+}
+
+.kombin-form-alt {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--bosluk2);
+  margin-top: var(--bosluk4);
+}
+
+/* ---------- LİSTE ---------- */
+
+.kombin-liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk3);
+}
+
+.kombin-kart-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+  margin-bottom: var(--bosluk3);
+}
+
+.kombin-ad {
+  font-size: var(--yazi-orta);
+  color: var(--yaziKoyu);
+  margin-right: var(--bosluk2);
+}
+
+.kombin-eylem {
+  display: flex;
+  gap: var(--bosluk2);
+}
+
+.kombin-urunler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk2);
+  margin-bottom: var(--bosluk3);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+}
+
+.kombin-parca {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+.kombin-arti {
+  color: var(--yaziGri);
+}
+
+/* Pasif ürün kombini görünmez yapıyor — admin bunu fark etmeli. */
+.kombin-pasif-urun {
+  text-decoration: line-through;
+  color: var(--hata);
+}
+
+.kombin-fiyat {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bosluk3);
+  font-size: var(--yazi-normal);
+  color: var(--yaziKoyu);
+}
+
+.kombin-eski {
+  text-decoration: line-through;
+  color: var(--yaziGri);
+}
+
+.kombin-tasarruf {
+  color: var(--basari);
+  font-size: var(--yazi-ikincil);
+}
+
+.kombin-bos {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk3);
+  padding: var(--bosluk5);
+  border: 1px dashed var(--kenarlik);
+  border-radius: var(--kose-orta);
+  color: var(--yaziGri);
+  font-size: var(--yazi-ikincil);
+}
