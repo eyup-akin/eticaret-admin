@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // ⭐ apiPut eklendi — durum aç/kapa endpoint'i için
 import { apiGet, apiDelete, apiPut } from '../services/api';
 import { paraBicimle, sayiBicimle } from '../utils/bicimlendir';
+import { indirimBilgisi } from '../utils/indirim';   // ⭐ YENİ (B1)
 import { resimUrl } from '../utils/resim';
 // ⭐ YENİ — kâr formülü ortak dosyadan.
 // "karHesapla" takma adıyla alıyoruz çünkü bu dosyada zaten
@@ -381,9 +382,46 @@ export default function UrunlerSayfasi() {
       hucre: (u) => kategoriAdi(u.categoryId),
     },
     {
+      /* ⭐ DEĞİŞTİ (B1 tamamlama, 2026-08-12) — İNDİRİM GÖSTERGESİ.
+       *
+       * İndirim mobilde aylardır görünüyordu ama panelde HİÇBİR izi
+       * yoktu: admin bir ürüne indirim girip listeye döndüğünde
+       * girdiğini göremiyordu. "Girdiğim veri ekranda görünmüyorsa
+       * kaydolmadı mı?" sorusu haklı bir sorudur.
+       *
+       * ⚠️ Üstü çizili eski fiyat + yüzde, mobildeki kartla AYNI
+       * dilde. İki arayüz aynı ürün için farklı bir indirim iddiası
+       * göstermemeli — hesap da o yüzden ortak kuralda
+       * (`utils/indirim.js`).
+       *
+       * ⚠️ Yüzde rozeti YOK, düz yazı var. Panel bir vitrin değil
+       * bir çalışma masası; renkli rozetler burada dikkat çekmek
+       * yerine tablonun taranmasını zorlaştırıyor. */
       baslik: 'Fiyat',
       hizala: 'sag',
-      hucre: (u) => paraBicimle(u.price),
+      hucre: (u) => {
+        const ind = indirimBilgisi(u);
+
+        if (!ind.indirimliMi) {
+          return paraBicimle(u.price);
+        }
+
+        return (
+          <div>
+            <b>{paraBicimle(u.price)}</b>
+            <div style={{ fontSize: 12, color: 'var(--yaziGri)', marginTop: 2 }}>
+              <span style={{ textDecoration: 'line-through' }}>
+                {paraBicimle(ind.eskiFiyat)}
+              </span>
+              {ind.yuzde > 0 && (
+                <span style={{ color: 'var(--hata)', marginLeft: 6 }}>
+                  -%{ind.yuzde}
+                </span>
+              )}
+            </div>
+          </div>
+        );
+      },
     },
     {
       baslik: 'Kâr',
