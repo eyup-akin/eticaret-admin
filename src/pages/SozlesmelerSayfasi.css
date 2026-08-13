@@ -16,6 +16,35 @@
   line-height: 1.5;
 }
 
+/* ⭐ YENİ — HUKUKİ UYARI.
+   Taslak uyarısından AYRI ve ondan ağır: kırmızı zemin + kalın
+   başlık. Aynı görünümü paylaşsalardı ikisi de "sarı bilgi şeridi"
+   diye okunup atlanırdı; bu kutu düzenleme yetkisinin bedelini
+   söylüyor. */
+.sozlesme-hukuk-uyari {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bosluk3);
+  padding: var(--bosluk4);
+  margin-bottom: var(--bosluk3);
+  border-radius: var(--kose-orta);
+  border-left: 3px solid var(--hata);
+  background-color: var(--yumusakHata);
+  color: var(--yaziKoyu);
+}
+
+.sozlesme-hukuk-uyari b {
+  display: block;
+  font-size: var(--yazi-normal);
+  margin-bottom: var(--bosluk1);
+}
+
+.sozlesme-hukuk-uyari p {
+  font-size: var(--yazi-ikincil);
+  line-height: var(--satir-normal);
+  color: var(--yaziOrta);
+}
+
 .sozlesme-duzen {
   display: flex;
   gap: var(--bosluk4);
@@ -107,4 +136,156 @@
 .sozlesme-bos {
   color: var(--yaziGri);
   font-size: var(--yazi-ikincil);
+}
+
+/* Seçili sözleşme kilitliyken (düzenleme sürerken) tıklanamaz
+   olduğu görünmeli — aksi halde basıp "bozuk" sanılır. */
+.sozlesme-satir:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* ===================================================== */
+/*  ⭐ YENİ — DÜZENLEME                                   */
+/* ===================================================== */
+
+.sozlesme-metin-ust-sag {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk3);
+}
+
+/* ⚠️ Yükseklik 55vh: okuma görünümündeki metin kutusuyla (60vh)
+   aynı hizada durması için — düzenlemeye girince sayfa boyu
+   zıplamıyor. Aradaki fark alttaki buton satırının payı. */
+.sozlesme-metin-alan {
+  width: 100%;
+  height: 55vh;
+  padding: var(--bosluk3);
+  border: 1px solid var(--inputKenar);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-size: var(--yazi-normal);
+  line-height: var(--satir-genis);
+  resize: vertical;
+  outline: none;
+}
+
+.sozlesme-metin-alan:focus {
+  border-color: var(--anaRenk);
+}
+
+.sozlesme-duzenle-alt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk3);
+}
+
+.sozlesme-sayac {
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziGri);
+}
+
+.sozlesme-duzenle-butonlar {
+  display: flex;
+  gap: var(--bosluk3);
+}
+
+
+/* ---------- SÜRÜM GEÇMİŞİ ---------- */
+
+.sozlesme-gecmis {
+  margin-top: var(--bosluk3);
+  padding: var(--bosluk3);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--acikKart);
+}
+
+.sozlesme-gecmis-baslik {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  margin-bottom: var(--bosluk2);
+  font-size: var(--yazi-kucuk);
+  font-weight: 600;
+  color: var(--yaziOrta);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sozlesme-gecmis-satir {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk2);
+  padding: var(--bosluk1) 0;
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+}
+
+.sozlesme-gecmis-surum {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  font-weight: 600;
+  color: var(--yaziKoyu);
+}
+
+.sozlesme-gecmis-aktif {
+  padding: 0 var(--bosluk2);
+  border-radius: var(--kose-tam);
+  background-color: var(--yumusakBasari);
+  color: var(--basari);
+  font-size: var(--yazi-mikro);
+  font-weight: 600;
+}
+
+.sozlesme-gecmis-tarih {
+  flex: 1;
+  text-align: right;
+}
+
+.sozlesme-gecmis-onay {
+  min-width: 60px;
+  text-align: right;
+}
+
+
+/* ---------- ONAY PENCERESİ İÇERİĞİ ---------- */
+
+.sozlesme-onay-liste {
+  padding-left: var(--bosluk5);
+  font-size: var(--yazi-ikincil);
+  line-height: var(--satir-normal);
+  color: var(--yaziOrta);
+}
+
+.sozlesme-onay-alan {
+  margin-bottom: var(--bosluk3);
+}
+
+.sozlesme-onay-etiket {
+  display: block;
+  margin-bottom: var(--bosluk2);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+}
+
+.sozlesme-onay-input {
+  width: 100%;
+  padding: var(--bosluk3);
+  border: 1px solid var(--inputKenar);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  outline: none;
+}
+
+.sozlesme-onay-input:focus {
+  border-color: var(--anaRenk);
 }

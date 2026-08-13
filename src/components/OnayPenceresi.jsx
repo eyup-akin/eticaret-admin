@@ -38,6 +38,26 @@ export default function OnayPenceresi({
   // kullanıcıyı gereksiz korkutur ve gerçekten tehlikeli
   // işlemlerin uyarı gücünü zayıflatır.
   onayTipi = 'tehlike',
+
+  // ⭐ YENİ — mesajın altına ek içerik (form alanı, uyarı kutusu).
+  //
+  // NEDEN GEREKLİ?
+  // Sözleşme yayınlama, onay için şifre ve elle yazılan bir doğrulama
+  // kelimesi istiyor. Bunun için ikinci bir pencere bileşeni yazmak,
+  // perdeyi/kutuyu/buton düzenini ikinci kez tanımlamak olurdu — ve
+  // ikisi zamanla ayrışırdı.
+  //
+  // ⚠️ Varsayılan yok: children verilmezse pencere eskisi gibi
+  // yalnızca başlık + mesaj çiziyor. Yeni seçenek ekleyen
+  // değişikliklerde kural — varsayılan = mevcut davranış.
+  children,
+
+  // ⭐ YENİ — onay butonu basılabilir mi?
+  //
+  // islemde'den AYRI: o "istek gidiyor" demek, bu "koşullar henüz
+  // sağlanmadı" demek. Tek bayrakta toplasaydık, alanlar boşken
+  // buton "Yayınlanıyor..." yazardı.
+  onayKilitli = false,
 }) {
   // Kapalıysa hiçbir şey çizme
   if (!acik) {
@@ -52,12 +72,14 @@ export default function OnayPenceresi({
         <div className="onay-baslik">{baslik}</div>
         <div className="onay-mesaj">{mesaj}</div>
 
+        {children && <div className="onay-icerik">{children}</div>}
+
         <div className="onay-butonlar">
           <Buton tip="ikincil" onClick={iptal} disabled={islemde}>
             Vazgeç
           </Buton>
 
-          <Buton tip={onayTipi} onClick={onayla} disabled={islemde}>
+          <Buton tip={onayTipi} onClick={onayla} disabled={islemde || onayKilitli}>
             {islemde ? islemdeYazi : onayYazi}
           </Buton>
         </div>

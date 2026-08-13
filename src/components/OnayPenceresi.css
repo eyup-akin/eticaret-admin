@@ -33,6 +33,13 @@
   margin-bottom: var(--bosluk5);
 }
 
+/* ⭐ YENİ — mesaj ile butonlar arasındaki ek içerik alanı
+   (onay formu, ek uyarı). Üst boşluğu mesajın kendi alt boşluğu
+   veriyor; burada yalnızca butonlardan ayrılması gerekiyor. */
+.onay-icerik {
+  margin-bottom: var(--bosluk5);
+}
+
 .onay-butonlar {
   display: flex;
   justify-content: flex-end;
