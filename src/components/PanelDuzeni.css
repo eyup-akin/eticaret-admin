@@ -50,6 +50,61 @@
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 0;      /* flex çocuğun kaymaya izin vermesi için şart */
+
+  /* ⭐ YENİ — KAYDIRMA ÇUBUĞU MENÜYE UYSUN
+
+     ⚠️ Varsayılan çubuk işletim sisteminin çubuğuydu: açık gri oluklu,
+     iki ucunda ok düğmeleri olan klasik Windows çubuğu. Koyu, yuvarlak
+     köşeli yüzen bir panelin içinde yabancı bir parça gibi duruyordu —
+     üstelik panelin kavisli köşesini kesiyordu.
+
+     ⚠️ RENK TOKEN'DAN TÜRETİLİYOR, elle rgba yazılmıyor.
+     Menü iki temada da koyu (#161b22 / #0b0e13) ama tonu değişiyor;
+     --menuYazi da onunla birlikte değişiyor. color-mix ile ondan
+     türetince çubuk her iki temada da zeminle aynı ilişkiyi koruyor.
+
+     ⚠️ İKİ AYRI SÖZDİZİMİ, İKİSİ DE GEREKLİ:
+       • scrollbar-width / scrollbar-color → standart (Firefox, yeni Chrome)
+       • ::-webkit-scrollbar               → eski Chrome/Safari
+     Yeni Chrome ikisini de tanıyor ve standardı tercih ediyor; ikisi
+     aynı görünümü ürettiği için hangisinin çalıştığı fark etmiyor.
+     Hiçbiri desteklenmezse tarayıcı kendi çubuğuna düşer — bozulmaz. */
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--menuYazi) 26%, transparent) transparent;
+}
+
+/* Oluk GÖRÜNMÜYOR: koyu menü zemini olduğu gibi devam ediyor.
+   Boyayacak bir renk aramak yerine hiç çizmemek, çubuğu panelin
+   parçası gibi gösteriyor. */
+.menu-liste::-webkit-scrollbar {
+  width: 10px;
+}
+
+.menu-liste::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.menu-liste::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--menuYazi) 26%, transparent);
+  border-radius: var(--kose-tam);
+
+  /* ⚠️ Saydam kenarlık + padding-box hilesi:
+     Tutamaç 10px'lik alanın ortasında 6px kalınlığında görünüyor ve
+     panelin kenarına yapışmıyor. Bunu doğrudan width ile yapamayız —
+     genişliği daraltmak tıklama hedefini de daraltırdı. Bu yolla
+     tutamaç İNCE görünüyor ama tutma alanı 10px kalıyor. */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.menu-liste::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--menuYazi) 45%, transparent);
+}
+
+/* Ok düğmelerini kaldır — klasik Windows çubuğunun en göze batan
+   parçası onlardı. macOS'ta zaten yoklar. */
+.menu-liste::-webkit-scrollbar-button {
+  display: none;
 }
 
 .yan-menu-logo {
