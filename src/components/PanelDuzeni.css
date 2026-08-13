@@ -95,6 +95,11 @@
   margin: 3px var(--bosluk3);
   border-radius: var(--kose-orta);
 
+  /* ⭐ YENİ — bekleyen iş rozetinin konum çerçevesi.
+     Bu satır olmadan rozet en yakın konumlanmış ataya (yan menü)
+     yapışır ve satırın değil menünün köşesine gider. */
+  position: relative;
+
   color: var(--menuYazi);
   text-decoration: none;
   font-size: var(--yazi-normal);
@@ -150,6 +155,68 @@
 .menu-link.active .menu-ikon {
   background-color: rgba(255, 255, 255, 0.22);
   color: #ffffff;
+}
+
+
+/* ⭐ YENİ — BEKLEYEN İŞ ROZETİ
+
+   Menüde bir sayfada bekleyen iş varsa (cevaplanmamış destek talebi,
+   karar bekleyen iade, kritik stok...) o satırın köşesinde kırmızı bir
+   sayı çıkıyor.
+
+   ⚠️ NEDEN KIRMIZI (--hata)?
+   Bu panelde kırmızı "hata" değil "acil dikkat" demek; zil rozeti de
+   aynı rengi kullanıyor. İki gösterge aynı olayı anlatıyor, aynı renkte
+   olmaları gerekiyordu — farklı renk, kullanıcıya "bunlar farklı şeyler"
+   derdi.
+
+   ⚠️ NEDEN GENİŞ HÂLDE SATIRIN KÖŞESİNDE, DAR HÂLDE İKONUN KÖŞESİNDE?
+   Geniş menüde satır 216px; rozeti ikona yapıştırsak yazının ortasında
+   asılı kalır ve "hangi satıra ait" belirsizleşirdi. Dar menüde ise
+   satır zaten ikondan ibaret — orada ikonun köşesi satırın köşesidir.
+
+   ⚠️ TEK DÜĞÜM, İKİ KONUM. JSX rozeti bir kez çiziyor; hangi durumda
+   nerede duracağını yalnızca CSS biliyor. İki ayrı düğüm çizip birini
+   gizlemek de olurdu ama o zaman aynı sayı iki yerde yazılırdı. */
+.menu-rozet {
+  position: absolute;
+
+  /* Satırın SAĞ ÜST köşesi.
+     Hap 12px yarıçaplı; 6px içeriden başlamak rozeti köşe kavisinin
+     üstüne değil yanına oturtuyor. */
+  top: 2px;
+  right: 6px;
+
+  /* ⚠️ border-box: kenarlık 22px'in İÇİNDE kalıyor. Tek haneli sayıda
+     kutu tam 22×22 — yani DAİRE. "9+" gelince yalnızca genişlik büyüyüp
+     hapa dönüşüyor, yükseklik sabit kalıyor ve satır hizası bozulmuyor. */
+  box-sizing: border-box;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: var(--kose-tam);
+
+  background-color: var(--hata);
+  color: #ffffff;
+  font-size: var(--yazi-mikro);
+  font-weight: 700;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Menü zemininden ince bir ayrım — rozet aktif satırın mavi hapının
+     üstüne geldiğinde sınırı kaybolmasın diye. */
+  border: 2px solid var(--menuArka);
+
+  /* Rozet bir GÖSTERGE, tıklama hedefi değil. Fare olayları altındaki
+     bağlantıya geçsin — köşeye denk gelen tık da menüyü açmalı. */
+  pointer-events: none;
+
+  /* Menü daralıp genişlerken rozet zıplamasın; .yan-menu'nün width
+     geçişiyle aynı süre. */
+  transition: top 0.18s ease, right 0.18s ease;
 }
 
 
@@ -339,6 +406,38 @@
   margin: 2px var(--bosluk2);
 
   gap: 0;
+}
+
+/* ⭐ YENİ — DAR MENÜDE ROZET İKONUN KÖŞESİNE GEÇER
+
+   Geniş menüde rozet satırın sağ üst köşesinde duruyor. Dar menüde
+   satır 52px'e iniyor ve içinde yazı kalmıyor — rozeti yine satırın
+   köşesine bıraksaydık ikonun 11px sağında, boşlukta asılı kalırdı.
+
+   ⚠️ KONUM SATIRIN KENARINA DEĞİL, ORTASINA GÖRE VERİLİYOR.
+
+   "right: 7px" gibi sabit bir kenar payı ilk bakışta yeterliydi ama
+   kırılgan: .menu-liste'de overflow-y:auto var ve liste uzayınca dikey
+   kaydırma çubuğu çıkıyor. Çubuk satırı ~15px daraltıyor, ORTALANMIŞ
+   ikon ise yalnızca ~7px sola kayıyor — yani ikisi farklı miktarda
+   kayıyor ve rozet ikonun üstüne biniyordu.
+
+   Ortaya göre hizalayınca satır genişliği ne olursa olsun rozet
+   ikonla birlikte hareket ediyor:
+
+     ikon 30px, ortalanmış  → sağ kenarı: merkez + 15px
+     4px taşma (zil rozetindeki −4px ile aynı his)
+     rozetin sağ kenarı     → merkez + 19px
+     right: calc(50% - 19px)  bunu genişlikten bağımsız kurar
+
+   ⚠️ Sağ kenardan hizalamanın ikinci faydası: "9+" gelip rozet
+   genişlediğinde İÇERİ (ikona doğru) büyüyor, dışarı taşmıyor.
+
+   Dikeyde sabit sayı güvenli — üst dolgu (12px) genişlikten
+   etkilenmiyor:  üst = 12 − 4 = 8px */
+.yan-menu-dar .menu-rozet {
+  top: 8px;
+  right: calc(50% - 19px);
 }
 
 /* ---------- DARALTMA BUTONU ---------- */

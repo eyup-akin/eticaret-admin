@@ -1,23 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { apiGet } from '../services/api';
+import { rozetYazisi } from '../utils/bicimlendir';
 import './BildirimZili.css';
 
 // ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
 import { AlertTriangle, Bell, Clock, Package, ShieldCheck, Ticket, Undo2 } from 'lucide-react';
-
-// Sayaç kaç saniyede bir tazelensin?
-//
-// Neden route değişiminde değil de zamanlayıcıyla?
-// Zil, kullanıcı hiçbir şey yapmadan da güncellenmeli — "yeni
-// sipariş geldi" bilgisini görmek için sayfa değiştirmek zorunda
-// kalmamalı. Zamanlayıcı bunu sağlıyor.
-//
-// 60 saniye: bir yönetim panelinde yeterince taze. Daha sık
-// sorsaydık sunucuya boşuna yük binerdi; daha seyrek olsaydı
-// "bildirim" olmaktan çıkardı.
-const TAZELEME_MS = 60000;
 
 // Her uyarı türünün ikonu — dashboard'daki sözlükle AYNI.
 //
@@ -33,55 +21,26 @@ const UYARI_IKON = {
   bekleyen_iade: <Undo2 size={16} />,
 };
 
-export default function BildirimZili() {
+// ⭐ DEĞİŞTİ — VERİYİ ARTIK KENDİ ÇEKMİYOR, PROP OLARAK ALIYOR.
+//
+// ⚠️ Bu bileşen '/admin/dikkat-gerektirenler' ucuna kendi
+// zamanlayıcısıyla soruyordu. Yan menüdeki rozetler ikinci tüketici
+// olunca aynı uca iki istek gitmesi gerekirdi: iki zamanlayıcı, iki
+// ayrı "gerçek". Zil 12 gösterirken menü 11 gösterebilirdi — aynı
+// ekranda birbirini tutmayan iki sayı, hiç sayı göstermemekten kötü.
+//
+// Çekme işi PanelDuzeni'ne taşındı (zaten bu bileşeni o çiziyor ve
+// menü rozetlerinin sahibi de o). Burada kalan tek iş: açılır listeyi
+// yönetmek.
+//
+// ⚠️ `uyarilar` varsayılanı boş dizi: prop hiç gelmezse bileşen
+// çökmesin, sadece "bekleyen iş yok" desin.
+export default function BildirimZili({ uyarilar = [] }) {
   const navigate = useNavigate();
 
   const [acik, setAcik] = useState(false);
-  const [uyarilar, setUyarilar] = useState([]);
 
   const sarmalRef = useRef(null);
-
-  // ---------- VERİYİ ÇEK + PERİYODİK TAZELE ----------
-  useEffect(() => {
-    let iptal = false;
-
-    async function getir() {
-      try {
-        const veri = await apiGet('/admin/dikkat-gerektirenler');
-
-        if (!iptal) {
-          setUyarilar(veri.uyarilar ?? []);
-        }
-      } catch {
-        // ⚠️ SESSİZCE YUTUYORUZ — bilinçli.
-        //
-        // Bu bir SAYAÇ. Alınamazsa panel yine çalışmalı.
-        // Üst barda kırmızı bir hata kutusu çıkarmak, asıl işini
-        // yapmaya çalışan yöneticiyi gereksiz yere rahatsız ederdi.
-        //
-        // Dashboard'daki aynı uç hata yönetimini zaten yapıyor.
-        if (!iptal) {
-          setUyarilar([]);
-        }
-      }
-    }
-
-    // İlk yüklemede hemen çek — 60 saniye bekletmiyoruz.
-    getir();
-
-    const zamanlayici = setInterval(getir, TAZELEME_MS);
-
-    // ⚠️ TEMİZLİK — ATLANAMAZ.
-    //
-    // clearInterval yazmasaydık: kullanıcı çıkış yapıp bileşen
-    // ekrandan kalktıktan sonra bile zamanlayıcı çalışmaya devam
-    // ederdi. Her 60 saniyede bir, artık var olmayan bir bileşenin
-    // durumunu güncellemeye çalışan bir istek. Klasik bellek sızıntısı.
-    return () => {
-      iptal = true;
-      clearInterval(zamanlayici);
-    };
-  }, []);
 
   // ---------- DIŞARI TIKLAYINCA KAPAT ----------
   //
@@ -121,16 +80,22 @@ export default function BildirimZili() {
   // ayrışırlardı.
   //
   // reduce: her uyarı grubunun 'adet' değerini topluyor.
-  // 'ogeler.length' DEĞİL 'adet' kullanıyoruz — backend en fazla
-  // 8 öğe gönderiyor ama gerçek sayı daha büyük olabilir.
+  //
+  // 'ogeler.length' DEĞİL 'adet' kullanıyoruz — backend en fazla 8 örnek
+  // gönderiyor ama gerçek sayı daha büyük olabilir.
+  //
+  // ⚠️ Bu cümle uzun süre YANLIŞTI: backend `adet` alanını da kırpılmış
+  // listeden sayıyordu, yani 50 bekleyen sipariş varken 8 gönderiyordu.
+  // Sayım artık ayrı bir COUNT sorgusundan geliyor ve bu satır nihayet
+  // gerçekten doğru.
   const toplam = uyarilar.reduce((t, u) => t + u.adet, 0);
 
   // Rozet metni: 9'dan büyükse "9+".
   //
-  // Neden? İki haneli sayılar rozeti genişletir ve üst barın
-  // hizasını bozar. Mobildeki RozetliIkon bileşeninde de aynı
-  // kural — iki platformda aynı davranış.
-  const rozetYazi = toplam > 9 ? '9+' : String(toplam);
+  // ⭐ DEĞİŞTİ — kural bicimlendir.js'e taşındı. Yan menüdeki rozetler
+  // ikinci tüketici oldu; iki yerde ayrı yazsaydık biri "9+" derken
+  // diğeri başka bir eşik kullanabilirdi.
+  const rozetYazi = rozetYazisi(toplam);
 
   function uyariyaGit(link) {
     setAcik(false);

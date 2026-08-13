@@ -81,3 +81,32 @@ export function gunBicimle(tarihMetni) {
     year: 'numeric',
   });
 }
+// 0 → ""   |   3 → "3"   |   9 → "9"   |   47 → "9+"
+//
+// ⭐ YENİ — Bildirim rozetlerinin metni.
+//
+// ⚠️ NEDEN ORTAK YERE TAŞINDI?
+// Kural BildirimZili'nin içinde yazılıydı ve tek tüketicisi vardı.
+// Yan menüdeki rozetler ikinci tüketici oldu; ikisinde ayrı ayrı
+// yazsaydık biri "9+" derken diğeri "99+" diyebilirdi ve aynı ekranda
+// iki farklı eşik görünürdü.
+//
+// ⚠️ NEDEN 9'DAN SONRA KESİLİYOR?
+// İki haneli sayı rozeti genişletir; menüde ve üst barda hizayı bozar.
+// Yönetici için "9'dan fazla" ile "23" arasındaki fark eyleme
+// dönüşmüyor — ikisinde de listeye gidip bakacak.
+//
+// Mobildeki RozetliIkon bileşeninde de aynı eşik var.
+export function rozetYazisi(sayi) {
+  const deger = Number(sayi) || 0;
+
+  // ⚠️ Sıfırda BOŞ dönüyor, "0" değil.
+  // "0" yazan bir rozet dikkat çeker ama hiçbir bilgi vermez; üstelik
+  // her bakışta "bir şey mi var?" diye baktırır. Çağıran taraf zaten
+  // sayı 0 ise rozeti hiç çizmiyor — bu, o kararın ikinci kapısı.
+  if (deger <= 0) {
+    return '';
+  }
+
+  return deger > 9 ? '9+' : String(deger);
+}

@@ -1,3 +1,22 @@
+// ============================================
+// ⚠️ BU DOSYANIN BİR İKİZİ VAR:
+//        ETicaretMobil/src/services/api.js
+//
+// Token yönetimi mantığı (tek refresh kilidi, 401 akışı, /auth/
+// muafiyeti, 403'te oturumu düşürmeme) ikisinde de AYNI ve öyle
+// kalmalı. Refresh mantığında bir değişiklik yapıyorsan İKİSİNE DE
+// uygula — biri güncellenip diğeri unutulursa iki istemci farklı
+// oturum davranışı gösterir ve fark ancak "mobilde çıkış atıyor ama
+// panelde atmıyor" gibi bir şikâyetle anlaşılır.
+//
+// Neden ortak bir pakete çıkarılmadı? İki AYRI git deposu ve
+// paylaşılan bir npm paketi yok. Paket açmanın bedeli (sürümleme,
+// iki depoda yayın) bu ölçekte kazancından büyük. Kopya BİLİNÇLİ;
+// bu not da onu bilinçli tutmak için.
+//
+// Farklar (kasıtlı): burada localStorage senkron, mobilde SecureStore
+// asenkron; burada FormData yükleme ve dosya indirme var, mobilde yok.
+// ============================================
 import { API_URL } from './config';
 import {
   tokenAl, tokenKaydet,
@@ -156,7 +175,21 @@ export async function apiIstek(yol, secenekler = {}, yenidenDenendi = false) {
   // yasak. Aşağıdaki genel bloğa düşüp backend'in gerçek mesajını gösterir.
   if (!cevap.ok) {
     const hataMesaji = veri && veri.mesaj ? veri.mesaj : 'Bir hata oluştu';
-    throw new Error(hataMesaji);
+
+    // ⭐ YENİ — backend "kod" gönderdiyse hata nesnesine iliştir.
+    //
+    // ⚠️ Bu satır mobildeki ikizinde VARDI, burada YOKTU — iki kopyanın
+    // sessizce ayrıştığı ilk yer. Backend bazı durumlarda makine
+    // okunur bir kod da gönderiyor (örn. KUPON_GECERSIZ,
+    // EMAIL_DOGRULANMADI); metne bakarak durum ayırt etmek, mesaj her
+    // düzeltildiğinde istemciyi kırardı.
+    //
+    // JS'te Error bir nesnedir; üstüne kendi alanlarını ekleyebilirsin:
+    //    catch (hata) { if (hata.kod === 'KUPON_GECERSIZ') ... }
+    const hata = new Error(hataMesaji);
+    hata.kod = veri && veri.kod ? veri.kod : null;
+
+    throw hata;
   }
 
   return veri;

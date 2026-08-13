@@ -40,12 +40,27 @@ import { Search } from 'lucide-react';
 // API sözleşmesine dokunmamış oluruz.
 //
 // Rozet bileşeninde de aynı deseni kullandık.
+//
+// ⚠️ Anahtarlar backend'deki DenetimIslemi sabitleriyle BİREBİR aynı
+// olmalı (Services/DenetimKaydi.cs). Orada sabit sınıfa toplandılar;
+// burada hâlâ düz metin çünkü bu taraf yalnızca gösterim yapıyor.
 const ISLEM_BILGI = {
-  rol_degisti:      { yazi: 'Rol Değişti',      renk: '#8e44ad' },
-  pasiflestirildi:  { yazi: 'Pasifleştirildi',  renk: '#e74c3c' },
-  aktiflestirildi:  { yazi: 'Aktifleştirildi',  renk: '#27ae60' },
-  yorum_gizlendi:   { yazi: 'Yorum Gizlendi',   renk: '#f39c12' },
-  yorum_gosterildi: { yazi: 'Yorum Gösterildi', renk: '#2563eb' },
+  rol_degisti:           { yazi: 'Rol Değişti',          renk: '#8e44ad' },
+  pasiflestirildi:       { yazi: 'Pasifleştirildi',      renk: '#e74c3c' },
+  aktiflestirildi:       { yazi: 'Aktifleştirildi',      renk: '#27ae60' },
+  yorum_gizlendi:        { yazi: 'Yorum Gizlendi',       renk: '#f39c12' },
+  yorum_gosterildi:      { yazi: 'Yorum Gösterildi',     renk: '#2563eb' },
+
+  // ⭐ YENİ — bunlar backend'de zaten üretiliyordu ama karşılıkları
+  // buraya yazılmadığı için ekranda ham kod olarak görünüyorlardı.
+  basvuru_onaylandi:     { yazi: 'Başvuru Onaylandı',    renk: '#27ae60' },
+  basvuru_reddedildi:    { yazi: 'Başvuru Reddedildi',   renk: '#e74c3c' },
+  sozlesme_guncellendi:  { yazi: 'Sözleşme Güncellendi', renk: '#0891b2' },
+
+  // ⭐ YENİ — para hareketi yaratan iki işlem. Renkleri bilerek
+  // belirgin: denetim listesinde göz önce bunlara takılmalı.
+  para_iadesi:           { yazi: 'Para İadesi',          renk: '#d97706' },
+  siparis_iptal_admin:   { yazi: 'Sipariş İptali',       renk: '#dc2626' },
 };
 
 // Sözlükte olmayan bir kod gelirse ne olacak?

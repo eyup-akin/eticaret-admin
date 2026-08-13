@@ -27,6 +27,8 @@ import {
 import BildirimZili from './BildirimZili';   // ⭐ YENİ
 
 import KullaniciMenusu from './KullaniciMenusu';
+import { apiGet } from '../services/api';        // ⭐ YENİ
+import { rozetYazisi } from '../utils/bicimlendir';   // ⭐ YENİ
 import './PanelDuzeni.css';
 
 // SOL MENÜ
@@ -73,6 +75,18 @@ const MENU = [
 // olurdu — hiçbir yerde patlamaz, sadece çalışmaz. Sihirli metinleri
 // isimlendirmek bu tür hataları imkânsız kılıyor.
 const MENU_DURUM_ANAHTARI = 'panel-menu-daraltilmis';
+
+// ⭐ YENİ — bekleyen iş sayaçları kaç saniyede bir tazelensin?
+//
+// Değer BildirimZili'den buraya taşındı; artık tek bir zamanlayıcı var
+// ve hem zil hem menü rozetleri onu paylaşıyor. İki ayrı zamanlayıcı
+// olsaydı aynı uca iki kez sorulur ve iki taraf farklı anlarda
+// güncellenip birbirini tutmayan sayılar gösterebilirdi.
+//
+// 60 saniye: bir yönetim panelinde yeterince taze. Daha sık sorsaydık
+// sunucuya boşuna yük binerdi; daha seyrek olsaydı "bildirim" olmaktan
+// çıkardı.
+const TAZELEME_MS = 60000;
 
 // ⭐ YENİ — rol kodunu okunabilir yazıya çevirir.
 //
@@ -148,6 +162,80 @@ export default function PanelDuzeni() {
     }
   }, [daraltilmis]);
 
+  // ⭐ YENİ — BEKLEYEN İŞ UYARILARI
+  //
+  // ⚠️ VERİ BURADA ÇEKİLİYOR, BildirimZili'nin İÇİNDE DEĞİL.
+  //
+  // Zil bu uca kendi zamanlayıcısıyla soruyordu. Menü rozetleri ikinci
+  // tüketici olunca aynı ucu iki kez sormak gerekirdi: iki istek, iki
+  // zamanlayıcı ve iki ayrı "gerçek". Zil 12 gösterirken menü 11
+  // gösterebilirdi — aynı ekranda birbirini tutmayan iki sayı, hiç
+  // sayı göstermemekten kötüdür.
+  //
+  // Şimdi tek kaynak burada; zil veriyi prop olarak alıyor.
+  const [uyarilar, setUyarilar] = useState([]);
+
+  useEffect(() => {
+    let iptal = false;
+
+    async function getir() {
+      try {
+        const veri = await apiGet('/admin/dikkat-gerektirenler');
+
+        if (!iptal) {
+          setUyarilar(veri.uyarilar ?? []);
+        }
+      } catch {
+        // ⚠️ SESSİZCE YUTUYORUZ — bilinçli.
+        //
+        // Bu bir SAYAÇ. Alınamazsa panel yine çalışmalı. Menünün
+        // üstünde kırmızı bir hata kutusu çıkarmak, asıl işini yapmaya
+        // çalışan yöneticiyi gereksiz yere rahatsız ederdi.
+        //
+        // ⚠️ Boşaltmak şart: eski sayılar ekranda asılı kalırsa
+        // yönetici bekleyen iş olduğunu sanıp boş listeye gider.
+        if (!iptal) {
+          setUyarilar([]);
+        }
+      }
+    }
+
+    // İlk yüklemede hemen çek — 60 saniye bekletmiyoruz.
+    getir();
+
+    const zamanlayici = setInterval(getir, TAZELEME_MS);
+
+    // ⚠️ TEMİZLİK — ATLANAMAZ. clearInterval olmadan, bileşen ekrandan
+    // kalktıktan sonra bile 60 saniyede bir istek gitmeye devam ederdi.
+    return () => {
+      iptal = true;
+      clearInterval(zamanlayici);
+    };
+  }, []);
+
+  // ⭐ YENİ — MENÜ YOLU → BEKLEYEN İŞ SAYISI
+  //
+  // ⚠️ EŞLEME ELLE YAZILMIYOR, `tumunuGorLink`'TEN TÜRETİLİYOR.
+  //
+  // Backend her uyarıya zaten "tümünü gör" adresi koyuyor ve o adresler
+  // menüdeki yollarla birebir aynı (/siparisler, /urunler, /destek,
+  // /iadeler, /admin-basvurulari).
+  //
+  // { bekleyen_destek: '/destek', ... } gibi bir sözlük yazsaydık
+  // backend yeni bir uyarı türü eklediğinde rozet SESSİZCE çıkmazdı —
+  // hiçbir yerde hata olmaz, sadece eksik çalışırdı. Türetince yeni tür
+  // kendiliğinden doğru menüye düşüyor.
+  //
+  // ⚠️ Toplama yapıyoruz (`+=`), atama değil: ileride iki farklı uyarı
+  // türü aynı sayfaya işaret ederse ikisi tek rozette birleşmeli.
+  const menuSayaclari = uyarilar.reduce((toplam, u) => {
+    if (u.tumunuGorLink) {
+      toplam[u.tumunuGorLink] = (toplam[u.tumunuGorLink] ?? 0) + u.adet;
+    }
+
+    return toplam;
+  }, {});
+
   // Kullanıcının rolüne göre menüyü süz.
   // Türetilmiş değer — state'te tutmuyoruz, her render'da hesaplanıyor.
   const gorunenMenu = MENU.filter((oge) =>
@@ -194,6 +282,9 @@ export default function PanelDuzeni() {
           {gorunenMenu.map((oge) => {
             const Ikon = oge.ikon;
 
+            // ⭐ YENİ — bu menüde bekleyen iş var mı?
+            const sayi = menuSayaclari[oge.yol] ?? 0;
+
             return (
               <NavLink
                 key={oge.yol}
@@ -203,8 +294,21 @@ export default function PanelDuzeni() {
                 /* ⭐ İpucu SADECE daraltılmışken.
                    Genişken yazı zaten görünüyor; balon göstermek gereksiz
                    tekrar ve fare gezdirirken can sıkıcı olurdu.
-                   undefined vermek özniteliği hiç eklemiyor. */
-                title={daraltilmis ? oge.yazi : undefined}
+                   undefined vermek özniteliği hiç eklemiyor.
+
+                   ⭐ DEĞİŞTİ — daraltılmışken sayı da balona giriyor.
+                   Dar menüde rozet "9+" diyor ama neyin 9'u olduğunu
+                   söylemiyor; yazı gizli olduğu için tek ipucu bu balon. */
+                title={
+                  daraltilmis
+                    ? (sayi > 0 ? `${oge.yazi} (${sayi} bekleyen)` : oge.yazi)
+                    : undefined
+                }
+                /* Ekran okuyucu görsel rozeti göremez; sayıyı ancak
+                   buradan öğrenir. Sayı yokken aria-label VERMİYORUZ —
+                   bağlantının kendi metni zaten yeterli ve gereksiz
+                   aria-label metni ezerdi. */
+                aria-label={sayi > 0 ? `${oge.yazi}, ${sayi} bekleyen` : undefined}
               >
                 {/* ⭐ YENİ — ikon dairesel rozet içinde (referans tasarım).
 
@@ -217,6 +321,27 @@ export default function PanelDuzeni() {
                 </span>
 
                 <span className="menu-yazi">{oge.yazi}</span>
+
+                {/* ⭐ YENİ — BEKLEYEN İŞ ROZETİ
+
+                    ⚠️ SAYI SIFIRSA HİÇ ÇİZİLMİYOR. "0" yazan bir rozet
+                    dikkat çeker ama bilgi vermez; üstelik her bakışta
+                    "bir şey mi var?" diye baktırır. Yokluk, sıfırdan
+                    farklı bir şeydir. (Zil rozetinde de aynı kural.)
+
+                    ⚠️ Konumu CSS'te: genişken satırın sağ üst köşesinde,
+                    daraltılmışken ikonun sağ üst köşesinde. JSX bu farkı
+                    BİLMİYOR — tek bir düğüm var, yerini .yan-menu-dar
+                    altındaki kural değiştiriyor. Görünüm kararı
+                    JavaScript'e sızmıyor.
+
+                    aria-hidden: sayı yukarıdaki aria-label'da zaten
+                    okunuyor, ekran okuyucu iki kez duymamalı. */}
+                {sayi > 0 && (
+                  <span className="menu-rozet" aria-hidden="true">
+                    {rozetYazisi(sayi)}
+                  </span>
+                )}
               </NavLink>
             );
           })}
@@ -288,8 +413,12 @@ export default function PanelDuzeni() {
               
               Sıralama .ust-bar'daki flex akışından geliyor:
               isim (margin-right: auto ile sola yapışık) → zil →
-              profil menüsü. */}
-          <BildirimZili />
+              profil menüsü.
+
+              ⭐ DEĞİŞTİ — veri artık prop olarak geçiyor. Zil kendi
+              isteğini atmıyor; menü rozetleriyle AYNI cevabı okuyor.
+              Böylece iki gösterge hiçbir zaman farklı sayı söylemiyor. */}
+          <BildirimZili uyarilar={uyarilar} />
 
           <KullaniciMenusu />
         </header>
