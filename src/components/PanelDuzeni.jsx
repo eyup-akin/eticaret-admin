@@ -271,7 +271,16 @@ export default function PanelDuzeni() {
             Logo işareti bir tamga gibi geometrik: "S" harfini
             çağrıştıran ama harf olmayan bir işaret. Emoji
             kullanmıyoruz — her platformda farklı çiziliyor. */}
-        <div className="yan-menu-logo">
+        {/* ⭐ DEĞİŞTİ — LOGO ARTIK BAĞLANTI.
+            ⚠️ Sol üstteki markaya basınca ana sayfaya gitmek her
+            panelde beklenen davranış; buradaki yalnızca bir yazıydı
+            ve tıklanınca hiçbir şey olmuyordu.
+            ⚠️ `NavLink` "aktif" sınıfı ekliyor ama burada işe
+            yaramıyor (logo hep aynı görünmeli); yine de menüdeki
+            diğer bağlantılarla aynı bileşen kullanıldı — `<a href>`
+            yazsaydık tarayıcı sayfayı BAŞTAN yükler ve tek sayfa
+            uygulamasının bütün durumu sıfırlanırdı. */}
+        <NavLink to="/" end className="yan-menu-logo" title="Dashboard'a git">
           <span className="logo-isaret" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path
@@ -283,7 +292,7 @@ export default function PanelDuzeni() {
             </svg>
           </span>
           <span className="logo-yazi">Satık</span>
-        </div>
+        </NavLink>
 
         {/* ⭐ DEĞİŞTİ — menü artık kendi kaydırma alanında.
             Alttaki kullanıcı kartı sabit kalsın, sadece bağlantılar

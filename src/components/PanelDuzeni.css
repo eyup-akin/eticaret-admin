@@ -118,6 +118,28 @@
   align-items: center;
   gap: 10px;
   white-space: nowrap;
+
+  /* ⭐ YENİ — logo artık bağlantı (NavLink).
+     ⚠️ Tarayıcı <a> etiketine varsayılan olarak altı çizili mavi
+     veriyor; menü zemininde beyaz kalmalı. */
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.yan-menu-logo:hover {
+  /* ⚠️ Renk DEĞİŞMİYOR, saydamlık değişiyor: logo işareti ile yazı
+     ayrı renklerde olsaydı hover'da ikisini ayrı ayrı tanımlamak
+     gerekirdi. Opaklık ikisini birden, tek kuralla etkiliyor. */
+  opacity: 0.8;
+}
+
+/* Klavyeyle gezenler için görünür odak — menünün koyu zemininde
+   varsayılan mavi halka okunmuyor. */
+.yan-menu-logo:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+  border-radius: var(--kose-kucuk);
 }
 
 /* ⭐ YENİ — logo işareti.
