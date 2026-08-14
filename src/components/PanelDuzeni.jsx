@@ -70,10 +70,17 @@ const MENU = [
     yazi: 'Admin Başvuruları',
     gerekenRol: 'superadmin',
   },
+  // ⭐ DEĞİŞTİ — "Denetim Kaydı" girdisi kaldırıldı, yerini bu aldı.
+  //
+  // ⚠️ İKİ AYRI LOG MENÜSÜ OLMASIN: süperadmin "ne oldu?" diye
+  // baktığında tek yere bakmak ister. Denetim, e-posta, girişler ve
+  // hatalar ayrı menüler olsaydı sorunun hangi ekranda görüneceğini
+  // önceden bilmek gerekirdi — ki bakan kişi tam olarak onu bilmiyor.
+  // Denetim artık bu sayfanın ilk sekmesi.
   {
-    yol: '/denetim-kaydi',
+    yol: '/sistem-kayitlari',
     ikon: ScrollText,
-    yazi: 'Denetim Kaydı',
+    yazi: 'Sistem Kayıtları',
     gerekenRol: 'superadmin',
   },
 ];

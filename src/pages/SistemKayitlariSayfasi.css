@@ -1,0 +1,207 @@
+/* ============================================================
+   SİSTEM KAYITLARI
+
+   ⭐ DEĞİŞTİ — .denetim-* sınıfları DenetimKaydiSayfasi.css'ten
+   BURAYA TAŞINDI, kopyalanmadı. O dosya ve sayfası silindi.
+
+   ⚠️ Kopyalasaydık iki tanım aynı ada sahip olurdu ve CSS'in kapsamı
+   olmadığı için hangisinin kazandığı dosya sırasına kalırdı — sessiz
+   ve teşhisi zor bir görünüm hatası.
+   ============================================================ */
+
+/* ---------- DENETİM TABLOSU ---------- */
+
+/* İşlem tipi etiketi — rengi JS'ten geliyor, biçimi buradan */
+.denetim-etiket
+{
+    display: inline-block;
+    padding: 3px var(--bosluk3);
+    font-size: var(--yazi-kucuk);
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: var(--kose-orta);
+}
+
+/* Kişi adları tıklanabilir — o kişinin detay sayfasına gider.
+   <button> kullanıyoruz, <a> değil: sayfa geçişini React Router
+   yapıyor, tarayıcının tam sayfa yenilemesi istemiyoruz. */
+.denetim-kisi-link
+{
+    padding: 0;
+    font-size: var(--yazi-ikincil);
+    font-weight: 500;
+    font-family: inherit;
+    color: var(--anaRenk);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.denetim-kisi-link:hover
+{
+    text-decoration: underline;
+}
+
+/* Eski → yeni akışı tek hücrede */
+.denetim-degisim
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: var(--yazi-ikincil);
+    white-space: nowrap;
+}
+
+/* Eski değer geçmişte kaldı — üstü çizili ve soluk.
+   Metin okunmadan bile "bu artık geçerli değil" anlaşılır. */
+.denetim-eski
+{
+    color: var(--yaziGri);
+    text-decoration: line-through;
+}
+
+.denetim-ok
+{
+    color: var(--yaziGri);
+}
+
+/* Yeni değer güncel gerçek — vurgulu */
+.denetim-yeni
+{
+    font-weight: 600;
+    color: var(--yaziKoyu);
+}
+
+/* Değer değişikliği olmayan olaylar (yorum gizleme gibi).
+   Boş hücre "veri yok mu, bozuk mu" belirsizliği yaratır;
+   açık bir tire "burada gösterilecek değer yok" der. */
+.denetim-bos
+{
+    color: var(--yaziGri);
+}
+
+/* ---------- KONTROL PANELİ (sekmeler + tarih) ---------- */
+
+/* ⚠️ Ayrı bir sınıf, .rapor-kontrol'ün yeniden kullanımı DEĞİL.
+   Aynı görünüyorlar ama farklı sayfalara ait; birini değiştirmek
+   diğerini sessizce bozardı. (Ortak bir sınıf gerekirse index.css'e
+   taşınır — o zaman iki değil ÜÇ tüketici olur.) */
+.log-kontrol
+{
+    margin-bottom: var(--bosluk4);
+    background-color: var(--kartArka);
+    border: 1px solid var(--kenarlik);
+    border-radius: var(--kose-orta);
+
+    /* Üstte sekme, altta tarih — dikey akış */
+    overflow: hidden;
+}
+
+.log-kontrol .tarih-araligi
+{
+    padding: var(--bosluk3) var(--bosluk4);
+}
+
+.log-govde
+{
+    min-height: 200px;
+}
+
+/* ---------- BİLGİ NOTU ----------
+   Tablonun üstünde/altında duran açıklama satırı. Bu ekranda not
+   şart: "gönderildi" ile "ulaştı" farkı, şifrelerin saklanmadığı ve
+   kayıtların silinemezliği ekranda YAZMAZSA kimse bilmez. */
+.log-not
+{
+    margin-bottom: var(--bosluk3);
+    font-size: var(--yazi-ikincil);
+    line-height: var(--satir-normal);
+    color: var(--yaziGri);
+}
+
+/* ---------- DEĞİŞİKLİK ALANLARI (JSON kayıtlar) ---------- */
+
+.deger-alanlar
+{
+    display: flex;
+    flex-direction: column;
+    gap: var(--bosluk1);
+}
+
+.deger-satir
+{
+    display: flex;
+    align-items: baseline;
+    gap: var(--bosluk2);
+}
+
+/* Alan adı ikincil bilgi: hangi alanın değiştiği önemli ama asıl
+   dikkat değerlerin kendisinde olmalı. */
+.deger-ad
+{
+    min-width: 80px;
+    font-size: var(--yazi-kucuk);
+    color: var(--yaziGri);
+}
+
+/* ---------- VARLIK ETİKETİ ----------
+   Kişi adı tıklanabilir (mavi link), varlık etiketi değil.
+   Aynı sütunda ikisi de görünüyor; farkın anlaşılması için varlık
+   etiketi nötr renkte kalıyor — tıklanamayan bir şeyi link gibi
+   göstermek boşuna tıklattırırdı. */
+.denetim-varlik
+{
+    font-size: var(--yazi-ikincil);
+    color: var(--yaziOrta);
+}
+
+/* ---------- HATA SEKMESİ ---------- */
+
+.log-yol
+{
+    font-size: var(--yazi-kucuk);
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    color: var(--yaziKoyu);
+}
+
+/* Hata mesajı bir sorun bildiriyor — rengi bunu söylemeli.
+   ⚠️ Rozet zemini VERİLMEDİ: her satırda kırmızı bir blok, tablonun
+   tamamını alarm ekranına çevirirdi. Yazı rengi yeterli. */
+.log-hata-metin
+{
+    font-size: var(--yazi-ikincil);
+    color: var(--hata);
+}
+
+/* Sağlayıcı mesaj kimliği gibi ikincil teknik bilgi */
+.log-kisik
+{
+    display: inline-block;
+    max-width: 220px;
+    overflow: hidden;
+    font-size: var(--yazi-kucuk);
+    color: var(--yaziGri);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+
+/* Yığın izi — makine çıktısı, okunması için tek aralıklı font şart.
+   ⚠️ Yükseklik sınırlı ve kendi içinde kayıyor: 4000 karakterlik bir
+   iz sayfayı metrelerce uzatır ve altındaki sayfalama erişilemez
+   hale gelirdi. */
+.log-yigin
+{
+    max-height: 360px;
+    padding: var(--bosluk3);
+    margin: 0;
+    overflow: auto;
+    font-size: var(--yazi-kucuk);
+    font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+    line-height: var(--satir-normal);
+    color: var(--yaziOrta);
+    white-space: pre-wrap;
+    word-break: break-word;
+    background-color: var(--acikGri);
+    border-radius: var(--kose-orta);
+}

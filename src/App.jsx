@@ -41,7 +41,9 @@ import HesabimSayfasi from './pages/HesabimSayfasi';   // ⭐ YENİ
 
 import OturumlarimSayfasi from './pages/OturumlarimSayfasi';   // ⭐ YENİ
 
-import DenetimKaydiSayfasi from './pages/DenetimKaydiSayfasi';
+// ⭐ DEĞİŞTİ — DenetimKaydiSayfasi kaldırıldı, yerine sekmeli
+// Sistem Kayıtları geldi. Denetim onun ilk sekmesi.
+import SistemKayitlariSayfasi from './pages/SistemKayitlariSayfasi';
 
 export default function App() {
   return (
@@ -125,12 +127,22 @@ export default function App() {
                   taahhüdü, her adminin bakması gereken bir şey değil. */}
               <Route path="/sozlesmeler" element={<SozlesmelerSayfasi />} />
 
-              {/* ⭐ YENİ — denetim kaydı.
+              {/* ⭐ DEĞİŞTİ — sistem kayıtları (denetim / e-posta /
+                  girişler / hatalar), tek sekmeli sayfa.
                   Aynı süperadmin bekçisinin altında: denetim
                   mekanizması, denetlenen kişiye kapalı olmalı. */}
               <Route
+                path="/sistem-kayitlari"
+                element={<SistemKayitlariSayfasi />}
+              />
+
+              {/* ⚠️ ESKİ ADRES YÖNLENDİRİLİYOR, SİLİNMİYOR.
+                  /denetim-kaydi yer imlerinde ve tarayıcı geçmişinde
+                  duruyor; kaldırsaydık "*" kuralı kullanıcıyı sessizce
+                  dashboard'a atardı ve neden olduğu anlaşılmazdı. */}
+              <Route
                 path="/denetim-kaydi"
-                element={<DenetimKaydiSayfasi />}
+                element={<Navigate to="/sistem-kayitlari" replace />}
               />
             </Route>
 
