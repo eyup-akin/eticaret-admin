@@ -34,6 +34,7 @@ import IadelerSayfasi from './pages/IadelerSayfasi';           // ⭐ YENİ (Aş
 import SozlesmelerSayfasi from './pages/SozlesmelerSayfasi';   // ⭐ YENİ (Aşama 10)
 import KombinlerSayfasi from './pages/KombinlerSayfasi';       // ⭐ YENİ
 import BannerlarSayfasi from './pages/BannerlarSayfasi';       // ⭐ YENİ (B2)
+import IndirimlerSayfasi from './pages/IndirimlerSayfasi';     // ⭐ YENİ
 import AdminBasvurulariSayfasi from './pages/AdminBasvurulariSayfasi';
 
 import HesabimSayfasi from './pages/HesabimSayfasi';   // ⭐ YENİ
@@ -98,6 +99,7 @@ export default function App() {
             <Route path="/iadeler"    element={<IadelerSayfasi />} />
             <Route path="/kombinler" element={<KombinlerSayfasi />} />
             <Route path="/bannerlar" element={<BannerlarSayfasi />} />
+            <Route path="/indirimler" element={<IndirimlerSayfasi />} />
 
 
             {/* ⭐ YENİ — Hesabım.

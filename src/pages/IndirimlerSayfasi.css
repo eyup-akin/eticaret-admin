@@ -1,0 +1,234 @@
+/* ===================================================== */
+/*  İNDİRİMLER                                           */
+/* ===================================================== */
+
+.indirim-basari {
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
+  border-radius: var(--kose-kucuk);
+  border-left: 3px solid var(--basari);
+  background-color: var(--acikKart);
+  color: var(--yaziKoyu);
+  font-size: var(--yazi-ikincil);
+}
+
+/* ---------- TABLO ---------- */
+
+.indirim-secim {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--anaRenk);
+}
+
+.indirim-kategori {
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+  margin-top: 2px;
+}
+
+/* İndirimli satır soluk DEĞİL, hafif vurgulu — burada indirim
+   bir eksiklik değil, aranan durum. */
+.indirim-satir td {
+  background-color: var(--yumusakHata);
+}
+
+.indirim-fiyat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.indirim-eski {
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+  text-decoration: line-through;
+}
+
+/* İndirim hapı.
+   ⚠️ Ortak `Rozet` kullanılmadı — gerekçe JSX'te. Renk `hata`
+   ile aynı ailede ama anlamı ayrı: burada kırmızı "ters gitti"
+   değil "fırsat" demek. Mobil tarafta da bu ayrım var
+   (Rozet tipi `indirim`, `hata`dan ayrı). */
+.indirim-hap {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--kose-tam);
+  background-color: var(--hata);
+  color: #ffffff;
+  font-size: var(--yazi-kucuk);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.indirim-yok {
+  color: var(--yaziGri);
+}
+
+.indirim-zarar {
+  color: var(--hata);
+}
+
+.indirim-eylem {
+  display: flex;
+  gap: var(--bosluk2);
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* ---------- SEÇİM ŞERİDİ ---------- */
+
+.indirim-secim-serit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
+  border-radius: var(--kose-orta);
+  background-color: var(--yumusakVurgu);
+  color: var(--yaziKoyu);
+  font-size: var(--yazi-ikincil);
+}
+
+.indirim-secim-eylem {
+  display: flex;
+  gap: var(--bosluk2);
+  flex-wrap: wrap;
+}
+
+/* ---------- FORM ---------- */
+
+.indirim-form {
+  margin-bottom: var(--bosluk5);
+}
+
+.indirim-form-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+  margin-bottom: var(--bosluk4);
+  font-size: var(--yazi-orta);
+  color: var(--yaziKoyu);
+}
+
+.indirim-kapat {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--yaziGri);
+  padding: var(--bosluk1);
+}
+
+.indirim-form-alanlar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--bosluk4);
+}
+
+.indirim-tip {
+  display: flex;
+  border: 1px solid var(--inputKenar);
+  border-radius: var(--kose-kucuk);
+  overflow: hidden;
+}
+
+.indirim-tip-buton {
+  font: inherit;
+  font-size: var(--yazi-ikincil);
+  padding: 9px var(--bosluk4);
+  border: none;
+  background-color: var(--kartArka);
+  color: var(--yaziOrta);
+  cursor: pointer;
+}
+
+.indirim-tip-buton + .indirim-tip-buton {
+  border-left: 1px solid var(--inputKenar);
+}
+
+.indirim-tip-secili {
+  background-color: var(--anaRenk);
+  color: var(--anaRenkUstuYazi);
+}
+
+.indirim-alan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk1);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+  min-width: 180px;
+}
+
+.indirim-alan input {
+  padding: var(--bosluk2) var(--bosluk3);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-family: inherit;
+  font-size: var(--yazi-normal);
+}
+
+.indirim-alan input:focus {
+  outline: none;
+  border-color: var(--anaRenk);
+}
+
+/* ---------- ÖNİZLEME ---------- */
+
+.indirim-onizleme {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk4);
+  padding: var(--bosluk3) var(--bosluk4);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--acikKart);
+}
+
+.indirim-onizleme-eski {
+  color: var(--yaziGri);
+  text-decoration: line-through;
+}
+
+.indirim-onizleme-ok {
+  color: var(--yaziGri);
+}
+
+.indirim-onizleme-yeni {
+  font-size: var(--yazi-orta);
+  color: var(--yaziKoyu);
+}
+
+.indirim-uyari {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  margin-top: var(--bosluk3);
+  padding: var(--bosluk3) var(--bosluk4);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--yumusakUyari);
+  color: var(--uyari);
+  font-size: var(--yazi-ikincil);
+}
+
+.indirim-toplu-not {
+  margin: var(--bosluk3) 0 0;
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+}
+
+.indirim-form-alt {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk4);
+}

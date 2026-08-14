@@ -21,7 +21,7 @@ import { rolYeterliMi } from '../utils/roller';
 import {
   LayoutDashboard, Package, Tags, Receipt, CreditCard,
   Users, Ticket, TrendingUp, LifeBuoy, ShieldCheck, ScrollText,
-  ChevronLeft, ChevronRight, Undo2, FileText, Layers, Images,
+  ChevronLeft, ChevronRight, Undo2, FileText, Layers, Images, Percent,
 } from 'lucide-react';
 
 import BildirimZili from './BildirimZili';   // ⭐ YENİ
@@ -53,6 +53,12 @@ const MENU = [
   // Kombinlerin yanında: ikisi de "vitrin" işi, sipariş/ödeme gibi
   // günlük operasyon değil.
   { yol: '/bannerlar',         ikon: Images,          yazi: 'Bannerlar' },
+  // ⭐ YENİ — ürün etiketindeki indirim (kupondan AYRI).
+  //
+  // ⚠️ Kuponların hemen üstünde ve ayrı bir girdi: ikisi de "indirim"
+  // ama biri ÜRÜNÜN fiyatını düşürüyor, diğeri SEPETE uygulanıyor.
+  // Tek menüde toplasaydık admin hangisini değiştirdiğini karıştırırdı.
+  { yol: '/indirimler',        ikon: Percent,         yazi: 'İndirimler' },
   { yol: '/kuponlar',          ikon: Ticket,          yazi: 'Kuponlar' },
   { yol: '/raporlar',          ikon: TrendingUp,      yazi: 'Raporlar' },
   { yol: '/destek',            ikon: LifeBuoy,        yazi: 'Destek Talepleri' },
