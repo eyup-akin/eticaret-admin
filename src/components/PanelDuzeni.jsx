@@ -21,7 +21,7 @@ import { rolYeterliMi } from '../utils/roller';
 import {
   LayoutDashboard, Package, Tags, Receipt, CreditCard,
   Users, Ticket, TrendingUp, LifeBuoy, ShieldCheck, ScrollText,
-  ChevronLeft, ChevronRight, Undo2, FileText, Layers,
+  ChevronLeft, ChevronRight, Undo2, FileText, Layers, Images,
 } from 'lucide-react';
 
 import BildirimZili from './BildirimZili';   // ⭐ YENİ
@@ -49,6 +49,10 @@ const MENU = [
   { yol: '/odemeler',          ikon: CreditCard,      yazi: 'Ödemeler / Gelir' },
   { yol: '/kullanicilar',      ikon: Users,           yazi: 'Kullanıcılar' },
   { yol: '/kombinler',         ikon: Layers,          yazi: 'Kombinler' },
+  // ⭐ YENİ (B2) — mobil ana sayfadaki afiş şeridi.
+  // Kombinlerin yanında: ikisi de "vitrin" işi, sipariş/ödeme gibi
+  // günlük operasyon değil.
+  { yol: '/bannerlar',         ikon: Images,          yazi: 'Bannerlar' },
   { yol: '/kuponlar',          ikon: Ticket,          yazi: 'Kuponlar' },
   { yol: '/raporlar',          ikon: TrendingUp,      yazi: 'Raporlar' },
   { yol: '/destek',            ikon: LifeBuoy,        yazi: 'Destek Talepleri' },

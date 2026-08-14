@@ -1,0 +1,294 @@
+/* ===================================================== */
+/*  BANNERLAR (kampanya afişleri)                        */
+/* ===================================================== */
+
+.banner-basari {
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
+  border-radius: var(--kose-kucuk);
+  border-left: 3px solid var(--basari);
+  background-color: var(--acikKart);
+  color: var(--yaziKoyu);
+  font-size: var(--yazi-ikincil);
+}
+
+/* Ölçü hatırlatması — yönetici görseli üretirken lazım olan tek bilgi */
+.banner-olcu-kutu {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bosluk2);
+  padding: var(--bosluk3) var(--bosluk4);
+  margin-bottom: var(--bosluk4);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--yumusakVurgu);
+  color: var(--yaziOrta);
+  font-size: var(--yazi-ikincil);
+  line-height: 1.5;
+}
+
+.banner-olcu-kutu svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--anaRenk);
+}
+
+/* ---------- FORM ---------- */
+
+.banner-form {
+  margin-bottom: var(--bosluk5);
+}
+
+.banner-form-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--bosluk4);
+  font-size: var(--yazi-orta);
+  color: var(--yaziKoyu);
+}
+
+.banner-kapat {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--yaziGri);
+  padding: var(--bosluk1);
+}
+
+/* ⚠️ Yükleme alanı 2:1 — mobildeki kutunun aynısı.
+   Serbest yükseklikte bir kutu, kırpmanın nereden olacağını
+   göstermezdi ve önizlemenin tek amacı bu. */
+.banner-yukle {
+  aspect-ratio: 2 / 1;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px dashed var(--inputKenar);
+  border-radius: var(--kose-buyuk);
+  background-color: var(--acikKart);
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.banner-yukle:hover,
+.banner-yukle-aktif {
+  border-color: var(--anaRenk);
+  background-color: var(--yumusakVurgu);
+}
+
+.banner-yukle-bos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--bosluk2);
+  color: var(--yaziGri);
+  font-size: var(--yazi-ikincil);
+  text-align: center;
+  padding: var(--bosluk4);
+}
+
+.banner-yukle-ipucu {
+  font-size: var(--yazi-kucuk);
+}
+
+/* object-fit: cover — mobildeki resizeMode="cover" ile aynı davranış */
+.banner-onizleme {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.banner-gizli-input {
+  display: none;
+}
+
+.banner-olcu-sonuc {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  margin-top: var(--bosluk2);
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+}
+
+.banner-olcu-uyari {
+  color: var(--uyari);
+}
+
+.banner-alanlar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk3);
+  align-items: flex-end;
+  margin: var(--bosluk4) 0;
+}
+
+.banner-alan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk1);
+  flex: 1;
+  min-width: 200px;
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+}
+
+.banner-alan-dar {
+  flex: 0 0 200px;
+}
+
+.banner-alan-genis {
+  margin-bottom: var(--bosluk4);
+}
+
+.banner-alan input,
+.banner-alan textarea {
+  padding: var(--bosluk2) var(--bosluk3);
+  border: 1px solid var(--kenarlik);
+  border-radius: var(--kose-kucuk);
+  background-color: var(--kartArka);
+  color: var(--yaziKoyu);
+  font-family: inherit;
+  font-size: var(--yazi-normal);
+  resize: vertical;
+}
+
+.banner-alan input:focus,
+.banner-alan textarea:focus {
+  outline: none;
+  border-color: var(--anaRenk);
+}
+
+.banner-ipucu {
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+}
+
+.banner-ikili {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk4);
+  margin-bottom: var(--bosluk4);
+}
+
+.banner-onay {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+  padding-bottom: var(--bosluk2);
+}
+
+.banner-form-alt {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--bosluk3);
+}
+
+/* ---------- LİSTE ---------- */
+
+.banner-bos {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk3);
+  padding: var(--bosluk5);
+  border-radius: var(--kose-dev);
+  background-color: var(--acikKart);
+  color: var(--yaziGri);
+  font-size: var(--yazi-ikincil);
+}
+
+.banner-liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk3);
+}
+
+.banner-kart {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk4);
+  padding: var(--bosluk4);
+}
+
+/* ⚠️ Yayında olmayan afiş SOLUK ama okunur.
+   Gizleseydik yönetici kapattığı afişi bulamaz, gri yazıya
+   çevirseydik "silinmiş" gibi görünürdü. */
+.banner-kart-pasif {
+  opacity: 0.55;
+}
+
+.banner-kucuk {
+  flex: 0 0 auto;
+  width: 140px;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  border-radius: var(--kose-orta);
+  background-color: var(--acikKart);
+  display: block;
+}
+
+.banner-bilgi {
+  flex: 1;
+  min-width: 0;
+}
+
+.banner-bilgi-ust {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+}
+
+.banner-ad {
+  font-size: var(--yazi-orta);
+  color: var(--yaziKoyu);
+}
+
+.banner-kisa {
+  margin-top: var(--bosluk1);
+  font-size: var(--yazi-ikincil);
+  color: var(--yaziOrta);
+}
+
+.banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk3);
+  margin-top: var(--bosluk2);
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+}
+
+.banner-kuponlar {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  letter-spacing: 0.3px;
+}
+
+.banner-eylem {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.banner-oklar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk1);
+}
+
+@media (max-width: 900px) {
+  .banner-kart {
+    flex-wrap: wrap;
+  }
+
+  .banner-eylem {
+    width: 100%;
+  }
+}

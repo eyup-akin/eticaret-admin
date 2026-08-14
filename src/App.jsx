@@ -33,6 +33,7 @@ import DestekDetaySayfasi from './pages/DestekDetaySayfasi';   // ⭐ YENİ (Aş
 import IadelerSayfasi from './pages/IadelerSayfasi';           // ⭐ YENİ (Aşama 9)
 import SozlesmelerSayfasi from './pages/SozlesmelerSayfasi';   // ⭐ YENİ (Aşama 10)
 import KombinlerSayfasi from './pages/KombinlerSayfasi';       // ⭐ YENİ
+import BannerlarSayfasi from './pages/BannerlarSayfasi';       // ⭐ YENİ (B2)
 import AdminBasvurulariSayfasi from './pages/AdminBasvurulariSayfasi';
 
 import HesabimSayfasi from './pages/HesabimSayfasi';   // ⭐ YENİ
@@ -96,6 +97,7 @@ export default function App() {
             <Route path="/destek/:id" element={<DestekDetaySayfasi />} />
             <Route path="/iadeler"    element={<IadelerSayfasi />} />
             <Route path="/kombinler" element={<KombinlerSayfasi />} />
+            <Route path="/bannerlar" element={<BannerlarSayfasi />} />
 
 
             {/* ⭐ YENİ — Hesabım.
