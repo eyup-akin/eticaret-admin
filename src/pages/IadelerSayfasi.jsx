@@ -311,13 +311,16 @@ export default function IadelerSayfasi() {
         onayla={() => karar(onaylanacak, true)}
       />
 
-      {/* Para iadesi geri alınamaz: kırmızı. */}
+      {/* ⭐ DEĞİŞTİ — metin artık gerçeği söylüyor.
+          Eskiden iade yalnızca veritabanına yazılıyordu; şimdi para
+          gerçekten müşterinin kartına gönderiliyor. Admin'in neyi
+          onayladığını bilmesi gerekiyor. */}
       <OnayPenceresi
         acik={odenecek !== null}
         baslik="Para iadesi yapılsın mı?"
         mesaj={
           odenecek
-            ? `${paraBicimle(odenecek.tutar)} iade edilecek ve ürünler stoğa geri eklenecek. Bu işlem geri alınamaz.`
+            ? `${paraBicimle(odenecek.tutar)} müşterinin kartına GERÇEKTEN gönderilecek ve ürünler stoğa geri eklenecek. Bu işlem geri alınamaz.`
             : ''
         }
         onayYazi="Evet, İade Et"

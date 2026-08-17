@@ -1,0 +1,140 @@
+/* Ödeme denemeleri kutusu — sipariş detayında.
+   ⚠️ .kutu, .kutu-baslik ve .kart-mono index.css'te; burada
+   yeniden tanımlanmıyor. */
+
+.deneme + .deneme {
+  margin-top: var(--bosluk5);
+  padding-top: var(--bosluk5);
+  border-top: 1px solid var(--kenarlik);
+}
+
+.deneme-ust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bosluk3);
+  margin-bottom: var(--bosluk4);
+}
+
+.deneme-tarih {
+  font-size: var(--yazi-kucuk);
+  color: var(--yaziGri);
+}
+
+.deneme-izgara {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--bosluk3);
+}
+
+.deneme-alan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bosluk1);
+}
+
+.deneme-etiket {
+  font-size: var(--yazi-mikro);
+  color: var(--yaziGri);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.deneme-deger {
+  font-size: var(--yazi-normal);
+  color: var(--yaziKoyu);
+}
+
+/* Fraud satırı — üç durum, üç ayrı renk rolü.
+   ⚠️ "İncelemede" yeşil DEĞİL: para henüz kesin değil. */
+.fraud-satiri {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk2);
+  margin-top: var(--bosluk4);
+  padding: var(--bosluk2) var(--bosluk3);
+  border-radius: var(--kose-kucuk);
+  font-size: var(--yazi-kucuk);
+}
+
+.fraud-onay {
+  background: var(--yumusakBasari);
+  color: var(--basari);
+}
+
+.fraud-inceleme {
+  background: var(--yumusakUyari);
+  color: var(--uyari);
+}
+
+.fraud-ret {
+  background: var(--yumusakHata);
+  color: var(--hata);
+}
+
+.deneme-hata {
+  margin-top: var(--bosluk3);
+  padding: var(--bosluk2) var(--bosluk3);
+  border-radius: var(--kose-kucuk);
+  background: var(--yumusakHata);
+  color: var(--hata);
+  font-size: var(--yazi-kucuk);
+  line-height: var(--satir-normal);
+}
+
+.kalem-tablo {
+  width: 100%;
+  margin-top: var(--bosluk4);
+  border-collapse: collapse;
+  font-size: var(--yazi-kucuk);
+}
+
+.kalem-tablo th,
+.kalem-tablo td {
+  padding: var(--bosluk2) 0;
+  text-align: left;
+  border-bottom: 1px solid var(--kenarlik);
+}
+
+.kalem-tablo th {
+  color: var(--yaziGri);
+  font-weight: 600;
+}
+
+.kalem-tablo td {
+  color: var(--yaziOrta);
+}
+
+.kalem-tablo .sag {
+  text-align: right;
+}
+
+.ham-buton {
+  display: flex;
+  align-items: center;
+  gap: var(--bosluk1);
+  margin-top: var(--bosluk3);
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--anaRenk);
+  font-size: var(--yazi-kucuk);
+  cursor: pointer;
+}
+
+/* ⚠️ Ham cevap uzun ve tek satır: kutuyu taşırmasın diye kendi
+   içinde kayıyor. Sayfa yatay kaymamalı. */
+.ham-cevap {
+  margin-top: var(--bosluk2);
+  padding: var(--bosluk3);
+  max-height: 260px;
+  overflow: auto;
+  border-radius: var(--kose-orta);
+  background: var(--acikGri);
+  color: var(--yaziOrta);
+  font-family: ui-monospace, monospace;
+  font-size: var(--yazi-mikro);
+  line-height: var(--satir-normal);
+  white-space: pre-wrap;
+  word-break: break-all;
+}

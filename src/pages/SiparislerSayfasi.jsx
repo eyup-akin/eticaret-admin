@@ -335,6 +335,9 @@ export default function SiparislerSayfasi() {
           onChange={(e) => setDurumFiltre(e.target.value)}
         >
           <option value="">Tüm kargo durumları</option>
+          {/* ⭐ YENİ — ödeme onayı beklenen siparişler. Bunlar SATIŞ
+              DEĞİL: stok rezerve ama para gelmedi. */}
+          <option value="odeme_bekliyor">Ödeme Bekliyor</option>
           <option value="hazirlaniyor">Hazırlanıyor</option>
           <option value="kargoda">Kargoda</option>
           <option value="teslim_edildi">Teslim Edildi</option>
@@ -348,8 +351,14 @@ export default function SiparislerSayfasi() {
         >
           <option value="">Tüm ödeme durumları</option>
           <option value="odendi">Ödendi</option>
-          <option value="beklemede">Beklemede</option>
+          {/* ⭐ YENİ — ödeme akışının durumları */}
+          <option value="odeme_bekliyor">Ödeme Bekliyor</option>
+          <option value="odeme_incelemede">Doğrulanıyor</option>
+          <option value="odeme_basarisiz">Ödeme Başarısız</option>
           <option value="iade_edildi">İade Edildi</option>
+          <option value="kismi_iade">Kısmi İade</option>
+          {/* Bu özellikten önceki siparişlerin durumu */}
+          <option value="beklemede">Beklemede (eski)</option>
         </select>
       </div>
 

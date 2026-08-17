@@ -148,6 +148,28 @@ const DURUMLAR = {
   kismi_iade:       { yazi: 'Kısmi İade',      renk: '#8e44ad' },
 
 
+  // ---- Ödeme akışı (iyzico) ----
+  //
+  // ⚠️ Anahtar çakışması kontrol edildi: üçü de sözlükte yoktu.
+  // 'beklemede' YENİDEN KULLANILMADI — o eski siparişlerin ödeme
+  // durumu ve "hiç ödeme akışı yoktu" anlamına geliyor.
+  //
+  // odeme_bekliyor    → sıra müşteride, stok rezerve  (turuncu)
+  // odeme_incelemede  → para çekildi ama KESİN DEĞİL  (turkuaz)
+  // odeme_basarisiz   → kart reddetti, tekrar denenebilir (kırmızı)
+  //
+  // ⚠️ 'odeme_incelemede' YEŞİL DEĞİL: iyzico fraud kontrolü
+  // sürüyor, ret gelebilir. Yeşil görüp kargoya vermek en pahalı
+  // hata olurdu.
+  odeme_bekliyor:   { yazi: 'Ödeme Bekliyor',  renk: '#f39c12' },
+  odeme_incelemede: { yazi: 'Doğrulanıyor',    renk: '#0891b2' },
+  odeme_basarisiz:  { yazi: 'Ödeme Başarısız', renk: '#e74c3c' },
+
+  // Ödeme denemesi durumları (OdemeIslemi.Durum).
+  // ⚠️ 'basarili'/'basarisiz' zaten var; yalnızca eksik ikisi.
+  baslatildi:    { yazi: 'Başlatıldı',   renk: '#64748b' },
+  suresi_doldu:  { yazi: 'Süresi Doldu', renk: '#94a3b8' },
+
 };
 
 export default function Rozet({ durum }) {

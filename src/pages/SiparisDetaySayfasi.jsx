@@ -12,6 +12,7 @@ import OnayPenceresi from '../components/OnayPenceresi';
 import KargoyaVerModal from '../components/KargoyaVerModal';   // ⭐ YENİ
 
 import KargoEtiketi from '../components/KargoEtiketi';
+import OdemeDenemeleri from '../components/OdemeDenemeleri';   // ⭐ YENİ
 
 // ⭐ YENİ (4.7) — emoji yerine çizgi ikon. Gerekçe PanelDuzeni'nde.
 import { ArrowRight, Ban, Check, Copy, CreditCard, Info, Lock, MapPin, Package, StickyNote, Tag, Truck, User } from 'lucide-react';
@@ -519,9 +520,14 @@ export default function SiparisDetaySayfasi() {
               )}
 
               <div className="durum-ipucu">
-                <Lock size={14} /> Kartın yalnızca son 4 hanesi saklanır.
+                <Lock size={14} /> Kart bilgisi iyzico'da toplanıyor; bize
+                yalnızca son 4 hane geliyor.
               </div>
             </div>
+
+            {/* ⭐ YENİ — "iyzico ne dedi" sorusunun cevabı.
+                Denemesi olmayan siparişlerde kutu hiç çizilmiyor. */}
+            <OdemeDenemeleri siparisId={id} />
 
           </div>
         </div>
